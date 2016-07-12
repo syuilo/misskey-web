@@ -1,0 +1,113 @@
+@import "../base";
+
+$ui-background-color = #f2ebe8;
+
+*::-webkit-input-placeholder,
+*:-moz-placeholder,
+*::-moz-placeholder,
+*:-ms-input-placeholder {
+	color: #D8CBC5;
+}
+
+* {
+	/*user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	cursor: default;*/
+	-webkit-tap-highlight-color: fade($theme-color, 70%);
+
+	&:focus {
+		/*outline: solid 2px $theme-color;*/
+		outline: none;
+	}
+
+	&::-webkit-scrollbar {
+		width: 5px;
+		background: transparent;
+
+		&:horizontal {
+			height: 5px;
+		}
+	}
+
+	&::-webkit-scrollbar-button {
+		width: 0;
+		height: 0;
+		background: rgba(0, 0, 0, 0.2);
+	}
+
+	&::-webkit-scrollbar-piece {
+		background: transparent;
+
+		&:start {
+			background: transparent;
+		}
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: rgba(0, 0, 0, 0.2);
+
+		&:hover {
+			background: rgba(0, 0, 0, 0.4);
+		}
+
+		&:active {
+			background: $theme-color;
+		}
+	}
+
+	&::-webkit-scrollbar-corner {
+		background: rgba(0, 0, 0, 0.2);
+	}
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	scroll-behavior: smooth;
+	-webkit-text-size-adjust: 100%;
+}
+
+html, body, input, textarea, select {
+	font-family: 'Proxima Nova Reg', "FOT-スーラ Pro M", 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Meiryo UI', 'Meiryo', 'メイリオ', sans-serif;
+}
+
+button {
+	font-family: 'Proxima Nova Reg', "FOT-スーラ Pro M", 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Meiryo', 'メイリオ', sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: $theme-color;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	* {
+		cursor: pointer;
+	}
+}
+
+button {
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	cursor: default;
+}
+
+kbd > kbd {
+	display: inline;
+	margin: 0 4px;
+	padding: 0 8px;
+	color: #888;
+	background: #f8f8f8;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+dt {
+	margin-top: 1em;
+}

@@ -1,0 +1,484 @@
+@import "../../base"
+
+*:not(i)
+	user-select none
+	cursor default
+	font-family '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
+
+html, body
+	margin 0
+	padding 0
+
+html
+	color #444
+	background-color #fff
+	background-image url("#/desktop/pages/entrance/bg.jpg")
+	background-attachment fixed
+	background-repeat no-repeat
+	background-position center center
+	background-size cover
+
+	&.logging
+		&, *
+			cursor wait !important
+
+body
+	position relative
+	padding-bottom 32px
+
+text-input()
+	appearance none
+	user-select text
+	display inline-block
+	cursor auto
+	box-sizing border-box
+	padding 0 12px
+	margin 0
+	width 100%
+	line-height 44px
+	font-size 1em
+	color #333 !important
+	background #fff !important
+	outline none
+	border solid 1px rgba(0, 0, 0, 0.1)
+	border-radius 4px
+	box-shadow 0 0 0 114514px #fff inset
+	transition all .3s ease
+	font-family 'Meiryo', 'メイリオ', 'Meiryo UI', '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', sans-serif
+
+	&:hover
+		border-color rgba(0, 0, 0, 0.2)
+		transition all .1s ease
+
+	&:focus
+		color $theme-color !important
+		border-color $theme-color
+		box-shadow 0 0 0 1024px #fff inset, 0 0 0 4px rgba($theme-color, 10%)
+		transition all 0s ease
+
+	&:disabled
+		opacity 0.5
+
+body > header
+	display block
+	box-sizing border-box
+	padding 32px
+	margin 0 auto
+	max-width 512px
+	text-align center
+	color #fff
+
+	h1
+		display block
+		margin 0
+		padding 0
+		font-size 2em
+		font-weight normal
+		color rgba(0, 0, 0, 0.5)
+		opacity 1
+
+	p
+		display block
+		margin 0
+		padding 8px 0 0 0
+		color rgba(0, 0, 0, 0.4)
+		opacity 1
+
+		a
+			cursor pointer
+
+body > main
+	display block
+	position relative
+	box-sizing border-box
+	width 380px
+	margin 0 auto
+	padding 32px
+	background-image url("#/desktop/pages/entrance/bg.blur.jpg")
+	background-attachment fixed
+	background-repeat no-repeat
+	background-position center center
+	background-size cover
+	background-clip padding-box
+	//border-left solid 16px $theme-color
+	border solid 1px rgba(0, 0, 0, 0.1)
+	border-radius 4px
+
+	#signin-form-container
+		position relative
+		left 0
+		opacity 1
+
+		#loading
+			position absolute
+			z-index 1
+			width 100%
+			height 100%
+
+		#signin
+			display block
+			position relative
+			z-index 2
+			box-sizing border-box
+			padding 10px 32px 0 32px
+			background #fff
+			background-clip padding-box
+			border solid 1px rgba(0, 0, 0, 0.1)
+			border-radius 4px
+
+			&:hover
+				> .help
+					opacity 1
+
+			h2
+				display block
+				margin 0
+				padding 0
+				height 54px
+				line-height 54px
+				text-align center
+				text-transform uppercase
+				font-size 1em
+				font-weight bold
+				color #888
+				border-bottom solid 1px #eee
+
+				p
+					display inline
+					margin 0
+					padding 0
+
+				#avatar
+					display inline-block
+					position relative
+					top 10px
+					width 32px
+					height 32px
+					margin-right 8px
+					border-radius 100%
+
+					&[src='']
+						display none
+
+			> .help
+				appearance none
+				cursor pointer
+				display block
+				position absolute
+				top 0
+				right 0
+				z-index 1
+				margin 0
+				padding 0
+				font-size 1.2em
+				color #999
+				border none
+				outline none
+				box-shadow none
+				background transparent
+				opacity 0
+				transition opacity 0.1s ease
+
+				&:hover
+					color #444
+
+				&:active
+					color #222
+
+				> i
+					padding 14px
+
+			label
+				display block
+				position relative
+				margin 12px 0
+
+				i
+					display block
+					pointer-events none
+					position absolute
+					bottom 0
+					top 0
+					left 0
+					z-index 1
+					margin auto
+					padding 0 16px
+					height 1em
+					color #898786
+
+				input[type=text],
+				input[type=password]
+					text-input()
+					padding 0 0 0 38px
+
+					&:hover + i {
+						color #797776
+
+			[type=submit]
+				appearance none
+				cursor pointer
+				box-sizing border-box
+				padding 16px 16px 32px 16px
+				margin -6px 0 0 0
+				width 100%
+				font-size 1.2em
+				color #555
+				outline none
+				border none
+				border-radius 0
+				box-shadow none
+				background transparent
+				transition all .5s ease
+
+				&:hover
+					color $theme-color
+					transition all .2s ease
+
+				&:focus
+					color $theme-color
+					transition all .2s ease
+
+				&:active
+					color darken($theme-color, 30%)
+					transition all .2s ease
+
+#signup-form
+	display none
+	position absolute
+	top 32px
+	left 100%
+	box-sizing border-box
+	padding 18px 32px 0 32px
+	width 368px
+	background #fff
+	background-clip padding-box
+	border solid 1px rgba(0, 0, 0, 0.1)
+	border-radius 4px
+	opacity 0
+
+	*:not(i)
+		font-family 'Meiryo', 'メイリオ', 'Meiryo UI', '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', sans-serif
+
+	&:hover
+		> .cancel
+			opacity 1
+
+	> .cancel
+		appearance none
+		cursor pointer
+		display block
+		position absolute
+		top 0
+		right 0
+		z-index 1
+		margin 0
+		padding 0
+		font-size 1.2em
+		color #999
+		border none
+		outline none
+		box-shadow none
+		background transparent
+		opacity 0
+		transition opacity 0.1s ease
+
+		&:hover
+			color #555
+
+		&:active
+			color #222
+
+		> i
+			padding 14px
+
+	label
+		display block
+		position relative
+		margin 16px 0
+
+		> .caption
+			margin 0 0 4px 0
+			color #828888
+			font-size 0.95em
+
+			> i
+				margin-right 0.25em
+				color #96adac
+
+		> .info
+			display block
+			margin 4px 0
+			font-size 0.8em
+
+			&[data-state='none']
+				display none
+
+			&[data-state='error']
+				color #FF1161
+
+			&[data-state='processing']
+				color #999
+
+			&[data-state='ok']
+				color #3CB7B5
+
+			> i
+				margin-right 0.3em
+
+		&.user-name
+			.profile-page-url-preview
+				display block
+				margin 4px 8px 0 4px
+				font-size 0.8em
+				color #888
+
+				&:empty
+					display none
+
+				&:not(:empty) + .info
+					margin-top 0
+
+		&.password
+			.meter
+				display block
+				margin-top 8px
+				width 100%
+				height 8px
+
+				&[data-strength='']
+					display none
+
+				&[data-strength='low']
+					> .value
+						background #d73612
+
+				&[data-strength='medium']
+					> .value
+						background #d7ca12
+
+				&[data-strength='high']
+					> .value
+						background #61bb22
+
+				> .value
+					display block
+					width 0%
+					height 100%
+					background transparent
+					border-radius 4px
+					transition all 0.1s ease
+
+	[type=text], [type=password]
+		text-input()
+
+	.agree-tou
+		padding 4px
+		border-radius 4px
+
+		&:hover
+			background #f4f4f4
+
+		&:active
+			background #eee
+
+		&, *
+			cursor pointer
+
+		p
+			display inline
+			color #555
+
+	[type=submit]
+		appearance none
+		cursor pointer
+		display block
+		box-sizing border-box
+		position relative
+		padding 12px
+		margin 20px 0 32px 0
+		width 100%
+		font-size 1em
+		color #fff
+		outline none
+		border none
+		border-radius 3px
+		box-shadow none
+		background $theme-color
+
+		*
+			pointer-events none
+
+		&:before
+			content ""
+			display block
+			width 48px
+			height 100%
+			position absolute
+			top 0
+			left 0
+			background rgba(0, 0, 0, 0.1)
+			border-radius 3px 0 0 3px
+
+		> i
+			display block
+			width 48px
+			height 1em
+			position absolute
+			top 0
+			left 0
+			bottom 0
+			margin auto 0
+
+		> p
+			display inline
+			margin 0
+
+		&:disabled
+			opacity 0.5
+
+		&:hover
+			background darken($theme-color, 5%)
+
+#new
+	appearance none
+	display block
+	position relative
+	box-sizing border-box
+	width 314px
+	margin-top 24px
+	padding 18px 18px 18px 36px
+	line-height 1em
+	font-size 1em
+	color #fff
+	text-transform uppercase
+	text-align center
+	text-decoration none
+	outline 0
+	border 0
+	border-radius 4px
+	box-shadow none
+	background $theme-color
+	overflow hidden
+	cursor pointer
+	opacity 1
+
+	*
+		pointer-events none
+
+	> i
+		position absolute
+		top 0
+		left 0
+		padding 18px
+		background rgba(0, 0, 0, 0.1)
+
+	> p
+		display inline
+		margin 0
+
+	&:hover
+		text-decoration none
+		background darken($theme-color, 5%)
+
+	&:active
+		text-decoration none

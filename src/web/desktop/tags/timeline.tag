@@ -1,0 +1,3 @@
+timeline
+	post(each={ posts })
+		

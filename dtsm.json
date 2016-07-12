@@ -1,0 +1,86 @@
+{
+  "repos": [
+    {
+      "url": "https://github.com/borisyankov/DefinitelyTyped.git",
+      "ref": "master"
+    }
+  ],
+  "path": "typings",
+  "bundle": "typings/bundle.d.ts",
+  "link": {
+    "npm": {
+      "include": true
+    }
+  },
+  "dependencies": {
+    "express/express.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "mongoose/mongoose.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "jade/jade.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "body-parser/body-parser.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "cookie-parser/cookie-parser.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "express-session/express-session.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "moment/moment.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "cors/cors.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "compression/compression.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "connect-mongo/connect-mongo.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "request/request.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "gm/gm.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "socket.io/socket.io.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "multer/multer.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "cookie/cookie.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "redis/redis.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "browserify/browserify.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "csurf/csurf.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "serve-favicon/serve-favicon.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "js-yaml/js-yaml.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "shelljs/shelljs.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "argv/argv.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    },
+    "express-useragent/express-useragent.d.ts": {
+      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
+    }
+  }
+}

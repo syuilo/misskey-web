@@ -1,0 +1,128 @@
+extends ../../../base
+
+block title
+	| Misskey
+
+block head
+	meta(name='description', content='シンプルで楽しいTwitter風ミニブログSNS。')
+	meta(name='keywords', content='Misskey, sns, blog, miniblog')
+	meta(property='og:title', content='Misskey')
+	meta(property='og:type', content='website')
+	meta(property='og:description', content='A miniblog-based online social networking service.')
+	meta(property='og:url', content= url)
+	meta(property='og:image', content='')
+	meta(property='og:site_name', content='Misskey')
+	link(rel='stylesheet', href= config.urls.resources + '/desktop/pages/entrance/style.css')
+	script(src= config.urls.resources + '/desktop/pages/entrance/script.js')
+	script(src='https://www.google.com/recaptcha/api.js')
+
+block body
+	header
+		h1#title Misskey
+		p#description
+			| おかえりなさい。ここは知る人ぞ知る、未来のSNSです。
+			br
+			a(href= config.urls.about) もっと詳しく
+
+	main
+		div#signin-form-container
+			div#loading.
+				<div class="sk-folding-cube">
+					<div class="sk-cube1 sk-cube"></div>
+					<div class="sk-cube2 sk-cube"></div>
+					<div class="sk-cube4 sk-cube"></div>
+					<div class="sk-cube3 sk-cube"></div>
+				</div>
+
+			form#signin
+				h2.title
+					img#avatar(src='', href='')
+					p アカウント
+				a.help(href= config.urls.help, title='お困りですか？'): i.fa.fa-question
+				label.user-name
+					input#user-name(name='user-name'
+						type='text'
+						pattern='^[0-9A-Za-z\-]+$'
+						placeholder='ユーザー名'
+						autofocus
+						required)
+					i.fa.fa-at
+				label.password
+					input#password(name='password'
+						type='password'
+						placeholder='パスワード'
+						required)
+					i.fa.fa-lock
+				button(type='submit') サインイン
+
+		form#signup-form(autocomplete='off')
+			button.cancel(type='button', title='キャンセル'): i.fa.fa-times
+			label.user-name
+				p.caption
+					i.fa.fa-at
+					| ユーザー名
+				input(name='user-name'
+					type='text'
+					pattern='^[0-9A-Za-z\-]{3,20}$'
+					placeholder='a~z、0~9、-が使えます'
+					autocomplete='off'
+					required)
+				p.profile-page-url-preview
+				p.info(data-state='none')
+					i
+					span
+
+			label.password
+				p.caption
+					i.fa.fa-lock
+					| パスワード
+				input(name='password'
+					type='password'
+					placeholder='8文字以上を推奨します'
+					autocomplete='off'
+					required)
+				div.meter(data-strength='')
+					div.value
+				p.info(data-state='none')
+					i
+					span
+
+			label.retype-password
+				p.caption
+					i.fa.fa-lock
+					| パスワード(再入力)
+				input(name='password-retype'
+					type='password'
+					placeholder='念のため再入力してください'
+					autocomplete='off'
+					required)
+				p.info(data-state='none')
+					i
+					span
+
+			label.recaptcha
+				p.caption
+					i.fa.fa-toggle-off
+					| 認証
+				div.g-recaptcha(
+					data-callback='onRecaptchaed'
+					data-expired-callback='onRecaptchaExpired'
+					data-sitekey=config.recaptcha.siteKey)
+
+			label.agree-tou
+				input(
+					name='agree-tou',
+					type='checkbox',
+					autocomplete='off',
+					required)
+				p
+					a() 利用規約
+					| に同意する
+
+			button.ripple-effect(type='submit')
+				i.fa.fa-check
+				p アカウント作成
+
+		button.ripple-effect#new
+			i.fa.fa-pencil-square-o
+			p 新規登録

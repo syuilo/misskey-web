@@ -1,0 +1,90 @@
+extends ../../ui
+
+mixin widget(widgets)
+	if widgets != null && widgets.length > 0
+		each widget in widgets
+			!= widget
+
+block title
+	| Misskey
+
+block meta
+	meta(name='description', content='Misskey Home')
+
+block assets
+	script(src= config.streamingUrl + '/socket.io/socket.io.js')
+
+block content
+	main
+		div#contents
+			if widgets.left != null && widgets.left.length > 0
+				div#left-contents
+					div.body
+						+widget(widgets.left)
+			div#main-contents(role='main')
+				div.body
+					+widget(widgets.center)
+			if widgets.right != null && widgets.right.length > 0
+				div#right-contents
+					div.body
+						+widget(widgets.right)
+
+block shortcuts
+	dt
+		kbd: kbd t
+	dd タイムラインの最新の投稿にフォーカス
+
+	dt
+		| 投稿にフォーカスした状態で
+		kbd: kbd ↑
+		| または
+		kbd: kbd k
+		| または
+		kbd
+			kbd Shift
+			| +
+			kbd Tab
+	dd 上の投稿にフォーカス
+	
+	dt
+		| 投稿にフォーカスした状態で
+		kbd: kbd ↓
+		| または
+		kbd: kbd j
+		| または
+		kbd: kbd Tab
+	dd 下の投稿にフォーカス
+	
+	dt
+		| 投稿にフォーカスした状態で
+		kbd: kbd Space
+	dd 投稿を開く/閉じる
+
+	dt
+		| 投稿にフォーカスした状態で
+		kbd: kbd Esc
+	dd 投稿を閉じる
+
+	dt
+		| 投稿にフォーカスした状態で
+		kbd: kbd Enter
+	dd 投稿を開いて返信フォームにフォーカス
+
+	dt
+		| 返信フォームにフォーカスした状態で
+		kbd: kbd Esc
+	dd 投稿を閉じる
+
+	dt
+		| 投稿にフォーカスした状態で
+		kbd: kbd f
+		| または
+		kbd: kbd l
+	dd Likeする
+
+	dt
+		| 投稿にフォーカスした状態で
+		kbd: kbd r
+		| または
+		kbd: kbd s
+	dd Repostする

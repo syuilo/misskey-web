@@ -1,0 +1,58 @@
+doctype html
+
+!= '\r\n<!-- Thank you for using Misskey! @syuilo -->\r\n'
+
+html(lang=lang, dir='ltr')
+
+	- var setScript = function (name, val) {
+	-   return 'var ' + name + '=' + val + ';Object.freeze(' + name + ');';
+	- }
+	- var escapeScript = function (name, val) {
+	-   return 'eval(decodeURIComponent("' + encodeURIComponent('var ' + name + '=' + val + ';Object.freeze(' + name + ');') + '"));';
+	- }
+
+	head(prefix='og: http://ogp.me/ns#')
+		meta(charset='utf-8')
+		meta(name='robots', content='all')
+		meta(name='application-name', content='Misskey')
+		meta(name='theme-color', content= config.themeColor)
+		meta(name='google-site-verification', content= config.googleSiteVerification)
+		meta(name='referrer', content='origin')
+		meta(name='csrf-token', content= csrftoken)
+		title
+			if env !== 'production'
+				| (DEBUG)
+				= ' '
+			block title
+		script!= 'document.domain = \'' + config.host + '\';'
+		link(rel='shortcut icon', href= config.url + '/favicon.ico')
+		link(rel='icon', href= config.url + '/favicon.ico')
+		link(rel='image_src', href= config.url + '/favicon.ico')
+		link(rel='apple-touch-icon', sizes='120x120', href= config.urls.resources + '/app-icon-120x120.png')
+		link(rel='apple-touch-icon', sizes='144x144', href= config.urls.resources + '/app-icon-144x144.png')
+		link(rel='apple-touch-icon', sizes='180x180', href= config.urls.resources + '/app-icon-180x180.png')
+		link(rel='manifest', href= config.url + '/manifest.json')
+		link(rel='search', href= config.searchUrl, title=' Misskey search')
+		link(rel='dns-prefetch', href= config.webApiUrl)
+		link(rel='dns-prefetch', href= config.apiUrl)
+		link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
+		script!= setScript('LOGIN', signin.toString())
+		script!= escapeScript('ME', JSON.stringify(me))
+		script!= escapeScript('USER_SETTINGS', JSON.stringify(userSettings))
+		script(type='application/ld+json').
+			{
+			  "@context": "http://schema.org",
+			  "@type": "WebSite",
+			  "url": "#{config.url}",
+			  "potentialAction": {
+			    "@type": "SearchAction",
+			    "target": "#{config.urls.search}?q={q}",
+			    "query-input": "required name=q"
+			  }
+			}
+		block head
+
+	body
+		block body
+
+		!= '<!-- このセッションは ' + workerId + ' が担当しました -->'

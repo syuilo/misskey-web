@@ -1,0 +1,63 @@
+{
+	"compilerOptions": {
+		"noEmitOnError": false,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"sourceMap": false,
+		"target": "es6",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"removeComments": true,
+		"noLib": true,
+		"outDir": "built",
+		"rootDir": "src"
+	},
+	"compileOnSave": false,
+	"atom": {
+		"rewriteTsconfig": true
+	},
+	"filesGlob": [
+		"./node_modules/typescript/lib/lib.es6.d.ts",
+		"./typings/bundle.d.ts",
+		"./src/**/*.ts"
+	],
+	"files": [
+		"./node_modules/typescript/lib/lib.es6.d.ts",
+		"./typings/bundle.d.ts",
+		"./src/api/endpoints/account/create.ts",
+		"./src/api/endpoints/album/upload.ts",
+		"./src/api/endpoints/avatar/update.ts",
+		"./src/api/endpoints/banner/update.ts",
+		"./src/api/endpoints/display-image-quality/update.ts",
+		"./src/api/endpoints/home-layout/update.ts",
+		"./src/api/endpoints/mobile-header-overlay/update.ts",
+		"./src/api/endpoints/posts/create-with-file.ts",
+		"./src/api/endpoints/posts/reply.ts",
+		"./src/api/endpoints/pseudo-push-notification-display-duration/update.ts",
+		"./src/api/endpoints/ui-language/update.ts",
+		"./src/api/endpoints/url/analyze.ts",
+		"./src/api/endpoints/user-settings/update.ts",
+		"./src/api/router.ts",
+		"./src/api/server.ts",
+		"./src/api/streaming/get-session-user.ts",
+		"./src/api/streaming/home.ts",
+		"./src/api/streaming/index.ts",
+		"./src/api/streaming/talk.ts",
+		"./src/argv.ts",
+		"./src/check-dependencies.ts",
+		"./src/config.ts",
+		"./src/core/get-post-summary.ts",
+		"./src/core/naming-worker-id.ts",
+		"./src/core/request-api.ts",
+		"./src/core/signin.ts",
+		"./src/db/db.ts",
+		"./src/db/models/post.ts",
+		"./src/db/models/user-settings.ts",
+		"./src/db/models/user.ts",
+		"./src/index.ts",
+		"./src/resources.ts",
+		"./src/router.ts",
+		"./src/server.ts"
+	]
+}
