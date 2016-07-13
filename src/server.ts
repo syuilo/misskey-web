@@ -152,12 +152,10 @@ app.use(async (req, res, next) => {
 		const user = await api('account/show', {}, userId);
 		const settings = await UserSetting.findOne({user_id: userId}).lean();
 		res.locals.user = Object.assign({}, user, {_settings: settings});
-		res.locals.me = res.locals.user;
 		res.locals.userSettings = settings;
 		next();
 	} else {
 		res.locals.user = null;
-		res.locals.me = res.locals.user;
 		res.locals.userSettings = guestUserSettings;
 		next();
 	}

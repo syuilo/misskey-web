@@ -28,7 +28,7 @@ html(lang='ja', dir='ltr')
 		link(rel='dns-prefetch', href= config.apiUrl)
 		link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
 		script!= 'const LOGIN = ' + signin.toString()
-		script!= 'const ME = eval(atob("' + (new Buffer(JSON.stringify(me))).toString('base64') + '"))'
+		script!= 'const USER = eval(atob("' + (new Buffer(JSON.stringify(me))).toString('base64') + '"))'
 		script(type='application/ld+json').
 			{
 			  "@context": "http://schema.org",

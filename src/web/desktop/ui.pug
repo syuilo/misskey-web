@@ -3,122 +3,121 @@ extends ./base
 block body
 
 	div#misskey-global
-		if !noui
-			header#misskey-header
-				div#misskey-menu-bg(role='presentation')
-				div#misskey-menu
-					div.body
-						ul
-							li: a.ui-waves-effect(href= config.aboutUrl)
-								i.fa.fa-info-circle
-								| About Misskey
-							li: a.ui-waves-effect(href= config.helpUrl)
-								i.fa.fa-question-circle
-								| Help
-						ul
-							li: a.ui-waves-effect(href= config.url + '/madoka')
-								i.fa.fa-check-circle
-								| @madoka
-						ul
-							li: a.ui-waves-effect(href= config.aboutUrl + '/donate')
-								i.fa.fa-heart
-								| Donate
-						ul
-							li: a.ui-waves-effect(href='https://github.com/MissKernel/Misskey')
-								i.fa.fa-github
-								| Github repository
-							li: a.ui-waves-effect(href= config.developerCenterUrl)
-								i.fa.fa-terminal
-								| Developers Center
+		header#misskey-header
+			div#misskey-menu-bg(role='presentation')
+			div#misskey-menu
+				div.body
+					ul
+						li: a.ui-waves-effect(href= config.aboutUrl)
+							i.fa.fa-info-circle
+							| About Misskey
+						li: a.ui-waves-effect(href= config.helpUrl)
+							i.fa.fa-question-circle
+							| Help
+					ul
+						li: a.ui-waves-effect(href= config.url + '/madoka')
+							i.fa.fa-check-circle
+							| @madoka
+					ul
+						li: a.ui-waves-effect(href= config.aboutUrl + '/donate')
+							i.fa.fa-heart
+							| Donate
+					ul
+						li: a.ui-waves-effect(href='https://github.com/MissKernel/Misskey')
+							i.fa.fa-github
+							| Github repository
+						li: a.ui-waves-effect(href= config.developerCenterUrl)
+							i.fa.fa-terminal
+							| Developers Center
 
-				if signin && me.isSuspended
-					- var text = locale.sites.desktop.common.account_suspended
-					-   .replace('<link>', '<a href="' + config.helpUrl + '/account-suspended">')
-					-   .replace('</link>', '</a>');
-					p.account-suspended!=text
-				div.main
-					div.main-contents-container
-						div.left
-							nav
-								div.misskey-menu
-									button.hamburger
-										span.bar(role='presentation')
-										span.bar(role='presentation')
-										span.bar(role='presentation')
-								div.main-nav
+			if signin && user.isSuspended
+				- var text = locale.sites.desktop.common.account_suspended
+				-   .replace('<link>', '<a href="' + config.helpUrl + '/account-suspended">')
+				-   .replace('</link>', '</a>');
+				p.account-suspended!=text
+			div.main
+				div.main-contents-container
+					div.left
+						nav
+							div.misskey-menu
+								button.hamburger
+									span.bar(role='presentation')
+									span.bar(role='presentation')
+									span.bar(role='presentation')
+							div.main-nav
+								ul
+									if signin
+										li.home(class= pagePath == '/' ? 'active' : ''): a(href= config.url)
+											i.fa.fa-home
+											p= locale.sites.desktop.common.header.home
+										li.mentions(class= pagePath == '/i/mentions' ? 'active' : ''): a(href= config.url + '/i/mentions')
+											i.fa.fa-at
+											p= locale.sites.desktop.common.header.mentions
+										li.talks(class= pagePath == '/i/talks' ? 'active' : ''): a(href= config.talkUrl)
+											i.fa.fa-comments
+											p= locale.sites.desktop.common.header.talks
+										li.forum: a(href= config.forumUrl)
+											i.fa.fa-users
+											p= locale.sites.desktop.common.header.forum
+					div.right
+						form.search(action= config.searchUrl, method='get', role='search')
+							input(type='search', name='q', placeholder!='&#xf002; ' + locale.sites.desktop.common.header.search_placeholder)
+							div.result
+						if signin
+							div.account
+								div.bg(role='presentation')
+								button.header(data-active='false')
+									span.screen-name
+										= user.screenName
+										i.fa.fa-angle-down
+									img.avatar(src= user.avatarUrl + '?size=64&quality=' + userSettings.displayImageQuality, alt='avatar')
+								div.body(style={display: 'none'})
 									ul
-										if signin
-											li.home(class= pagePath == '/' ? 'active' : ''): a(href= config.url)
-												i.fa.fa-home
-												p= locale.sites.desktop.common.header.home
-											li.mentions(class= pagePath == '/i/mentions' ? 'active' : ''): a(href= config.url + '/i/mentions')
-												i.fa.fa-at
-												p= locale.sites.desktop.common.header.mentions
-											li.talks(class= pagePath == '/i/talks' ? 'active' : ''): a(href= config.talkUrl)
-												i.fa.fa-comments
-												p= locale.sites.desktop.common.header.talks
-											li.forum: a(href= config.forumUrl)
-												i.fa.fa-users
-												p= locale.sites.desktop.common.header.forum
-						div.right
-							form.search(action= config.searchUrl, method='get', role='search')
-								input(type='search', name='q', placeholder!='&#xf002; ' + locale.sites.desktop.common.header.search_placeholder)
-								div.result
-							if signin
-								div.account
-									div.bg(role='presentation')
-									button.header(data-active='false')
-										span.screen-name
-											= me.screenName
-											i.fa.fa-angle-down
-										img.avatar(src= me.avatarUrl + '?size=64&quality=' + userSettings.displayImageQuality, alt='avatar')
-									div.body(style={display: 'none'})
-										ul
-											li: a.ui-waves-effect(href= config.url + '/' + me.screenName)
-												i.fa.fa-user
-												=locale.sites.desktop.common.header.profile_page
-												i.fa.fa-angle-right
-											li: a.ui-waves-effect(href= config.url + '/i/album')
-												i.fa.fa-cloud
-												=locale.sites.desktop.common.header.album
-												i.fa.fa-angle-right
-											li: a.ui-waves-effect(href= config.url + '/' + me.screenName + '/likes')
-												i.fa.fa-star
-												| Likes
-												i.fa.fa-angle-right
-										ul
-											li: a.ui-waves-effect(href= config.url + '/i/settings')
-												i.fa.fa-cog
-												=locale.sites.desktop.common.header.settings
-												i.fa.fa-angle-right
-										ul
-											li: a.ui-waves-effect(href= config.signoutUrl)
-												i(class='fa fa-power-off')
-												=locale.common.sign_out
-												i.fa.fa-angle-right
-								div.notifications(data-active='false')
-									button.header
-										span
-											i.fa.fa-bell
-									div.body
-										div.nav
-											select.filter-type(title='表示を絞り込み')
-												option(value='all') すべて
-												option(value='self-notification') self-notification
-												option(value='follow') 被フォロー
-												option(value='like') Like
-												option(value='repost') Repost
-											button.delete-all-button(title=locale.sites.desktop.common.header.delete_all_notifications)
-												i.fa.fa-trash-o
-										div.main
-								div.post
-									button#misskey-post-button(title=locale.sites.desktop.common.header.create_new_post_button_tooltip)
-										i.fa.fa-pencil-square-o
-							div.time
-								div.header
-									time.now(datetime= Date.now())
-								div.content
-									canvas.clock#misskey-main-clock-canvas(width='256', height='256')
+										li: a.ui-waves-effect(href= config.url + '/' + user.screenName)
+											i.fa.fa-user
+											=locale.sites.desktop.common.header.profile_page
+											i.fa.fa-angle-right
+										li: a.ui-waves-effect(href= config.url + '/i/album')
+											i.fa.fa-cloud
+											=locale.sites.desktop.common.header.album
+											i.fa.fa-angle-right
+										li: a.ui-waves-effect(href= config.url + '/' + user.screenName + '/likes')
+											i.fa.fa-star
+											| Likes
+											i.fa.fa-angle-right
+									ul
+										li: a.ui-waves-effect(href= config.url + '/i/settings')
+											i.fa.fa-cog
+											=locale.sites.desktop.common.header.settings
+											i.fa.fa-angle-right
+									ul
+										li: a.ui-waves-effect(href= config.signoutUrl)
+											i(class='fa fa-power-off')
+											=locale.common.sign_out
+											i.fa.fa-angle-right
+							div.notifications(data-active='false')
+								button.header
+									span
+										i.fa.fa-bell
+								div.body
+									div.nav
+										select.filter-type(title='表示を絞り込み')
+											option(value='all') すべて
+											option(value='self-notification') self-notification
+											option(value='follow') 被フォロー
+											option(value='like') Like
+											option(value='repost') Repost
+										button.delete-all-button(title=locale.sites.desktop.common.header.delete_all_notifications)
+											i.fa.fa-trash-o
+									div.main
+							div.post
+								button#misskey-post-button(title=locale.sites.desktop.common.header.create_new_post_button_tooltip)
+									i.fa.fa-pencil-square-o
+						div.time
+							div.header
+								time.now(datetime= Date.now())
+							div.content
+								canvas.clock#misskey-main-clock-canvas(width='256', height='256')
 
 		div#misskey-contents
 			block content
