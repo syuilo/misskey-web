@@ -1,6 +1,6 @@
 import * as redis from 'redis';
 import * as SocketIO from 'socket.io';
-import requestApi from '../../core/request-api';
+import api from '../../core/request-api';
 import getSessionUser from './get-session-user';
 import config from '../../config';
 
@@ -37,7 +37,7 @@ module.exports = (io: SocketIO.Server, sessionStore: any) => {
 				case 'post':
 					const postId: any = content.value.id;
 
-					requestApi('posts/show', {
+					api('posts/show', {
 						'post-id': postId
 					}, socket.user.id).then((post: Object) => {
 						socket.emit(content.type, post);
@@ -47,7 +47,7 @@ module.exports = (io: SocketIO.Server, sessionStore: any) => {
 				case 'notification':
 					const notificationId: any = content.value.id;
 
-					requestApi('notifications/show', {
+					api('notifications/show', {
 						'notification-id': notificationId
 					}, socket.user.id).then((notification: Object) => {
 						socket.emit(content.type, notification);

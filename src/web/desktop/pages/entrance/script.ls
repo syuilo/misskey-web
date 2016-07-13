@@ -80,7 +80,7 @@ function go-signup
 
 	set-timeout do
 		->
-			$title.text LOCALE.sites.desktop.pages._entrance.signup_title
+			$title.text '始めましょう'
 			$description
 				.transition {
 					opacity: 0
@@ -251,13 +251,13 @@ function init-signup-form
 	$form = $ \#signup-form
 
 	$form.find '.user-name > input' .keyup ->
-		sn = $form.find '.user-name > input' .val!
-		if sn != ''
+		un = $form.find '.user-name > input' .val!
+		if un != ''
 			err = switch
-				| not sn.match /^[a-zA-Z0-9\-]+$/ => LOCALE.sites.desktop.pages._entrance._signup.screen_name_error_1
-				| sn.length < 3chars              => LOCALE.sites.desktop.pages._entrance._signup.screen_name_error_2
-				| sn.length > 20chars             => LOCALE.sites.desktop.pages._entrance._signup.screen_name_error_3
-				| _                               => null
+				| not un.match /^[a-z0-9\-]+$/ => '小文字のa~z、0~9、-(ハイフン)が使えます'
+				| un.length < 3chars           => '3文字以上でお願いします！'
+				| un.length > 20chars          => '20文字以内でお願いします'
+				| _                            => null
 
 			if err
 				$form.find '.user-name > .info'
@@ -268,27 +268,27 @@ function init-signup-form
 			else
 				$form.find '.user-name > .info'
 					..children \i .attr \class 'fa fa-spinner fa-pulse'
-					..children \span .text LOCALE.sites.desktop.pages._entrance._signup.screen_name_info_1
+					..children \span .text '確認しています...'
 					..attr \data-state \processing
-				$form.find '.user-name > .profile-page-url-preview' .text "#{CONFIG.url}/#sn"
+				$form.find '.user-name > .profile-page-url-preview' .text "#{CONFIG.url}/#un"
 
-				$.ajax "#{CONFIG.urls.api}/screenname/available" {
-					data: {'screen-name': sn}
+				$.ajax "#{CONFIG.urls.api}/username/available" {
+					data: {'username': un}
 				} .done (result) ->
 					if result.available
 						$form.find '.user-name > .info'
 							..children \i .attr \class 'fa fa-check'
-							..children \span .text LOCALE.sites.desktop.pages._entrance._signup.screen_name_info_2
+							..children \span .text '利用できます'
 							..attr \data-state \ok
 					else
 						$form.find '.user-name > .info'
 							..children \i .attr \class 'fa fa-exclamation-triangle'
-							..children \span .text LOCALE.sites.desktop.pages._entrance._signup.screen_name_info_3
+							..children \span .text '既に利用されています'
 							..attr \data-state \error
 				.fail (err) ->
 					$form.find '.user-name > .info'
 						..children \i .attr \class 'fa fa-exclamation-triangle'
-						..children \span .text LOCALE.sites.desktop.pages._entrance._signup.screen_name_info_4
+						..children \span .text '通信エラー'
 						..attr \data-state \error
 		else
 			$form.find '.user-name > .profile-page-url-preview' .text ""
@@ -302,14 +302,14 @@ function init-signup-form
 			text = ''
 
 			if strength > 0.3
-				text = LOCALE.sites.desktop.pages._entrance._signup.password_strength_medium
+				text = 'まあまあのパスワード'
 				$meter.attr \data-strength \medium
 
 				if strength > 0.7
-					text = LOCALE.sites.desktop.pages._entrance._signup.password_strength_high
+					text = '強いパスワード'
 					$meter.attr \data-strength \high
 			else
-				text = LOCALE.sites.desktop.pages._entrance._signup.password_strength_low
+				text = '弱いパスワード'
 				$meter.attr \data-strength \low
 
 			$meter.find '.value' .css \width "#{strength * 100}%"
@@ -332,7 +332,7 @@ function init-signup-form
 		retyped-password = $form.find '.retype-password > input' .val!
 		if retyped-password != ''
 			err = switch
-				| retyped-password != password => LOCALE.sites.desktop.pages._entrance._signup.retype_password_error_1
+				| retyped-password != password => 'パスワードが一致していません'
 				| _                            => null
 			if err
 				$form.find '.retype-password > .info'
@@ -342,7 +342,7 @@ function init-signup-form
 			else
 				$form.find '.retype-password > .info'
 					..children \i .attr \class 'fa fa-check'
-					..children \span .text LOCALE.sites.desktop.pages._entrance._signup.retype_password_info_1
+					..children \span .text 'OK'
 					..attr \data-state \ok
 
 	$form.submit (event) ->
@@ -350,30 +350,32 @@ function init-signup-form
 
 		$submit-button = $form.find '[type=submit]'
 			..attr \disabled on
-			..find \span .text LOCALE.sites.desktop.pages._entrance._signup.creating
+			..find \span .text 'アカウントを作成中...'
 			..find \i .attr \class 'fa fa-spinner fa-pulse'
 
 		$form.find \input .attr \disabled on
 
-		screen-name = $form.find '[name="user-name"]' .val!
+		user-name = $form.find '[name="user-name"]' .val!
 		password = $form.find '[name="password"]' .val!
 
 		$ \html .add-class \logging
 
 		$.ajax "#{CONFIG.urls.api}/account/create" {
 			data:
-				'screen-name': screen-name
+				'user-name': user-name
 				'password': password
 				'g-recaptcha-response': grecaptcha.get-response!
 		} .done ->
 			$submit-button
-				.find \span .text LOCALE.sites.desktop.pages._entrance._signup.logging
+				.find \span .text 'サインイン中...'
 
-			location.href = "#{CONFIG.urls.signin}?screen-name=#{screen-name}&password=#{password}"
+			location.href = "#{CONFIG.urls.signin}?user-name=#{user-name}&password=#{password}"
 		.fail ->
+			alert '何らかの原因によりアカウントの作成に失敗しました。再度お試しください。'
+
 			$submit-button
 				..attr \disabled off
-				.find \span .text LOCALE.sites.desktop.pages._entrance._signup.create
+				.find \span .text 'アカウント作成'
 				..find \i .attr \class 'fa fa-check'
 
 			$form.find \input .attr \disabled off

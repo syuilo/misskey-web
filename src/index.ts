@@ -27,11 +27,11 @@
  */
 
 import * as cluster from 'cluster';
+import name from 'named';
 import {logInfo, logWarn} from 'log-cool';
 import argv from './argv';
 import config from './config';
 import checkDependencies from './check-dependencies';
-import name from './core/naming-worker-id';
 
 (<any>Error).stackTraceLimit = Infinity;
 

@@ -1,7 +1,7 @@
 import * as http from 'http';
 import * as express from 'express';
 import * as request from 'request';
-import requestApi from '../../../core/request-api';
+import api from '../../../core/api';
 import config from '../../../config';
 
 export default function (req: express.Request, res: express.Response): void {
@@ -20,7 +20,7 @@ export default function (req: express.Request, res: express.Response): void {
 		}
 		const parsed: any = JSON.parse(body);
 		if (parsed.success) {
-			requestApi('account/create', {
+			api('account/create', {
 				'screen-name': req.body['screen-name'],
 				'password': req.body['password']
 			}).then((account: Object) => {

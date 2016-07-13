@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as express from 'express';
-import requestApi from '../../../core/request-api';
+import api from '../../../core/request-api';
 
 export default function (req: express.Request, res: express.Response): void {
 	const file: Express.Multer.File = (<any>req).file;
@@ -14,7 +14,7 @@ export default function (req: express.Request, res: express.Response): void {
 			}
 		};
 		fs.unlink(file.path);
-		requestApi('album/files/upload', data, req.user, true).then((albumFile: Object) => {
+		api('album/files/upload', data, req.user, true).then((albumFile: Object) => {
 			create(albumFile);
 		}, (err: any) => {
 			console.error(err);
@@ -27,7 +27,7 @@ export default function (req: express.Request, res: express.Response): void {
 	function create(fileEntity: any = null): void {
 		const inReplyToPostId = req.body['in-reply-to-post-id'];
 		if (inReplyToPostId !== undefined && inReplyToPostId !== null && inReplyToPostId !== '') {
-			requestApi('posts/reply', {
+			api('posts/reply', {
 				'text': req.body.text,
 				'files': fileEntity !== null ? fileEntity.id : null,
 				'in-reply-to-post-id': inReplyToPostId
@@ -37,7 +37,7 @@ export default function (req: express.Request, res: express.Response): void {
 				res.status(500).send(err);
 			});
 		} else {
-			requestApi('posts/create', {
+			api('posts/create', {
 				'text': req.body.text,
 				'files': fileEntity !== null ? fileEntity.id : null
 			}, req.user).then((post: Object) => {

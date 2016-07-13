@@ -1,9 +1,8 @@
 import * as http from 'http';
 import * as express from 'express';
 import * as request from 'request';
-// import * as gm from 'gm';
-const gm: any = require('gm');
-import requestApi from '../../../core/request-api';
+import * as gm from 'gm';
+import api from '../../../core/api';
 
 export default function (req: express.Request, res: express.Response): void {
 	const avaterFileId: string = req.body['file-id'];
@@ -13,7 +12,7 @@ export default function (req: express.Request, res: express.Response): void {
 	const trimH: number = Number(req.body['trim-h']);
 
 	if (trimX >= 0 && trimY >= 0 && trimW > 0 && trimH > 0) {
-		requestApi('album/files/show', {
+		api('album/files/show', {
 			'file-id': avaterFileId
 		}, req.user).then((file: any) => {
 			if (file.dataSize > ((1024 * 1024) * 10)) {
@@ -37,7 +36,7 @@ export default function (req: express.Request, res: express.Response): void {
 						res.status(500).send('something-happened');
 						return;
 					}
-					requestApi('album/files/upload', {
+					api('album/files/upload', {
 						file: {
 							value: buffer,
 							options: {
@@ -46,7 +45,7 @@ export default function (req: express.Request, res: express.Response): void {
 							}
 						}
 					}, req.user, true).then((albumFile: any) => {
-						requestApi('account/avatar/update', {
+						api('account/avatar/update', {
 							'file-id': albumFile.id
 						}, req.user).then((me: Object) => {
 							res.send('success');
@@ -60,7 +59,7 @@ export default function (req: express.Request, res: express.Response): void {
 			});
 		});
 	} else {
-		requestApi('account/avatar/update', {
+		api('account/avatar/update', {
 			'file-id': avaterFileId
 		}, req.user).then((me: Object) => {
 			res.send('success');

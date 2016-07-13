@@ -16,16 +16,16 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as csrf from 'csurf';
 import * as favicon from 'serve-favicon';
+import name from 'named';
 const vhost = require('vhost');
 
 import db from './db/db';
 import { UserSettings, guestUserSettings } from './db/models/user-settings';
-import name from './core/naming-worker-id';
-import requestApi from './core/request-api';
 
+import api from './core/api';
 import config from './config';
 
-import api from './api/server';
+import webapi from './api/server';
 import resources from './resources';
 import router from './router';
 
@@ -76,7 +76,9 @@ app.set('views', __dirname);
 app.set('view engine', 'pug');
 
 // Init API server
-app.use(vhost(config.hosts.api, api(session)));
+app.use(vhost(config.hosts.api, webapi(session)));
+
+app.use(compression());
 
 // Init static resources server
 app.use(vhost(config.hosts.resources, resources()));
@@ -84,7 +86,6 @@ app.use(vhost(config.hosts.resources, resources()));
 app.use(favicon(`${__dirname}/resources/favicon.ico`));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(config.cookiePass));
-app.use(compression());
 
 // CORS
 app.use((req, res, next) => {
@@ -147,7 +148,7 @@ app.use(async (req, res, next) => {
 
 	if (res.locals.isLogin) {
 		const userId: string = (<any>req.session).userId;
-		const user = await requestApi('account/show', {}, userId);
+		const user = await api('account/show', {}, userId);
 		const settings = await UserSettings.findOne({user_id: userId});
 		req.user = Object.assign({}, user, {_settings: settings.toObject()});
 		res.locals.me = user;

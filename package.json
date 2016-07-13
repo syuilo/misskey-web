@@ -1,10 +1,11 @@
 {
+  "private": true,
   "name": "misskey-web",
   "version": "0.0.0",
   "description": "Misskey Web",
   "main": "./built/index.js",
   "repository": {
-    "url": "https://github.com/MissKernel/Misskey-Web.git"
+    "url": "https://github.com/syuilo/misskey-web.git"
   },
   "scripts": {
     "start-production": "NODE_ENV=production node ./built/index.js",
@@ -29,7 +30,7 @@
     "event-stream": "3.3.3",
     "glob": "7.0.5",
     "gulp": "3.9.1",
-    "gulp-autoprefixer": "^3.1.0",
+    "gulp-autoprefixer": "3.1.0",
     "gulp-cssnano": "2.1.2",
     "gulp-livescript": "3.0.1",
     "gulp-notify": "2.2.0",
@@ -40,13 +41,13 @@
     "gulp-typescript": "2.13.6",
     "gulp-uglify": "1.5.4",
     "gulp-util": "3.0.7",
-    "jade": "^1.11.0",
+    "jade": "1.11.0",
     "jadeify": "4.6.0",
     "livescript": "1.5.0",
-    "riotify": "^1.0.1",
+    "riotify": "1.0.1",
     "tslint": "3.13.0",
     "typescript": "1.8.10",
-    "typescript-require": "^0.2.9-1",
+    "typescript-require": "0.2.9-1",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0"
   },
@@ -80,6 +81,7 @@
     "moment": "2.14.1",
     "mongoose": "4.5.3",
     "multer": "1.1.0",
+    "named": "1.0.2",
     "node-ipc": "7.0.0",
     "object-assign-deep": "0.0.4",
     "pug": "2.0.0-beta3",
@@ -93,6 +95,5 @@
     "tslint": "3.13.0",
     "typescript-require": "0.2.9",
     "vhost": "3.0.2"
-  },
-  "private": true
+  }
 }

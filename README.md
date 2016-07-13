@@ -13,7 +13,7 @@ Misskey-Web is *Misskey* official client for the Web. run on [Node.js](https://g
 * GraphicsMagick (for trimming, compress, etc etc)
 
 ## How to build
-1. `git clone git://github.com/MissKernel/Misskey-Web.git`
+1. `git clone git://github.com/syuilo/misskey-web.git`
 2. `cd Misskey-Web`
 3. `npm install`
 4. `npm run dtsm`
@@ -114,16 +114,16 @@ The original author of Misskey is [syuilo](https://github.com/syuilo)
 
 The current lead maintainer is [syuilo](https://github.com/syuilo)
 
-[List of all contributors](https://github.com/MissKernel/Misskey-Web/graphs/contributors)
+[List of all contributors](https://github.com/syuilo/misskey-web/graphs/contributors)
 
 ## License
 The MIT License. See [LICENSE](LICENSE).
 
 [mit]:             http://opensource.org/licenses/MIT
 [mit-badge]:       https://img.shields.io/badge/license-MIT-444444.svg?style=flat-square
-[travis-link]:     https://travis-ci.org/MissKernel/Misskey-Web
-[travis-badge]:    http://img.shields.io/travis/MissKernel/Misskey-Web.svg?style=flat-square
-[david-dev-link]:  https://david-dm.org/MissKernel/Misskey-Web#info=devDependencies&view=table
-[david-dev-badge]: https://img.shields.io/david/dev/MissKernel/Misskey-Web.svg?style=flat-square
-[gemnasium-link]:  https://gemnasium.com/MissKernel/Misskey-Web
-[gemnasium-badge]: https://gemnasium.com/MissKernel/Misskey-Web.svg
+[travis-link]:     https://travis-ci.org/syuilo/misskey-web
+[travis-badge]:    http://img.shields.io/travis/syuilo/misskey-web.svg?style=flat-square
+[david-dev-link]:  https://david-dm.org/syuilo/misskey-web#info=devDependencies&view=table
+[david-dev-badge]: https://img.shields.io/david/dev/syuilo/misskey-web.svg?style=flat-square
+[gemnasium-link]:  https://gemnasium.com/syuilo/misskey-web
+[gemnasium-badge]: https://gemnasium.com/syuilo/misskey-web.svg

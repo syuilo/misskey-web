@@ -2,7 +2,7 @@ doctype html
 
 != '\r\n<!-- Thank you for using Misskey! @syuilo -->\r\n'
 
-html(lang=lang, dir='ltr')
+html(lang='ja', dir='ltr')
 
 	head(prefix='og: http://ogp.me/ns#')
 		meta(charset='utf-8')
@@ -19,8 +19,6 @@ html(lang=lang, dir='ltr')
 			block title
 		script!= 'document.domain = \'' + config.host + '\';'
 		link(rel='shortcut icon', href= config.url + '/favicon.ico')
-		link(rel='icon', href= config.url + '/favicon.ico')
-		link(rel='image_src', href= config.url + '/favicon.ico')
 		link(rel='apple-touch-icon', sizes='120x120', href= config.urls.resources + '/app-icon-120x120.png')
 		link(rel='apple-touch-icon', sizes='144x144', href= config.urls.resources + '/app-icon-144x144.png')
 		link(rel='apple-touch-icon', sizes='180x180', href= config.urls.resources + '/app-icon-180x180.png')
@@ -30,7 +28,7 @@ html(lang=lang, dir='ltr')
 		link(rel='dns-prefetch', href= config.apiUrl)
 		link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
 		script!= 'const LOGIN = ' + signin.toString()
-		script!= 'const ME = eval(btoa("' + (new Buffer(JSON.stringify(me))).toString('base64') + '"))'
+		script!= 'const ME = eval(atob("' + (new Buffer(JSON.stringify(me))).toString('base64') + '"))'
 		script(type='application/ld+json').
 			{
 			  "@context": "http://schema.org",

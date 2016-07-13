@@ -5,7 +5,7 @@
 import * as express from 'express';
 
 import { User } from './db/models/user';
-import requestApi from './core/request-api';
+import api from './core/api';
 import signin from './core/signin';
 import config from './config';
 
@@ -307,7 +307,7 @@ function paramUsername(
 	screenName: string
 ): void {
 
-	requestApi('users/show', {
+	api('users/show', {
 		'screen-name': screenName
 	}, res.locals.isLogin ? req.user : null).then((user: User) => {
 		if (user !== null) {
@@ -332,7 +332,7 @@ function paramPostId(
 	postId: string
 ): void {
 
-	requestApi('posts/show', {
+	api('posts/show', {
 		'post-id': postId
 	}, res.locals.isLogin ? req.user : null).then((post: Object) => {
 		if (post !== null) {
@@ -357,7 +357,7 @@ function paramFileId(
 	fileId: string
 ): void {
 
-	requestApi('album/files/show', {
+	api('album/files/show', {
 		'file-id': fileId
 	}, res.locals.isLogin ? req.user : null).then((file: Object) => {
 		res.locals.file = file;
@@ -377,7 +377,7 @@ function paramFolderId(
 	folderId: string
 ): void {
 
-	requestApi('album/folders/show', {
+	api('album/folders/show', {
 		'folder-id': folderId
 	}, res.locals.isLogin ? req.user : null).then((folder: Object) => {
 		res.locals.folder = folder;
@@ -397,7 +397,7 @@ function paramTalkGroupId(
 	groupId: string
 ): void {
 
-	requestApi('talks/group/show', {
+	api('talks/group/show', {
 		'group-id': groupId
 	}, req.user).then((group: Object) => {
 		res.locals.talkGroup = group;

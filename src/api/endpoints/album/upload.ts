@@ -1,10 +1,10 @@
 import * as fs from 'fs';
 import * as express from 'express';
 
-import requestApi from '../../../core/request-api';
+import api from '../../../core/api';
 
 export default function (req: express.Request, res: express.Response): void {
-	const file: Express.Multer.File = (<any>req).file;
+	const file = req.file;
 	const folder: string = req.body.folder;
 	const data: any = {};
 	data.file = {
@@ -18,7 +18,7 @@ export default function (req: express.Request, res: express.Response): void {
 		data['folder-id'] = folder;
 	}
 	fs.unlink(file.path);
-	requestApi('album/files/upload', data, req.user, true).then((albumFile: Object) => {
+	api('album/files/upload', data, req.user, true).then((albumFile: Object) => {
 		res.send(albumFile);
 	}, (err: any) => {
 		console.error(err);

@@ -1,8 +1,8 @@
 import * as express from 'express';
 import * as multer from 'multer';
-const upload: any = multer({ dest: 'uploads/' });
+const upload = multer({ dest: 'uploads/' });
 
-import requestApi from '../core/request-api';
+import api from '../core/api';
 
 export default function(app: express.Express): void {
 	app.use((req, res, next) => {
@@ -45,7 +45,7 @@ export default function(app: express.Express): void {
 	app.post('/web/posts/reply', require('./endpoints/posts/reply').default);
 
 	app.post('/*', (req, res) => {
-		requestApi(
+		api(
 			req.path.substring(1),
 			req.body,
 			req.user

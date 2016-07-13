@@ -1,6 +1,6 @@
 import * as redis from 'redis';
 import * as SocketIO from 'socket.io';
-import requestApi from '../../core/request-api';
+import api from '../../core/request-api';
 import getSessionUser from './get-session-user';
 import config from '../../config';
 
@@ -88,7 +88,7 @@ function streamingMessageHandler(socket: MKSocket, contentString: string): void 
 		case 'message':
 			const messageId: any = content.value.id;
 
-			requestApi('talks/messages/show', {
+			api('talks/messages/show', {
 				'message-id': messageId
 			}, socket.user.id).then((message: Object) => {
 				socket.emit(content.type, message);

@@ -5,7 +5,7 @@ window.CSRF_TOKEN = $ 'meta[name="csrf-token"]' .attr \content
 
 $.ajax-setup do
 	type: \post
-	-cache
+	cache: no
 	xhr-fields: {+with-credentials}
 
 	# ヘッダーに含めるとCORSのプリフライトが発動して余計な通信が増えるので

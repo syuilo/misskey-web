@@ -1,8 +1,8 @@
-import requestApi from '../core/request-api';
+import api from '../core/request-api';
 import { UserSettings } from '../db/models/user-settings';
 
 export default (username: string, password: string, session: any) => new Promise<void>(async (resove, reject) => {
-	const user = await requestApi('signin', {
+	const user = await api('signin', {
 		'username': username,
 		'password': password
 	});
