@@ -21,7 +21,6 @@ const vhost = require('vhost');
 
 import db from './db/db';
 import UserSetting from './db/models/user-settings';
-import { guestUserSettings } from './db/models/user-settings';
 
 import api from './core/api';
 import config from './config';
@@ -152,11 +151,9 @@ app.use(async (req, res, next) => {
 		const user = await api('account/show', {}, userId);
 		const settings = await UserSetting.findOne({user_id: userId}).lean();
 		res.locals.user = Object.assign({}, user, {_settings: settings});
-		res.locals.userSettings = settings;
 		next();
 	} else {
 		res.locals.user = null;
-		res.locals.userSettings = guestUserSettings;
 		next();
 	}
 });

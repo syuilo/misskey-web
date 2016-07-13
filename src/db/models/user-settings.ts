@@ -1,7 +1,7 @@
 import {Schema, Document} from 'mongoose';
 import db from '../db';
 
-const schema: any = {
+const schema = new Schema({
 	displayImageQuality:                         { type: Number, required: false, default: 90 },
 	pseudoPushNotificationDisplayDuration:       { type: Number, required: false, default: 5000 },
 	enableSushi:                                 { type: Boolean, required: false, default: false },
@@ -22,9 +22,7 @@ const schema: any = {
 	}},
 	mobileHeaderOverlay:                         { type: String, required: false, default: null },
 	userId:                                      { type: Schema.Types.ObjectId, required: true }
-};
-
-export default db.model<IUserSettings>('UserSetting', new Schema(schema), 'user_settings');
+});
 
 export interface IUserSettings extends Document {
 	displayImageQuality: number;
@@ -36,15 +34,4 @@ export interface IUserSettings extends Document {
 	userId: string;
 }
 
-let guestUserSettings0: any = {};
-
-for (let key in schema) {
-	if (schema.hasOwnProperty(key)) {
-		const value: any = schema[key];
-		if (!value.required) {
-			guestUserSettings0[key] = value.default;
-		}
-	}
-}
-
-export const guestUserSettings = guestUserSettings0;
+export default db.model<IUserSettings>('UserSetting', schema, 'user_settings');
