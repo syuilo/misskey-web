@@ -27,7 +27,7 @@ html(lang='ja', dir='ltr')
 		link(rel='dns-prefetch', href= config.webApiUrl)
 		link(rel='dns-prefetch', href= config.apiUrl)
 		link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
-		script!= 'const LOGIN = ' + signin.toString()
+		script!= 'const SIGNIN = ' + signin.toString()
 		script!= 'const USER = eval(atob("' + (new Buffer(JSON.stringify(user))).toString('base64') + '"))'
 		script(type='application/ld+json').
 			{
