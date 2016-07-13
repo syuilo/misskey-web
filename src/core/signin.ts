@@ -1,5 +1,5 @@
-import api from '../core/request-api';
-import { UserSettings } from '../db/models/user-settings';
+import api from '../core/api';
+import UserSetting from '../db/models/user-settings';
 
 export default (username: string, password: string, session: any) => new Promise<void>(async (resove, reject) => {
 	const user = await api('signin', {
@@ -8,13 +8,13 @@ export default (username: string, password: string, session: any) => new Promise
 	});
 
 	// ユーザー設定引き出し
-	const settings = await UserSettings.findOne({
+	const settings = await UserSetting.findOne({
 		userId: user.id
 	});
 
 	if (settings === null) {
 		// ユーザー設定が無ければ作成
-		UserSettings.create({
+		UserSetting.create({
 			userId: user.id
 		}, (createErr, created) => {
 			saveSession(user);

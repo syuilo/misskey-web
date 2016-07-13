@@ -19,9 +19,6 @@
     "mongoose/mongoose.d.ts": {
       "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
     },
-    "jade/jade.d.ts": {
-      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
-    },
     "body-parser/body-parser.d.ts": {
       "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
     },
@@ -59,9 +56,6 @@
       "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
     },
     "redis/redis.d.ts": {
-      "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
-    },
-    "browserify/browserify.d.ts": {
       "ref": "de82425735f84a10b43921ae4b1d085b3752a626"
     },
     "csurf/csurf.d.ts": {

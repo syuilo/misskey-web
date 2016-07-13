@@ -14,7 +14,7 @@ export default function (req: express.Request, res: express.Response): void {
 	if (trimX >= 0 && trimY >= 0 && trimW > 0 && trimH > 0) {
 		api('album/files/show', {
 			'file-id': avaterFileId
-		}, req.user).then((file: any) => {
+		}, res.locals.user).then((file: any) => {
 			if (file.dataSize > ((1024 * 1024) * 10)) {
 				res.status(500).send('big-data');
 				return;
@@ -44,10 +44,10 @@ export default function (req: express.Request, res: express.Response): void {
 								contentType: 'image/png'
 							}
 						}
-					}, req.user, true).then((albumFile: any) => {
+					}, res.locals.user, true).then((albumFile: any) => {
 						api('account/avatar/update', {
 							'file-id': albumFile.id
-						}, req.user).then((me: Object) => {
+						}, res.locals.user).then((me: Object) => {
 							res.send('success');
 						}, (updateErr: any) => {
 							return res.status(500).send('something-happened');
@@ -61,7 +61,7 @@ export default function (req: express.Request, res: express.Response): void {
 	} else {
 		api('account/avatar/update', {
 			'file-id': avaterFileId
-		}, req.user).then((me: Object) => {
+		}, res.locals.user).then((me: Object) => {
 			res.send('success');
 		}, (updateErr: any) => {
 			return res.status(500).send('something-happened');

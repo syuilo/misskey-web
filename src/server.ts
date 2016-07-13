@@ -20,7 +20,8 @@ import name from 'named';
 const vhost = require('vhost');
 
 import db from './db/db';
-import { UserSettings, guestUserSettings } from './db/models/user-settings';
+import UserSetting from './db/models/user-settings';
+import { guestUserSettings } from './db/models/user-settings';
 
 import api from './core/api';
 import config from './config';
@@ -131,32 +132,32 @@ app.use(async (req, res, next) => {
 	// See http://web-tan.forum.impressrd.jp/e/2013/05/17/15269
 	res.header('Vary', 'User-Agent, Cookie');
 
-	res.locals.isLogin =
+	res.locals.isSignin =
 		req.hasOwnProperty('session') &&
 		req.session !== null &&
 		req.session.hasOwnProperty('userId') &&
 		(<any>req.session).userId !== null;
 
-	const ua = req.useragent.isMobile ? 'mobile' : 'desktop';
+	const ua = res.locals.useragent.isMobile ? 'mobile' : 'desktop';
 
 	res.locals.config = config;
-	res.locals.signin = res.locals.isLogin;
+	res.locals.signin = res.locals.isSignin;
 	res.locals.ua = ua;
 	res.locals.workerId = name(worker.id);
 
 	res.locals.csrftoken = req.csrfToken();
 
-	if (res.locals.isLogin) {
+	if (res.locals.isSignin) {
 		const userId: string = (<any>req.session).userId;
 		const user = await api('account/show', {}, userId);
-		const settings = await UserSettings.findOne({user_id: userId});
-		req.user = Object.assign({}, user, {_settings: settings.toObject()});
-		res.locals.me = user;
-		res.locals.userSettings = settings.toObject();
+		const settings = await UserSetting.findOne({user_id: userId}).lean();
+		res.locals.user = Object.assign({}, user, {_settings: settings});
+		res.locals.me = res.locals.user;
+		res.locals.userSettings = settings;
 		next();
 	} else {
-		req.user = null;
-		res.locals.me = null;
+		res.locals.user = null;
+		res.locals.me = res.locals.user;
 		res.locals.userSettings = guestUserSettings;
 		next();
 	}

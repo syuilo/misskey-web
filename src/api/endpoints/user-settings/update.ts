@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { UserSettings, IUserSettings } from '../../../db/models/user-settings';
+import UserSetting from '../../../db/models/user-settings';
 
 export default function (
 	req: express.Request,
@@ -19,15 +19,15 @@ export default function (
 		return;
 	}
 
-	UserSettings.findOne({
-		userId: req.user
-	}, (findErr: any, settings: IUserSettings) => {
+	UserSetting.findOne({
+		userId: res.locals.user
+	}, (findErr, settings) => {
 		if (findErr !== null) {
 			res.sendStatus(500);
 			return;
 		}
 		(<any>settings)[key] = value;
-		settings.save((saveErr: any, savedSettings: IUserSettings) => {
+		settings.save((saveErr, savedSettings) => {
 			if (saveErr !== null) {
 				res.sendStatus(500);
 				return;

@@ -18,7 +18,7 @@ export default function (req: express.Request, res: express.Response): void {
 		data['folder-id'] = folder;
 	}
 	fs.unlink(file.path);
-	api('album/files/upload', data, req.user, true).then((albumFile: Object) => {
+	api('album/files/upload', data, res.locals.user, true).then((albumFile: Object) => {
 		res.send(albumFile);
 	}, (err: any) => {
 		console.error(err);

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as express from 'express';
-import api from '../../../core/request-api';
+import api from '../../../core/api';
 
 export default function (req: express.Request, res: express.Response): void {
 	const file: Express.Multer.File = (<any>req).file;
@@ -14,7 +14,7 @@ export default function (req: express.Request, res: express.Response): void {
 			}
 		};
 		fs.unlink(file.path);
-		api('album/files/upload', data, req.user, true).then((albumFile: Object) => {
+		api('album/files/upload', data, res.locals.user, true).then((albumFile: Object) => {
 			create(albumFile);
 		}, (err: any) => {
 			console.error(err);
@@ -31,7 +31,7 @@ export default function (req: express.Request, res: express.Response): void {
 				'text': req.body.text,
 				'files': fileEntity !== null ? fileEntity.id : null,
 				'in-reply-to-post-id': inReplyToPostId
-			}, req.user).then((post: Object) => {
+			}, res.locals.user).then((post: Object) => {
 				res.send(post);
 			}, (err: any) => {
 				res.status(500).send(err);
@@ -40,7 +40,7 @@ export default function (req: express.Request, res: express.Response): void {
 			api('posts/create', {
 				'text': req.body.text,
 				'files': fileEntity !== null ? fileEntity.id : null
-			}, req.user).then((post: Object) => {
+			}, res.locals.user).then((post: Object) => {
 				res.send(post);
 			}, (err: any) => {
 				res.status(500).send(err);

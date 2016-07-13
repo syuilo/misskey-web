@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { UserSettings, IUserSettings } from '../../../db/models/user-settings';
+import UserSetting from '../../../db/models/user-settings';
 
 export default function (req: express.Request, res: express.Response): void {
 	const layoutString: string = req.body['layout'];
@@ -21,15 +21,15 @@ export default function (req: express.Request, res: express.Response): void {
 		saveLayout.right = layout.right;
 	}
 
-	UserSettings.findOne({
-		userId: req.user
-	}, (findErr: any, settings: IUserSettings) => {
+	UserSetting.findOne({
+		userId: res.locals.user
+	}, (findErr, settings) => {
 		if (findErr !== null) {
 			res.sendStatus(500);
 			return;
 		}
 		settings.homeLayout = saveLayout;
-		settings.save((saveErr: any, savedSettings: IUserSettings) => {
+		settings.save((saveErr, savedSettings) => {
 			if (saveErr !== null) {
 				res.sendStatus(500);
 				return;

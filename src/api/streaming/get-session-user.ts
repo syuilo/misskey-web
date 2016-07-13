@@ -2,8 +2,8 @@ import * as SocketIO from 'socket.io';
 import * as cookie from 'cookie';
 
 import { User } from '../../db/models/user';
-import { UserSettings, IUserSettings } from '../../db/models/user-settings';
-import api from '../../core/request-api';
+import UserSetting from '../../db/models/user-settings';
+import api from '../../core/api';
 import config from '../../config';
 
 export default function(socket: SocketIO.Socket, sessionStore: any): Promise<Object[]> {
@@ -25,9 +25,9 @@ export default function(socket: SocketIO.Socket, sessionStore: any): Promise<Obj
 
 			const userId: string = session.userId;
 			api('account/show', {}, userId).then((user: User) => {
-				UserSettings.findOne({
+				UserSetting.findOne({
 					userId: userId
-				}, (_: any, settings: IUserSettings) => {
+				}, (_, settings) => {
 					user._settings = settings;
 					resolve(user);
 				});

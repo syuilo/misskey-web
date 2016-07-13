@@ -1,6 +1,6 @@
 import * as redis from 'redis';
 import * as SocketIO from 'socket.io';
-import api from '../../core/request-api';
+import api from '../../core/api';
 import getSessionUser from './get-session-user';
 import config from '../../config';
 

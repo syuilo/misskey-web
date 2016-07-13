@@ -22,7 +22,7 @@ export default function(app: express.Express): void {
 	app.param('talkGroupId', paramTalkGroupId);
 
 	app.get('/', (req, res) => {
-		if (res.locals.isLogin) {
+		if (res.locals.isSignin) {
 			render(req, res, 'home');
 		} else {
 			render(req, res, 'entrance');
@@ -40,7 +40,7 @@ export default function(app: express.Express): void {
 	// I
 
 	app.get('/i/*', (req, res, next) => {
-		if (res.locals.isLogin) {
+		if (res.locals.isSignin) {
 			next();
 		} else {
 			render(req, res, 'signin');
@@ -137,7 +137,7 @@ export default function(app: express.Express): void {
 	const signupDomain = `/subdomain/${config.domains.signup}`;
 
 	app.get(`${signupDomain}/`, (req, res) => {
-		if (res.locals.isLogin) {
+		if (res.locals.isSignin) {
 			res.redirect(config.url);
 		} else {
 			render(req, res, 'signup');
@@ -158,7 +158,7 @@ export default function(app: express.Express): void {
 	});
 
 	app.get(`${signinDomain}/`, (req, res) => {
-		if (res.locals.isLogin) {
+		if (res.locals.isSignin) {
 			res.redirect(config.url);
 		} else if (req.query.hasOwnProperty('screen-name') && req.query.hasOwnProperty('password')) {
 			signin(req.query['screen-name'], req.query['password'], req.session).then(() => {
@@ -177,7 +177,7 @@ export default function(app: express.Express): void {
 	const signoutDomain = `/subdomain/${config.domains.signout}`;
 
 	app.get(`${signoutDomain}/`, (req, res) => {
-		if (res.locals.isLogin) {
+		if (res.locals.isSignin) {
 			req.session.destroy(() => {
 				res.redirect(config.url);
 			});
@@ -309,7 +309,7 @@ function paramUsername(
 
 	api('users/show', {
 		'screen-name': screenName
-	}, res.locals.isLogin ? req.user : null).then((user: User) => {
+	}, res.locals.isSignin ? res.locals.user : null).then((user: User) => {
 		if (user !== null) {
 			res.locals.user = user;
 			next();
@@ -334,7 +334,7 @@ function paramPostId(
 
 	api('posts/show', {
 		'post-id': postId
-	}, res.locals.isLogin ? req.user : null).then((post: Object) => {
+	}, res.locals.isSignin ? res.locals.user : null).then((post: Object) => {
 		if (post !== null) {
 			res.locals.post = post;
 			next();
@@ -359,7 +359,7 @@ function paramFileId(
 
 	api('album/files/show', {
 		'file-id': fileId
-	}, res.locals.isLogin ? req.user : null).then((file: Object) => {
+	}, res.locals.isSignin ? res.locals.user : null).then((file: Object) => {
 		res.locals.file = file;
 		next();
 	}, err => {
@@ -379,7 +379,7 @@ function paramFolderId(
 
 	api('album/folders/show', {
 		'folder-id': folderId
-	}, res.locals.isLogin ? req.user : null).then((folder: Object) => {
+	}, res.locals.isSignin ? res.locals.user : null).then((folder: Object) => {
 		res.locals.folder = folder;
 		next();
 	}, err => {
@@ -399,7 +399,7 @@ function paramTalkGroupId(
 
 	api('talks/group/show', {
 		'group-id': groupId
-	}, req.user).then((group: Object) => {
+	}, res.locals.user).then((group: Object) => {
 		res.locals.talkGroup = group;
 		next();
 	}, err => {

@@ -6,16 +6,16 @@ import api from '../core/api';
 
 export default function(app: express.Express): void {
 	app.use((req, res, next) => {
-		res.locals.isLogin =
+		res.locals.isSignin =
 			req.hasOwnProperty('session') &&
 			req.session !== null &&
 			req.session.hasOwnProperty('userId') &&
 			(<any>req.session).userId !== null;
 
-		if (res.locals.isLogin) {
-			req.user = (<any>req.session).userId;
+		if (res.locals.isSignin) {
+			res.locals.user = (<any>req.session).userId;
 		} else {
-			req.user = null;
+			res.locals.user = null;
 		}
 
 		next();
@@ -48,7 +48,7 @@ export default function(app: express.Express): void {
 		api(
 			req.path.substring(1),
 			req.body,
-			req.user
+			res.locals.user
 		).then((response: any) => {
 			res.json(response);
 		}, (err: any) => {
