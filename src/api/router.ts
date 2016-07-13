@@ -29,11 +29,10 @@ export default function(app: express.Express): void {
 	app.post('/web/url/analyze', require('./endpoints/url/analyze').default);
 	app.post('/web/avatar/update', require('./endpoints/avatar/update').default);
 	app.post('/web/banner/update', require('./endpoints/banner/update').default);
-	app.post('/web/home-layout/update', require('./endpoints/home-layout/update').default);
+	app.post('/web/home/update', require('./endpoints/home/update').default);
 	app.post('/web/display-image-quality/update', require('./endpoints/display-image-quality/update').default);
 	app.post('/web/pseudo-push-notification-display-duration/update',
 		require('./endpoints/pseudo-push-notification-display-duration/update').default);
-	app.post('/web/ui-language/update', require('./endpoints/ui-language/update').default);
 	app.post('/web/mobile-header-overlay/update', require('./endpoints/mobile-header-overlay/update').default);
 	app.post('/web/user-settings/update', require('./endpoints/user-settings/update').default);
 	app.post('/web/album/upload',
