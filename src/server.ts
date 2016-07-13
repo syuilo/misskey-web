@@ -19,8 +19,7 @@ import * as favicon from 'serve-favicon';
 const vhost = require('vhost');
 
 import db from './db/db';
-import { User } from './db/models/user';
-import { UserSettings, IUserSettings, guestUserSettings } from './db/models/user-settings';
+import { UserSettings, guestUserSettings } from './db/models/user-settings';
 import name from './core/naming-worker-id';
 import requestApi from './core/request-api';
 

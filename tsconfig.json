@@ -47,7 +47,6 @@
 		"./src/argv.ts",
 		"./src/check-dependencies.ts",
 		"./src/config.ts",
-		"./src/core/get-post-summary.ts",
 		"./src/core/naming-worker-id.ts",
 		"./src/core/request-api.ts",
 		"./src/core/signin.ts",
