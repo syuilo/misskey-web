@@ -207,7 +207,7 @@ function init-signin-form
 
 	$ \#username .change ->
 		$.ajax "#{CONFIG.urls.api}/users/show", {
-			data: {'screen-name': $ \#username .val!}
+			data: {'username': $ \#username .val!}
 		}
 		.done (user) ->
 			$ '#signin .title p' .text user.name
@@ -232,7 +232,7 @@ function init-signin-form
 
 		$.ajax CONFIG.urls.signin, {
 			data: {
-				'screen-name': $form.find '[name="username"]' .val!
+				'username': $form.find '[name="username"]' .val!
 				'password': $form.find '[name="password"]' .val!
 			}
 		}

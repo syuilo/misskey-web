@@ -30,7 +30,7 @@ export default async (
 	}
 
 	request(options, (err, response, body) => {
-		if (err !== null) {
+		if (err) {
 			console.error(err);
 			reject(err);
 		} else if (response.statusCode !== 200) {

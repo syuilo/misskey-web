@@ -86,39 +86,6 @@ export default function(app: express.Express): void {
 	app.get('/i/settings', (req, res) =>
 		render(req, res, 'i/settings'));
 
-	app.get('/i/settings/avatar', (req, res) =>
-		render(req, res, 'i/settings/avatar'));
-
-	app.get('/i/settings/banner', (req, res) =>
-		render(req, res, 'i/settings/banner'));
-
-	app.get('/i/settings/comment', (req, res) =>
-		render(req, res, 'i/settings/comment'));
-
-	app.get('/i/settings/location', (req, res) =>
-		render(req, res, 'i/settings/location'));
-
-	app.get('/i/settings/name', (req, res) =>
-		render(req, res, 'i/settings/name'));
-
-	app.get('/i/settings/tags', (req, res) =>
-		render(req, res, 'i/settings/tags'));
-
-	app.get('/i/settings/website', (req, res) =>
-		render(req, res, 'i/settings/website'));
-
-	app.get('/i/settings/ui-language', (req, res) =>
-		render(req, res, 'i/settings/ui-language'));
-
-	app.get('/i/settings/display-image-quality', (req, res) =>
-		render(req, res, 'i/settings/display-image-quality'));
-
-	app.get('/i/settings/push-notification', (req, res) =>
-		render(req, res, 'i/settings/push-notification'));
-
-	app.get('/i/settings/mobile-header-overlay', (req, res) =>
-		render(req, res, 'i/settings/mobile-header-overlay'));
-
 	app.get('/i/home-customize', (req, res) =>
 		render(req, res, 'i/home-customize'));
 
@@ -150,9 +117,9 @@ export default function(app: express.Express): void {
 	const signinDomain = `/subdomain/${config.domains.signin}`;
 
 	app.post(`${signinDomain}/`, (req, res) => {
-		signin(req.body['screen-name'], req.body['password'], req.session).then(() => {
+		signin(req.body['username'], req.body['password'], req.session).then(() => {
 			res.sendStatus(200);
-		}, (err: any) => {
+		}, err => {
 			res.status(err.statusCode).send(err.body);
 		});
 	});
@@ -160,10 +127,10 @@ export default function(app: express.Express): void {
 	app.get(`${signinDomain}/`, (req, res) => {
 		if (res.locals.isSignin) {
 			res.redirect(config.url);
-		} else if (req.query.hasOwnProperty('screen-name') && req.query.hasOwnProperty('password')) {
-			signin(req.query['screen-name'], req.query['password'], req.session).then(() => {
+		} else if (req.query.hasOwnProperty('username') && req.query.hasOwnProperty('password')) {
+			signin(req.query['username'], req.query['password'], req.session).then(() => {
 				res.redirect(config.url);
-			}, (err: any) => {
+			}, err => {
 				res.status(err.statusCode).send(err.body);
 			});
 		} else {

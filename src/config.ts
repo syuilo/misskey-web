@@ -76,6 +76,8 @@ function loadConfig(): IConfig {
 		+ host
 		+ ':' + conf.ports.streaming;
 
+	conf.domains = domains;
+
 	// Define hosts
 	conf.hosts = {
 		admin: `${domains.admin}.${host}`,
