@@ -42,7 +42,7 @@ block body
 				label.user-name
 					input#user-name(name='user-name'
 						type='text'
-						pattern='^[0-9A-Za-z\-]+$'
+						pattern='^[a-z0-9\-]{3,20}$'
 						placeholder='ユーザー名'
 						autofocus
 						required)
@@ -63,7 +63,7 @@ block body
 					| ユーザー名
 				input(name='user-name'
 					type='text'
-					pattern='^[0-9A-Za-z\-]{3,20}$'
+					pattern='^[a-z0-9\-]{3,20}$'
 					placeholder='a~z、0~9、-が使えます'
 					autocomplete='off'
 					required)

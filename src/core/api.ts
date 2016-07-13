@@ -18,8 +18,8 @@ export default async (
 		url: `http://${config.api.host}:${config.api.port}/${endpoint}`,
 		method: 'POST',
 		headers: {
-			'passkey': config.api.pass,
-			'user-id': userId
+			'pass': config.api.pass,
+			'user': userId
 		}
 	};
 
