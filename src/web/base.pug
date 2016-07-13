@@ -23,12 +23,12 @@ html(lang='ja', dir='ltr')
 		link(rel='apple-touch-icon', sizes='144x144', href= config.urls.resources + '/app-icon-144x144.png')
 		link(rel='apple-touch-icon', sizes='180x180', href= config.urls.resources + '/app-icon-180x180.png')
 		link(rel='manifest', href= config.url + '/manifest.json')
-		link(rel='search', href= config.searchUrl, title=' Misskey search')
+		link(rel='search', href= config.searchUrl, title='Misskey search')
 		link(rel='dns-prefetch', href= config.webApiUrl)
 		link(rel='dns-prefetch', href= config.apiUrl)
 		link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
 		script!= 'const LOGIN = ' + signin.toString()
-		script!= 'const USER = eval(atob("' + (new Buffer(JSON.stringify(me))).toString('base64') + '"))'
+		script!= 'const USER = eval(atob("' + (new Buffer(JSON.stringify(user))).toString('base64') + '"))'
 		script(type='application/ld+json').
 			{
 			  "@context": "http://schema.org",
