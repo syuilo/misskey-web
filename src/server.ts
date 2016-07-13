@@ -166,7 +166,7 @@ app.use(async (req, res, next) => {
 app.use(require('subdomain')(subdomainOptions));
 
 app.get('/manifest.json', (req, res) => {
-	res.sendFile(path.resolve(`${__dirname}/manifest.json`));
+	res.sendFile(path.resolve(`${__dirname}/resources/manifest.json`));
 });
 
 // Main routing
