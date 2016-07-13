@@ -40,7 +40,7 @@ block body
 					p アカウント
 				a.help(href= config.urls.help, title='お困りですか？'): i.fa.fa-question
 				label.user-name
-					input#user-name(name='user-name'
+					input#username(name='username'
 						type='text'
 						pattern='^[a-z0-9\-]{3,20}$'
 						placeholder='ユーザー名'
@@ -57,11 +57,11 @@ block body
 
 		form#signup-form(autocomplete='off')
 			button.cancel(type='button', title='キャンセル'): i.fa.fa-times
-			label.user-name
+			label.username
 				p.caption
 					i.fa.fa-at
 					| ユーザー名
-				input(name='user-name'
+				input(name='username'
 					type='text'
 					pattern='^[a-z0-9\-]{3,20}$'
 					placeholder='a~z、0~9、-が使えます'

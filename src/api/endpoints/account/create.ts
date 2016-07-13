@@ -1,10 +1,9 @@
-import * as http from 'http';
 import * as express from 'express';
 import * as request from 'request';
 import api from '../../../core/api';
 import config from '../../../config';
 
-export default function (req: express.Request, res: express.Response): void {
+export default (req: express.Request, res: express.Response) => {
 	request({
 		url: 'https://www.google.com/recaptcha/api/siteverify',
 		method: 'POST',
@@ -12,20 +11,22 @@ export default function (req: express.Request, res: express.Response): void {
 			'secret': config.recaptcha.secretKey,
 			'response': req.body['g-recaptcha-response']
 		}
-	}, (err: any, response: http.IncomingMessage, body: any) => {
-		if (err !== null) {
+	}, (err, response, body) => {
+		if (err) {
 			console.error(err);
 			res.sendStatus(500);
 			return;
 		}
-		const parsed: any = JSON.parse(body);
+
+		const parsed = JSON.parse(body);
+
 		if (parsed.success) {
 			api('account/create', {
-				'screen-name': req.body['screen-name'],
+				'username': req.body['username'],
 				'password': req.body['password']
-			}).then((account: Object) => {
+			}).then(account => {
 				res.send(account);
-			}, (err2: any) => {
+			}, err2 => {
 				res.send(err2);
 			});
 		} else {

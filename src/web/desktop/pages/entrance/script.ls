@@ -102,7 +102,7 @@ function go-signup
 				left: 0
 			}
 
-			$signup-form.find '.user-name > input' .focus!
+			$signup-form.find '.username > input' .focus!
 		1000ms
 
 function go-signin
@@ -197,7 +197,7 @@ function go-signin
 				left: 0
 			}
 
-			$signin-form.find '.user-name > input' .focus!
+			$signin-form.find '.username > input' .focus!
 		1000ms
 
 function init-signin-form
@@ -205,9 +205,9 @@ function init-signin-form
 
 	init-card-effect $form
 
-	$ \#user-name .change ->
+	$ \#username .change ->
 		$.ajax "#{CONFIG.urls.api}/users/show", {
-			data: {'screen-name': $ \#user-name .val!}
+			data: {'screen-name': $ \#username .val!}
 		}
 		.done (user) ->
 			$ '#signin .title p' .text user.name
@@ -232,7 +232,7 @@ function init-signin-form
 
 		$.ajax CONFIG.urls.signin, {
 			data: {
-				'screen-name': $form.find '[name="user-name"]' .val!
+				'screen-name': $form.find '[name="username"]' .val!
 				'password': $form.find '[name="password"]' .val!
 			}
 		}
@@ -250,8 +250,8 @@ function init-signin-form
 function init-signup-form
 	$form = $ \#signup-form
 
-	$form.find '.user-name > input' .keyup ->
-		un = $form.find '.user-name > input' .val!
+	$form.find '.username > input' .keyup ->
+		un = $form.find '.username > input' .val!
 		if un != ''
 			err = switch
 				| not un.match /^[a-z0-9\-]+$/ => '小文字のa~z、0~9、-(ハイフン)が使えます'
@@ -260,38 +260,38 @@ function init-signup-form
 				| _                            => null
 
 			if err
-				$form.find '.user-name > .info'
+				$form.find '.username > .info'
 					..children \i .attr \class 'fa fa-exclamation-triangle'
 					..children \span .text err
 					..attr \data-state \error
-				$form.find '.user-name > .profile-page-url-preview' .text ""
+				$form.find '.username > .profile-page-url-preview' .text ""
 			else
-				$form.find '.user-name > .info'
+				$form.find '.username > .info'
 					..children \i .attr \class 'fa fa-spinner fa-pulse'
 					..children \span .text '確認しています...'
 					..attr \data-state \processing
-				$form.find '.user-name > .profile-page-url-preview' .text "#{CONFIG.url}/#un"
+				$form.find '.username > .profile-page-url-preview' .text "#{CONFIG.url}/#un"
 
 				$.ajax "#{CONFIG.urls.api}/username/available" {
 					data: {'username': un}
 				} .done (result) ->
 					if result.available
-						$form.find '.user-name > .info'
+						$form.find '.username > .info'
 							..children \i .attr \class 'fa fa-check'
 							..children \span .text '利用できます'
 							..attr \data-state \ok
 					else
-						$form.find '.user-name > .info'
+						$form.find '.username > .info'
 							..children \i .attr \class 'fa fa-exclamation-triangle'
 							..children \span .text '既に利用されています'
 							..attr \data-state \error
 				.fail (err) ->
-					$form.find '.user-name > .info'
+					$form.find '.username > .info'
 						..children \i .attr \class 'fa fa-exclamation-triangle'
 						..children \span .text '通信エラー'
 						..attr \data-state \error
 		else
-			$form.find '.user-name > .profile-page-url-preview' .text ""
+			$form.find '.username > .profile-page-url-preview' .text ""
 
 	$form.find '.password > input' .keyup ->
 		$meter = $form.find '.password > .meter'
@@ -355,23 +355,25 @@ function init-signup-form
 
 		$form.find \input .attr \disabled on
 
-		user-name = $form.find '[name="user-name"]' .val!
+		username = $form.find '[name="username"]' .val!
 		password = $form.find '[name="password"]' .val!
 
 		$ \html .add-class \logging
 
 		$.ajax "#{CONFIG.urls.api}/account/create" {
 			data:
-				'user-name': user-name
+				'username': username
 				'password': password
 				'g-recaptcha-response': grecaptcha.get-response!
 		} .done ->
 			$submit-button
 				.find \span .text 'サインイン中...'
 
-			location.href = "#{CONFIG.urls.signin}?user-name=#{user-name}&password=#{password}"
+			location.href = "#{CONFIG.urls.signin}?username=#{username}&password=#{password}"
 		.fail ->
 			alert '何らかの原因によりアカウントの作成に失敗しました。再度お試しください。'
+
+			grecaptcha.reset!
 
 			$submit-button
 				..attr \disabled off
