@@ -1,4 +1,4 @@
-extends ./base
+extends ../base
 
 block body
 
@@ -30,11 +30,6 @@ block body
 							i.fa.fa-terminal
 							| Developers Center
 
-			if signin && user.isSuspended
-				- var text = locale.sites.desktop.common.account_suspended
-				-   .replace('<link>', '<a href="' + config.helpUrl + '/account-suspended">')
-				-   .replace('</link>', '</a>');
-				p.account-suspended!=text
 			div.main
 				div.main-contents-container
 					div.left
@@ -47,53 +42,50 @@ block body
 							div.main-nav
 								ul
 									if signin
-										li.home(class= pagePath == '/' ? 'active' : ''): a(href= config.url)
+										li.home.active: a(href= config.url)
 											i.fa.fa-home
-											p= locale.sites.desktop.common.header.home
-										li.mentions(class= pagePath == '/i/mentions' ? 'active' : ''): a(href= config.url + '/i/mentions')
+											p ホーム
+										li.mentions: a(href= config.url + '/i/mentions')
 											i.fa.fa-at
-											p= locale.sites.desktop.common.header.mentions
-										li.talks(class= pagePath == '/i/talks' ? 'active' : ''): a(href= config.talkUrl)
+											p あなた宛て
+										li.talks: a(href= config.talkUrl)
 											i.fa.fa-comments
-											p= locale.sites.desktop.common.header.talks
-										li.forum: a(href= config.forumUrl)
-											i.fa.fa-users
-											p= locale.sites.desktop.common.header.forum
+											p トーク
 					div.right
 						form.search(action= config.searchUrl, method='get', role='search')
-							input(type='search', name='q', placeholder!='&#xf002; ' + locale.sites.desktop.common.header.search_placeholder)
+							input(type='search', name='q', placeholder!='&#xf002; 検索')
 							div.result
 						if signin
 							div.account
 								div.bg(role='presentation')
 								button.header(data-active='false')
-									span.screen-name
-										= user.screenName
+									span.username
+										= user.username
 										i.fa.fa-angle-down
-									img.avatar(src= user.avatarUrl + '?size=64&quality=' + userSettings.displayImageQuality, alt='avatar')
+									img.avatar(src= user.avatarUrl + '?size=64', alt='avatar')
 								div.body(style={display: 'none'})
 									ul
-										li: a.ui-waves-effect(href= config.url + '/' + user.screenName)
+										li: a.ui-waves-effect(href= config.url + '/' + user.username)
 											i.fa.fa-user
-											=locale.sites.desktop.common.header.profile_page
+											| プロフィール
 											i.fa.fa-angle-right
-										li: a.ui-waves-effect(href= config.url + '/i/album')
+										li: a.ui-waves-effect(href= config.url + '/i/drive')
 											i.fa.fa-cloud
-											=locale.sites.desktop.common.header.album
+											| ドライブ
 											i.fa.fa-angle-right
-										li: a.ui-waves-effect(href= config.url + '/' + user.screenName + '/likes')
+										li: a.ui-waves-effect(href= config.url + '/' + user.username + '/likes')
 											i.fa.fa-star
-											| Likes
+											| お気に入り
 											i.fa.fa-angle-right
 									ul
 										li: a.ui-waves-effect(href= config.url + '/i/settings')
 											i.fa.fa-cog
-											=locale.sites.desktop.common.header.settings
+											| 設定
 											i.fa.fa-angle-right
 									ul
 										li: a.ui-waves-effect(href= config.signoutUrl)
 											i(class='fa fa-power-off')
-											=locale.common.sign_out
+											| サインアウト
 											i.fa.fa-angle-right
 							div.notifications(data-active='false')
 								button.header
@@ -107,11 +99,11 @@ block body
 											option(value='follow') 被フォロー
 											option(value='like') Like
 											option(value='repost') Repost
-										button.delete-all-button(title=locale.sites.desktop.common.header.delete_all_notifications)
+										button.delete-all-button(title='すべて削除')
 											i.fa.fa-trash-o
 									div.main
 							div.post
-								button#misskey-post-button(title=locale.sites.desktop.common.header.create_new_post_button_tooltip)
+								button#misskey-post-button(title='新規投稿')
 									i.fa.fa-pencil-square-o
 						div.time
 							div.header
@@ -122,5 +114,5 @@ block body
 		div#misskey-contents
 			block content
 
-	button#misskey-go-top-button.hidden(title=locale.sites.desktop.common.go_to_top)
+	button#misskey-go-top-button.hidden(title='一番上へ')
 		i.fa.fa-angle-up
