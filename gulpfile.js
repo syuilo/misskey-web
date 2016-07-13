@@ -11,6 +11,7 @@ const gulp = require('gulp');
 const gutil = require('gulp-util');
 const glob = require('glob');
 const del = require('del');
+const babel = require('gulp-babel');
 const ts = require('gulp-typescript');
 const tslint = require('gulp-tslint');
 const browserify = require('browserify');
@@ -97,6 +98,9 @@ gulp.task('build:ts', () => {
 	return project
 		.src()
 		.pipe(ts(project))
+		.pipe(babel({
+			presets: ['es2015', 'stage-3']
+		}))
 		.pipe(gulp.dest('./built/'));
 });
 
