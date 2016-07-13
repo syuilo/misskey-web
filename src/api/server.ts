@@ -13,7 +13,7 @@ import config from '../config';
 
 import router from './router';
 
-export default function(session: any): express.Express {
+export default (session: any) => {
 	// Init server
 	const app = express();
 	app.disable('x-powered-by');
@@ -43,4 +43,4 @@ export default function(session: any): express.Express {
 	router(app);
 
 	return app;
-}
+};

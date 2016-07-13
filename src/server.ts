@@ -114,7 +114,7 @@ app.use(csrf({
 app.use(useragent.express());
 
 // Intercept all requests
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
 
 	// Security headers
 	res.header('X-Frame-Options', 'SAMEORIGIN');
@@ -148,18 +148,12 @@ app.use((req, res, next) => {
 
 	if (res.locals.isLogin) {
 		const userId: string = (<any>req.session).userId;
-		requestApi('account/show', {}, userId).then((user: User) => {
-			UserSettings.findOne({
-				userId: userId
-			}, (err: any, settings: IUserSettings) => {
-				req.user = Object.assign({}, user, {_settings: settings.toObject()});
-				res.locals.me = user;
-				res.locals.userSettings = settings.toObject();
-				next();
-			});
-		}, (err: any) => {
-			res.status(500).send('API error');
-		});
+		const user = await requestApi('account/show', {}, userId);
+		const settings = await UserSettings.findOne({user_id: userId});
+		req.user = Object.assign({}, user, {_settings: settings.toObject()});
+		res.locals.me = user;
+		res.locals.userSettings = settings.toObject();
+		next();
 	} else {
 		req.user = null;
 		res.locals.me = null;

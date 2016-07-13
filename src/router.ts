@@ -3,7 +3,6 @@
 //////////////////////////////////////////////////
 
 import * as express from 'express';
-import * as path from 'path';
 
 import { User } from './db/models/user';
 import requestApi from './core/request-api';
@@ -198,21 +197,6 @@ export default function(app: express.Express): void {
 		} else {
 			render(req, res, 'search/index');
 		}
-	});
-
-	//////////////////////////////////////////////////
-	// SHARE
-
-	const shareDomain = `/subdomain/${config.domains.share}`;
-
-	app.get(`${shareDomain}/`, (req, res) => {
-		render(req, res, 'share');
-	});
-
-	app.get(`${shareDomain}/script.js`, (req, res) => {
-		res.header('Access-Control-Allow-Origin', '*');
-		res.header('Access-Control-Allow-Credentials', 'false');
-		res.sendFile(path.resolve(`${__dirname}/share/script.js`));
 	});
 
 	//////////////////////////////////////////////////

@@ -5,7 +5,7 @@
 import * as express from 'express';
 import * as cors from 'cors';
 
-export default function server(): express.Express
+export default () =>
 {
 	// Init server
 	const app = express();
@@ -32,4 +32,4 @@ export default function server(): express.Express
 	});
 
 	return app;
-}
+};
