@@ -48,9 +48,9 @@ export default function(app: express.Express): void {
 			req.path.substring(1),
 			req.body,
 			res.locals.user
-		).then((response: any) => {
+		).then(response => {
 			res.json(response);
-		}, (err: any) => {
+		}, err => {
 			res.status(err.statusCode);
 			res.send(err.body);
 		});
