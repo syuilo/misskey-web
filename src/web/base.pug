@@ -4,13 +4,6 @@ doctype html
 
 html(lang=lang, dir='ltr')
 
-	- var setScript = function (name, val) {
-	-   return 'var ' + name + '=' + val + ';Object.freeze(' + name + ');';
-	- }
-	- var escapeScript = function (name, val) {
-	-   return 'eval(decodeURIComponent("' + encodeURIComponent('var ' + name + '=' + val + ';Object.freeze(' + name + ');') + '"));';
-	- }
-
 	head(prefix='og: http://ogp.me/ns#')
 		meta(charset='utf-8')
 		meta(name='robots', content='all')
@@ -36,9 +29,8 @@ html(lang=lang, dir='ltr')
 		link(rel='dns-prefetch', href= config.webApiUrl)
 		link(rel='dns-prefetch', href= config.apiUrl)
 		link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
-		script!= setScript('LOGIN', signin.toString())
-		script!= escapeScript('ME', JSON.stringify(me))
-		script!= escapeScript('USER_SETTINGS', JSON.stringify(userSettings))
+		script!= 'const LOGIN = ' + signin.toString()
+		script!= 'const ME = eval(btoa("' + (new Buffer(JSON.stringify(me))).toString('base64') + '"))'
 		script(type='application/ld+json').
 			{
 			  "@context": "http://schema.org",
