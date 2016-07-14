@@ -4,15 +4,15 @@ window.$ = require 'jquery'
 window.moment = require 'moment'
 
 riot = require 'riot'
-post = require '../../tags/post.tag'
-analog-clock = require '../../tags/analog-clock.tag'
-header = require '../../tags/header.tag'
-header-clock = require '../../tags/header-clock.tag'
+require '../../tags/post.tag'
+require '../../tags/analog-clock.tag'
+require '../../tags/header.tag'
+require '../../tags/post-form.tag'
+require '../../tags/header-clock.tag'
+ui = require '../../tags/ui.tag'
 
 $ ->
-	riot.mount analog-clock
-	riot.mount header
-	riot.mount header-clock
+	riot.mount ui
 
 is-active = yes
 unread-count = 0

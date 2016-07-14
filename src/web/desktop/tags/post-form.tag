@@ -1,13 +1,25 @@
 mk-post-form
-	textarea(name='text')
-	button(onclick='{post}') ようこう
-	!
-	textarea(na
-	textarea(name=)
+	div.bg
+	div.container
+		form
+			textarea(name='text')
+			button(onclick='{post}') 投稿
 
 	script.
+		@is-open = false
+
+		@opts.core.on \toggle-post-form ~>
+			if @is-open
+				@close!
+			else
+				@open!
+
+		@open = ~>
+			@is-open = true
+			@opts.core.trigger \on-modal
+
 		@post = (e) ~>
-			$.ajax "#{CONFIG.urls.api}/posts/create", { data: {
+			$.ajax CONFIG.urls.api + '/posts/create' { data: {
 				'text': @text.value
 			}}
 			.done (data) ->
