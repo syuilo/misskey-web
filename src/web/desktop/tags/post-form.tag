@@ -3,7 +3,7 @@ mk-post-form
 	div.container
 		form
 			textarea(name='text')
-			button(onclick='{post}') 投稿
+			button(onclick={post}) 投稿
 
 script.
 	@is-open = false

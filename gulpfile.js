@@ -141,6 +141,28 @@ gulp.task('build:scripts', ['build:public-config'], done => {
 				})
 				.transform(ls)
 				.transform(aliasify, aliasifyConfig)
+				// tagの{}の''を不要にする (その代わりスタイルの記法は使えなくなるけど)
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					let dist = '';
+					const lines = source.split('\r\n');
+					let flag = false;
+					lines.forEach(line => {
+						if (line === 'style.' || line === 'script.') {
+							flag = true;
+						}
+						if (!flag) {
+							if (line.replace(/\t/g, '')[0] === '|') {
+								dist += line + '\r\n';
+							} else {
+								dist += line.replace(/\{/g, '"{').replace(/\}/g, '}"') + '\r\n';
+							}
+						} else {
+							dist += line + '\r\n';
+						}
+					});
+					return dist;
+				}))
 				// tagのstyleおよびscriptのインデントを不要にする
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;

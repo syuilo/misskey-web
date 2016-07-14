@@ -4,7 +4,7 @@ mk-header
 			div.left
 				nav
 					div.main-nav
-						ul(if='{SIGNIN}')
+						ul(if={SIGNIN})
 							li.home.active: a(href= config.url)
 								i.fa.fa-home
 								p ホーム
@@ -18,16 +18,16 @@ mk-header
 				form.search(action= config.searchUrl, method='get', role='search')
 					input(type='search', name='q', placeholder!='&#xf002; 検索')
 					div.result
-				div.account(if='{SIGNIN}')
+				div.account(if={SIGNIN})
 					div.bg(role='presentation')
 					button.header(data-active='false')
 						span.username
 							| {USER.username}
 							i.fa.fa-angle-down
-						img.avatar(src='{USER.avatar_url + \'?size=64\'}', alt='avatar')
-					div.body(style={display: 'none'})
+						img.avatar(src={USER.avatar_url + '?size=64'}, alt='avatar')
+					div.body(show={false})
 						ul
-							li: a.ui-waves-effect(href= config.url + '/{USER.username}')
+							li: a.ui-waves-effect(href= config.url + '/' + {USER.username})
 								i.fa.fa-user
 								| プロフィール
 								i.fa.fa-angle-right
@@ -49,8 +49,8 @@ mk-header
 								i(class='fa fa-power-off')
 								| サインアウト
 								i.fa.fa-angle-right
-				div.post(if='{SIGNIN}')
-					button(onclick='{post}', title='新規投稿')
+				div.post(if={SIGNIN})
+					button(onclick={post}, title='新規投稿')
 						i.fa.fa-pencil-square-o
 				mk-header-clock
 
