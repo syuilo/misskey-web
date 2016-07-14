@@ -16,6 +16,7 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as csrf from 'csurf';
 import * as favicon from 'serve-favicon';
+import * as accesses from 'accesses';
 import name from 'named';
 const vhost = require('vhost');
 
@@ -74,6 +75,9 @@ app.locals.env = env;
 // app.locals.pretty = '    ';
 app.set('views', __dirname);
 app.set('view engine', 'pug');
+
+// Logging
+app.use(accesses.express());
 
 // Init API server
 app.use(vhost(config.hosts.api, webapi(session)));

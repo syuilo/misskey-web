@@ -32,6 +32,7 @@ Error.stackTraceLimit = Infinity;
  * Module dependencies
  */
 import * as cluster from 'cluster';
+import * as accesses from 'accesses';
 import name from 'named';
 import {logInfo, logWarn} from 'log-cool';
 import argv from './argv';
@@ -68,6 +69,12 @@ if (cluster.isMaster) {
 
 	// Master Only
 	require('./api/streaming');
+
+	// Setup accesses from master proccess
+	accesses.serve({
+		appName: 'Misskey Web',
+		port: 81
+	});
 }
 // Workers
 else {
