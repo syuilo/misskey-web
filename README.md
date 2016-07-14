@@ -32,6 +32,70 @@ Riotのtagは、Jade+Stylus+LiveScriptで書きます。
 * タグファイル内のscriptおよびstyleのインデントは不要です(本来ならばtagの子にしなければならないために、**無意味に**一段ネストが深くなってしまう)。
 * タグファイル内のscriptおよびstyleにtypeやscopedの指定は不要です。stlyeは、デフォルトでscopedです。
 * テンプレート変数を記述する際に、本来ならばJade特有の記法と競合してしまうために`hoge='{piyo}'`と書かなければいけませんが、`hoge={piyo}`と書けるようにしています(その代償としてJadeのstyle記法は使えなくなりました(まあそんなに使うことないと思うので))。
+まとめると、以下のコード
+```jade
+todo
+	h3 TODO
+
+	ul
+		li(each='{ item, i in items }')= '{ item }'
+
+	form(onsubmit='{ handleSubmit }')
+		input
+		button
+			| Add { items.length + 1 }
+
+	script.
+		@items = []
+
+		@handle-submit = (e) ~>
+			input = e.target.0
+			@items.push input.value
+			input.value = ''
+
+	style(type='stylus', scoped).
+		$theme-color = #ec6b43
+
+		:scope
+			background #fff
+
+			> h3
+				font-size 1.2em
+				color $theme-color
+```
+
+は、以下のように書けるということです:
+
+```jade
+todo
+	h3 TODO
+
+	ul
+		li(each={ item, i in items })= { item }
+
+	form(onsubmit={ handleSubmit })
+		input
+		button
+			| Add { items.length + 1 }
+
+script.
+	@items = []
+
+	@handle-submit = (e) ~>
+		input = e.target.0
+		@items.push input.value
+		input.value = ''
+
+style.
+	$theme-color = #ec6b43
+
+	:scope
+		background #fff
+
+		> h3
+			font-size 1.2em
+			color $theme-color
+```
 
 ## Configuration
 
