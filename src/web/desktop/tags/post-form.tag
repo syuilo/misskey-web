@@ -1,9 +1,8 @@
 mk-post-form
 	div.bg
-	div.container
-		form
-			textarea@text
-			button(onclick={post}) 投稿
+	div.container: form
+		textarea@text
+		button(onclick={post}) 投稿
 
 script.
 	@is-open = false
