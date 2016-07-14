@@ -27,6 +27,7 @@ const ls = require('browserify-livescript');
 const jadeify = require('pugify');
 const aliasify = require('aliasify');
 const riotify = require('riotify');
+const transformify = require('transformify');
 require('typescript-require')(require('./tsconfig.json'));
 
 const env = process.env.NODE_ENV;
@@ -140,13 +141,16 @@ gulp.task('build:scripts', ['build:public-config'], done => {
 				})
 				.transform(ls)
 				.transform(aliasify, aliasifyConfig)
+				// スペースでインデントされてないとエラーが出る
+				.transform(transformify(source => source.replace(/\t/g, '  ')))
 				.transform(riotify, {
 					template: 'pug',
-					type: 'livescript'
-				})
-				.transform(jadeify, {
-					"compileDebug": false,
-					"pretty": false
+					type: 'livescript',
+					parserOptions: {
+						template: {
+							config: config
+						}
+					}
 				})
 				.bundle()
 				.pipe(source(entry.replace('src/web', 'resources').replace('.ls', '.js')));

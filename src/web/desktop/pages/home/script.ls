@@ -1,6 +1,18 @@
 require '../../../base.ls'
-$ = require 'jquery'
+window.$ = require 'jquery'
+
+window.moment = require 'moment'
+
+riot = require 'riot'
 post = require '../../tags/post.tag'
+analog-clock = require '../../tags/analog-clock.tag'
+header = require '../../tags/header.tag'
+header-clock = require '../../tags/header-clock.tag'
+
+$ ->
+	riot.mount analog-clock
+	riot.mount header
+	riot.mount header-clock
 
 is-active = yes
 unread-count = 0
