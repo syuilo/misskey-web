@@ -29,9 +29,9 @@ script.
 			easing: \linear
 			step: -> $global.css do
 				'-webkit-filter': "blur("+@blur-radius+"px)"
-				'-moz-filter': "blur("+@blur-radius+"px)"
-				'filter': "blur("+@blur-radius+"px)"
+				'-moz-filter':    "blur("+@blur-radius+"px)"
+				'filter':         "blur("+@blur-radius+"px)"
 			complete: -> $global.css do
 				'-webkit-filter': ""
-				'-moz-filter': ""
-				'filter': ""
+				'-moz-filter':    ""
+				'filter':         ""
