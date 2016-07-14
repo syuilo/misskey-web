@@ -28,10 +28,11 @@ Misskey-Web is *Misskey* official client for the Web. run on [Node.js](https://g
 
 ## tagについて
 Riotのtagは、Jade+Stylus+LiveScriptで書きます。
-**それに加え、Misskey独自の改良を加えています:**
+**それに加え、Misskey独自の拡張/改良を加えています:**
 * タグファイル内のscriptおよびstyleのインデントは不要です(本来ならばtagの子にしなければならないために、**無意味に**一段ネストが深くなってしまう(tagの子でなくとも、同じファイルに記述されている以上、そのstyleとscriptはそのtagのものであるということが**明らか**))。
 * タグファイル内のscriptおよびstyleにtypeやscopedの指定は不要です。styleは、デフォルトで*scoped*です(*scoped*以外のstyleをタグファイルに記述したい場合なんてあるか？？？？？？)。
 * テンプレート変数を記述する際に、本来ならばJade特有の記法と競合してしまうために`hoge='{piyo}'`と書かなければいけませんが、`hoge={piyo}`と書けるようにしています(その代償としてJadeのstyle記法は使えなくなりました(まあそんなに使うことないと思うので))。
+* `div(name='hoge')`は、`div@hoge`と書けます。
 
 まとめると、以下のコード
 ```jade

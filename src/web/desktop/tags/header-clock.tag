@@ -1,6 +1,6 @@
 mk-header-clock
 	div.header
-		time(name='time', datetime= Date.now())
+		time@time(datetime= Date.now())
 	div.content
 		mk-analog-clock
 

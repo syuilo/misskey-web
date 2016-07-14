@@ -153,11 +153,49 @@ gulp.task('build:scripts', ['build:public-config'], done => {
 						}
 						if (!flag) {
 							if (line.replace(/\t/g, '')[0] === '|') {
-								dist += line + '\r\n';
+								through();
 							} else {
 								dist += line.replace(/\{/g, '"{').replace(/\}/g, '}"') + '\r\n';
 							}
 						} else {
+							through();
+						}
+
+						function through() {
+							dist += line + '\r\n';
+						}
+					});
+					return dist;
+				}))
+				// tagの@hogeをname='hoge'にする
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					let dist = '';
+					const lines = source.split('\r\n');
+					let flag = false;
+					lines.forEach(line => {
+						if (line === 'style.' || line === 'script.') {
+							flag = true;
+						}
+						if (!flag) {
+							if (line.indexOf('@') === -1) {
+								through();
+							} else if (line.replace(/\t/g, '')[0] === '|') {
+								through();
+							} else {
+								let name = line.match(/@[a-z-]+/)[0];
+								if (line[line.indexOf(name) + name.length] === '(') {
+									line = line.replace(name + '(', '(name=\'' + name.substr(1) + '\',');
+								} else {
+									line = line.replace(name, '(name=\'' + name.substr(1) + '\')');
+								}
+								dist += line + '\r\n';
+							}
+						} else {
+							through();
+						}
+
+						function through() {
 							dist += line + '\r\n';
 						}
 					});
@@ -176,6 +214,10 @@ gulp.task('build:scripts', ['build:public-config'], done => {
 						if (flag) {
 							dist += '\t' + line + '\r\n';
 						} else {
+							through();
+						}
+
+						function through() {
 							dist += line + '\r\n';
 						}
 					});

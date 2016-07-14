@@ -1,5 +1,5 @@
 mk-analog-clock
-	canvas(name='canvas', width='256', height='256')
+	canvas@canvas(width='256', height='256')
 
 script.
 	self = @

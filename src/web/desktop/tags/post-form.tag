@@ -2,7 +2,7 @@ mk-post-form
 	div.bg
 	div.container
 		form
-			textarea(name='text')
+			textarea@text
 			button(onclick={post}) 投稿
 
 script.

@@ -1,8 +1,8 @@
 mk-ui
 	mk-post-form(core={core})
 
-	mk-global(name='global')
-		mk-header(name='header', core={core})
+	mk-global@global
+		mk-header@header(core={core})
 
 		mk-contents
 			| <yield/>
