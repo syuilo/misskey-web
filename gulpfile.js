@@ -27,7 +27,7 @@ const ls = require('browserify-livescript');
 const jadeify = require('pugify');
 const aliasify = require('aliasify');
 const riotify = require('riotify');
-const transformify = require('transformify');
+const transformify = require('syuilo-transformify');
 require('typescript-require')(require('./tsconfig.json'));
 
 const env = process.env.NODE_ENV;
@@ -141,8 +141,33 @@ gulp.task('build:scripts', ['build:public-config'], done => {
 				})
 				.transform(ls)
 				.transform(aliasify, aliasifyConfig)
+				// tagのstyleおよびscriptのインデントを不要にする
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					let dist = '';
+					const lines = source.split('\r\n');
+					let flag = false;
+					lines.forEach(line => {
+						if (line === 'style.' || line === 'script.') {
+							flag = true;
+						}
+						if (flag) {
+							dist += '\t' + line + '\r\n';
+						} else {
+							dist += line + '\r\n';
+						}
+					});
+					return dist;
+				}))
 				// スペースでインデントされてないとエラーが出る
-				.transform(transformify(source => source.replace(/\t/g, '  ')))
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					return source.replace(/\t/g, '  ');
+				}))
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					return source.replace('style.', 'style(type=\'stylus\', scoped).');
+				}))
 				.transform(riotify, {
 					template: 'pug',
 					type: 'livescript',
