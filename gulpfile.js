@@ -45,6 +45,7 @@ const aliasifyConfig = {
 		"config": "./built/_/config.json",
 		"jquery": "./bower_components/jquery/dist/jquery.js",
 		"jquery.transit": "./bower_components/jquery.transit/jquery.transit.js",
+		"js-cookie": "./bower_components/js-cookie/src/js.cookie.js",
 		"cropper": "./bower_components/cropper/dist/cropper.js",
 		"moment": "./bower_components/moment/moment.js",
 		"Sortable": "./bower_components/Sortable/Sortable.js",
@@ -183,14 +184,36 @@ gulp.task('build:scripts', ['build:public-config'], done => {
 							} else if (line.replace(/\t/g, '')[0] === '|') {
 								through();
 							} else {
-								let name = line.match(/@[a-z-]+/)[0];
-								if (line[line.indexOf(name) + name.length] === '(') {
-									line = line.replace(name + '(', '(name=\'' + name.substr(1) + '\',');
-								} else {
-									line = line.replace(name, '(name=\'' + name.substr(1) + '\')');
+								while (line.indexOf('@') !== -1) {
+									let name = line.match(/@[a-z-]+/)[0];
+									if (line[line.indexOf(name) + name.length] === '(') {
+										line = line.replace(name + '(', '(name=\'' + name.substr(1) + '\',');
+									} else {
+										line = line.replace(name, '(name=\'' + name.substr(1) + '\')');
+									}
 								}
 								dist += line + '\r\n';
 							}
+						} else {
+							through();
+						}
+
+						function through() {
+							dist += line + '\r\n';
+						}
+					});
+					return dist;
+				}))
+				// tagのstyleの定数
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					let dist = '';
+					const lines = source.split('\r\n');
+					lines.forEach(line => {
+						if (line === 'style.') {
+							through();
+							dist += '\t$theme-color = ' + config.themeColor + '\r\n';
+							dist += '\t$theme-color-foreground = ' + config.themeColorForeground + '\r\n';
 						} else {
 							through();
 						}

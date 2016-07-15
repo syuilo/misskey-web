@@ -1,14 +1,18 @@
 require '../../../base.ls'
-window.$ = require 'jquery'
+require 'jquery.transit'
 
 window.moment = require 'moment'
 
 riot = require 'riot'
 require '../../tags/post.tag'
 require '../../tags/analog-clock.tag'
+require '../../tags/go-top.tag'
 require '../../tags/header.tag'
-require '../../tags/post-form.tag'
+require '../../tags/header-account.tag'
 require '../../tags/header-clock.tag'
+require '../../tags/header-nav.tag'
+require '../../tags/header-search.tag'
+require '../../tags/post-form.tag'
 ui = require '../../tags/ui.tag'
 
 $ ->

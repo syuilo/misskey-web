@@ -25,6 +25,9 @@ script.
 		clock.innerHTML = "#yyyymmdd<br>#hhmm"
 
 style.
+	$ui-controll-background-color = #fffbfb
+	$ui-controll-foreground-color = #ABA49E
+
 	display inline-block
 	position relative
 	overflow visible

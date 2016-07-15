@@ -155,6 +155,12 @@ app.use(async (req, res, next) => {
 		const user = await api('account/show', {}, userId);
 		const settings = await UserSetting.findOne({user_id: userId}).lean();
 		res.locals.user = Object.assign({}, user, {_settings: settings});
+		res.cookie('u', JSON.stringify(res.locals.user), {
+			path: '/',
+			domain: `.${config.host}`,
+			secure: config.https.enable,
+			httpOnly: false
+		});
 		next();
 	} else {
 		res.locals.user = null;
@@ -166,6 +172,10 @@ app.use(require('subdomain')(subdomainOptions));
 
 app.get('/manifest.json', (req, res) => {
 	res.sendFile(path.resolve(`${__dirname}/resources/manifest.json`));
+});
+
+app.get('/apple-touch-icon.png', (req, res) => {
+	res.sendFile(path.resolve(`${__dirname}/resources/apple-touch-icon.png`));
 });
 
 // Main routing

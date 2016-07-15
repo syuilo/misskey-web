@@ -12,7 +12,7 @@ mk-ui
 script.
 	@core = riot.observable!
 
-	@core.on \on-modal ~>
+	@core.on \on-blur ~>
 		$global = $ @global
 		$ {blur-radius: 0} .animate {blur-radius: 5} do
 			duration: 100ms
@@ -22,7 +22,7 @@ script.
 				'-moz-filter':    "blur("+@blur-radius+"px)"
 				'filter':         "blur("+@blur-radius+"px)"
 
-	@core.on \off-modal ~>
+	@core.on \off-blur ~>
 		$global = $ @global
 		$ {blur-radius: 5} .animate {blur-radius: 0} do
 			duration: 100ms

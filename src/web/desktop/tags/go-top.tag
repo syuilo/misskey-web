@@ -1,2 +1,3 @@
-mk-go-top.hidden(title='一番上へ')
-	i.fa.fa-angle-up
+mk-go-top
+	button.hidden(title='一番上へ')
+		i.fa.fa-angle-up
