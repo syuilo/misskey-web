@@ -148,7 +148,12 @@ app.use(async (req, res, next) => {
 	res.locals.ua = ua;
 	res.locals.workerId = name(worker.id);
 
-	res.locals.csrftoken = req.csrfToken();
+	res.cookie('x', req.csrfToken(), {
+		path: '/',
+		domain: `.${config.host}`,
+		secure: config.https.enable,
+		httpOnly: false
+	});
 
 	if (res.locals.isSignin) {
 		const userId: string = (<any>req.session).userId;

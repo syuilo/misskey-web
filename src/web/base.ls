@@ -2,9 +2,13 @@ window.$ = require 'jquery'
 Cookies = require 'js-cookie'
 
 window.CONFIG = require 'config'
-window.CSRF_TOKEN = $ 'meta[name="csrf-token"]' .attr \content
+window.CSRF_TOKEN = Cookies.get \x
 window.USER = JSON.parse Cookies.get \u
 window.SIGNIN = window.USER?
+
+Cookies.remove \x do
+	path: \/
+	domain: '.' + CONFIG.host
 
 Cookies.remove \u do
 	path: \/
