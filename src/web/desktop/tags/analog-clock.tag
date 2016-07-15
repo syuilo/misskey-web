@@ -94,7 +94,7 @@ script.
 		ctx.stroke!
 
 style.
-	:scope > canvas
+	> canvas
 		display block
 		width 256px
 		height 256px

@@ -31,6 +31,7 @@ Riotのtagは、Jade+Stylus+LiveScriptで書きます(すべてインデント�
 **それに加え、Misskey独自の拡張/改良を加えています:**
 * タグファイル内のscriptおよびstyleのインデントは不要です(本来ならばtagの子にしなければならないために、**無意味に**一段ネストが深くなってしまう(tagの子でなくとも、同じファイルに記述されている以上、そのstyleとscriptはそのtagのものであるということが**明らか**))。
 * タグファイル内のscriptおよびstyleにtypeやscopedの指定は不要です。styleは、デフォルトで*scoped*です(*scoped*以外のstyleをタグファイルに記述したい場合なんてあるか？？？？？？)。
+* styleは暗黙的に:scopeがルートに存在しているとみなします。
 * テンプレート変数を記述する際に、本来ならばJade特有の記法と競合してしまうために`hoge='{piyo}'`と書かなければいけませんが、`hoge={piyo}`と書けるようにしています(その代償としてJadeのstyle記法は使えなくなりました(まあそんなに使うことないと思うので))。
 * `div(name='hoge')`は、`div@hoge`と書けます。Riot.jsの特性上、nameを指定することが多いので、このように短く書けるようにしました。また、script(LiveScript)上において、name指定した要素を@hogeのようにしてアクセスするので(LiveScriptでは、`this.`を`@`と書けます)、表現が一致して分かりやすくなります。
 
@@ -56,9 +57,9 @@ todo
 			input.value = ''
 
 	style(type='stylus', scoped).
-		$theme-color = #ec6b43
-
 		:scope
+			$theme-color = #ec6b43
+
 			background #fff
 
 			> h3
@@ -91,13 +92,14 @@ script.
 style.
 	$theme-color = #ec6b43
 
-	:scope
-		background #fff
+	background #fff
 
-		> h3
-			font-size 1.2em
-			color $theme-color
+	> h3
+		font-size 1.2em
+		color $theme-color
 ```
+
+styleに至っては二段も**余計な**インデントを無くすことができました。
 
 ## Configuration
 

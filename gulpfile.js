@@ -201,6 +201,37 @@ gulp.task('build:scripts', ['build:public-config'], done => {
 					});
 					return dist;
 				}))
+				// tagのstyleを暗黙的に:scopeにする
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					let dist = '';
+					const lines = source.split('\r\n');
+					let flag = false;
+					lines.forEach(line => {
+						let next = false;
+						if (line === 'script.') {
+							flag = false;
+						} else if (line === 'style.') {
+							through();
+							dist += '\t:scope\r\n';
+							flag = true;
+							next = true;
+						}
+
+						if (!next) {
+							if (flag) {
+								dist += '\t\t' + line + '\r\n';
+							} else {
+								through();
+							}
+						}
+
+						function through() {
+							dist += line + '\r\n';
+						}
+					});
+					return dist;
+				}))
 				// tagのstyleおよびscriptのインデントを不要にする
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
@@ -235,6 +266,7 @@ gulp.task('build:scripts', ['build:public-config'], done => {
 				.transform(riotify, {
 					template: 'pug',
 					type: 'livescript',
+					compact: true,
 					parserOptions: {
 						template: {
 							config: config
