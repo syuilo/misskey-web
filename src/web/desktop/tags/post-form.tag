@@ -4,40 +4,10 @@ mk-post-form
 		textarea@text
 		button(onclick={post}) 投稿
 
-style.
-	[name='bg']
-	[name='container']
-		display none
-		position fixed
-		top 0
-		width 100%
-		height 100%
-
-	[name='bg']
-		z-index 127
-		left 0
-		background rgba(0, 0, 0, 0.7)
-		opacity 0
-
-	[name='container']
-		z-index 1024
-
-	[name='form']
-		display block
-		position absolute
-		top 15%
-		right 0
-		left 0
-		width 100%
-		max-width 530px
-		margin auto
-		background #fff
-		opacity 0
-
 script.
 	@is-open = false
 
-	@opts.core.on \toggle-post-form ~>
+	@opts.ui.on \toggle-post-form ~>
 		@toggle!
 
 	@toggle = ~>
@@ -48,7 +18,7 @@ script.
 
 	@open = ~>
 		@is-open = true
-		@opts.core.trigger \on-blur
+		@opts.ui.trigger \on-blur
 
 		$bg = $ @bg
 		$container = $ @container
@@ -76,7 +46,7 @@ script.
 
 	@close = ~>
 		@is-open = false
-		@opts.core.trigger \off-blur
+		@opts.ui.trigger \off-blur
 
 		$bg = $ @bg
 		$container = $ @container
@@ -107,3 +77,33 @@ script.
 			console.log data
 		.fail (err, text-status) ->
 			console.error err
+
+style.
+	[name='bg']
+	[name='container']
+		display none
+		position fixed
+		top 0
+		width 100%
+		height 100%
+
+	[name='bg']
+		z-index 127
+		left 0
+		background rgba(0, 0, 0, 0.7)
+		opacity 0
+
+	[name='container']
+		z-index 1024
+
+	[name='form']
+		display block
+		position absolute
+		top 15%
+		right 0
+		left 0
+		width 100%
+		max-width 530px
+		margin auto
+		background #fff
+		opacity 0

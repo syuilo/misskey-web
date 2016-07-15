@@ -1,8 +1,8 @@
 mk-ui
-	mk-post-form(core={core})
+	mk-post-form(ui={ui})
 
 	mk-global@global
-		mk-header@header(core={core})
+		mk-header@header(ui={ui})
 
 		mk-contents
 			| <yield/>
@@ -10,9 +10,9 @@ mk-ui
 	mk-go-top
 
 script.
-	@core = riot.observable!
+	@ui = riot.observable!
 
-	@core.on \on-blur ~>
+	@ui.on \on-blur ~>
 		$global = $ @global
 		$ {blur-radius: 0} .animate {blur-radius: 5} do
 			duration: 100ms
@@ -22,7 +22,7 @@ script.
 				'-moz-filter':    "blur("+@blur-radius+"px)"
 				'filter':         "blur("+@blur-radius+"px)"
 
-	@core.on \off-blur ~>
+	@ui.on \off-blur ~>
 		$global = $ @global
 		$ {blur-radius: 5} .animate {blur-radius: 0} do
 			duration: 100ms

@@ -5,7 +5,7 @@ mk-header
 		div.right
 			mk-header-search
 			mk-header-account(if={SIGNIN})
-			mk-header-post-button(if={SIGNIN}, core={opts.core})
+			mk-header-post-button(if={SIGNIN}, ui={opts.ui})
 			mk-header-clock
 
 style.

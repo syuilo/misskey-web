@@ -4,7 +4,7 @@ mk-header-post-button
 
 script.
 	@post = (e) ~>
-		@opts.core.trigger \toggle-post-form
+		@opts.ui.trigger \toggle-post-form
 
 style.
 	display inline-block
