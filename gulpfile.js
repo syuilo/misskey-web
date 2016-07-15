@@ -24,7 +24,6 @@ const cssnano = require('gulp-cssnano');
 const autoprefixer = require('gulp-autoprefixer');
 const uglify = require('gulp-uglify');
 const ls = require('browserify-livescript');
-const jadeify = require('pugify');
 const aliasify = require('aliasify');
 const riotify = require('riotify');
 const transformify = require('syuilo-transformify');
