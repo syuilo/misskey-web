@@ -27,7 +27,7 @@ Misskey-Web is *Misskey* official client for the Web. run on [Node.js](https://g
 `npm start -- -h`
 
 ## tagについて
-Riotのtagは、Jade+Stylus+LiveScriptで書きます。
+Riotのtagは、Jade+Stylus+LiveScriptで書きます(すべてインデントでブロックを表すタイプの言語(！))。
 **それに加え、Misskey独自の拡張/改良を加えています:**
 * タグファイル内のscriptおよびstyleのインデントは不要です(本来ならばtagの子にしなければならないために、**無意味に**一段ネストが深くなってしまう(tagの子でなくとも、同じファイルに記述されている以上、そのstyleとscriptはそのtagのものであるということが**明らか**))。
 * タグファイル内のscriptおよびstyleにtypeやscopedの指定は不要です。styleは、デフォルトで*scoped*です(*scoped*以外のstyleをタグファイルに記述したい場合なんてあるか？？？？？？)。
