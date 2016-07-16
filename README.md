@@ -1,4 +1,6 @@
-# Misskey Web
+![](./web.png)
+-----------------------------
+
 [![][travis-badge]][travis-link]
 [![][gemnasium-badge]][gemnasium-link]
 [![][david-dev-badge]][david-dev-link]
