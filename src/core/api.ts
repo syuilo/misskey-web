@@ -12,7 +12,7 @@ export default async (
 		? typeof user === 'string'
 			? user
 			: user.id
-		: null;
+		: undefined;
 
 	const options: request.Options = {
 		url: `http://${config.api.host}:${config.api.port}/${endpoint}`,

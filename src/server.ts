@@ -124,8 +124,7 @@ app.use(useragent.express());
 app.use(async (req, res, next) => {
 
 	// Security headers
-	res.header('X-Frame-Options', 'SAMEORIGIN');
-	res.header('X-XSS-Protection', '1; mode=block');
+	res.header('X-Frame-Options', 'DENY');
 	res.header('X-Content-Type-Options', 'nosniff');
 
 	// HSTS
