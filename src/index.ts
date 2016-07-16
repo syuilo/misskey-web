@@ -39,10 +39,13 @@ import argv from './argv';
 import config from './config';
 import checkDependencies from './check-dependencies';
 
-require("babel-core/register");
-require("babel-polyfill");
+// init babel
+require('babel-core/register');
+require('babel-polyfill');
 
 const env = process.env.NODE_ENV;
+const isProduction = env === 'production';
+const isDebug = !isProduction;
 
 // Master
 if (cluster.isMaster) {
@@ -55,7 +58,7 @@ if (cluster.isMaster) {
 		checkDependencies();
 	}
 
-	if (env !== 'production') {
+	if (isDebug) {
 		logWarn('Productionモードではありません。本番環境で使用しないでください。');
 	}
 
