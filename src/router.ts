@@ -10,7 +10,8 @@ import signin from './core/signin';
 import config from './config';
 
 function render(req: express.Request, res: express.Response, path: string, data?: any): void {
-	res.render(`${__dirname}/web/${res.locals.ua}/pages/${path}/view`, data);
+	const ua = res.locals.useragent.isMobile ? 'mobile' : 'desktop';
+	res.render(`${__dirname}/web/${ua}/pages/${path}/view`, data);
 }
 
 export default function(app: express.Express): void {

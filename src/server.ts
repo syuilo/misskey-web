@@ -144,13 +144,10 @@ app.use(async (req, res, next) => {
 		req.session.hasOwnProperty('userId') &&
 		(<any>req.session).userId !== null;
 
-	const ua = res.locals.useragent.isMobile ? 'mobile' : 'desktop';
-
 	res.locals.config = config;
 	res.locals.signin = res.locals.isSignin;
-	res.locals.ua = ua;
-	res.locals.workerId = name(worker.id);
 
+	// Set CSRF token to Cookie
 	res.cookie('x', req.csrfToken(), Object.assign({
 		httpOnly: false
 	}, cookieBase));
@@ -162,13 +159,18 @@ app.use(async (req, res, next) => {
 	}
 
 	try {
-		const userId: string = (<any>req.session).userId;
-		const user = await api('account/show', {}, userId);
-		const settings = await UserSetting.findOne({user_id: userId}).lean();
-		res.locals.user = Object.assign({}, user, {_settings: settings});
+		// ユーザー情報フェッチ
+		const user = await api('account/show', {}, (<any>req.session).userId);
+
+		// ユーザー設定取得
+		const settings = await UserSetting.findOne({user_id: user.id}).lean();
+
+		res.locals.user = Object.assign(user, {_settings: settings});
+
 		res.cookie('u', JSON.stringify(res.locals.user), Object.assign({
 			httpOnly: false
 		}, cookieBase));
+
 		next();
 	} catch (e) {
 		res.status(500).send('Core Error');
