@@ -46,19 +46,22 @@ const subdomainOptions = {
 	base: config.host
 };
 
+const cookieBase = {
+	path: '/',
+	domain: `.${config.host}`,
+	secure: config.https.enable
+};
+
 const session = {
 	name: config.sessionKey,
 	secret: config.sessionSecret,
 	resave: false,
 	saveUninitialized: true,
-	cookie: {
-		path: '/',
-		domain: `.${config.host}`,
+	cookie: Object.assign({
 		httpOnly: true,
-		secure: config.https.enable,
 		expires: new Date(Date.now() + sessionExpires),
 		maxAge: sessionExpires
-	},
+	}, cookieBase),
 	store: new store({
 		mongooseConnection: db
 	})
@@ -148,28 +151,27 @@ app.use(async (req, res, next) => {
 	res.locals.ua = ua;
 	res.locals.workerId = name(worker.id);
 
-	res.cookie('x', req.csrfToken(), {
-		path: '/',
-		domain: `.${config.host}`,
-		secure: config.https.enable,
+	res.cookie('x', req.csrfToken(), Object.assign({
 		httpOnly: false
-	});
+	}, cookieBase));
 
-	if (res.locals.isSignin) {
+	if (!res.locals.isSignin) {
+		res.locals.user = null;
+		next();
+		return;
+	}
+
+	try {
 		const userId: string = (<any>req.session).userId;
 		const user = await api('account/show', {}, userId);
 		const settings = await UserSetting.findOne({user_id: userId}).lean();
 		res.locals.user = Object.assign({}, user, {_settings: settings});
-		res.cookie('u', JSON.stringify(res.locals.user), {
-			path: '/',
-			domain: `.${config.host}`,
-			secure: config.https.enable,
+		res.cookie('u', JSON.stringify(res.locals.user), Object.assign({
 			httpOnly: false
-		});
+		}, cookieBase));
 		next();
-	} else {
-		res.locals.user = null;
-		next();
+	} catch (e) {
+		res.status(500).send('Core Error');
 	}
 });
 
