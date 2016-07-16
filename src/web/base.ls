@@ -2,11 +2,7 @@ window.$ = require 'jquery'
 Cookies = require 'js-cookie'
 
 u = Cookies.get \u
-
-if u?
-	user = JSON.parse u
-else
-	user = null
+user = if u? then JSON.parse u else null
 
 window.CONFIG = require 'config'
 window.CSRF_TOKEN = Cookies.get \x
