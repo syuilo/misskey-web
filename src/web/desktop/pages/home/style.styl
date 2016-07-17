@@ -1,120 +1,90 @@
-@import "../../base";
+@import "../../base"
 
-html {
-	color: #000;
-	background: $ui-background-color;
-}
+html
+	color #000
+	background $ui-background-color
 
-main {
-	display: block;
-	position: relative;
+#home
+	display -webkit-flex
+	display -moz-flex
+	display -ms-flex
+	display -o-flex
+	display flex
+	justify-content center
+	position relative
 
-	#contents {
-		display: -webkit-flex;
-		display: -moz-flex;
-		display: -ms-flex;
-		display: -o-flex;
-		display: flex;
-		justify-content: center;
-		position: relative;
+	> main
+		position relative
+		flex 1 1 560px
+		box-sizing border-box
+		max-width 560px
+		margin 0
+		padding 0
 
-		#main-contents {
-			position: relative;
-			flex: 1 1 560px;
-			box-sizing: border-box;
-			max-width: 560px;
-			margin: 0;
-			padding: 0;
+		> .body
+			padding 16px
 
-			> .body {
-				padding: 16px;
-			}
-		}
+	.side-left
+		position relative
+		flex 1 1 270px
+		max-width 270px
+		margin 0
+		padding 0
 
-		#left-contents {
-			position: relative;
-			flex: 1 1 270px;
-			max-width: 270px;
-			margin: 0;
-			padding: 0;
+		> .body
+			padding 16px 0 16px 16px
 
-			> .body {
-				padding: 16px 0 16px 16px;
-			}
-		}
+	.side-right
+		position relative
+		flex 1 1 270px
+		max-width 270px
+		margin 0
+		padding 0
 
-		#right-contents {
-			position: relative;
-			flex: 1 1 270px;
-			max-width: 270px;
-			margin: 0;
-			padding: 0;
+		> .body
+			padding 16px 16px 16px 0
 
-			> .body {
-				padding: 16px 16px 16px 0;
-			}
-		}
-	}
-}
+@media (max-width 1000px)
+	main
+		#contents
+			#left-contents
+				display none
 
-@media (max-width: 1000px) {
-	main {
-		#contents {
-			#left-contents {
-				display: none;
-			}
+			#right-contents
+				display none
 
-			#right-contents {
-				display: none;
-			}
-		}
-	}
-}
+@media (max-width 600px)
+	main
+		#contents
+			#main-contents
+				padding 0
+				max-width 100%
 
-@media (max-width: 600px) {
-	main {
-		#contents {
-			#main-contents {
-				padding: 0;
-				max-width: 100%;
+				#widget-timeline
+					> .timeline
+						> .posts
+							> .post:first-child
+								border-top-left-radius 0
+								border-top-right-radius 0
 
-				#widget-timeline {
-					> .timeline {
-						> .posts {
-							> .post:first-child {
-								border-top-left-radius: 0;
-								border-top-right-radius: 0;
-							}
-						}
+						> .read-more
+							border-bottom-left-radius 0
+							border-bottom-right-radius 0
 
-						> .read-more {
-							border-bottom-left-radius: 0;
-							border-bottom-right-radius: 0;
-						}
+						> footer
+							display none
 
-						> footer {
-							display: none;
-						}
-					}
-				}
-			}
-		}
-	}
-}
+body > .streaming-info
+	pointer-events none
+	position fixed
+	z-index 1024
+	bottom 8px
+	right 8px
+	margin 0
+	padding 6px 12px
+	font-size 0.9em
+	color #fff
+	background rgba(0, 0, 0, 0.8)
 
-body > .streaming-info {
-	pointer-events: none;
-	position: fixed;
-	z-index: 1024;
-	bottom: 8px;
-	right: 8px;
-	margin: 0;
-	padding: 6px 12px;
-	font-size: 0.9em;
-	color: #fff;
-	background: rgba(0, 0, 0, 0.8);
-
-	> i {
-		margin-right: 0.25em;
-	}
-}
+	> i
+		margin-right 0.25em

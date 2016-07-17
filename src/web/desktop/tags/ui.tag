@@ -35,3 +35,15 @@ script.
 				'-webkit-filter': ""
 				'-moz-filter':    ""
 				'filter':         ""
+
+	@on \mount ~>
+		@$header = $ @header
+		$ \body .css \margin-top @$header.outer-height! + \px
+
+	$ window .on 'load scroll resize' @on-scroll
+
+	@on-scroll = ~>
+		t = $ window .scroll-top!
+		opacity = t / 128
+		if opacity > 0.3 then opacity = 0.3
+		@$header.css \box-shadow "0 0 1px rgba(0, 0, 0, " + opacity + ")"

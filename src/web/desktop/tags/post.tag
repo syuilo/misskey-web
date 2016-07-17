@@ -35,6 +35,7 @@ style.
 	padding 12px 0
 	background #fffbfb
 	border none
+	font-family 'Meiryo', 'メイリオ', 'sans-serif'
 
 	> article
 		position relative
