@@ -40,7 +40,7 @@ script.
 		@$header = $ @header
 		$ \body .css \margin-top @$header.outer-height! + \px
 
-	$ window .on 'load scroll resize' @on-scroll
+		$ window .on 'load scroll resize' @on-scroll
 
 	@on-scroll = ~>
 		t = $ window .scroll-top!
