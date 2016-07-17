@@ -1,3 +1,2 @@
-timeline
-	post(each={ posts })
-		
+mk-timeline
+	mk-post(each={ opts.posts })

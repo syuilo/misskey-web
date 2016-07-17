@@ -14,10 +14,20 @@ require '../../tags/header-nav.tag'
 require '../../tags/header-post-button.tag'
 require '../../tags/header-search.tag'
 require '../../tags/post-form.tag'
+require '../../tags/post.tag'
+tl = require '../../tags/timeline.tag'
 ui = require '../../tags/ui.tag'
 
 $ ->
 	riot.mount ui
+
+	$.ajax CONFIG.urls.api + '/posts/timeline'
+	.done (posts) ->
+		console.log posts
+		riot.mount tl, do
+			posts: posts
+	.fail (err, text-status) ->
+		console.error err
 
 is-active = yes
 unread-count = 0
