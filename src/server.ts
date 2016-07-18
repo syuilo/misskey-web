@@ -159,7 +159,7 @@ app.use(async (req, res, next) => {
 
 	try {
 		// ユーザー情報フェッチ
-		const user = await api('account/show', {}, (<any>req.session).userId);
+		const user = await api('i', {}, (<any>req.session).userId);
 
 		// ユーザー設定取得
 		const settings = await UserSetting.findOne({user_id: user.id}).lean();
