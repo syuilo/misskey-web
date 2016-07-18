@@ -21,7 +21,7 @@ ui = require '../../tags/ui.tag'
 $ ->
 	riot.mount ui
 
-	$.ajax CONFIG.urls.api + '/posts/timeline'
+	$.ajax CONFIG.urls.api + '/i/timeline'
 	.done (posts) ->
 		console.log posts
 		riot.mount tl, do
