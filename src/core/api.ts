@@ -2,12 +2,12 @@ import * as request from 'request';
 
 import config from '../config';
 
-export default async (
+export default (
 	endpoint: string,
 	params: any,
 	user: any = null,
 	withFile: boolean = false
-) => new Promise<any>((resolve, reject) => {
+) => new Promise<any>(async (resolve, reject) => {
 	const userId: string = user !== null
 		? typeof user === 'string'
 			? user
