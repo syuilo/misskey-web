@@ -1,7 +1,4 @@
 require '../../../base.ls'
-require 'jquery.transit'
-
-window.moment = require 'moment'
 
 riot = require 'riot'
 require '../../tags/post.tag'

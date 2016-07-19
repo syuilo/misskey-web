@@ -70,9 +70,6 @@ if (cluster.isMaster) {
 		cluster.fork();
 	}
 
-	// Master Only
-	require('./api/streaming');
-
 	// Setup accesses from master proccess
 	accesses.serve({
 		appName: 'Misskey Web',

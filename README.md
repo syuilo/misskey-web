@@ -133,11 +133,6 @@ mongo:
    user: <string>
    pass: <string>
 
-# 2016年5月現在、APIがストリーミングを提供していないため直接APIサーバーのRedisに繋ぐ必要があるので、その情報
-redis:
-  host: <string>
-  pass: <string>
-
 ### TLS設定
 https:
   enable: <boolean>

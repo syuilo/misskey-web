@@ -21,10 +21,6 @@ export default function(app: express.Express): void {
 		next();
 	});
 
-	app.get('/', (req, res) => {
-		res.send('sakuhima');
-	});
-
 	app.post('/account/create', require('./endpoints/account/create').default);
 	app.post('/web/url/analyze', require('./endpoints/url/analyze').default);
 	app.post('/web/avatar/update', require('./endpoints/avatar/update').default);
@@ -42,19 +38,6 @@ export default function(app: express.Express): void {
 		upload.single('file'),
 		require('./endpoints/posts/create-with-file').default);
 	app.post('/web/posts/reply', require('./endpoints/posts/reply').default);
-
-	app.post('/*', (req, res) => {
-		api(
-			req.path.substring(1),
-			req.body,
-			res.locals.user
-		).then(response => {
-			res.json(response);
-		}, err => {
-			res.status(err.statusCode);
-			res.send(err.body);
-		});
-	});
 
 	// Not found handling
 	app.use((req, res) => {
