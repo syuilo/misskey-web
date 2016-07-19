@@ -18,7 +18,7 @@ export default (
 		url: `http://${config.api.host}:${config.api.port}/${endpoint}`,
 		method: 'POST',
 		headers: {
-			'pass': config.api.pass,
+			'_web': config.api.pass,
 			'user': userId
 		}
 	};
