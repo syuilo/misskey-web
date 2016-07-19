@@ -40,9 +40,6 @@ console.log(`Init ${name(worker.id)} server...`);
 const store = MongoStore(expressSession);
 
 const sessionExpires = 1000 * 60 * 60 * 24 * 365; // One Year
-const subdomainOptions = {
-	base: config.host
-};
 
 const cookieBase = {
 	path: '/',
@@ -168,8 +165,6 @@ app.use(async (req, res, next): Promise<void> => {
 		res.status(500).send('Core Error');
 	}
 });
-
-app.use(require('subdomain')(subdomainOptions));
 
 // Main routing
 router(app);

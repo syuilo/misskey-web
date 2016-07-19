@@ -16,7 +16,13 @@ function render(req: express.Request, res: express.Response, path: string, data?
 	res.render(`${__dirname}/web/${ua}/pages/${path}/view`, data);
 }
 
+const subdomainOptions = {
+	base: config.host
+};
+
 export default function(app: express.Express): void {
+
+	app.use(require('subdomain')(subdomainOptions));
 
 	app.param('username', paramUsername);
 	app.param('postId', paramPostId);
