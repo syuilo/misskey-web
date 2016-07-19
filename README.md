@@ -6,7 +6,7 @@
 [![][david-dev-badge]][david-dev-link]
 [![][mit-badge]][mit]
 
-Misskey-Web is *Misskey* official client for the Web. run on [Node.js](https://github.com/nodejs/node)!
+*Misskey* official client for the Web.
 
 ## External dependencies
 * Node.js
@@ -16,13 +16,13 @@ Misskey-Web is *Misskey* official client for the Web. run on [Node.js](https://g
 
 ## How to build
 1. `git clone git://github.com/syuilo/misskey-web.git`
-2. `cd Misskey-Web`
+2. `cd misskey-web`
 3. `npm install`
 4. `npm run dtsm`
-4. `sudo ./node_modules/.bin/bower install --allow-root`
+4. `./node_modules/.bin/bower install --allow-root`
 5. `npm run build`
 
-## How to start Misskey Web server
+## How to start misskey-web
 `npm start`
 
 ## How to display options
@@ -124,7 +124,6 @@ host: "misskey.xyz"
 ports:
   http: 80
   https: 443
-  streaming: 3000
 
 ### ユーザーのクライアントに関する設定をストアするDB(Mongo)の情報
 mongo:
@@ -164,17 +163,12 @@ recaptcha:
   # シークレット
   secretKey: <string>
 
-### Search Console設定
-# SEE: https://support.google.com/webmasters/answer/35179?hl=ja
-googleSiteVerification: <string>
-
 bindIp: null
 
 ### Web待ち受けポート
 bindPorts:
   http: 80
   https: 443
-  streaming: 3000
 
 ### テーマカラー
 themeColor: "#ec6b43"
@@ -190,7 +184,7 @@ The current lead maintainer is [syuilo](https://github.com/syuilo)
 [List of all contributors](https://github.com/syuilo/misskey-web/graphs/contributors)
 
 ## License
-The MIT License. See [LICENSE](LICENSE).
+[MIT](LICENSE)
 
 [mit]:             http://opensource.org/licenses/MIT
 [mit-badge]:       https://img.shields.io/badge/license-MIT-444444.svg?style=flat-square
