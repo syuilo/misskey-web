@@ -288,7 +288,7 @@ export default function(app: express.Express): void {
 	app.use((err: any, req: express.Request, res: express.Response, next: any) => {
 		console.error(err);
 		//render(req, res, 'error', err);
-		res.render(`${__dirname}/web/common/error`, {
+		res.render(`${__dirname}/web/error`, {
 			error: err
 		});
 	});
