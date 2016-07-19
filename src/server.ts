@@ -26,8 +26,6 @@ import UserSetting from './db/models/user-settings';
 import api from './core/api';
 import config from './config';
 
-import webapi from './api/server';
-import resources from './resources';
 import router from './router';
 
 const env = process.env.NODE_ENV;
@@ -81,9 +79,6 @@ app.set('view engine', 'pug');
 
 // Logging
 app.use(accesses.express());
-
-// Init API server
-app.use(vhost(config.hosts.api, webapi(session)));
 
 app.use(compression());
 
