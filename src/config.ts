@@ -71,11 +71,6 @@ function loadConfig(): IConfig {
 		+ conf.api.host
 		+ (conf.api.secure ? conf.api.port === 443 ? '' : ':' + conf.api.port : conf.api.port === 80 ? '' : ':' + conf.api.port);
 
-	conf.streamingUrl =
-		scheme + '://'
-		+ host
-		+ ':' + conf.ports.streaming;
-
 	conf.domains = domains;
 
 	// Define hosts
@@ -174,20 +169,13 @@ export interface IConfig {
 			pass: string;
 		}
 	};
-	redis: {
-		host: string;
-		pass: string;
-	};
-	streamingUrl: string;
 	ports: {
 		http: number;
 		https: number;
-		streaming: number;
 	};
 	bindPorts: {
 		http: number;
 		https: number;
-		streaming: number;
 	};
 	https: {
 		enable: boolean;
