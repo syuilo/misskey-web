@@ -17,12 +17,15 @@
     "tests"
   ],
   "dependencies": {
-    "cropperjs": "2.3.0",
+    "cropperjs": "0.7.2",
     "fastclick": "1.0.6",
     "fuck-adblock": "3.2.0",
     "js-cookie": "",
     "riot": "2.5.0",
     "Sortable": "1.4.2",
-    "Swiper": "swiper#3.3.0"
+    "Swiper": "swiper#3.3.0",
+    "password-strength.js": "latest",
+    "ripple.js": "latest",
+    "fetch": ""
   }
 }

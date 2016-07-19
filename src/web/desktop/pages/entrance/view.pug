@@ -14,6 +14,8 @@ block head
 	meta(property='og:image', content='')
 	meta(property='og:site_name', content='Misskey')
 	link(rel='stylesheet', href='/_/resources/desktop/pages/entrance/style.css')
+	script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js')
+	script(src='//cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js')
 	script(src='/_/resources/desktop/pages/entrance/script.js')
 	script(src='https://www.google.com/recaptcha/api.js')
 
@@ -21,7 +23,7 @@ block body
 	header
 		h1#title Misskey
 		p#description
-			| おかえりなさい。ここは知る人ぞ知る、未来のSNSです。
+			| これさえあれば、何もいらない。
 			br
 			a(href= config.urls.about) もっと詳しく
 

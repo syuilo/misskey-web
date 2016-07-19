@@ -4,8 +4,6 @@
 
 import * as express from 'express';
 
-import { User } from './db/models/user';
-import api from './core/api';
 import signin from './core/signin';
 import config from './config';
 import * as multer from 'multer';
@@ -24,12 +22,6 @@ export default function(app: express.Express): void {
 
 	app.use(require('subdomain')(subdomainOptions));
 
-	app.param('username', paramUsername);
-	app.param('postId', paramPostId);
-	app.param('fileId', paramFileId);
-	app.param('folderId', paramFolderId);
-	app.param('talkGroupId', paramTalkGroupId);
-
 	app.get('/', (req, res) => {
 		if (res.locals.signin) {
 			render(req, res, 'home');
@@ -41,62 +33,9 @@ export default function(app: express.Express): void {
 	//////////////////////////////////////////////////
 	// GENERAL
 
-	app.get('/terms-of-use', (req, res) => {
+	app.get('/_/terms-of-use', (req, res) => {
 		render(req, res, 'terms-of-use');
 	});
-
-	//////////////////////////////////////////////////
-	// I
-
-	app.get('/i/*', (req, res, next) => {
-		if (res.locals.signin) {
-			next();
-		} else {
-			render(req, res, 'signin');
-		}
-	});
-
-	app.get('/i/post', (req, res) => {
-		render(req, res, 'i/post');
-	});
-
-	app.get('/i/mentions', (req, res) => {
-		render(req, res, 'i/mentions');
-	});
-
-	app.get('/i/notifications', (req, res) => {
-		render(req, res, 'i/notifications');
-	});
-
-	app.get('/i/album', (req, res) => {
-		render(req, res, 'i/album');
-	});
-
-	app.get('/i/album/file/:fileId', (req, res) => {
-		render(req, res, 'i/album/file');
-	});
-
-	app.get('/i/album/file/:fileId/edit-tag', (req, res) => {
-		render(req, res, 'i/album/file/edit-tag');
-	});
-
-	app.get('/i/album/folder/:folderId', (req, res) => {
-		render(req, res, 'i/album/folder');
-	});
-
-	app.get('/i/album/tags', (req, res) => {
-		render(req, res, 'i/album/tags');
-	});
-
-	app.get('/i/upload', (req, res) => {
-		render(req, res, 'i/upload');
-	});
-
-	app.get('/i/settings', (req, res) =>
-		render(req, res, 'i/settings'));
-
-	app.get('/i/home-customize', (req, res) =>
-		render(req, res, 'i/home-customize'));
 
 	//////////////////////////////////////////////////
 	// COLOR
@@ -163,116 +102,24 @@ export default function(app: express.Express): void {
 	});
 
 	//////////////////////////////////////////////////
-	// SEARCH
-
-	const searchDomain = `/subdomain/${config.domains.search}`;
-
-	app.get(`${searchDomain}/`, (req, res) => {
-		if (req.query.hasOwnProperty('q')) {
-			render(req, res, 'search/result');
-		} else {
-			render(req, res, 'search/index');
-		}
-	});
-
-	//////////////////////////////////////////////////
-	// ABOUT
-
-	const aboutDomain = `/subdomain/${config.domains.about}`;
-
-	app.get(`${aboutDomain}/`, (req, res) => {
-		render(req, res, 'about');
-	});
-
-	app.get(`${aboutDomain}/license`, (req, res) => {
-		render(req, res, 'about/license');
-	});
-
-	app.get(`${aboutDomain}/technologies`, (req, res) => {
-		render(req, res, 'about/technologies');
-	});
-
-	//////////////////////////////////////////////////
-	// TALK
-
-	const talkDomain = `/subdomain/${config.domains.talk}`;
-
-	app.get(`${talkDomain}/*`, (req, res, next) => {
-		if (req.headers.hasOwnProperty('referer')) {
-			const referer = req.headers['referer'];
-			if ((new RegExp(`^https?://(.+\.)?${config.host}/?\$`)).test(referer)) {
-				res.header('X-Frame-Options', '');
-			} else {
-				res.header('X-Frame-Options', 'DENY');
-			}
-		} else {
-			res.header('X-Frame-Options', 'DENY');
-		}
-
-		next();
-	});
-
-	app.get(`${talkDomain}/`, (req, res) => {
-		render(req, res, 'i/talks');
-	});
-
-	app.get(`${talkDomain}/i/users`, (req, res) => {
-		render(req, res, 'i/talks/users');
-	});
-
-	app.get(`${talkDomain}/i/groups`, (req, res) => {
-		render(req, res, 'i/talks/groups');
-	});
-
-	app.get(`${talkDomain}/i/group/create`, (req, res) => {
-		render(req, res, 'i/talks/group/create');
-	});
-
-	app.get(`${talkDomain}/:userScreenName`, (req, res) => {
-		render(req, res, 'i/talk/user');
-	});
-
-	app.get(`${talkDomain}/\:group/:talkGroupId`,
-		(req, res) => {
-		render(req, res, 'i/talk/group');
-	});
-
-	app.get('/:userScreenName', (req, res) => {
-		render(req, res, 'user/home');
-	});
-
-	app.get('/:userScreenName/following', (req, res) => {
-		render(req, res, 'user/following');
-	});
-
-	app.get('/:userScreenName/followers', (req, res) => {
-		render(req, res, 'user/followers');
-	});
-
-	app.get('/:userScreenName/:postId', (req, res) => {
-		render(req, res, 'post');
-	});
-
-	//////////////////////////////////////////////////
 	// API
 
-	app.post('/account/create', require('./endpoints/account/create').default);
-	app.post('/web/url/analyze', require('./endpoints/url/analyze').default);
-	app.post('/web/avatar/update', require('./endpoints/avatar/update').default);
-	app.post('/web/banner/update', require('./endpoints/banner/update').default);
-	app.post('/web/home/update', require('./endpoints/home/update').default);
-	app.post('/web/display-image-quality/update', require('./endpoints/display-image-quality/update').default);
-	app.post('/web/pseudo-push-notification-display-duration/update',
-		require('./endpoints/pseudo-push-notification-display-duration/update').default);
-	app.post('/web/mobile-header-overlay/update', require('./endpoints/mobile-header-overlay/update').default);
-	app.post('/web/user-settings/update', require('./endpoints/user-settings/update').default);
-	app.post('/web/album/upload',
+	app.post('/_/api/account/create', require('./api/account/create').default);
+	app.post('/_/api/url/analyze', require('./api/url/analyze').default);
+	app.post('/_/api/avatar/update', require('./api/avatar/update').default);
+	app.post('/_/api/banner/update', require('./api/banner/update').default);
+	app.post('/_/api/home/update', require('./api/home/update').default);
+	app.post('/_/api/display-image-quality/update', require('./api/display-image-quality/update').default);
+	app.post('/_/api/pseudo-push-notification-display-duration/update',
+		require('./api/pseudo-push-notification-display-duration/update').default);
+	app.post('/_/api/mobile-header-overlay/update', require('./api/mobile-header-overlay/update').default);
+	app.post('/_/api/user-settings/update', require('./api/user-settings/update').default);
+	app.post('/_/api/album/upload',
 		upload.single('file'),
-		require('./endpoints/album/upload').default);
-	app.post('/web/posts/create-with-file',
+		require('./api/album/upload').default);
+	app.post('/_/api/posts/create-with-file',
 		upload.single('file'),
-		require('./endpoints/posts/create-with-file').default);
-	app.post('/web/posts/reply', require('./endpoints/posts/reply').default);
+		require('./api/posts/create-with-file').default);
 
 	// Not found handling
 	app.use((req, res) => {
@@ -297,112 +144,5 @@ export default function(app: express.Express): void {
 		res.render(`${__dirname}/web/error`, {
 			error: err
 		});
-	});
-}
-
-function paramUsername(
-	req: express.Request,
-	res: express.Response,
-	next: () => void,
-	screenName: string
-): void {
-
-	api('users/show', {
-		'screen-name': screenName
-	}, res.locals.signin ? res.locals.user : null).then((user: User) => {
-		if (user !== null) {
-			res.locals.user = user;
-			next();
-		} else {
-			res.status(404);
-			render(req, res, 'user-not-found');
-		}
-	}, err => {
-		if (err.body === 'not-found') {
-			res.status(404);
-			render(req, res, 'user-not-found');
-		}
-	});
-}
-
-function paramPostId(
-	req: express.Request,
-	res: express.Response,
-	next: () => void,
-	postId: string
-): void {
-
-	api('posts/show', {
-		'post-id': postId
-	}, res.locals.signin ? res.locals.user : null).then((post: Object) => {
-		if (post !== null) {
-			res.locals.post = post;
-			next();
-		} else {
-			res.status(404);
-			render(req, res, 'post-not-found');
-		}
-	}, err => {
-		if (err.body === 'not-found') {
-			res.status(404);
-			render(req, res, 'post-not-found');
-		}
-	});
-}
-
-function paramFileId(
-	req: express.Request,
-	res: express.Response,
-	next: () => void,
-	fileId: string
-): void {
-
-	api('album/files/show', {
-		'file-id': fileId
-	}, res.locals.signin ? res.locals.user : null).then((file: Object) => {
-		res.locals.file = file;
-		next();
-	}, err => {
-		if (err.body === 'not-found') {
-			res.status(404);
-			render(req, res, 'i/album/file-not-found');
-		}
-	});
-}
-
-function paramFolderId(
-	req: express.Request,
-	res: express.Response,
-	next: () => void,
-	folderId: string
-): void {
-
-	api('album/folders/show', {
-		'folder-id': folderId
-	}, res.locals.signin ? res.locals.user : null).then((folder: Object) => {
-		res.locals.folder = folder;
-		next();
-	}, err => {
-		if (err.body === 'not-found') {
-			res.status(404);
-			render(req, res, 'i/album/folder-not-found');
-		}
-	});
-}
-
-function paramTalkGroupId(
-	req: express.Request,
-	res: express.Response,
-	next: () => void,
-	groupId: string
-): void {
-
-	api('talks/group/show', {
-		'group-id': groupId
-	}, res.locals.user).then((group: Object) => {
-		res.locals.talkGroup = group;
-		next();
-	}, err => {
-		res.sendStatus(500);
 	});
 }

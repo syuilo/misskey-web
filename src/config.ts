@@ -78,7 +78,6 @@ function loadConfig(): IConfig {
 		admin: `${domains.admin}.${host}`,
 		i: `${domains.i}.${host}`,
 		about: `${scheme}${domains.about}.${host}`,
-		api: `${domains.api}.${host}`,
 		signup: `${domains.signup}.${host}`,
 		signin: `${domains.signin}.${host}`,
 		signout: `${domains.signout}.${host}`,
@@ -95,7 +94,6 @@ function loadConfig(): IConfig {
 		admin: `${scheme}://${domains.admin}.${host}`,
 		i: `${scheme}://${domains.i}.${host}`,
 		about: `${scheme}://${domains.about}.${host}`,
-		api: `${scheme}://${domains.api}.${host}`,
 		signup: `${scheme}://${domains.signup}.${host}`,
 		signin: `${scheme}://${domains.signin}.${host}`,
 		signout: `${scheme}://${domains.signout}.${host}`,
@@ -132,7 +130,6 @@ export function sanitize(conf: IConfig): any {
 type Domains = {
 	about: string;
 	admin: string;
-	api: string;
 	color: string;
 	forum: string;
 	help: string;
@@ -158,7 +155,6 @@ export interface IConfig {
 	host: string;
 	hosts: Domains;
 	maintainer: string;
-	googleSiteVerification: string;
 	mongo: {
 		uri: string;
 		options: {

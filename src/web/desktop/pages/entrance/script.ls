@@ -1,9 +1,6 @@
-$ = require 'jquery'
-require 'jquery.transit'
-
 require '../../../base.ls'
-WavesEffect = require '../../common/waves-effect.js'
-Strength = require '../../common/strength.js'
+WavesEffect = require 'ripple.js'
+Strength = require 'strength.js'
 
 $ window .load ->
 	WavesEffect.attach-to-class \ripple-effect
@@ -206,10 +203,11 @@ function init-signin-form
 	init-card-effect $form
 
 	$ \#username .change ->
-		$.ajax "#{CONFIG.urls.api}/users/show", {
-			data: {'username': $ \#username .val!}
+		api 'users/show' {
+			'username': $ \#username .val!
 		}
-		.done (user) ->
+		.then (user) ->
+			console.log user
 			$ '#signin .title p' .text user.name
 			$ \#avatar .attr \src user.avatar-thumbnail-url
 

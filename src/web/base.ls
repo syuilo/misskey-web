@@ -1,3 +1,17 @@
+require 'fetch'
+
+window.api = (endpoint, data) ->
+	body = []
+
+	for k, v of data
+		body.push "#{k}=#{v}"
+
+	fetch "#{CONFIG.api.url}/#{endpoint}" do
+		method: \POST
+		headers:
+			'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+		body: body.join \&
+
 Cookies = require 'js-cookie'
 
 u = Cookies.get \u
