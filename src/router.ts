@@ -8,6 +8,8 @@ import { User } from './db/models/user';
 import api from './core/api';
 import signin from './core/signin';
 import config from './config';
+import * as multer from 'multer';
+const upload = multer({ dest: 'uploads/' });
 
 function render(req: express.Request, res: express.Response, path: string, data?: any): void {
 	const ua = res.locals.useragent.isMobile ? 'mobile' : 'desktop';
@@ -244,6 +246,28 @@ export default function(app: express.Express): void {
 	app.get('/:userScreenName/:postId', (req, res) => {
 		render(req, res, 'post');
 	});
+
+	//////////////////////////////////////////////////
+	// API
+
+	app.post('/account/create', require('./endpoints/account/create').default);
+	app.post('/web/url/analyze', require('./endpoints/url/analyze').default);
+	app.post('/web/avatar/update', require('./endpoints/avatar/update').default);
+	app.post('/web/banner/update', require('./endpoints/banner/update').default);
+	app.post('/web/home/update', require('./endpoints/home/update').default);
+	app.post('/web/display-image-quality/update', require('./endpoints/display-image-quality/update').default);
+	app.post('/web/pseudo-push-notification-display-duration/update',
+		require('./endpoints/pseudo-push-notification-display-duration/update').default);
+	app.post('/web/mobile-header-overlay/update', require('./endpoints/mobile-header-overlay/update').default);
+	app.post('/web/user-settings/update', require('./endpoints/user-settings/update').default);
+	app.post('/web/album/upload',
+		upload.single('file'),
+		require('./endpoints/album/upload').default);
+	app.post('/web/posts/create-with-file',
+		upload.single('file'),
+		require('./endpoints/posts/create-with-file').default);
+	app.post('/web/posts/reply', require('./endpoints/posts/reply').default);
+
 
 	// Not found handling
 	app.use((req, res) => {

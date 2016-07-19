@@ -79,7 +79,6 @@ function loadConfig(): IConfig {
 		i: `${domains.i}.${host}`,
 		about: `${scheme}${domains.about}.${host}`,
 		api: `${domains.api}.${host}`,
-		resources: `${domains.resources}.${host}`,
 		signup: `${domains.signup}.${host}`,
 		signin: `${domains.signin}.${host}`,
 		signout: `${domains.signout}.${host}`,
@@ -97,7 +96,6 @@ function loadConfig(): IConfig {
 		i: `${scheme}://${domains.i}.${host}`,
 		about: `${scheme}://${domains.about}.${host}`,
 		api: `${scheme}://${domains.api}.${host}`,
-		resources: `${scheme}://${domains.resources}.${host}`,
 		signup: `${scheme}://${domains.signup}.${host}`,
 		signin: `${scheme}://${domains.signin}.${host}`,
 		signout: `${scheme}://${domains.signout}.${host}`,
@@ -139,7 +137,6 @@ type Domains = {
 	forum: string;
 	help: string;
 	i: string;
-	resources: string;
 	signup: string;
 	signin: string;
 	signout: string;

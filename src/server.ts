@@ -88,7 +88,7 @@ app.use(vhost(config.hosts.api, webapi(session)));
 app.use(compression());
 
 // Init static resources server
-app.use(vhost(config.hosts.resources, resources()));
+app.use('/_/resources', express.static(`${__dirname}/resources`));
 
 app.use(favicon(`${__dirname}/resources/favicon.ico`));
 app.use(bodyParser.urlencoded({ extended: true }));
