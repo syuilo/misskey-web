@@ -116,7 +116,7 @@ app.use(csrf({
 app.use(useragent.express());
 
 // Intercept all requests
-app.use(async (req, res, next) => {
+app.use(async (req, res, next): Promise<void> => {
 
 	// Security headers
 	res.header('X-Frame-Options', 'DENY');

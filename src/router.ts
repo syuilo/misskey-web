@@ -268,7 +268,6 @@ export default function(app: express.Express): void {
 		require('./endpoints/posts/create-with-file').default);
 	app.post('/web/posts/reply', require('./endpoints/posts/reply').default);
 
-
 	// Not found handling
 	app.use((req, res) => {
 		res.status(404);

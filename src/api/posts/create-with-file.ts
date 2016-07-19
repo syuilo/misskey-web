@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as express from 'express';
-import api from '../../../core/api';
+import api from '../../core/api';
 
 export default function (req: express.Request, res: express.Response): void {
 	const file: Express.Multer.File = (<any>req).file;

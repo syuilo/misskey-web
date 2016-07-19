@@ -1,5 +1,5 @@
 import * as express from 'express';
-import UserSetting from '../../../db/models/user-settings';
+import UserSetting from '../../db/models/user-settings';
 
 export default function (req: express.Request, res: express.Response): void {
 	const id: string = req.body['id'];

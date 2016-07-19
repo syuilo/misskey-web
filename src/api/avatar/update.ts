@@ -2,7 +2,7 @@ import * as http from 'http';
 import * as express from 'express';
 import * as request from 'request';
 import * as gm from 'gm';
-import api from '../../../core/api';
+import api from '../../core/api';
 
 export default function (req: express.Request, res: express.Response): void {
 	const avaterFileId: string = req.body['file-id'];
