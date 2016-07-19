@@ -25,7 +25,7 @@ export default function(app: express.Express): void {
 	app.param('talkGroupId', paramTalkGroupId);
 
 	app.get('/', (req, res) => {
-		if (res.locals.isSignin) {
+		if (res.locals.signin) {
 			render(req, res, 'home');
 		} else {
 			render(req, res, 'entrance');
@@ -43,7 +43,7 @@ export default function(app: express.Express): void {
 	// I
 
 	app.get('/i/*', (req, res, next) => {
-		if (res.locals.isSignin) {
+		if (res.locals.signin) {
 			next();
 		} else {
 			render(req, res, 'signin');
@@ -107,7 +107,7 @@ export default function(app: express.Express): void {
 	const signupDomain = `/subdomain/${config.domains.signup}`;
 
 	app.get(`${signupDomain}/`, (req, res) => {
-		if (res.locals.isSignin) {
+		if (res.locals.signin) {
 			res.redirect(config.url);
 		} else {
 			render(req, res, 'signup');
@@ -128,7 +128,7 @@ export default function(app: express.Express): void {
 	});
 
 	app.get(`${signinDomain}/`, (req, res) => {
-		if (res.locals.isSignin) {
+		if (res.locals.signin) {
 			res.redirect(config.url);
 		} else if (req.query.hasOwnProperty('username') && req.query.hasOwnProperty('password')) {
 			signin(req.query['username'], req.query['password'], req.session).then(() => {
@@ -147,7 +147,7 @@ export default function(app: express.Express): void {
 	const signoutDomain = `/subdomain/${config.domains.signout}`;
 
 	app.get(`${signoutDomain}/`, (req, res) => {
-		if (res.locals.isSignin) {
+		if (res.locals.signin) {
 			req.session.destroy(() => {
 				res.redirect(config.url);
 			});
@@ -304,7 +304,7 @@ function paramUsername(
 
 	api('users/show', {
 		'screen-name': screenName
-	}, res.locals.isSignin ? res.locals.user : null).then((user: User) => {
+	}, res.locals.signin ? res.locals.user : null).then((user: User) => {
 		if (user !== null) {
 			res.locals.user = user;
 			next();
@@ -329,7 +329,7 @@ function paramPostId(
 
 	api('posts/show', {
 		'post-id': postId
-	}, res.locals.isSignin ? res.locals.user : null).then((post: Object) => {
+	}, res.locals.signin ? res.locals.user : null).then((post: Object) => {
 		if (post !== null) {
 			res.locals.post = post;
 			next();
@@ -354,7 +354,7 @@ function paramFileId(
 
 	api('album/files/show', {
 		'file-id': fileId
-	}, res.locals.isSignin ? res.locals.user : null).then((file: Object) => {
+	}, res.locals.signin ? res.locals.user : null).then((file: Object) => {
 		res.locals.file = file;
 		next();
 	}, err => {
@@ -374,7 +374,7 @@ function paramFolderId(
 
 	api('album/folders/show', {
 		'folder-id': folderId
-	}, res.locals.isSignin ? res.locals.user : null).then((folder: Object) => {
+	}, res.locals.signin ? res.locals.user : null).then((folder: Object) => {
 		res.locals.folder = folder;
 		next();
 	}, err => {

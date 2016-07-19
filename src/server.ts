@@ -2,6 +2,11 @@
 // WEB SERVER
 //////////////////////////////////////////////////
 
+const env = process.env.NODE_ENV;
+
+/**
+ * Module dependencies
+ */
 import * as cluster from 'cluster';
 import * as fs from 'fs';
 import * as http from 'http';
@@ -14,24 +19,19 @@ import * as MongoStore from 'connect-mongo';
 import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
+import * as cors from 'cors';
 import * as csrf from 'csurf';
 import * as favicon from 'serve-favicon';
 import * as accesses from 'accesses';
 import name from 'named';
-const vhost = require('vhost');
 
 import db from './db/db';
 import UserSetting from './db/models/user-settings';
-
 import api from './core/api';
 import config from './config';
-
 import router from './router';
 
-const env = process.env.NODE_ENV;
-
 const worker = cluster.worker;
-
 console.log(`Init ${name(worker.id)} server...`);
 
 //////////////////////////////////////////////////
@@ -82,27 +82,27 @@ app.use(accesses.express());
 
 app.use(compression());
 
+// CORS
+app.use(cors({
+	origin: true,
+	credentials: true
+}));
+
 // Init static resources server
 app.use('/_/resources', express.static(`${__dirname}/resources`));
 
+app.get('/manifest.json', (req, res) =>
+	res.sendFile(path.resolve(`${__dirname}/resources/manifest.json`))
+);
+
+app.get('/apple-touch-icon.png', (req, res) =>
+	res.sendFile(path.resolve(`${__dirname}/resources/apple-touch-icon.png`))
+);
+
 app.use(favicon(`${__dirname}/resources/favicon.ico`));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(config.cookiePass));
-
-// CORS
-app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', config.url);
-	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-	res.header('Access-Control-Allow-Headers', 'Content-Type, csrf-token');
-	res.header('Access-Control-Allow-Credentials', 'true');
-
-	// intercept OPTIONS method
-	if (req.method === 'OPTIONS') {
-		res.sendStatus(200);
-	} else {
-		next();
-	}
-});
 
 // Session settings
 app.use(expressSession(session));
@@ -120,7 +120,6 @@ app.use(async (req, res, next) => {
 
 	// Security headers
 	res.header('X-Frame-Options', 'DENY');
-	res.header('X-Content-Type-Options', 'nosniff');
 
 	// HSTS
 	if (config.https.enable) {
@@ -132,21 +131,20 @@ app.use(async (req, res, next) => {
 	// See http://web-tan.forum.impressrd.jp/e/2013/05/17/15269
 	res.header('Vary', 'User-Agent, Cookie');
 
-	res.locals.isSignin =
+	res.locals.signin =
 		req.hasOwnProperty('session') &&
 		req.session !== null &&
 		req.session.hasOwnProperty('userId') &&
 		(<any>req.session).userId !== null;
 
 	res.locals.config = config;
-	res.locals.signin = res.locals.isSignin;
 
 	// Set CSRF token to Cookie
 	res.cookie('x', req.csrfToken(), Object.assign({
 		httpOnly: false
 	}, cookieBase));
 
-	if (!res.locals.isSignin) {
+	if (!res.locals.signin) {
 		res.locals.user = null;
 		next();
 		return;
@@ -172,14 +170,6 @@ app.use(async (req, res, next) => {
 });
 
 app.use(require('subdomain')(subdomainOptions));
-
-app.get('/manifest.json', (req, res) => {
-	res.sendFile(path.resolve(`${__dirname}/resources/manifest.json`));
-});
-
-app.get('/apple-touch-icon.png', (req, res) => {
-	res.sendFile(path.resolve(`${__dirname}/resources/apple-touch-icon.png`));
-});
 
 // Main routing
 router(app);
@@ -210,9 +200,9 @@ if (config.https.enable) {
 }
 
 server.listen(port, config.bindIp, () => {
-	const listenhost = server.address().address;
-	const listenport = server.address().port;
+	const h = server.address().address;
+	const p = server.address().port;
 
 	console.log(
-		`\u001b[1;32m${name(worker.id)} is now listening at ${listenhost}:${listenport}\u001b[0m`);
+		`\u001b[1;32m${name(worker.id)} is now listening at ${h}:${p}\u001b[0m`);
 });
