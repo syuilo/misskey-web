@@ -4,7 +4,9 @@ mk-go-top
 
 script.
 
-	window.on 'load scroll resize' @on-scroll
+	window.add-event-listener \load @on-scroll
+	window.add-event-listener \scroll @on-scroll
+	window.add-event-listener \resize @on-scroll
 
 	@on-scroll = ~>
 		if $ window .scroll-top! > 500px
