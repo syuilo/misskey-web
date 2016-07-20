@@ -21,9 +21,9 @@ export default (req: express.Request, res: express.Response) => {
 		const parsed = JSON.parse(body);
 
 		if (parsed.success) {
-			api('account/create', {
-				'username': req.body['username'],
-				'password': req.body['password']
+			api('signup', {
+				username: req.body['username'],
+				password: req.body['password']
 			}).then(account => {
 				res.send(account);
 			}, err2 => {

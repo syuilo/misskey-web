@@ -355,7 +355,7 @@ function init-signup-form
 
 		$ \html .add-class \logging
 
-		api 'account/create' do
+		webapi 'account/create' do
 			username: username
 			password: password
 			'g-recaptcha-response': grecaptcha.get-response!
@@ -368,6 +368,8 @@ function init-signup-form
 			alert '何らかの原因によりアカウントの作成に失敗しました。再度お試しください。'
 
 			grecaptcha.reset!
+
+			$ \.recaptcha .find '> .caption > i' .attr \class 'fa fa-toggle-off'
 
 			$submit-button
 				..attr \disabled off

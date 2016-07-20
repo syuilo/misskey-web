@@ -26,6 +26,9 @@ window.api = (endpoint, data) ->
 	for k, v of data
 		body.push "#{k}=#{v}"
 
+	if window.SIGNIN
+		body.push "_i=#{window.USER._web}"
+
 	new Promise (resolve, reject) ->
 		fetch "#{CONFIG.api.url}/#{endpoint}" do
 			method: \POST
@@ -45,8 +48,12 @@ window.webapi = (endpoint, data) ->
 	for k, v of data
 		body.push "#{k}=#{v}"
 
+	ep = if (endpoint.index-of '://') == -1
+		then "#{CONFIG.url}/_/api/#{endpoint}"
+		else endpoint
+
 	new Promise (resolve, reject) ->
-		fetch "#{endpoint}" do
+		fetch ep, do
 			credentials: \include
 			method: \POST
 			headers:

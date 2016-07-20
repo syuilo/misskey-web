@@ -4,7 +4,7 @@ import config from '../config';
 
 export default (
 	endpoint: string,
-	params: any,
+	params: any = {},
 	user: any = null,
 	withFile: boolean = false
 ) => new Promise<any>(async (resolve, reject) => {
@@ -16,12 +16,11 @@ export default (
 
 	const options: request.Options = {
 		url: `http://${config.api.host}:${config.api.port}/${endpoint}`,
-		method: 'POST',
-		headers: {
-			'_web': config.api.pass,
-			'user': userId
-		}
+		method: 'POST'
 	};
+
+	params._web = config.api.pass;
+	params._user = userId;
 
 	if (withFile) {
 		options.formData = params;
@@ -31,7 +30,6 @@ export default (
 
 	request(options, (err, response, body) => {
 		if (err) {
-			console.error(err);
 			reject(err);
 		} else if (response.statusCode !== 200) {
 			reject({

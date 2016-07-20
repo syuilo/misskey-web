@@ -34,10 +34,11 @@ Error.stackTraceLimit = Infinity;
 import * as cluster from 'cluster';
 import * as accesses from 'accesses';
 import name from 'named';
-import {logInfo, logWarn} from 'log-cool';
+import {logDone, logInfo, logWarn, logFailed} from 'log-cool';
 import argv from './argv';
 import config from './config';
 import checkDependencies from './check-dependencies';
+import api from './core/api';
 
 // init babel
 require('babel-core/register');
@@ -62,6 +63,23 @@ if (cluster.isMaster) {
 		logWarn('Productionモードではありません。本番環境で使用しないでください。');
 	}
 
+	// Get Core information
+	api('meta').then(res => {
+		logDone('Core: available');
+		logInfo(`Core: maintainer: ${res.maintainer}`);
+		logInfo(`Core: commit: ${res.commit}`);
+		spawn();
+	}, err => {
+		logFailed('Failed to connect to the Core');
+		spawn();
+	});
+}
+// Workers
+else {
+	require('./server');
+}
+
+function spawn(): void {
 	// Count the machine's CPUs
 	const cpuCount = require('os').cpus().length;
 
@@ -75,10 +93,6 @@ if (cluster.isMaster) {
 		appName: 'Misskey Web',
 		port: 81
 	});
-}
-// Workers
-else {
-	require('./server');
 }
 
 // Listen new workers

@@ -1,5 +1,3 @@
-const env = process.env.NODE_ENV;
-
 /**
  * Module dependencies
  */
@@ -30,45 +28,23 @@ const worker = cluster.worker;
 console.log(`Init ${name(worker.id)} server...`);
 
 /**
- * Options
+ * Init app
  */
+const app = express();
 
-const store = MongoStore(expressSession);
+app.disable('x-powered-by');
+app.locals.env = process.env.NODE_ENV;
+app.locals.compileDebug = false;
+app.locals.cache = true;
+//app.locals.pretty = '  ';
+app.set('views', __dirname);
+app.set('view engine', 'pug');
 
-const sessionExpires = 1000 * 60 * 60 * 24 * 365; // One Year
-
-const cookieBase = {
+const cookie = {
 	path: '/',
 	domain: `.${config.host}`,
 	secure: config.https.enable
 };
-
-const session = {
-	name: 's',
-	secret: config.sessionSecret,
-	resave: false,
-	saveUninitialized: true,
-	cookie: Object.assign({
-		httpOnly: true,
-		expires: new Date(Date.now() + sessionExpires),
-		maxAge: sessionExpires
-	}, cookieBase),
-	store: new store({
-		mongooseConnection: db
-	})
-};
-
-/**
- * Init app
- */
-const app = express();
-app.disable('x-powered-by');
-app.locals.compileDebug = false;
-app.locals.cache = true;
-app.locals.env = env;
-// app.locals.pretty = '    ';
-app.set('views', __dirname);
-app.set('view engine', 'pug');
 
 /**
  * Logging
@@ -91,8 +67,8 @@ app.use(cors({
 /**
  * Statics
  */
-app.use('/_/resources', express.static(`${__dirname}/resources`));
 app.use(favicon(`${__dirname}/resources/favicon.ico`));
+app.use('/_/resources', express.static(`${__dirname}/resources`));
 app.get('/manifest.json', (req, res) => res.sendFile(__dirname + '/resources/manifest.json'));
 app.get('/apple-touch-icon.png', (req, res) => res.sendFile(__dirname + '/resources/apple-touch-icon.png'));
 
@@ -105,7 +81,22 @@ app.use(cookieParser(config.cookiePass));
 /**
  * Session
  */
-app.use(expressSession(session));
+const store = MongoStore(expressSession);
+const sessionExpires = 1000 * 60 * 60 * 24 * 365; // One Year
+app.use(expressSession({
+	name: 's',
+	secret: config.sessionSecret,
+	resave: false,
+	saveUninitialized: true,
+	cookie: Object.assign({
+		httpOnly: true,
+		expires: new Date(Date.now() + sessionExpires),
+		maxAge: sessionExpires
+	}, cookie),
+	store: new store({
+		mongooseConnection: db
+	})
+}));
 
 /**
  * CSRF
@@ -148,7 +139,7 @@ app.use(async (req, res, next): Promise<void> => {
 	// Set CSRF token to Cookie
 	res.cookie('x', req.csrfToken(), Object.assign({
 		httpOnly: false
-	}, cookieBase));
+	}, cookie));
 
 	if (!res.locals.signin) {
 		res.locals.user = null;
@@ -167,7 +158,7 @@ app.use(async (req, res, next): Promise<void> => {
 		// Set user data to Cookie
 		res.cookie('u', JSON.stringify(res.locals.user), Object.assign({
 			httpOnly: false
-		}, cookieBase));
+		}, cookie));
 
 		next();
 	} catch (e) {
@@ -197,6 +188,5 @@ server.listen(config.bindPort, config.bindIp, () => {
 	const h = server.address().address;
 	const p = server.address().port;
 
-	console.log(
-		`\u001b[1;32m${name(worker.id)} is now listening at ${h}:${p}\u001b[0m`);
+	console.log(`\u001b[1;32m${name(worker.id)} is now listening at ${h}:${p}\u001b[0m`);
 });
