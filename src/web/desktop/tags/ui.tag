@@ -37,7 +37,7 @@ script.
 				'filter':         ""
 
 	@on \mount ~>
-		document.body.style.marginTop = @header.client-height + \px
+		document.body.style.margin-top = @header.client-height + \px
 
 		window.add-event-listener \load @on-scroll
 		window.add-event-listener \scroll @on-scroll
@@ -47,4 +47,4 @@ script.
 		t = window.page-y-offset
 		opacity = t / 128
 		if opacity > 0.3 then opacity = 0.3
-		@$header.css \box-shadow "0 0 1px rgba(0, 0, 0, " + opacity + ")"
+		@header.style.box-shadow = "0 0 1px rgba(0, 0, 0, " + opacity + ")"
