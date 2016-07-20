@@ -147,11 +147,12 @@ app.use(async (req, res, next): Promise<void> => {
 	// ユーザー情報フェッチ
 	try {
 		res.locals.user = await api('i', {}, userId);
-		res.locals.user._settings = await UserSetting.findOne({user_id: userId}).lean();
-		next();
 	} catch (_) {
-		res.status(500).send('Core Error');
+		return res.status(500).send('Core Error');
 	}
+
+	res.locals.user._settings = await UserSetting.findOne({user_id: userId}).lean();
+	next();
 });
 
 /**
