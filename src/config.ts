@@ -61,8 +61,8 @@ function loadConfig(): IConfig {
 
 	const scheme = conf.https.enable ? 'https' : 'http';
 	const port = conf.https.enable
-		? conf.ports.https === 443 ? '' : ':' + conf.ports.https
-		: conf.ports.http === 80 ? '' : ':' + conf.ports.http;
+		? conf.port === 443 ? '' : ':' + conf.port
+		: conf.port === 80 ? '' : ':' + conf.port;
 
 	conf.url = `${scheme}://${host}` + port;
 
@@ -162,20 +162,13 @@ export interface IConfig {
 			pass: string;
 		}
 	};
-	ports: {
-		http: number;
-		https: number;
-	};
-	bindPorts: {
-		http: number;
-		https: number;
-	};
+	port: number;
+	bindPort: number;
 	https: {
 		enable: boolean;
 		keyPath: string;
 		certPath: string;
 	};
-	sessionKey: string;
 	sessionSecret: string;
 	recaptcha: {
 		siteKey: string;

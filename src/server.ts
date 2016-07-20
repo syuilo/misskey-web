@@ -1,7 +1,3 @@
-//////////////////////////////////////////////////
-// WEB SERVER
-//////////////////////////////////////////////////
-
 const env = process.env.NODE_ENV;
 
 /**
@@ -11,7 +7,6 @@ import * as cluster from 'cluster';
 import * as fs from 'fs';
 import * as http from 'http';
 import * as https from 'https';
-import * as path from 'path';
 import * as express from 'express';
 import * as expressSession from 'express-session';
 import * as useragent from 'express-useragent';
@@ -34,8 +29,9 @@ import router from './router';
 const worker = cluster.worker;
 console.log(`Init ${name(worker.id)} server...`);
 
-//////////////////////////////////////////////////
-// SERVER OPTIONS
+/**
+ * Options
+ */
 
 const store = MongoStore(expressSession);
 
@@ -48,7 +44,7 @@ const cookieBase = {
 };
 
 const session = {
-	name: config.sessionKey,
+	name: 's',
 	secret: config.sessionSecret,
 	resave: false,
 	saveUninitialized: true,
@@ -62,9 +58,9 @@ const session = {
 	})
 };
 
-//////////////////////////////////////////////////
-// INIT SERVER PHASE
-
+/**
+ * Init app
+ */
 const app = express();
 app.disable('x-powered-by');
 app.locals.compileDebug = false;
@@ -74,45 +70,58 @@ app.locals.env = env;
 app.set('views', __dirname);
 app.set('view engine', 'pug');
 
-// Logging
+/**
+ * Logging
+ */
 app.use(accesses.express());
 
+/**
+ * Compressions
+ */
 app.use(compression());
 
-// CORS
+/**
+ * CORS
+ */
 app.use(cors({
 	origin: true,
 	credentials: true
 }));
 
-// Init static resources server
+/**
+ * Statics
+ */
 app.use('/_/resources', express.static(`${__dirname}/resources`));
-
-app.get('/manifest.json', (req, res) =>
-	res.sendFile(path.resolve(`${__dirname}/resources/manifest.json`))
-);
-
-app.get('/apple-touch-icon.png', (req, res) =>
-	res.sendFile(path.resolve(`${__dirname}/resources/apple-touch-icon.png`))
-);
-
 app.use(favicon(`${__dirname}/resources/favicon.ico`));
+app.get('/manifest.json', (req, res) => res.sendFile(__dirname + '/resources/manifest.json'));
+app.get('/apple-touch-icon.png', (req, res) => res.sendFile(__dirname + '/resources/apple-touch-icon.png'));
 
+/**
+ * Basic parsers
+ */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(config.cookiePass));
 
-// Session settings
+/**
+ * Session
+ */
 app.use(expressSession(session));
 
-// CSRF
+/**
+ * CSRF
+ */
 app.use(csrf({
 	cookie: false
 }));
 
-// Parse user agent
+/**
+ * Parse user-agent
+ */
 app.use(useragent.express());
 
-// Intercept all requests
+/**
+ * Initialize requests
+ */
 app.use(async (req, res, next): Promise<void> => {
 
 	// Security headers
@@ -143,8 +152,7 @@ app.use(async (req, res, next): Promise<void> => {
 
 	if (!res.locals.signin) {
 		res.locals.user = null;
-		next();
-		return;
+		return next();
 	}
 
 	try {
@@ -156,6 +164,7 @@ app.use(async (req, res, next): Promise<void> => {
 
 		res.locals.user = Object.assign(user, {_settings: settings});
 
+		// Set user data to Cookie
 		res.cookie('u', JSON.stringify(res.locals.user), Object.assign({
 			httpOnly: false
 		}, cookieBase));
@@ -166,35 +175,25 @@ app.use(async (req, res, next): Promise<void> => {
 	}
 });
 
-// Main routing
+/**
+ * Routing
+ */
 router(app);
 
-//////////////////////////////////////////////////
-// LISTEN PHASE
+/**
+ * Create server
+ */
+const server = config.https.enable
+	? https.createServer({
+			key: fs.readFileSync(config.https.keyPath),
+			cert: fs.readFileSync(config.https.certPath)
+		}, app)
+	: http.createServer(app);
 
-let server: http.Server | https.Server;
-let port: number;
-
-if (config.https.enable) {
-	port = config.bindPorts.https;
-	server = https.createServer({
-		key: fs.readFileSync(config.https.keyPath),
-		cert: fs.readFileSync(config.https.certPath)
-	}, app);
-
-	// 非TLSはリダイレクト
-	http.createServer((req, res) => {
-		res.writeHead(301, {
-			Location: config.url + req.url
-		});
-		res.end();
-	}).listen(config.bindPorts.http);
-} else {
-	port = config.bindPorts.http;
-	server = http.createServer(app);
-}
-
-server.listen(port, config.bindIp, () => {
+/**
+ * Server listen
+ */
+server.listen(config.bindPort, config.bindIp, () => {
 	const h = server.address().address;
 	const p = server.address().port;
 

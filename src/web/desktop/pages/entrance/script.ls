@@ -228,15 +228,12 @@ function init-signin-form
 		$submit-button = $form.find '[type=submit]'
 			..attr \disabled on
 
-		$.ajax CONFIG.urls.signin, {
-			data: {
-				'username': $form.find '[name="username"]' .val!
-				'password': $form.find '[name="password"]' .val!
-			}
-		}
-		.done ->
+		webapi CONFIG.urls.signin, do
+			username: $form.find '[name="username"]' .val!
+			password: $form.find '[name="password"]' .val!
+		.then ->
 			location.reload!
-		.fail ->
+		.catch ->
 			$ \html .remove-class \logging
 			$submit-button.attr \disabled off
 			$form.css {
@@ -270,9 +267,9 @@ function init-signup-form
 					..attr \data-state \processing
 				$form.find '.username > .profile-page-url-preview' .text "#{CONFIG.url}/#un"
 
-				$.ajax "#{CONFIG.urls.api}/username/available" {
-					data: {'username': un}
-				} .done (result) ->
+				api 'username/available' do
+					username: un
+				.then (result) ->
 					if result.available
 						$form.find '.username > .info'
 							..children \i .attr \class 'fa fa-check'
@@ -283,7 +280,7 @@ function init-signup-form
 							..children \i .attr \class 'fa fa-exclamation-triangle'
 							..children \span .text '既に利用されています'
 							..attr \data-state \error
-				.fail (err) ->
+				.catch (err) ->
 					$form.find '.username > .info'
 						..children \i .attr \class 'fa fa-exclamation-triangle'
 						..children \span .text '通信エラー'
@@ -358,17 +355,16 @@ function init-signup-form
 
 		$ \html .add-class \logging
 
-		$.ajax "#{CONFIG.urls.api}/account/create" {
-			data:
-				'username': username
-				'password': password
-				'g-recaptcha-response': grecaptcha.get-response!
-		} .done ->
+		api 'account/create' do
+			username: username
+			password: password
+			'g-recaptcha-response': grecaptcha.get-response!
+		.then ->
 			$submit-button
 				.find \span .text 'サインイン中...'
 
 			location.href = "#{CONFIG.urls.signin}?username=#{username}&password=#{password}"
-		.fail ->
+		.catch ->
 			alert '何らかの原因によりアカウントの作成に失敗しました。再度お試しください。'
 
 			grecaptcha.reset!

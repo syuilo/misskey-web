@@ -107,9 +107,7 @@ styleに至っては二段も**余計な**インデントを無くすことが�
 
 ### Basic template
 ``` yaml
-#================================================================
 # Misskey Web Configuration
-#================================================================
 
 ### サーバーの管理者情報
 # ex) "Your Name <youremail@example.com>"
@@ -121,9 +119,12 @@ host: "misskey.xyz"
 ### アクセスするときのポート
 # サーバー内部でlistenするポートではありません。ブラウザでアクセスするときの最終的なポートです。
 # 内部でプロキシを使用していたりなどの理由で、リクエストを待ち受けるポートを指定する場合は bindPorts の項目を設定してください。
-ports:
-  http: 80
-  https: 443
+port: 80
+
+bindIp: null
+
+### Web待ち受けポート
+bindPort: 80
 
 ### ユーザーのクライアントに関する設定をストアするDB(Mongo)の情報
 mongo:
@@ -149,9 +150,6 @@ api:
 # よく分からない
 cookiePass: <string>
 
-# セッションIDを保存するCookieのキー
-sessionKey: "hmsk"
-
 # よく分からない
 sessionSecret: <string>
 
@@ -162,13 +160,6 @@ recaptcha:
   siteKey: <string>
   # シークレット
   secretKey: <string>
-
-bindIp: null
-
-### Web待ち受けポート
-bindPorts:
-  http: 80
-  https: 443
 
 ### テーマカラー
 themeColor: "#ec6b43"
