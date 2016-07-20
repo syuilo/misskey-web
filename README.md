@@ -1,13 +1,11 @@
 ![](./web.png)
 -----------------------------
 
-<div style="text-align: center;">
 [![][travis-badge]][travis-link]
 [![][dependencies-badge]][dependencies-link]
 [![][mit-badge]][mit]
 
-<p style="padding: 16px;"><i>Misskey</i> official client for the Web.</p>
-</div>
+*Misskey* official client for the Web.
 
 ## External dependencies
 * Node.js
