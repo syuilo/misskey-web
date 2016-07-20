@@ -1,6 +1,6 @@
 # require 'fetch'
 
-api = (endpoint, data) ->
+window.api = (endpoint, data) ->
 	body = []
 
 	for k, v of data
@@ -22,7 +22,7 @@ api = (endpoint, data) ->
 		.catch (e) ->
 			reject e
 
-webapi = (endpoint, data) ->
+window.webapi = (endpoint, data) ->
 	body = ["_csrf=#{CSRF_TOKEN}"]
 
 	for k, v of data

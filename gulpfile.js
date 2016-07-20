@@ -264,14 +264,24 @@ gulp.task('build:scripts', done => {
 					});
 					return dist;
 				}))
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					let dist = '';
+					const lines = source.split('\r\n');
+					let flag = false;
+					lines.forEach(line => {
+						if (line === '\tstyle.') {
+							dist += line = '\tstyle(type=\'stylus\', scoped).\r\n';
+						} else {
+							dist += line + '\r\n';
+						}
+					});
+					return dist;
+				}))
 				// スペースでインデントされてないとエラーが出る
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
 					return source.replace(/\t/g, '  ');
-				}))
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-					return source.replace('style.', 'style(type=\'stylus\', scoped).');
 				}))
 				.transform(riotify, {
 					template: 'pug',

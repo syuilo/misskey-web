@@ -8,9 +8,10 @@ script.
 	set-interval draw, 1000ms
 
 	function draw
-		s = (new Date!).get-seconds!
-		m = (new Date!).get-minutes!
-		h = (new Date!).get-hours!
+		now = new Date!
+		s = now.get-seconds!
+		m = now.get-minutes!
+		h = now.get-hours!
 
 		vec2 = (x, y) ->
 			@x = x
