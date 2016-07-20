@@ -160,9 +160,9 @@ script.
 		e.stop-propagation!
 
 	@post = (e) ~>
-		$.ajax CONFIG.urls.api + '/posts/create' { data: {
+		api 'posts/create' {
 			'text': @text.value
-		}}
+		}
 		.done (data) ->
 			console.log data
 		.fail (err, text-status) ->

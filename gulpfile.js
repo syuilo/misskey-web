@@ -41,7 +41,6 @@ const sanitizedConfig = require('./src/config.ts').sanitize(config);
  */
 const aliasifyConfig = {
 	"aliases": {
-		"config": "./built/_/config.json",
 		"fetch": "./bower_components/fetch/fetch.js",
 		"jquery": "./bower_components/jquery/dist/jquery.js",
 		"jquery.transit": "./bower_components/jquery.transit/jquery.transit.js",
@@ -109,20 +108,6 @@ gulp.task('build:ts', () => {
 });
 
 //////////////////////////////////////////////////
-// configのデプロイ
-gulp.task('build:public-config', ['build:ts'], done => {
-	gutil.log('設定情報を配置します...');
-
-	fs.mkdir('./built/_', e => {
-		if (!e || (e && e.code === 'EEXIST')) {
-			fs.writeFile('./built/_/config.json', JSON.stringify(sanitizedConfig), done);
-		} else {
-			console.error(e);
-		}
-	});
-});
-
-//////////////////////////////////////////////////
 // Bowerのパッケージのコピー
 gulp.task('copy:bower_components', () => {
 	gutil.log('Bower経由のパッケージを配置します...');
@@ -133,7 +118,7 @@ gulp.task('copy:bower_components', () => {
 
 //////////////////////////////////////////////////
 // フロントサイドのスクリプトのビルド
-gulp.task('build:scripts', ['build:public-config'], done => {
+gulp.task('build:scripts', done => {
 	gutil.log('フロントサイドスクリプトを構築します...');
 
 	glob('./src/web/**/*.ls', (err, files) => {
@@ -300,7 +285,11 @@ gulp.task('build:scripts', ['build:public-config'], done => {
 					}
 				})
 				.bundle()
-				.pipe(source(entry.replace('src/web', 'resources').replace('.ls', '.js')));
+				.pipe(source(entry.replace('src/web', 'resources').replace('.ls', '.js')))
+				.pipe(replace(/CONFIG\.themeColor/g, '"' + config.themeColor + '"'))
+				.pipe(replace(/CONFIG\.api\.url/g, '"' + config.api.url + '"'))
+				.pipe(replace(/CONFIG\.urls\.signin/g, '"' + config.urls.signin + '"'))
+				.pipe(replace(/CONFIG\.url/g, '"' + config.url + '"'));
 
 			if (isProduction) {
 				bundle = bundle
