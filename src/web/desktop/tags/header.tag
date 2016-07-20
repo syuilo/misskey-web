@@ -9,9 +9,6 @@ mk-header
 			mk-header-clock
 
 style.
-	$ui-controll-background-color = #fffbfb
-	$ui-controll-foreground-color = #ABA49E
-
 	position fixed
 	top 0
 	z-index 1024
@@ -22,7 +19,7 @@ style.
 		margin 0
 		padding 0
 		color $ui-controll-foreground-color
-		background $ui-controll-background-color
+		background #fff
 		background-clip content-box
 		font-size 0.9rem
 

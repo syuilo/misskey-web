@@ -42,8 +42,7 @@ const sanitizedConfig = require('./src/config.ts').sanitize(config);
 const aliasifyConfig = {
 	"aliases": {
 		"fetch": "./bower_components/fetch/fetch.js",
-		"jquery": "./bower_components/jquery/dist/jquery.js",
-		"jquery.transit": "./bower_components/jquery.transit/jquery.transit.js",
+		"velocity": "./bower_components/velocity/velocity.js",
 		"ripple.js": "./bower_components/ripple.js/ripple.js",
 		"strength.js": "./bower_components/password-strength.js/strength.js",
 		"js-cookie": "./bower_components/js-cookie/src/js.cookie.js",

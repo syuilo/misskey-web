@@ -1,4 +1,4 @@
-require '../../../base.ls'
+require '../../base.ls'
 
 riot = require 'riot'
 require '../../tags/post.tag'

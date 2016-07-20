@@ -13,28 +13,10 @@ script.
 	@ui = riot.observable!
 
 	@ui.on \on-blur ~>
-		$global = $ @global
-		$ {blur-radius: 0} .animate {blur-radius: 5} do
-			duration: 100ms
-			easing: \linear
-			step: -> $global.css do
-				'-webkit-filter': "blur("+@blur-radius+"px)"
-				'-moz-filter':    "blur("+@blur-radius+"px)"
-				'filter':         "blur("+@blur-radius+"px)"
+		Velocity @global, { blur: 5 } 100ms
 
 	@ui.on \off-blur ~>
-		$global = $ @global
-		$ {blur-radius: 5} .animate {blur-radius: 0} do
-			duration: 100ms
-			easing: \linear
-			step: -> $global.css do
-				'-webkit-filter': "blur("+@blur-radius+"px)"
-				'-moz-filter':    "blur("+@blur-radius+"px)"
-				'filter':         "blur("+@blur-radius+"px)"
-			complete: -> $global.css do
-				'-webkit-filter': ""
-				'-moz-filter':    ""
-				'filter':         ""
+		Velocity @global, { blur: 0 } 100ms
 
 	@on \mount ~>
 		document.body.style.margin-top = @header.client-height + \px

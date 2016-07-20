@@ -107,54 +107,45 @@ script.
 		@is-open = true
 		@opts.ui.trigger \on-blur
 
-		$bg = $ @bg
-		$container = $ @container
-		$form = $ @form
+		@bg.style.display = \block
+		@bg.style.pointer-events = ''
 
-		$bg
-			.css do
-				'display': \block
-				'pointer-events': ''
-			.animate {
-				opacity: 1
-			} 100ms \linear
+		Velocity @bg, {
+			opacity: 1
+		} 100ms
 
-		$container.css do
-			'display': \block
-			'pointer-events': ''
+		@container.style.display = \block
+		@container.style.pointer-events = ''
 
-		$form
-			.stop!
-			.css \transform 'scale(1.2)'
-			.transition {
-				opacity: \1
-				scale: \1
-			} 1000ms 'cubic-bezier(0, 1, 0, 1)'
+		Velocity @form, {scale: 1.2} 0ms
+		Velocity @form, {
+			opacity: 1
+			scale: 1
+		} {
+			duration: 1000ms
+			easing: [ 300, 8 ]
+		}
 
 	@close = ~>
 		@is-open = false
 		@opts.ui.trigger \off-blur
 
-		$bg = $ @bg
-		$container = $ @container
-		$form = $ @form
+		@bg.style.pointer-events = \none
 
-		$bg
-			.css \pointer-events \none
-			.animate {
-				opacity: 0
-				} 100ms \linear -> $bg.css \display \none
+		Velocity @bg, {
+			opacity: 0
+		} 100ms \linear ~> @bg.style.display = \block
 
-		$container.css \pointer-events \none
+		@container.style.pointer-events = \none
 
-		$form
-			.stop!
-			.transition {
-				opacity: \0
-				scale: \0.8
-			} 1000ms 'cubic-bezier(0, 1, 0, 1)' ->
-				if ($form.css \opacity) === '0'
-					$container.css \display \none
+		Velocity @form, {
+			opacity: \0
+			scale: \0.8
+		} {
+			duration: 500ms
+			easing: [ 0.5, -0.5, 1, 0.5 ]
+		} ~>
+			@container.style.display = \none
 
 	@cancel-close = (e) ~>
 		e.stop-propagation!
