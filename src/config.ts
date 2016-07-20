@@ -57,6 +57,9 @@ function loadConfig(): IConfig {
 
 	validateHost(conf.host);
 
+	conf.themeColor = '#ec6b43';
+	conf.themeColorForeground = '#fff';
+
 	const host = conf.host;
 
 	const scheme = conf.https.enable ? 'https' : 'http';
@@ -176,6 +179,7 @@ export interface IConfig {
 	};
 	url: string;
 	themeColor: string;
+	themeColorForeground: string;
 	domains: Domains;
 	urls: Domains;
 }
