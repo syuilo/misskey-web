@@ -37,6 +37,7 @@ app.locals.env = process.env.NODE_ENV;
 app.locals.compileDebug = false;
 app.locals.cache = true;
 //app.locals.pretty = '  ';
+app.set('etag', false);
 app.set('views', __dirname);
 app.set('view engine', 'pug');
 
