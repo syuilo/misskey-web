@@ -40,12 +40,6 @@ app.locals.cache = true;
 app.set('views', __dirname);
 app.set('view engine', 'pug');
 
-const cookie = {
-	path: '/',
-	domain: `.${config.host}`,
-	secure: config.https.enable
-};
-
 /**
  * Logging
  */
@@ -88,11 +82,14 @@ app.use(expressSession({
 	secret: config.sessionSecret,
 	resave: false,
 	saveUninitialized: true,
-	cookie: Object.assign({
+	cookie: {
+		path: '/',
+		domain: `.${config.host}`,
+		secure: config.https.enable,
 		httpOnly: true,
 		expires: new Date(Date.now() + sessionExpires),
 		maxAge: sessionExpires
-	}, cookie),
+	},
 	store: new store({
 		mongooseConnection: db
 	})
@@ -136,32 +133,22 @@ app.use(async (req, res, next): Promise<void> => {
 
 	res.locals.config = config;
 
-	// Set CSRF token to Cookie
-	res.cookie('x', req.csrfToken(), Object.assign({
-		httpOnly: false
-	}, cookie));
+	// Get CSRF token
+	res.locals.csrftoken = req.csrfToken();
 
 	if (!res.locals.signin) {
 		res.locals.user = null;
 		return next();
 	}
 
+	const userId = (<any>req.session).userId;
+
+	// ユーザー情報フェッチ
 	try {
-		// ユーザー情報フェッチ
-		const user = await api('i', {}, (<any>req.session).userId);
-
-		// ユーザー設定取得
-		const settings = await UserSetting.findOne({user_id: user.id}).lean();
-
-		res.locals.user = Object.assign(user, {_settings: settings});
-
-		// Set user data to Cookie
-		res.cookie('u', JSON.stringify(res.locals.user), Object.assign({
-			httpOnly: false
-		}, cookie));
-
+		res.locals.user = await api('i', {}, userId);
+		res.locals.user._settings = await UserSetting.findOne({user_id: userId}).lean();
 		next();
-	} catch (e) {
+	} catch (_) {
 		res.status(500).send('Core Error');
 	}
 });
@@ -174,12 +161,12 @@ router(app);
 /**
  * Create server
  */
-const server = config.https.enable
-	? https.createServer({
-			key: fs.readFileSync(config.https.keyPath),
-			cert: fs.readFileSync(config.https.certPath)
-		}, app)
-	: http.createServer(app);
+const server = config.https.enable ?
+	https.createServer({
+		key: fs.readFileSync(config.https.keyPath),
+		cert: fs.readFileSync(config.https.certPath)
+	}, app) :
+	http.createServer(app);
 
 /**
  * Server listen

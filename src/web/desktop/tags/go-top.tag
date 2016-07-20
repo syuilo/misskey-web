@@ -4,10 +4,10 @@ mk-go-top
 
 script.
 
-	$ window .on 'load scroll resize' @on-scroll
+	window.on 'load scroll resize' @on-scroll
 
 	@on-scroll = ~>
 		if $ window .scroll-top! > 500px
-			$ \#misskey-go-top-button .remove-class \hidden
+			@remove-class \hidden
 		else
-			$ \#misskey-go-top-button .add-class \hidden
+			@add-class \hidden

@@ -11,16 +11,22 @@ script.
 	set-interval draw, 1000ms
 
 	function draw
-		s = (new Date!).get-seconds!
-		m = (new Date!).get-minutes!
-		h = (new Date!).get-hours!
-		yyyymmdd = moment!.format 'YYYY/MM/DD'
-		yyyymmdd = "<span class='yyyymmdd'>#yyyymmdd</span>"
-		hhmm = moment!.format 'HH:mm'
-		if s % 2 == 0
+		now = new Date!
+
+		yyyy = now.get-full-year!
+		mm = (\0 + (now.get-month! + 1)).slice -2
+		dd = (\0 + now.get-date!).slice -2
+		yyyymmdd = "<span class='yyyymmdd'>#yyyy/#mm/#dd</span>"
+
+		hh = (\0 + now.get-hours!).slice -2
+		mm = (\0 + now.get-minutes!).slice -2
+		hhmm = "<span class='hhmm'>#hh:#mm</span>"
+
+		if now.get-seconds! % 2 == 0
 			hhmm .= replace \: '<span style=\'visibility:visible\'>:</span>'
 		else
 			hhmm .= replace \: '<span style=\'visibility:hidden\'>:</span>'
+
 		clock = self.time
 		clock.innerHTML = "#yyyymmdd<br>#hhmm"
 

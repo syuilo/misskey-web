@@ -15,15 +15,13 @@ require '../../tags/post.tag'
 tl = require '../../tags/timeline.tag'
 ui = require '../../tags/ui.tag'
 
-$ ->
-	riot.mount ui
+riot.mount ui
 
-	$.ajax CONFIG.urls.api + '/i/timeline'
-	.done (posts) ->
-		console.log posts
+api 'i/timeline'
+	.then (posts) ->
 		riot.mount tl, do
 			posts: posts
-	.fail (err, text-status) ->
+	.catch (err, text-status) ->
 		console.error err
 
 is-active = yes
