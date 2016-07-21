@@ -78,11 +78,13 @@
     "mongoose": "4.5.4",
     "multer": "1.1.0",
     "named": "1.0.2",
+    "nodegit": "0.14.1",
     "pug": "2.0.0-beta3",
     "request": "2.73.0",
     "serve-favicon": "2.3.0",
     "shelljs": "0.7.0",
     "subdomain": "1.2.0",
+    "tcp-port-used": "0.1.2",
     "vhost": "3.0.2"
   }
 }

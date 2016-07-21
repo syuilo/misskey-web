@@ -4,25 +4,26 @@ mk-post-form
 		h1 新規投稿
 		div.body
 			textarea@text(placeholder='いまどうしてる？')
-			button(onclick={ post }) 投稿
+			button@submit(onclick={ post }) 投稿
 
 style.
 	[name='bg']
 	[name='container']
-		display none
+		display block
 		position fixed
 		top 0
 		width 100%
 		height 100%
+		pointer-events none
 
 	[name='bg']
-		z-index 127
+		z-index 2048
 		left 0
 		background rgba(0, 0, 0, 0.7)
 		opacity 0
 
 	[name='container']
-		z-index 1024
+		z-index 2049
 
 	[name='form']
 		display block
@@ -42,7 +43,7 @@ style.
 			display block
 			margin 0
 			text-align center
-			font-size 1.2em
+			font-size 1.1em
 			line-height 40px
 			font-weight normal
 			color #d0b4ac
@@ -54,42 +55,88 @@ style.
 			padding 16px
 			background lighten($theme-color, 95%)
 
-		textarea
-			-webkit-appearance none
-			-moz-appearance none
-			appearance none
-			user-select text
-			-moz-user-select text
-			-webkit-user-select text
-			-ms-user-select text
-			display inline-block
-			cursor auto
-			box-sizing border-box
-			padding 12px
-			margin 0
-			width 100%
-			font-size 1em
-			color #333
-			background #fff
-			background-clip padding-box
-			outline none
-			border solid 1px rgba($theme-color, 0.1)
-			border-radius 4px
-			transition all .3s ease
-			font-family 'Meiryo', 'メイリオ', 'Meiryo UI', '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', sans-serif
+			&:after
+				content ""
+				display block
+				clear both
 
-			&:hover
-				border-color rgba($theme-color, 0.2)
-				transition all .1s ease
+	[name='text']
+		-webkit-appearance none
+		-moz-appearance none
+		appearance none
+		display block
+		cursor auto
+		box-sizing border-box
+		padding 12px
+		margin 0
+		width 100%
+		max-width 100%
+		min-width 100%
+		min-height 2em
+		font-size 1em
+		color #333
+		background #fff
+		background-clip padding-box
+		outline none
+		border solid 1px rgba($theme-color, 0.1)
+		border-radius 4px
+		transition border-color .3s ease
+		font-family 'Meiryo', 'メイリオ', 'Meiryo UI', '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', sans-serif
 
-			&:focus
-				color $theme-color
-				border-color $theme-color
-				box-shadow 0 0 0 1024px #fff inset, 0 0 0 4px rgba($theme-color, 10%)
-				transition all 0s ease
+		&:hover
+			border-color rgba($theme-color, 0.2)
+			transition border-color .1s ease
 
-			&:disabled
-				opacity 0.5
+		&:focus
+			color $theme-color
+			border-color rgba($theme-color, 0.5)
+			transition border-color 0s ease
+
+		&:disabled
+			opacity 0.5
+
+		&::-webkit-input-placeholder
+			color rgba($theme-color, 0.3)
+
+	[name='submit']
+		-webkit-appearance none
+		-moz-appearance none
+		appearance none
+		display block
+		position relative
+		float right
+		cursor pointer
+		box-sizing border-box
+		padding 0
+		margin 8px 0 0 0
+		width 100px
+		font-size 1em
+		line-height 40px
+		color $theme-color-foreground
+		background linear-gradient(to bottom, lighten($theme-color, 25%) 0%, lighten($theme-color, 10%) 100%)
+		outline none
+		border solid 1px lighten($theme-color, 15%)
+		border-radius 4px
+		box-shadow none
+
+		&:hover
+			background linear-gradient(to bottom, lighten($theme-color, 8%) 0%, darken($theme-color, 8%) 100%)
+			border-color $theme-color
+
+		&:active
+			background $theme-color
+			border-color $theme-color
+
+		&:focus
+			&:after
+				content ""
+				position absolute
+				top -5px
+				right -5px
+				bottom -5px
+				left -5px
+				border 2px solid rgba($theme-color, 0.3)
+				border-radius 8px
 
 script.
 	@is-open = false
@@ -107,45 +154,56 @@ script.
 		@is-open = true
 		@opts.ui.trigger \on-blur
 
-		@bg.style.display = \block
-		@bg.style.pointer-events = ''
+		@bg.style.pointer-events = \auto
+		@container.style.pointer-events = \auto
 
+		Velocity @bg, \finish true
 		Velocity @bg, {
 			opacity: 1
-		} 100ms
+		} {
+			queue: false
+			duration: 100ms
+			easing: \linear
+		}
 
-		@container.style.display = \block
-		@container.style.pointer-events = ''
-
+		Velocity @form, \finish true
 		Velocity @form, {scale: 1.2} 0ms
 		Velocity @form, {
 			opacity: 1
 			scale: 1
 		} {
+			queue: false
 			duration: 1000ms
 			easing: [ 300, 8 ]
 		}
+
+		@text.focus!
 
 	@close = ~>
 		@is-open = false
 		@opts.ui.trigger \off-blur
 
 		@bg.style.pointer-events = \none
-
-		Velocity @bg, {
-			opacity: 0
-		} 100ms \linear ~> @bg.style.display = \block
-
 		@container.style.pointer-events = \none
 
-		Velocity @form, {
-			opacity: \0
-			scale: \0.8
+		Velocity @bg, \finish true
+		Velocity @bg, {
+			opacity: 0
 		} {
-			duration: 500ms
+			queue: false
+			duration: 300ms
+			easing: \linear
+		}
+
+		Velocity @form, \finish true
+		Velocity @form, {
+			opacity: 0
+			scale: 0.8
+		} {
+			queue: false
+			duration: 300ms
 			easing: [ 0.5, -0.5, 1, 0.5 ]
-		} ~>
-			@container.style.display = \none
+		}
 
 	@cancel-close = (e) ~>
 		e.stop-propagation!

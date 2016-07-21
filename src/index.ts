@@ -35,6 +35,8 @@ import * as cluster from 'cluster';
 import * as accesses from 'accesses';
 import name from 'named';
 import {logDone, logInfo, logWarn, logFailed} from 'log-cool';
+const Git = require('nodegit');
+const portUsed = require('tcp-port-used');
 import argv from './argv';
 import config from './config';
 import checkDependencies from './check-dependencies';
@@ -52,34 +54,57 @@ const isDebug = !isProduction;
 if (cluster.isMaster) {
 	console.log('Welcome to Misskey!');
 
+	if (isDebug) {
+		logWarn('Productionモードではありません。本番環境で使用しないでください。');
+	}
+
+	master().then(ok => {
+		if (ok) {
+			logDone('ALL CORRECT');
+		} else {
+			logWarn('SOME ISSUES');
+		}
+	});
+}
+// Workers
+else {
+	worker();
+}
+
+/**
+ * Init master proccess
+ */
+async function master(): Promise<boolean> {
 	logInfo(`environment: ${env}`);
 	logInfo(`maintainer: ${config.maintainer}`);
+
+	let ok = true;
+
+	// Get repository info
+	const repository = await Git.Repository.open(__dirname + '/../');
+	logInfo(`commit: ${(await repository.getHeadCommit()).sha()}`);
 
 	if (!argv.options.hasOwnProperty('skip-check-dependencies')) {
 		checkDependencies();
 	}
 
-	if (isDebug) {
-		logWarn('Productionモードではありません。本番環境で使用しないでください。');
+	// Check if a port is being used
+	if (await portUsed.check(config.bindPort, '127.0.0.1')) {
+		logFailed(`Port: ${config.bindPort} is already used!`);
+		process.exit();
 	}
 
 	// Get Core information
-	api('meta').then(res => {
+	try {
+		const core = await api('meta');
 		logDone('Core: available');
-		logInfo(`Core: maintainer: ${res.maintainer}`);
-		logInfo(`Core: commit: ${res.commit}`);
-		spawn();
-	}, err => {
+		logInfo(`Core: maintainer: ${core.maintainer}`);
+		logInfo(`Core: commit: ${core.commit}`);
+	} catch (_) {
 		logFailed('Failed to connect to the Core');
-		spawn();
-	});
-}
-// Workers
-else {
-	require('./server');
-}
+		ok = false;
+	}
 
-function spawn(): void {
 	// Count the machine's CPUs
 	const cpuCount = require('os').cpus().length;
 
@@ -93,6 +118,15 @@ function spawn(): void {
 		appName: 'Misskey Web',
 		port: 81
 	});
+
+	return Promise.resolve(ok);
+}
+
+/**
+ * Init worker proccess
+ */
+function worker(): void {
+	require('./server');
 }
 
 // Listen new workers
