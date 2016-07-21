@@ -207,7 +207,6 @@ function init-signin-form
 			'username': $ \#username .val!
 		}
 		.then (user) ->
-			console.log user
 			$ '#signin .title p' .text user.name
 			$ \#avatar .attr \src user.avatar-thumbnail-url
 

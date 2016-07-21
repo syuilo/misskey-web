@@ -12,11 +12,11 @@ mk-ui
 script.
 	@ui = riot.observable!
 
-	@ui.on \on-blur ~>
-		Velocity @global, { blur: 5 } 100ms
+	@ui.on \on-blur (duration = 100ms) ~>
+		Velocity @global, { blur: 5 } duration
 
-	@ui.on \off-blur ~>
-		Velocity @global, { blur: 0 } 100ms
+	@ui.on \off-blur (duration = 100ms) ~>
+		Velocity @global, { blur: 0 } duration
 
 	@on \mount ~>
 		document.body.style.margin-top = @header.client-height + \px

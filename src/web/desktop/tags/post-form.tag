@@ -1,6 +1,6 @@
 mk-post-form
 	div@bg
-	div@container(onclick={ close }): form@form(onclick={ cancel-close })
+	div@container(onclick={ close }): form@form(onclick={ repel-close }, class={ wait: wait })
 		h1 新規投稿
 		div.body
 			textarea@text(placeholder='いまどうしてる？')
@@ -38,6 +38,10 @@ style.
 		border-radius 6px
 		overflow hidden
 		opacity 0
+
+		&.wait
+			&, *
+				cursor wait !important
 
 		h1
 			display block
@@ -140,9 +144,14 @@ style.
 
 script.
 	@is-open = false
+	@wait = false
 
 	@opts.ui.on \toggle-post-form ~>
 		@toggle!
+
+	@clear = ~>
+		@text.value = ''
+		@update!
 
 	@toggle = ~>
 		if @is-open
@@ -181,7 +190,7 @@ script.
 
 	@close = ~>
 		@is-open = false
-		@opts.ui.trigger \off-blur
+		@opts.ui.trigger \off-blur 300ms
 
 		@bg.style.pointer-events = \none
 		@container.style.pointer-events = \none
@@ -205,14 +214,19 @@ script.
 			easing: [ 0.5, -0.5, 1, 0.5 ]
 		}
 
-	@cancel-close = (e) ~>
+	@repel-close = (e) ~>
 		e.stop-propagation!
 
 	@post = (e) ~>
-		api 'posts/create' {
+		@wait = true
+		api 'posts/create' do
 			'text': @text.value
-		}
-		.done (data) ->
-			console.log data
-		.fail (err, text-status) ->
+		.then (data) ~>
+			@close!
+			@clear!
+			@opts.ui.trigger \notification '投稿しました。'
+		.catch (err) ~>
 			console.error err
+		.then ~>
+			@wait = false
+			@update!

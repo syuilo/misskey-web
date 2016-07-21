@@ -293,6 +293,11 @@ gulp.task('build:scripts', done => {
 						}
 					}
 				})
+				// LiveScruptがHTMLクラスのショートカットを変な風に生成するのでそれを修正
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					return source.replace(/class="\{\(\{(.+?)\}\)\}"/g, 'class="{$1}"');
+				}))
 				.bundle()
 				.pipe(source(entry.replace('src/web', 'resources').replace('.ls', '.js')))
 				.pipe(replace(/CONFIG\.themeColor/g, '"' + config.themeColor + '"'))

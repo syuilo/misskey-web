@@ -60,6 +60,17 @@ app.use(cors({
 }));
 
 /**
+ * HSTS
+ */
+if (config.https.enable) {
+	app.use((req, res) => {
+		res.header(
+			'Strict-Transport-Security',
+			'max-age=15768000; includeSubDomains; preload');
+	});
+}
+
+/**
  * Statics
  */
 app.use(favicon(`${__dirname}/resources/favicon.ico`));
@@ -116,13 +127,6 @@ app.use(async (req, res, next): Promise<void> => {
 	// Security headers
 	res.header('X-Frame-Options', 'DENY');
 
-	// HSTS
-	if (config.https.enable) {
-		res.header(
-			'Strict-Transport-Security',
-			'max-age=15768000; includeSubDomains; preload');
-	}
-
 	// See http://web-tan.forum.impressrd.jp/e/2013/05/17/15269
 	res.header('Vary', 'User-Agent, Cookie');
 
@@ -148,10 +152,14 @@ app.use(async (req, res, next): Promise<void> => {
 	try {
 		res.locals.user = await api('i', {}, userId);
 	} catch (_) {
-		return res.status(500).send('Core Error');
+		res.status(500).send('Core Error');
+		return;
 	}
 
-	res.locals.user._settings = await UserSetting.findOne({user_id: userId}).lean();
+	// ユーザー設定取得
+	res.locals.user._settings = await UserSetting
+		.findOne({user_id: userId}).lean();
+
 	next();
 });
 

@@ -66,7 +66,7 @@ export default function(app: express.Express): void {
 
 	app.post(`${signinDomain}/`, (req, res) => {
 		signin(req.body['username'], req.body['password'], req.session).then(() => {
-			res.sendStatus(200);
+			res.sendStatus(204);
 		}, err => {
 			res.status(err.statusCode).send(err.body);
 		});
