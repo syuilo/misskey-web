@@ -17,7 +17,7 @@ ui = require '../../tags/ui.tag'
 
 riot.mount ui
 
-api 'i/timeline'
+api 'posts/timeline'
 	.then (posts) ->
 		riot.mount tl, do
 			posts: posts
@@ -26,6 +26,55 @@ api 'i/timeline'
 
 is-active = yes
 unread-count = 0
+
+try
+	Notification.request-permission!
+catch
+	console.log 'oops'
+
+default-title = document.title
+
+$ document .keydown (e) ->
+	tag = e.target.tag-name.to-lower-case!
+	if tag != \input and tag != \textarea
+		if e.which == 84 # t
+			$ '#widget-timeline > .timeline > .posts > .post:first-child' .focus!
+
+$ window .focus ->
+	is-active := yes
+	unread-count := 0
+	document.title = default-title
+
+$ window .blur ->
+	is-active := no
+
+# Read more automatically
+if USER._settings.read-timeline-automatically
+	$ window .on \scroll ->
+		current = $ window .scroll-top! + window.inner-height
+		if current > $ document .height! - 16 # 遊び
+			read-more!
+
+$ \body .append $ "<p class=\"streaming-info\"><i class=\"fa fa-spinner fa-spin\"></i>ストリームに接続中...</p>"
+
+socket = io.connect CONFIG.api.url + '/streaming/home'
+
+socket.on \connect ->
+	$ 'body > .streaming-info' .remove!
+	$message = $ "<p class=\"streaming-info\"><i class=\"fa fa-check\"></i>ストリームに接続しました</p>"
+	$ \body .append $message
+	set-timeout ->
+		$message.animate {
+			opacity: 0
+		} 200ms \linear ->
+			$message.remove!
+	, 1000ms
+
+socket.on \disconnect (client) ->
+	if $ 'body > .streaming-info.reconnecting' .length == 0
+		$ 'body > .streaming-info' .remove!
+		$message = $ "<p class=\"streaming-info reconnecting\"><i class=\"fa fa-spinner fa-spin\"></i>#{LOCALE.sites.desktop.common.reconnecting_stream}</p>"
+		$ \body .append $message
 
 module.exports = (type) ->
 	$ window .on 'load scroll resize' ->
@@ -67,53 +116,3 @@ module.exports = (type) ->
 				$right-body.css \margin-top "#{margin}px"
 			else
 				$right-body.css \margin-top 0
-
-	$ ->
-		try
-			Notification.request-permission!
-		catch
-			console.log 'oops'
-
-		default-title = document.title
-
-		$ document .keydown (e) ->
-			tag = e.target.tag-name.to-lower-case!
-			if tag != \input and tag != \textarea
-				if e.which == 84 # t
-					$ '#widget-timeline > .timeline > .posts > .post:first-child' .focus!
-
-		$ window .focus ->
-			is-active := yes
-			unread-count := 0
-			document.title = default-title
-
-		$ window .blur ->
-			is-active := no
-
-		# Read more automatically
-		if USER_SETTINGS.read-timeline-automatically
-			$ window .on \scroll ->
-				current = $ window .scroll-top! + window.inner-height
-				if current > $ document .height! - 16 # 遊び
-					read-more!
-
-		$ \body .append $ "<p class=\"streaming-info\"><i class=\"fa fa-spinner fa-spin\"></i>#{LOCALE.sites.desktop.common.connecting_stream}</p>"
-
-		socket = io.connect CONFIG.streaming-url + '/streaming/' + type
-
-		socket.on \connect ->
-			$ 'body > .streaming-info' .remove!
-			$message = $ "<p class=\"streaming-info\"><i class=\"fa fa-check\"></i>#{LOCALE.sites.desktop.common.connected_stream}</p>"
-			$ \body .append $message
-			set-timeout ->
-				$message.animate {
-					opacity: 0
-				} 200ms \linear ->
-					$message.remove!
-			, 1000ms
-
-		socket.on \disconnect (client) ->
-			if $ 'body > .streaming-info.reconnecting' .length == 0
-				$ 'body > .streaming-info' .remove!
-				$message = $ "<p class=\"streaming-info reconnecting\"><i class=\"fa fa-spinner fa-spin\"></i>#{LOCALE.sites.desktop.common.reconnecting_stream}</p>"
-				$ \body .append $message
