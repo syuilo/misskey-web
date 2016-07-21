@@ -64,7 +64,7 @@ app.use(cors({
  * HSTS
  */
 app.use(hsts({
-	maxAge: 15768000,
+	maxAge: 10886400000,
 	includeSubDomains: true,
 	preload: true
 }));
