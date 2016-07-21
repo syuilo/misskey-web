@@ -41,6 +41,11 @@ style.
 		position relative
 		padding 16px 32px
 
+		&:after
+			content ""
+			display block
+			clear both
+
 		> .avatar-anchor
 			display block
 			float left
