@@ -69,14 +69,13 @@ style.
 		-moz-appearance none
 		appearance none
 		display block
-		cursor auto
 		box-sizing border-box
 		padding 12px
 		margin 0
 		width 100%
 		max-width 100%
 		min-width 100%
-		min-height 2em
+		min-height calc(1em + 12px + 12px)
 		font-size 1em
 		color #333
 		background #fff
@@ -100,6 +99,8 @@ style.
 			opacity 0.5
 
 		&::-webkit-input-placeholder
+		&::-moz-input-placeholder
+		&::input-placeholder
 			color rgba($theme-color, 0.3)
 
 	[name='submit']

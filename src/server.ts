@@ -17,6 +17,7 @@ import * as csrf from 'csurf';
 import * as favicon from 'serve-favicon';
 import * as accesses from 'accesses';
 import name from 'named';
+const hsts = require('hsts');
 
 import db from './db/db';
 import UserSetting from './db/models/user-settings';
@@ -62,13 +63,11 @@ app.use(cors({
 /**
  * HSTS
  */
-if (config.https.enable) {
-	app.use((req, res) => {
-		res.header(
-			'Strict-Transport-Security',
-			'max-age=15768000; includeSubDomains; preload');
-	});
-}
+app.use(hsts({
+	maxAge: 15768000,
+	includeSubDomains: true,
+	preload: true
+}));
 
 /**
  * Statics

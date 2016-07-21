@@ -16,7 +16,7 @@ export default (username: string, password: string, session: any) => new Promise
 		// ユーザー設定が無ければ作成
 		UserSetting.create({
 			userId: user.id
-		}, (createErr, created) => {
+		}, () => {
 			saveSession(user);
 		});
 	} else {
