@@ -170,15 +170,13 @@ gulp.task('build:scripts', done => {
 							} else if (line.replace(/\t/g, '')[0] === '|') {
 								through();
 							} else {
-								while (line.indexOf('@') !== -1) {
+								while (line.match(/@[a-z-]+/) !== null) {
 									const match = line.match(/@[a-z-]+/);
-									if (match !== null) {
-										let name = match[0];
-										if (line[line.indexOf(name) + name.length] === '(') {
-											line = line.replace(name + '(', '(name=\'' + name.substr(1) + '\',');
-										} else {
-											line = line.replace(name, '(name=\'' + name.substr(1) + '\')');
-										}
+									let name = match[0];
+									if (line[line.indexOf(name) + name.length] === '(') {
+										line = line.replace(name + '(', '(name=\'' + name.substr(1) + '\',');
+									} else {
+										line = line.replace(name, '(name=\'' + name.substr(1) + '\')');
 									}
 								}
 								dist += line + '\r\n';
