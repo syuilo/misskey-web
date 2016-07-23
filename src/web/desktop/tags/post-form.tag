@@ -4,11 +4,11 @@ mk-post-form
 		h1 新規投稿
 		button.close(title='キャンセル', onclick={ close }): i.fa.fa-times
 		div.body
-			textarea@text(disabled={ wait }, placeholder='いまどうしてる？')
-			ul.files
+			textarea@text(disabled={ wait }, class={ files: files.length != 0 }, placeholder='いまどうしてる？')
+			ul.files(if={ files.length != 0 })
 				li(each={ files })
 					div.img(style='background-image: url({ url })', alt={ name })
-			ul.uploadings
+			ul.uploadings(if={ uploadings.length != 0 })
 				li(each={ uploadings })
 					div.img(style='background-image: url({ img })')
 					p.name
@@ -143,14 +143,13 @@ style.
 				clear both
 
 	.files
-		margin 8px 0 0 0
+		margin 0
 		padding 8px
 		border solid 1px rgba($theme-color, 0.2)
-		border-radius 4px
+		border-top none
+		border-radius 0 0 4px 4px
 		list-style none
-
-		&:empty
-			display none
+		transition border-color .3s ease
 
 		&:after
 			content ""
@@ -176,9 +175,6 @@ style.
 		border solid 1px rgba($theme-color, 0.2)
 		border-radius 4px
 		list-style none
-
-		&:empty
-			display none
 
 		> li
 			display block
@@ -340,6 +336,18 @@ style.
 
 		&::-webkit-input-placeholder
 			color rgba($theme-color, 0.3)
+
+		&.files
+			border-bottom solid 1px rgba($theme-color, 0.1) !important
+			border-radius 4px 4px 0 0
+
+			&:hover + .files
+				border-color rgba($theme-color, 0.2)
+				transition border-color .1s ease
+
+			&:focus + .files
+				border-color rgba($theme-color, 0.5)
+				transition border-color 0s ease
 
 	[name='submit']
 		-webkit-appearance none
