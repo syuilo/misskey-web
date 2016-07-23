@@ -18,6 +18,9 @@ script.
 	@ui.on \off-blur (duration = 100ms) ~>
 		Velocity @global, { blur: 0 } duration
 
+	@ui.on \notification (text) ~>
+		alert text
+
 	@on \mount ~>
 		document.body.style.margin-top = @header.client-height + \px
 

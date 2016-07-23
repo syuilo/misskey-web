@@ -142,7 +142,7 @@ gulp.task('build:scripts', done => {
 							if (line.replace(/\t/g, '')[0] === '|') {
 								through();
 							} else {
-								dist += line.replace(/\{/g, '"{').replace(/\}/g, '}"') + '\r\n';
+								dist += line.replace(/([+=])\s?\{(.+?)\}/g, '$1"{$2}"') + '\r\n';
 							}
 						} else {
 							through();
@@ -189,6 +189,38 @@ gulp.task('build:scripts', done => {
 						}
 					});
 					return dist;
+				}))
+				// tagのchain-caseをcamelCaseにする
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					let dist = '';
+					const lines = source.split('\r\n');
+					let flag = false;
+					lines.forEach(line => {
+						if (line === 'style.' || line === 'script.') {
+							flag = true;
+						}
+						if (!flag) {
+							(line.match(/\{\s?([a-z-]+)\s?\}/g) || []).forEach(x => {
+								line = line.replace(x, camelCase(x));
+							});
+							dist += line + '\r\n';
+						} else {
+							through();
+						}
+
+						function through() {
+							dist += line + '\r\n';
+						}
+					});
+					return dist;
+
+					function camelCase(str) {
+						str = str.charAt(0).toLowerCase() + str.slice(1);
+						return str.replace(/[-_](.)/g, (match, group1) => {
+							return group1.toUpperCase();
+						});
+					}
 				}))
 				// tagのstyleの定数
 				.transform(transformify((source, file) => {
@@ -285,7 +317,7 @@ gulp.task('build:scripts', done => {
 				.transform(riotify, {
 					template: 'pug',
 					type: 'livescript',
-					expr: true,
+					//expr: true,
 					compact: true,
 					parserOptions: {
 						template: {
@@ -293,11 +325,12 @@ gulp.task('build:scripts', done => {
 						}
 					}
 				})
+				/*
 				// LiveScruptがHTMLクラスのショートカットを変な風に生成するのでそれを修正
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
 					return source.replace(/class="\{\(\{(.+?)\}\)\}"/g, 'class="{$1}"');
-				}))
+				}))*/
 				.bundle()
 				.pipe(source(entry.replace('src/web', 'resources').replace('.ls', '.js')))
 				.pipe(replace(/CONFIG\.themeColor/g, '"' + config.themeColor + '"'))

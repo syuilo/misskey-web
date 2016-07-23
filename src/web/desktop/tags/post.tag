@@ -33,7 +33,7 @@ style.
 	position relative
 	margin 0 0 1px
 	padding 12px 0
-	background #fffbfb
+	background #fff
 	border none
 	font-family 'Meiryo', 'メイリオ', 'sans-serif'
 

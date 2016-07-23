@@ -16,8 +16,12 @@ window.api = (endpoint, data) ->
 				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 			body: body.join \&
 		.then (res) ->
-			if res.status != 204
+			if res.status == 200
 				res.json!
+			else if res.status == 204
+				resolve!
+			else
+				reject!
 		.then (data) ->
 			resolve data
 		.catch (e) ->
@@ -41,8 +45,12 @@ window.webapi = (endpoint, data) ->
 				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 			body: body.join \&
 		.then (res) ->
-			if res.status != 204
+			if res.status == 200
 				res.json!
+			else if res.status == 204
+				resolve!
+			else
+				reject!
 		.then (data) ->
 			resolve data
 		.catch (e) ->

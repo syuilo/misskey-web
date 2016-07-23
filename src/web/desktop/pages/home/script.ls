@@ -17,10 +17,11 @@ ui = require '../../tags/ui.tag'
 
 riot.mount ui
 
+tl = (riot.mount tl).0
+
 api 'posts/timeline'
 	.then (posts) ->
-		riot.mount tl, do
-			posts: posts
+		tl.update opts: posts: posts
 	.catch (err, text-status) ->
 		console.error err
 
@@ -50,3 +51,5 @@ socket.on \disconnect ->
 
 socket.on \post (post) ->
 	console.log post
+	tl.opts.posts.unshift post
+	tl.update!
