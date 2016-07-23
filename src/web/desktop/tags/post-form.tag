@@ -145,6 +145,7 @@ style.
 	.files
 		margin 0
 		padding 8px
+		background lighten($theme-color, 98%)
 		border solid 1px rgba($theme-color, 0.2)
 		border-top none
 		border-radius 0 0 4px 4px
