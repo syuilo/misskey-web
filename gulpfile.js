@@ -171,11 +171,14 @@ gulp.task('build:scripts', done => {
 								through();
 							} else {
 								while (line.indexOf('@') !== -1) {
-									let name = line.match(/@[a-z-]+/)[0];
-									if (line[line.indexOf(name) + name.length] === '(') {
-										line = line.replace(name + '(', '(name=\'' + name.substr(1) + '\',');
-									} else {
-										line = line.replace(name, '(name=\'' + name.substr(1) + '\')');
+									const match = line.match(/@[a-z-]+/);
+									if (match !== null) {
+										let name = match[0];
+										if (line[line.indexOf(name) + name.length] === '(') {
+											line = line.replace(name + '(', '(name=\'' + name.substr(1) + '\',');
+										} else {
+											line = line.replace(name, '(name=\'' + name.substr(1) + '\')');
+										}
 									}
 								}
 								dist += line + '\r\n';

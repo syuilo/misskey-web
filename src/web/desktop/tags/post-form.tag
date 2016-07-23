@@ -7,9 +7,10 @@ mk-post-form
 			textarea@text(disabled={ wait }, placeholder='いまどうしてる？')
 			ul.files
 				li(each={ files })
+					div.img(style='background-image: url({ url })', alt={ name })
 			ul.uploadings
 				li(each={ uploadings })
-					div.img(style='background-image: url({ img })', alt='')
+					div.img(style='background-image: url({ img })')
 					p.name
 						i.fa.fa-spinner.fa-pulse
 						| { name }
@@ -141,10 +142,38 @@ style.
 				display block
 				clear both
 
+	.files
+		margin 8px 0 0 0
+		padding 8px
+		border solid 1px rgba($theme-color, 0.2)
+		border-radius 4px
+		list-style none
+
+		&:empty
+			display none
+
+		&:after
+			content ""
+			display block
+			clear both
+
+		> li
+			display block
+			position relative
+			float left
+			margin 4px
+			padding 0
+
+			> .img
+				width 64px
+				height 64px
+				background-size cover
+				background-position center center
+
 	.uploadings
 		margin 8px 0 0 0
 		padding 8px
-		border solid 1px rgba($theme-color, 0.1)
+		border solid 1px rgba($theme-color, 0.2)
 		border-radius 4px
 		list-style none
 
@@ -380,8 +409,10 @@ style.
 			border-color rgba($theme-color, 0.3)
 
 		&:active
+			color rgba($theme-color, 0.6)
 			background linear-gradient(to bottom, lighten($theme-color, 80%) 0%, lighten($theme-color, 90%) 100%)
 			border-color rgba($theme-color, 0.5)
+			box-shadow 0 2px 4px rgba(0, 0, 0, 0.15) inset
 
 		&:focus
 			&:after
@@ -483,7 +514,10 @@ script.
 			@upload file
 
 	@upload = (file) ~>
+		id = Math.random!
+
 		ctx =
+			id: id
 			name: file.name
 			progress: undefined
 
@@ -504,8 +538,9 @@ script.
 		xhr.open \POST CONFIG.api.url + '/drive/files/create' true
 		xhr.onload = (e) ~>
 			drive-file = JSON.parse e.target.response
-			console.log drive-file
-			alert \yeah
+			@files.push drive-file
+			@uploadings = @uploadings.filter (x) -> x.id != id
+			@update!
 
 		xhr.upload.onprogress = (e) ~>
 			if e.length-computable
