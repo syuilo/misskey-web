@@ -7,7 +7,7 @@ mk-post-form
 			textarea@text(disabled={ wait }, class={ files: files.length != 0 }, placeholder='いまどうしてる？')
 			ul.files(if={ files.length != 0 })
 				li(each={ files })
-					div.img(style='background-image: url({ url })', alt={ name })
+					div.img(style='background-image: url({ url })', title={ name })
 			ul.uploadings(if={ uploadings.length != 0 })
 				li(each={ uploadings })
 					div.img(style='background-image: url({ img })')
@@ -144,7 +144,7 @@ style.
 
 	.files
 		margin 0
-		padding 8px
+		padding 4px
 		background lighten($theme-color, 98%)
 		border solid 1px rgba($theme-color, 0.2)
 		border-top none
