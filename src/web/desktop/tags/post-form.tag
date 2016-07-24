@@ -1,13 +1,16 @@
 mk-post-form
 	div@bg
 	div@container(onclick={ close }): form@form(onclick={ repel-close }, class={ wait: wait })
-		h1 新規投稿
+		h1
+			| 新規投稿
+			span.files(if={ files.length != 0 }) 添付: { files.length }ファイル
 		button.close(title='キャンセル', onclick={ close }): i.fa.fa-times
 		div.body
-			textarea@text(disabled={ wait }, class={ files: files.length != 0 }, placeholder='いまどうしてる？')
-			ul.files(if={ files.length != 0 })
+			textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, placeholder='いまどうしてる？')
+			ul.files@attaches(if={ files.length != 0 })
 				li(each={ files })
 					div.img(style='background-image: url({ url })', title={ name })
+					img.remove(onclick={ _remove }, src='/_/resources/desktop/resources/remove.png', title='添付取り消し', alt='')
 			ul.uploadings(if={ uploadings.length != 0 })
 				li(each={ uploadings })
 					div.img(style='background-image: url({ img })')
@@ -102,6 +105,16 @@ style.
 			background-clip padding-box
 			border-bottom solid 1px rgba($theme-color, 0.1)
 
+			> .files
+				margin-left 8px
+				opacity 0.8
+
+				&:before
+					content '('
+
+				&:after
+					content ')'
+
 		.close
 			-webkit-appearance none
 			-moz-appearance none
@@ -142,7 +155,7 @@ style.
 				display block
 				clear both
 
-	.files
+	.body > .files
 		margin 0
 		padding 4px
 		background lighten($theme-color, 98%)
@@ -163,6 +176,10 @@ style.
 			float left
 			margin 4px
 			padding 0
+			cursor move
+
+			&:hover > .remove
+				display block
 
 			> .img
 				width 64px
@@ -170,7 +187,16 @@ style.
 				background-size cover
 				background-position center center
 
-	.uploadings
+			> .remove
+				display none
+				position absolute
+				top -6px
+				right -6px
+				width 16px
+				height 16px
+				cursor pointer
+
+	.body > .uploadings
 		margin 8px 0 0 0
 		padding 8px
 		border solid 1px rgba($theme-color, 0.2)
@@ -338,7 +364,7 @@ style.
 		&::-webkit-input-placeholder
 			color rgba($theme-color, 0.3)
 
-		&.files
+		&.withfiles
 			border-bottom solid 1px rgba($theme-color, 0.1) !important
 			border-radius 4px 4px 0 0
 
@@ -436,6 +462,8 @@ style.
 				border-radius 8px
 
 script.
+	Sortable = require '../../../../bower_components/Sortable/Sortable.js'
+
 	@is-open = false
 	@wait = false
 	@uploadings = []
@@ -547,9 +575,14 @@ script.
 		xhr.open \POST CONFIG.api.url + '/drive/files/create' true
 		xhr.onload = (e) ~>
 			drive-file = JSON.parse e.target.response
+			drive-file._remove = ~>
+				@files = @files.filter (x) -> x.id != drive-file.id
+				@update!
 			@files.push drive-file
 			@uploadings = @uploadings.filter (x) -> x.id != id
 			@update!
+			Sortable.create @attaches, do
+				animation: 150ms
 
 		xhr.upload.onprogress = (e) ~>
 			if e.length-computable
