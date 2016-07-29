@@ -1,7 +1,7 @@
 mk-ui
 	mk-post-form(ui={ui})
 
-	mk-global@global
+	div.global@global
 		mk-header@header(ui={ui})
 
 		mk-contents
@@ -9,13 +9,21 @@ mk-ui
 
 	mk-go-top
 
+style.
+	display block
+
+	> .global
+		display block
+
 script.
 	@ui = riot.observable!
 
 	@ui.on \blur (duration = 100ms) ~>
+		Velocity @global, \finish true
 		Velocity @global, { blur: 5 } duration
 
 	@ui.on \unblur (duration = 100ms) ~>
+		Velocity @global, \finish true
 		Velocity @global, { blur: 0 } duration
 
 	@ui.on \notification (text) ~>
