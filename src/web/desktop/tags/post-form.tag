@@ -1,10 +1,11 @@
 mk-post-form
-	div@bg
-	div@container(onclick={ close }): form@form(onclick={ repel-close }, class={ wait: wait })
-		h1
-			| 新規投稿
-			span.files(if={ files.length != 0 }) 添付: { files.length }ファイル
-		button.close(title='キャンセル', onclick={ close }): i.fa.fa-times
+	div@bg(onclick={ close })
+	form@form(onclick={ repel-close }, class={ wait: wait })
+		header
+			h1
+				| 新規投稿
+				span.files(if={ files.length != 0 }) 添付: { files.length }ファイル
+			button.close(title='閉じる', onclick={ close }): i.fa.fa-times
 		div.body
 			textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, oninput={ update }, placeholder='いまどうしてる？')
 			div.attaches(if={ files.length != 0 })
@@ -41,7 +42,6 @@ mk-post-form
 
 style.
 	[name='bg']
-	[name='container']
 		display block
 		position fixed
 		top 0
@@ -55,12 +55,10 @@ style.
 		background rgba(0, 0, 0, 0.7)
 		opacity 0
 
-	[name='container']
-		z-index 2049
-
 	[name='form']
 		display block
-		position absolute
+		position fixed
+		z-index 2049
 		top 15%
 		right 0
 		left 0
@@ -95,60 +93,63 @@ style.
 					from {background-position: 0 0;}
 					to   {background-position: -64px 32px;}
 
-		h1
-			pointer-events none
-			display block
-			margin 0
-			text-align center
-			font-size 1em
-			line-height 40px
-			font-weight normal
-			color #d0b4ac
+		> header
+			cursor move
 			background #fff
 			background-clip padding-box
 			border-bottom solid 1px rgba($theme-color, 0.1)
 
-			> .files
-				margin-left 8px
-				opacity 0.8
-
-				&:before
-					content '('
-
-				&:after
-					content ')'
-
-		.close
-			-webkit-appearance none
-			-moz-appearance none
-			appearance none
-			cursor pointer
-			display block
-			position absolute
-			top 0
-			right 0
-			z-index 1
-			margin 0
-			padding 0
-			font-size 1.2em
-			color rgba($theme-color, 0.4)
-			border none
-			outline none
-			box-shadow none
-			background transparent
-
-			&:hover
-				color rgba($theme-color, 0.6)
-
-			&:active
-				color darken($theme-color, 30%)
-
-			> i
-				padding 0
-				width 40px
+			> h1
+				pointer-events none
+				display block
+				margin 0
+				text-align center
+				font-size 1em
 				line-height 40px
+				font-weight normal
+				color #d0b4ac
 
-		.body
+				> .files
+					margin-left 8px
+					opacity 0.8
+
+					&:before
+						content '('
+
+					&:after
+						content ')'
+
+			> .close
+				-webkit-appearance none
+				-moz-appearance none
+				appearance none
+				cursor pointer
+				display block
+				position absolute
+				top 0
+				right 0
+				z-index 1
+				margin 0
+				padding 0
+				font-size 1.2em
+				color rgba($theme-color, 0.4)
+				border none
+				outline none
+				box-shadow none
+				background transparent
+
+				&:hover
+					color rgba($theme-color, 0.6)
+
+				&:active
+					color darken($theme-color, 30%)
+
+				> i
+					padding 0
+					width 40px
+					line-height 40px
+
+		> .body
 			position relative
 			padding 16px
 			background lighten($theme-color, 95%)
@@ -158,7 +159,7 @@ style.
 				display block
 				clear both
 
-	.body > .attaches
+	> .body > .attaches
 		position relative
 		margin 0
 		padding 0
@@ -239,7 +240,7 @@ style.
 					font-size 1.2em
 					color rgba($theme-color, 0.2)
 
-	.body > .uploadings
+	> .body > .uploadings
 		margin 8px 0 0 0
 		padding 8px
 		border solid 1px rgba($theme-color, 0.2)
@@ -543,7 +544,6 @@ script.
 		@opts.ui.trigger \blur
 
 		@bg.style.pointer-events = \auto
-		@container.style.pointer-events = \auto
 
 		Velocity @bg, \finish true
 		Velocity @bg, {
@@ -572,7 +572,6 @@ script.
 		@opts.ui.trigger \unblur 300ms
 
 		@bg.style.pointer-events = \none
-		@container.style.pointer-events = \none
 
 		Velocity @bg, \finish true
 		Velocity @bg, {
