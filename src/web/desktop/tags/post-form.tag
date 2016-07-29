@@ -96,9 +96,7 @@ style.
 					to   {background-position: -64px 32px;}
 
 		h1
-			user-select none
-			-webkit-user-select none
-			-moz-user-select none
+			pointer-events none
 			display block
 			margin 0
 			text-align center
@@ -422,6 +420,7 @@ style.
 				transition border-color 0s ease
 
 	.text-count
+		pointer-events none
 		display block
 		position absolute
 		bottom 16px
