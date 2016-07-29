@@ -30,11 +30,9 @@ const transformify = require('syuilo-transformify');
 require('typescript-require')(require('./tsconfig.json'));
 
 const env = process.env.NODE_ENV;
-
 const isProduction = env === 'production';
 
 const config = require('./src/config.ts').default;
-const sanitizedConfig = require('./src/config.ts').sanitize(config);
 
 /*
  * Browserifyのモジュールエイリアス

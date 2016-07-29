@@ -75,6 +75,9 @@
     },
     "express-useragent/express-useragent.d.ts": {
       "ref": "2aa973a605d0fc7ae4ea5c32653331a819e81f71"
+    },
+    "connect-redis/connect-redis.d.ts": {
+      "ref": "094dfc6420d3118c9c691764a29b4fbbfc041af6"
     }
   }
 }

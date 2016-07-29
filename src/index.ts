@@ -32,7 +32,6 @@ Error.stackTraceLimit = Infinity;
  * Module dependencies
  */
 import * as cluster from 'cluster';
-import * as accesses from 'accesses';
 import name from 'named';
 import {logDone, logInfo, logWarn, logFailed} from 'log-cool';
 const Git = require('nodegit');
@@ -112,12 +111,6 @@ async function master(): Promise<boolean> {
 	for (let i = 0; i < cpuCount; i++) {
 		cluster.fork();
 	}
-
-	// Setup accesses from master proccess
-	accesses.serve({
-		appName: 'Misskey Web',
-		port: 81
-	});
 
 	return Promise.resolve(ok);
 }

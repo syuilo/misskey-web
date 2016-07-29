@@ -44,7 +44,7 @@ const domains = {
 //////////////////////////////////////////////////
 // CONFIGURATION LOADER
 
-function loadConfig(): IConfig {
+function load(): IConfig {
 	let conf: IConfig;
 
 	try {
@@ -111,24 +111,7 @@ function loadConfig(): IConfig {
 	return conf;
 }
 
-export default loadConfig();
-
-export function sanitize(conf: IConfig): any {
-	const c = (<any>Object).assign({}, conf);
-
-	delete c.recaptcha.secretKey;
-	delete c.api.pass;
-	delete c.mongo;
-	delete c.redis;
-	delete c.cookiePass;
-	delete c.sessionSecret;
-	delete c.bindPorts;
-
-	return c;
-};
-
-//////////////////////////////////////////////////
-// CONFIGURATION INTERFACE DEFINITION
+export default load();
 
 type Domains = {
 	about: string;
@@ -164,6 +147,10 @@ export interface IConfig {
 			user: string;
 			pass: string;
 		}
+	};
+	redis: {
+		host: string;
+		port: number;
 	};
 	port: number;
 	bindPort: number;

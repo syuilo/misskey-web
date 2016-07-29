@@ -10,23 +10,21 @@ import * as https from 'https';
 
 // express modules
 import * as express from 'express';
-import * as expressSession from 'express-session';
+import * as session from 'express-session';
 import * as useragent from 'express-useragent';
-import * as MongoStore from 'connect-mongo';
 import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as csrf from 'csurf';
 import * as favicon from 'serve-favicon';
+import * as redis from 'connect-redis';
 const hsts = require('hsts');
 
 // Utility modules
-import * as accesses from 'accesses';
 import name from 'named';
 
 // Internal modules
-import db from './db/db';
 import UserSetting from './db/models/user-settings';
 import api from './core/api';
 import config from './config';
@@ -50,11 +48,6 @@ app.locals.config = config;
 app.locals.env = process.env.NODE_ENV;
 app.locals.compileDebug = false;
 app.locals.cache = true;
-
-/**
- * Logging
- */
-app.use(accesses.express());
 
 /**
  * Compressions
@@ -95,9 +88,9 @@ app.use(cookieParser(config.cookiePass));
 /**
  * Session
  */
-const store = MongoStore(expressSession);
 const sessionExpires = 1000 * 60 * 60 * 24 * 365; // One Year
-app.use(expressSession({
+const RedisStore = redis(session);
+app.use(session({
 	name: 's',
 	secret: config.sessionSecret,
 	resave: false,
@@ -110,8 +103,9 @@ app.use(expressSession({
 		expires: new Date(Date.now() + sessionExpires),
 		maxAge: sessionExpires
 	},
-	store: new store({
-		mongooseConnection: db
+	store: new RedisStore({
+		host: config.redis.host,
+		port: config.redis.port
 	})
 }));
 

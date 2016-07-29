@@ -32,14 +32,14 @@
 ``` yaml
 # Misskey Web Configuration
 
-### サーバーの管理者情報
+# サーバーの管理者情報
 # ex) "Your Name <youremail@example.com>"
 maintainer: <string>
 
-### アクセスするときのドメイン
+# アクセスするときのドメイン
 host: "misskey.xyz"
 
-### アクセスするときのポート
+# アクセスするときのポート
 # サーバー内部でlistenするポートではありません。ブラウザでアクセスするときの最終的なポートです。
 # 内部でプロキシを使用していたりなどの理由で、リクエストを待ち受けるポートを指定する場合は bindPorts の項目を設定してください。
 port: 80
@@ -48,7 +48,7 @@ port: 80
 bindIp: null
 bindPort: 80
 
-### TLS設定
+# TLS設定
 https:
   enable: <boolean>
   # 以下証明書設定。 enable が false の場合は省略
@@ -61,21 +61,26 @@ cookiePass: <string>
 # よく分からない
 sessionSecret: <string>
 
-### ユーザーのクライアントに関する設定をストアするDB(Mongo)の情報
+# MongoDB
 mongo:
   uri: <string>
   options:
    user: <string>
    pass: <string>
 
-### APIサーバー設定
+# Redis
+redis:
+  host: <string>
+  port: <number>
+
+# APIサーバー設定
 api:
   host: <string>
   port: <string>
   secure: <boolean>
   pass: <string>
 
-### reCAPTCHA設定
+# reCAPTCHA設定
 # SEE: https://www.google.com/recaptcha/intro/index.html
 recaptcha:
   siteKey: <string>
