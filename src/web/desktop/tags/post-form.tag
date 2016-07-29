@@ -6,7 +6,7 @@ mk-post-form
 			span.files(if={ files.length != 0 }) 添付: { files.length }ファイル
 		button.close(title='キャンセル', onclick={ close }): i.fa.fa-times
 		div.body
-			textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, placeholder='いまどうしてる？')
+			textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, oninput={ update }, placeholder='いまどうしてる？')
 			div.attaches(if={ files.length != 0 })
 				ul.files@attaches
 					li.file(each={ files })
@@ -35,6 +35,7 @@ mk-post-form
 					div.progress.waiting(if={ progress.value == progress.max })
 			button@upload(title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-upload
 			button@drive(title='ドライブからファイルを添付', onclick={ drive }): i.fa.fa-cloud
+			p.text-count(class={ over: text.value.length > 300 }) のこり{ 300 - text.value.length }文字
 			button@submit(disabled={ wait }, onclick={ post }) { wait ? '送信中...' : '投稿' }
 			input@file(type='file', accept='image/*', multiple, tabindex='-1', onchange={ change-file })
 
@@ -101,7 +102,7 @@ style.
 			display block
 			margin 0
 			text-align center
-			font-size 1.1em
+			font-size 1em
 			line-height 40px
 			font-weight normal
 			color #d0b4ac
@@ -419,6 +420,18 @@ style.
 			&:focus + .attaches
 				border-color rgba($theme-color, 0.5)
 				transition border-color 0s ease
+
+	.text-count
+		display block
+		position absolute
+		bottom 16px
+		right 128px
+		margin 0
+		line-height 40px
+		color rgba($theme-color, 0.5)
+
+		&.over
+			color #ec3828
 
 	[name='submit']
 		-webkit-appearance none
