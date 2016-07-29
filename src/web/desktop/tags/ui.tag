@@ -12,10 +12,10 @@ mk-ui
 script.
 	@ui = riot.observable!
 
-	@ui.on \on-blur (duration = 100ms) ~>
+	@ui.on \blur (duration = 100ms) ~>
 		Velocity @global, { blur: 5 } duration
 
-	@ui.on \off-blur (duration = 100ms) ~>
+	@ui.on \unblur (duration = 100ms) ~>
 		Velocity @global, { blur: 0 } duration
 
 	@ui.on \notification (text) ~>

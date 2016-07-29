@@ -1,10 +1,14 @@
 /**
- * Module dependencies
+ * Web server
  */
+
+// Core modules
 import * as cluster from 'cluster';
 import * as fs from 'fs';
 import * as http from 'http';
 import * as https from 'https';
+
+// express modules
 import * as express from 'express';
 import * as expressSession from 'express-session';
 import * as useragent from 'express-useragent';
@@ -15,10 +19,13 @@ import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as csrf from 'csurf';
 import * as favicon from 'serve-favicon';
-import * as accesses from 'accesses';
-import name from 'named';
 const hsts = require('hsts');
 
+// Utility modules
+import * as accesses from 'accesses';
+import name from 'named';
+
+// Internal modules
 import db from './db/db';
 import UserSetting from './db/models/user-settings';
 import api from './core/api';
@@ -39,6 +46,7 @@ app.set('etag', false);
 app.set('views', __dirname);
 app.set('view engine', 'pug');
 
+app.locals.config = config;
 app.locals.env = process.env.NODE_ENV;
 app.locals.compileDebug = false;
 app.locals.cache = true;
@@ -65,7 +73,7 @@ app.use(cors({
  * HSTS
  */
 app.use(hsts({
-	maxAge: 10886400000,
+	maxAge: 1000 * 60 * 60 * 24 * 365,
 	includeSubDomains: true,
 	preload: true
 }));
@@ -130,13 +138,9 @@ app.use(async (req, res, next): Promise<void> => {
 	// See http://web-tan.forum.impressrd.jp/e/2013/05/17/15269
 	res.header('Vary', 'User-Agent, Cookie');
 
+	// Check signin
 	res.locals.signin =
-		req.hasOwnProperty('session') &&
-		req.session !== null &&
-		req.session.hasOwnProperty('userId') &&
-		(<any>req.session).userId !== null;
-
-	res.locals.config = config;
+		req.session.hasOwnProperty('user');
 
 	// Get CSRF token
 	res.locals.csrftoken = req.csrfToken();
@@ -146,9 +150,9 @@ app.use(async (req, res, next): Promise<void> => {
 		return next();
 	}
 
-	const userId = (<any>req.session).userId;
+	const userId = req.session['user'];
 
-	// ユーザー情報フェッチ
+	// Fetch user data
 	try {
 		res.locals.user = await api('i', {}, userId);
 	} catch (_) {
@@ -156,7 +160,7 @@ app.use(async (req, res, next): Promise<void> => {
 		return;
 	}
 
-	// ユーザー設定取得
+	// Load user configuration
 	res.locals.user._settings = await UserSetting
 		.findOne({user_id: userId}).lean();
 

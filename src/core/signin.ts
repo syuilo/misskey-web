@@ -3,8 +3,8 @@ import UserSetting from '../db/models/user-settings';
 
 export default (username: string, password: string, session: any) => new Promise<void>(async (resove, reject) => {
 	const user = await api('signin', {
-		'username': username,
-		'password': password
+		username: username,
+		password: password
 	});
 
 	// ユーザー設定引き出し
@@ -17,14 +17,14 @@ export default (username: string, password: string, session: any) => new Promise
 		UserSetting.create({
 			userId: user.id
 		}, () => {
-			saveSession(user);
+			save(user);
 		});
 	} else {
-		saveSession(user);
+		save(user);
 	}
 
-	function saveSession(user: any): void {
-		session.userId = user.id;
+	function save(user: any): void {
+		session.user = user.id;
 		session.save(() => {
 			resove();
 		});

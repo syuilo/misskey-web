@@ -7,10 +7,14 @@ mk-post-form
 		button.close(title='キャンセル', onclick={ close }): i.fa.fa-times
 		div.body
 			textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, placeholder='いまどうしてる？')
-			ul.files@attaches(if={ files.length != 0 })
-				li(each={ files })
-					div.img(style='background-image: url({ url })', title={ name })
-					img.remove(onclick={ _remove }, src='/_/resources/desktop/resources/remove.png', title='添付取り消し', alt='')
+			div.attaches(if={ files.length != 0 })
+				ul.files@attaches
+					li.file(each={ files })
+						div.img(style='background-image: url({ url })', title={ name })
+						img.remove(onclick={ _remove }, src='/_/resources/desktop/resources/remove.png', title='添付取り消し', alt='')
+					li.add(if={ files.length < 4 }, title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-plus
+				p.remain
+					| 残り{ 4 - files.length }
 			ul.uploadings(if={ uploadings.length != 0 })
 				li(each={ uploadings })
 					div.img(style='background-image: url({ img })')
@@ -155,46 +159,86 @@ style.
 				display block
 				clear both
 
-	.body > .files
+	.body > .attaches
+		position relative
 		margin 0
-		padding 4px
+		padding 0
 		background lighten($theme-color, 98%)
-		border solid 1px rgba($theme-color, 0.2)
+		background-clip padding-box
+		border solid 1px rgba($theme-color, 0.1)
 		border-top none
 		border-radius 0 0 4px 4px
-		list-style none
 		transition border-color .3s ease
 
-		&:after
-			content ""
+		> .remain
 			display block
-			clear both
-
-		> li
-			display block
-			position relative
-			float left
-			margin 4px
+			position absolute
+			top 8px
+			right 8px
+			margin 0
 			padding 0
-			cursor move
+			color rgba($theme-color, 0.4)
 
-			&:hover > .remove
+		> .files
+			display block
+			margin 0
+			padding 4px
+			list-style none
+
+			&:after
+				content ""
 				display block
+				clear both
 
-			> .img
-				width 64px
-				height 64px
-				background-size cover
-				background-position center center
+			> .file
+				display block
+				position relative
+				float left
+				margin 4px
+				padding 0
+				cursor move
 
-			> .remove
-				display none
-				position absolute
-				top -6px
-				right -6px
-				width 16px
-				height 16px
+				&:hover > .remove
+					display block
+
+				> .img
+					width 64px
+					height 64px
+					background-size cover
+					background-position center center
+
+				> .remove
+					display none
+					position absolute
+					top -6px
+					right -6px
+					width 16px
+					height 16px
+					cursor pointer
+
+			> .add
+				display block
+				position relative
+				float left
+				margin 4px
+				padding 0
+				border dashed 2px rgba($theme-color, 0.2)
 				cursor pointer
+
+				&:hover
+					border-color rgba($theme-color, 0.3)
+
+					> i
+						color rgba($theme-color, 0.4)
+
+				> i
+					display block
+					width 60px
+					height 60px
+					line-height 60px
+					text-align center
+					font-size 1.2em
+					color rgba($theme-color, 0.2)
 
 	.body > .uploadings
 		margin 8px 0 0 0
@@ -368,11 +412,11 @@ style.
 			border-bottom solid 1px rgba($theme-color, 0.1) !important
 			border-radius 4px 4px 0 0
 
-			&:hover + .files
+			&:hover + .attaches
 				border-color rgba($theme-color, 0.2)
 				transition border-color .1s ease
 
-			&:focus + .files
+			&:focus + .attaches
 				border-color rgba($theme-color, 0.5)
 				transition border-color 0s ease
 
@@ -484,7 +528,7 @@ script.
 
 	@open = ~>
 		@is-open = true
-		@opts.ui.trigger \on-blur
+		@opts.ui.trigger \blur
 
 		@bg.style.pointer-events = \auto
 		@container.style.pointer-events = \auto
@@ -513,7 +557,7 @@ script.
 
 	@close = ~>
 		@is-open = false
-		@opts.ui.trigger \off-blur 300ms
+		@opts.ui.trigger \unblur 300ms
 
 		@bg.style.pointer-events = \none
 		@container.style.pointer-events = \none
@@ -582,6 +626,7 @@ script.
 			@uploadings = @uploadings.filter (x) -> x.id != id
 			@update!
 			Sortable.create @attaches, do
+				draggable: \.file
 				animation: 150ms
 
 		xhr.upload.onprogress = (e) ~>
@@ -597,7 +642,7 @@ script.
 	@post = (e) ~>
 		@wait = true
 		api 'posts/create' do
-			'text': @text.value
+			text: @text.value
 		.then (data) ~>
 			@close!
 			@clear!
