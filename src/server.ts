@@ -171,8 +171,8 @@ router(app);
  */
 const server = config.https.enable ?
 	https.createServer({
-		key: fs.readFileSync(config.https.keyPath),
-		cert: fs.readFileSync(config.https.certPath)
+		key: fs.readFileSync(config.https.key),
+		cert: fs.readFileSync(config.https.cert)
 	}, app) :
 	http.createServer(app);
 
@@ -182,6 +182,5 @@ const server = config.https.enable ?
 server.listen(config.bindPort, config.bindIp, () => {
 	const h = server.address().address;
 	const p = server.address().port;
-
 	console.log(`\u001b[1;32m${name(worker.id)} is now listening at ${h}:${p}\u001b[0m`);
 });

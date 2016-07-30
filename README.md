@@ -52,8 +52,8 @@ bindPort: 80
 https:
   enable: <boolean>
   # 以下証明書設定。 enable が false の場合は省略
-  keyPath: <string>
-  certPath: <string>
+  key: <string>
+  cert: <string>
 
 # よく分からない
 cookiePass: <string>
