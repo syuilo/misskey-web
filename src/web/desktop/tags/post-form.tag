@@ -1,7 +1,7 @@
 mk-post-form
 	div@bg(onclick={ close })
 	form@form(onclick={ repel-close }, class={ wait: wait })
-		header
+		header(onmousedown={ on-header-mousedown })
 			h1
 				| 新規投稿
 				span.files(if={ files.length != 0 }) 添付: { files.length }ファイル
@@ -60,11 +60,10 @@ style.
 		position fixed
 		z-index 2049
 		top 15%
-		right 0
 		left 0
 		width 100%
 		max-width 530px
-		margin auto
+		margin 0
 		background #fff
 		border-radius 6px
 		overflow hidden
@@ -526,6 +525,26 @@ script.
 	@uploadings = []
 	@files = []
 
+	@on \mount ~>
+		window.add-event-listener \resize ~>
+			position = @form.get-bounding-client-rect!
+			browser-width = window.inner-width
+			browser-height = window.inner-height
+			window-width = @form.offset-width
+			window-height = @form.offset-height
+
+			if position.left < 0
+				@form.style.left = 0
+
+			if position.top < 0
+				@form.style.top = 0
+
+			if position.left + window-width > browser-width
+				@form.style.left = browser-width - window-width + \px
+
+			if position.top + window-height > browser-height
+				@form.style.top = browser-height - window-height + \px
+
 	@opts.ui.on \toggle-post-form ~>
 		@toggle!
 
@@ -542,6 +561,9 @@ script.
 	@open = ~>
 		@is-open = true
 		@opts.ui.trigger \blur
+
+		@form.style.top = \15%
+		@form.style.left = (window.inner-width / 2) - (@form.offset-width / 2) + \px
 
 		@bg.style.pointer-events = \auto
 
@@ -664,3 +686,46 @@ script.
 		.then ~>
 			@wait = false
 			@update!
+
+	@on-header-mousedown = (e) ~>
+		position = @form.get-bounding-client-rect!
+
+		click-x = e.client-x
+		click-y = e.client-y
+		move-base-x = click-x - position.left
+		move-base-y = click-y - position.top
+		browser-width = window.inner-width
+		browser-height = window.inner-height
+		window-width = @form.offset-width
+		window-height = @form.offset-height
+
+		mousemove = (me) ~>
+			move-left = me.client-x - move-base-x
+			move-top = me.client-y - move-base-y
+
+			if move-left < 0
+				move-left = 0
+
+			if move-top < 0
+				move-top = 0
+
+			if move-left + window-width > browser-width
+				move-left = browser-width - window-width
+
+			if move-top + window-height > browser-height
+				move-top = browser-height - window-height
+
+			@form.style.left = move-left + \px
+			@form.style.top = move-top + \px
+
+		clear = ~>
+			window.remove-event-listener \mousemove mousemove
+			window.remove-event-listener \mouseup clear
+			window.remove-event-listener \mouseleave clear
+
+		window.add-event-listener \mousemove mousemove
+
+		window.add-event-listener \mouseleave clear
+		window.add-event-listener \mouseup clear
+		window.add-event-listener \dragstart clear
+		window.add-event-listener \dragend clear
