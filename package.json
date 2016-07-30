@@ -54,7 +54,6 @@
     "vinyl-source-stream": "1.1.0"
   },
   "dependencies": {
-    "accesses": "1.0.5",
     "argv": "0.0.2",
     "babel-core": "6.11.4",
     "babel-polyfill": "6.9.1",
