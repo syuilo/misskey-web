@@ -31,6 +31,7 @@ Error.stackTraceLimit = Infinity;
 /**
  * Module dependencies
  */
+import * as os from 'os';
 import * as cluster from 'cluster';
 import name from 'named';
 import {logDone, logInfo, logWarn, logFailed} from 'log-cool';
@@ -77,6 +78,10 @@ async function master(): Promise<boolean> {
 	logInfo(`environment: ${env}`);
 	logInfo(`maintainer: ${config.maintainer}`);
 
+	logInfo(`MACHINE: ${os.hostname()}`);
+	logInfo(`MACHINE: CPU: ${os.cpus().length}core`);
+	logInfo(`MACHINE: MEM: ${(os.freemem() / 1024 / 1024 / 1024).toFixed(1)}GB`);
+
 	let ok = true;
 
 	// Get repository info
@@ -105,7 +110,7 @@ async function master(): Promise<boolean> {
 	}
 
 	// Count the machine's CPUs
-	const cpuCount = require('os').cpus().length;
+	const cpuCount = os.cpus().length;
 
 	// Create a worker for each CPU
 	for (let i = 0; i < cpuCount; i++) {
