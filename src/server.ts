@@ -123,20 +123,20 @@ app.use(useragent.express());
 /**
  * Initialize requests
  */
-app.use(async (req, res, next): Promise<void> => {
-
+app.use(async (req, res, next): Promise<any> =>
+{
 	// Security headers
 	res.header('X-Frame-Options', 'DENY');
 
 	// See http://web-tan.forum.impressrd.jp/e/2013/05/17/15269
 	res.header('Vary', 'User-Agent, Cookie');
 
+	// Get CSRF token
+	res.locals.csrftoken = req.csrfToken();
+
 	// Check signin
 	res.locals.signin =
 		req.session.hasOwnProperty('user');
-
-	// Get CSRF token
-	res.locals.csrftoken = req.csrfToken();
 
 	if (!res.locals.signin) {
 		res.locals.user = null;
@@ -148,10 +148,13 @@ app.use(async (req, res, next): Promise<void> => {
 	// Fetch user data
 	try {
 		res.locals.user = await api('i', {}, userId);
-		next();
-	} catch (_) {
+	} catch (e) {
+		console.error(e);
 		res.status(500).send('Core Error');
+		return;
 	}
+
+	next();
 });
 
 /**
