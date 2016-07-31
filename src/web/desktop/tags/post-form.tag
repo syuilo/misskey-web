@@ -5,7 +5,7 @@ mk-post-form
 			h1
 				| 新規投稿
 				span.files(if={ files.length != 0 }) 添付: { files.length }ファイル
-			button.close(title='閉じる', onclick={ close }): i.fa.fa-times
+			button.close(title='閉じる', onmousedown={ repel-move }, onclick={ close }): i.fa.fa-times
 		div.body
 			textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, oninput={ update }, placeholder='いまどうしてる？')
 			div.attaches(if={ files.length != 0 })
@@ -615,6 +615,10 @@ script.
 		}
 
 	@repel-close = (e) ~>
+		e.stop-propagation!
+		return true
+
+	@repel-move = (e) ~>
 		e.stop-propagation!
 		return true
 
