@@ -82,7 +82,7 @@ app.get('/apple-touch-icon.png', (req, res) => res.sendFile(__dirname + '/resour
  * Basic parsers
  */
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser(config.cookiePass));
+app.use(cookieParser());
 
 /**
  * Session

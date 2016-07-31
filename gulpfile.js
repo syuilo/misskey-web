@@ -32,8 +32,6 @@ require('typescript-require')(require('./tsconfig.json'));
 const env = process.env.NODE_ENV;
 const isProduction = env === 'production';
 
-const config = require('./src/config.ts').default;
-
 /*
  * Browserifyのモジュールエイリアス
  */
@@ -117,6 +115,8 @@ gulp.task('copy:bower_components', () => {
 // フロントサイドのスクリプトのビルド
 gulp.task('build:scripts', done => {
 	gutil.log('フロントサイドスクリプトを構築します...');
+
+	const config = require('./src/config.ts').default;
 
 	glob('./src/web/**/*.ls', (err, files) => {
 		const tasks = files.map(entry => {

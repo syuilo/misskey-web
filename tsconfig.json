@@ -41,6 +41,7 @@
 		"./src/api/user-settings/update.ts",
 		"./src/argv.ts",
 		"./src/check-dependencies.ts",
+		"./src/config-generator.ts",
 		"./src/config.ts",
 		"./src/core/api.ts",
 		"./src/core/signin.ts",
@@ -48,8 +49,12 @@
 		"./src/db/models/post.ts",
 		"./src/db/models/user-settings.ts",
 		"./src/db/models/user.ts",
+		"./src/iconfig.ts",
 		"./src/index.ts",
+		"./src/load-config.ts",
+		"./src/meta.ts",
 		"./src/router.ts",
-		"./src/server.ts"
+		"./src/server.ts",
+		"./src/utils/yesno.ts"
 	]
 }

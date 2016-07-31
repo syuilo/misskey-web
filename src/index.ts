@@ -38,9 +38,10 @@ import {logDone, logInfo, logWarn, logFailed} from 'log-cool';
 const Git = require('nodegit');
 const portUsed = require('tcp-port-used');
 import argv from './argv';
-import config from './config';
+import yesno from './utils/yesno';
+import config from './load-config';
+import configGenerator from './config-generator';
 import checkDependencies from './check-dependencies';
-import api from './core/api';
 
 // init babel
 require('babel-core/register');
@@ -52,17 +53,22 @@ const isDebug = !isProduction;
 
 // Master
 if (cluster.isMaster) {
-	console.log('Welcome to Misskey!');
-
-	if (isDebug) {
-		logWarn('Productionモードではありません。本番環境で使用しないでください。');
-	}
-
 	master().then(ok => {
 		if (ok) {
-			logDone('ALL CORRECT');
+			logDone('OK');
+
+			console.log('\nStarting...\n');
+
+			// Count the machine's CPUs
+			const cpuCount = os.cpus().length;
+
+			// Create a worker for each CPU
+			for (let i = 0; i < cpuCount; i++) {
+				cluster.fork();
+			}
 		} else {
-			logWarn('SOME ISSUES');
+			console.error('there was a problem starting');
+			process.exit();
 		}
 	});
 }
@@ -75,8 +81,19 @@ else {
  * Init master proccess
  */
 async function master(): Promise<boolean> {
+	console.log('Welcome to Misskey!');
+
+	// Get repository info
+	const repository = await Git.Repository.open(__dirname + '/../');
+	console.log(`commit: ${(await repository.getHeadCommit()).sha()}`);
+
+	console.log('\nInitializing...\n');
+
+	if (isDebug) {
+		logWarn('Productionモードではありません。本番環境で使用しないでください。');
+	}
+
 	logInfo(`environment: ${env}`);
-	logInfo(`maintainer: ${config.maintainer}`);
 
 	const totalmem = (os.totalmem() / 1024 / 1024 / 1024).toFixed(1);
 	const freemem = (os.freemem() / 1024 / 1024 / 1024).toFixed(1);
@@ -84,21 +101,40 @@ async function master(): Promise<boolean> {
 	logInfo(`MACHINE: CPU: ${os.cpus().length}core`);
 	logInfo(`MACHINE: MEM: ${totalmem}GB (available: ${freemem}GB)`);
 
-	let ok = true;
+	// Load config
+	let conf: any;
+	try {
+		conf = config();
+	} catch (e) {
+		if (e.code !== 'ENOENT') {
+			logFailed('Failed to load configuration');
+			return false;
+		}
 
-	// Get repository info
-	const repository = await Git.Repository.open(__dirname + '/../');
-	logInfo(`commit: ${(await repository.getHeadCommit()).sha()}`);
+		logWarn('Config not found');
+		if (await yesno('Do you want setup now?', true)) {
+			await configGenerator();
+			conf = config();
+		} else {
+			logFailed('Failed to load configuration');
+			return false;
+		}
+	}
+
+	logDone('Success to load configuration');
+	logInfo(`maintainer: ${conf.maintainer}`);
 
 	if (!argv.options.hasOwnProperty('skip-check-dependencies')) {
 		checkDependencies();
 	}
 
 	// Check if a port is being used
-	if (await portUsed.check(config.bindPort, '127.0.0.1')) {
-		logFailed(`Port: ${config.bindPort} is already used!`);
-		process.exit();
+	if (await portUsed.check(conf.bindPort, '127.0.0.1')) {
+		logFailed(`Port: ${conf.bindPort} is already used!`);
+		return false;
 	}
+
+	const api = require('./core/api');
 
 	// Get Core information
 	try {
@@ -108,18 +144,10 @@ async function master(): Promise<boolean> {
 		logInfo(`Core: commit: ${core.commit}`);
 	} catch (_) {
 		logFailed('Failed to connect to the Core');
-		ok = false;
+		return false;
 	}
 
-	// Count the machine's CPUs
-	const cpuCount = os.cpus().length;
-
-	// Create a worker for each CPU
-	for (let i = 0; i < cpuCount; i++) {
-		cluster.fork();
-	}
-
-	return Promise.resolve(ok);
+	return true;
 }
 
 /**

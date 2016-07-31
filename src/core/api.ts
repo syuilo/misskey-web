@@ -19,7 +19,7 @@ export default (
 		method: 'POST'
 	};
 
-	params._web = config.api.pass;
+	params._web = config.api.key;
 	params._user = userId;
 
 	if (withFile) {

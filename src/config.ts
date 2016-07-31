@@ -1,32 +1,21 @@
-/**
- * Configuration
- */
+import {IConfig} from './iconfig';
+import load from './load-config';
 
-/// <reference path="../typings/node/node.d.ts" />
-/// <reference path="../typings/js-yaml/js-yaml.d.ts" />
-
-import * as fs from 'fs';
-import * as yaml from 'js-yaml';
-
-// Detect home path
-const home = process.env[
-	process.platform === 'win32' ? 'USERPROFILE' : 'HOME'];
-
-// Name of directory that includes config file
-const dirName = '.misskey-web';
-
-// Name of config file
-const fileName = 'config.yml';
-
-// Resolve paths
-const dirPath = `${home}/${dirName}`;
-const path = `${dirPath}/${fileName}`;
-
-let conf: IConfig;
+let conf: IConfig & {
+	themeColor: string;
+	themeColorForeground: string;
+	url: string;
+	api: {
+		url: string;
+	};
+	hosts: any;
+	domains: any;
+	urls: any;
+};
 
 try {
 	// Load and parse the config
-	conf = <IConfig>yaml.safeLoad(fs.readFileSync(path, 'utf8'));
+	conf = load();
 } catch (e) {
 	console.error('Failed to load config: ' + e);
 	process.exit(1);
@@ -94,49 +83,3 @@ conf.urls = {
 };
 
 export default conf;
-
-/**
- * Interface
- */
-export interface IConfig {
-	api: {
-		pass: string;
-		host: string;
-		port: number;
-		secure: boolean;
-		url: string;
-	};
-	bindIp: string;
-	cookiePass: string;
-	host: string;
-	hosts: any;
-	maintainer: string;
-	mongo: {
-		uri: string;
-		options: {
-			user: string;
-			pass: string;
-		}
-	};
-	redis: {
-		host: string;
-		port: number;
-	};
-	port: number;
-	bindPort: number;
-	https: {
-		enable: boolean;
-		key: string;
-		cert: string;
-	};
-	sessionSecret: string;
-	recaptcha: {
-		siteKey: string;
-		secretKey: string;
-	};
-	url: string;
-	themeColor: string;
-	themeColorForeground: string;
-	domains: any;
-	urls: any;
-}
