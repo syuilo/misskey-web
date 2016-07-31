@@ -566,7 +566,6 @@ script.
 		@form.style.left = (window.inner-width / 2) - (@form.offset-width / 2) + \px
 
 		@bg.style.pointer-events = \auto
-
 		Velocity @bg, \finish true
 		Velocity @bg, {
 			opacity: 1
@@ -576,6 +575,7 @@ script.
 			easing: \linear
 		}
 
+		@form.style.pointer-events = \auto
 		Velocity @form, \finish true
 		Velocity @form, {scale: 1.2} 0ms
 		Velocity @form, {
@@ -594,7 +594,6 @@ script.
 		@opts.ui.trigger \unblur 300ms
 
 		@bg.style.pointer-events = \none
-
 		Velocity @bg, \finish true
 		Velocity @bg, {
 			opacity: 0
@@ -604,6 +603,7 @@ script.
 			easing: \linear
 		}
 
+		@form.style.pointer-events = \none
 		Velocity @form, \finish true
 		Velocity @form, {
 			opacity: 0
