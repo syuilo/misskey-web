@@ -356,6 +356,8 @@ gulp.task('build:scripts', done => {
 gulp.task('build:styles', ['copy:bower_components'], () => {
 	gutil.log('フロントサイドスタイルを構築します...');
 
+	const config = require('./src/config.ts').default;
+
 	return gulp.src('./src/web/**/*.styl')
 		.pipe(replace(/url\("#/g, 'url\("' + config.urls.resources))
 		.pipe(stylus())
