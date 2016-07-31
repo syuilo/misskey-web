@@ -385,6 +385,8 @@ gulp.task('build-copy', [
 	return es.merge(
 		gulp.src('./src/web/**/*.pug').pipe(gulp.dest('./built/web/')),
 		gulp.src('./src/resources/**/*').pipe(gulp.dest('./built/resources/')),
+		gulp.src('./src/web/desktop/resources/**/*').pipe(gulp.dest('./built/resources/desktop/')),
+		gulp.src('./src/web/mobile/resources/**/*').pipe(gulp.dest('./built/resources/mobile/')),
 		gulp.src('./src/resources/favicon.ico').pipe(gulp.dest('./built/resources/')),
 		gulp.src([
 			'./src/web/**/*',
