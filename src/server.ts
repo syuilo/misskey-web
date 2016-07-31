@@ -25,7 +25,6 @@ const hsts = require('hsts');
 import name from 'named';
 
 // Internal modules
-import UserSetting from './db/models/user-settings';
 import api from './core/api';
 import config from './config';
 import router from './router';
@@ -149,16 +148,10 @@ app.use(async (req, res, next): Promise<void> => {
 	// Fetch user data
 	try {
 		res.locals.user = await api('i', {}, userId);
+		next();
 	} catch (_) {
 		res.status(500).send('Core Error');
-		return;
 	}
-
-	// Load user configuration
-	res.locals.user._settings = await UserSetting
-		.findOne({user_id: userId}).lean();
-
-	next();
 });
 
 /**
