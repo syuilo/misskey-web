@@ -158,214 +158,214 @@ style.
 				display block
 				clear both
 
-	> .body > .attaches
-		position relative
-		margin 0
-		padding 0
-		background lighten($theme-color, 98%)
-		background-clip padding-box
-		border solid 1px rgba($theme-color, 0.1)
-		border-top none
-		border-radius 0 0 4px 4px
-		transition border-color .3s ease
-
-		> .remain
-			display block
-			position absolute
-			top 8px
-			right 8px
+		> .body > .attaches
+			position relative
 			margin 0
 			padding 0
-			color rgba($theme-color, 0.4)
+			background lighten($theme-color, 98%)
+			background-clip padding-box
+			border solid 1px rgba($theme-color, 0.1)
+			border-top none
+			border-radius 0 0 4px 4px
+			transition border-color .3s ease
 
-		> .files
-			display block
-			margin 0
-			padding 4px
+			> .remain
+				display block
+				position absolute
+				top 8px
+				right 8px
+				margin 0
+				padding 0
+				color rgba($theme-color, 0.4)
+
+			> .files
+				display block
+				margin 0
+				padding 4px
+				list-style none
+
+				&:after
+					content ""
+					display block
+					clear both
+
+				> .file
+					display block
+					position relative
+					float left
+					margin 4px
+					padding 0
+					cursor move
+
+					&:hover > .remove
+						display block
+
+					> .img
+						width 64px
+						height 64px
+						background-size cover
+						background-position center center
+
+					> .remove
+						display none
+						position absolute
+						top -6px
+						right -6px
+						width 16px
+						height 16px
+						cursor pointer
+
+				> .add
+					display block
+					position relative
+					float left
+					margin 4px
+					padding 0
+					border dashed 2px rgba($theme-color, 0.2)
+					cursor pointer
+
+					&:hover
+						border-color rgba($theme-color, 0.3)
+
+						> i
+							color rgba($theme-color, 0.4)
+
+					> i
+						display block
+						width 60px
+						height 60px
+						line-height 60px
+						text-align center
+						font-size 1.2em
+						color rgba($theme-color, 0.2)
+
+		> .body > .uploadings
+			margin 8px 0 0 0
+			padding 8px
+			border solid 1px rgba($theme-color, 0.2)
+			border-radius 4px
 			list-style none
 
-			&:after
-				content ""
-				display block
-				clear both
-
-			> .file
+			> li
 				display block
 				position relative
-				float left
-				margin 4px
+				margin 8px 0 0 0
 				padding 0
-				cursor move
+				height 36px
+				box-shadow 0 -1px 0 rgba($theme-color, 0.1)
+				border-top solid 8px transparent
 
-				&:hover > .remove
-					display block
+				&:first-child
+					margin 0
+					box-shadow none
+					border-top none
 
 				> .img
-					width 64px
-					height 64px
+					display block
+					position absolute
+					top 0
+					left 0
+					width 36px
+					height 36px
 					background-size cover
 					background-position center center
 
-				> .remove
-					display none
+				> .name
+					display block
 					position absolute
-					top -6px
-					right -6px
-					width 16px
-					height 16px
-					cursor pointer
-
-			> .add
-				display block
-				position relative
-				float left
-				margin 4px
-				padding 0
-				border dashed 2px rgba($theme-color, 0.2)
-				cursor pointer
-
-				&:hover
-					border-color rgba($theme-color, 0.3)
+					top 0
+					left 44px
+					margin 0
+					padding 0
+					max-width 256px
+					font-size 0.8em
+					color rgba($theme-color, 0.7)
+					white-space nowrap
+					text-overflow ellipsis
+					overflow hidden
 
 					> i
-						color rgba($theme-color, 0.4)
+						margin-right 4px
 
-				> i
+				> .status
 					display block
-					width 60px
-					height 60px
-					line-height 60px
-					text-align center
-					font-size 1.2em
-					color rgba($theme-color, 0.2)
+					position absolute
+					top 0
+					right 0
+					margin 0
+					padding 0
+					font-size 0.8em
 
-	> .body > .uploadings
-		margin 8px 0 0 0
-		padding 8px
-		border solid 1px rgba($theme-color, 0.2)
-		border-radius 4px
-		list-style none
+					> .initing
+						color rgba($theme-color, 0.5)
 
-		> li
-			display block
-			position relative
-			margin 8px 0 0 0
-			padding 0
-			height 36px
-			box-shadow 0 -1px 0 rgba($theme-color, 0.1)
-			border-top solid 8px transparent
+					> .kb
+						color rgba($theme-color, 0.5)
 
-			&:first-child
-				margin 0
-				box-shadow none
-				border-top none
+					> .percentage
+						display inline-block
+						width 48px
+						text-align right
 
-			> .img
-				display block
-				position absolute
-				top 0
-				left 0
-				width 36px
-				height 36px
-				background-size cover
-				background-position center center
+						color rgba($theme-color, 0.7)
 
-			> .name
-				display block
-				position absolute
-				top 0
-				left 44px
-				margin 0
-				padding 0
-				max-width 256px
-				font-size 0.8em
-				color rgba($theme-color, 0.7)
-				white-space nowrap
-				text-overflow ellipsis
-				overflow hidden
+						&:after
+							content '%'
 
-				> i
-					margin-right 4px
+				> progress
+					-webkit-appearance none
+					-moz-appearance none
+					appearance none
+					display block
+					position absolute
+					bottom 0
+					right 0
+					margin 0
+					width calc(100% - 44px)
+					height 8px
+					background transparent
+					border none
+					border-radius 4px
+					overflow hidden
 
-			> .status
-				display block
-				position absolute
-				top 0
-				right 0
-				margin 0
-				padding 0
-				font-size 0.8em
+					&::-webkit-progress-value
+						background $theme-color
 
-				> .initing
-					color rgba($theme-color, 0.5)
+					&::-webkit-progress-bar
+						background rgba($theme-color, 0.1)
 
-				> .kb
-					color rgba($theme-color, 0.5)
+				> .progress
+					-webkit-appearance none
+					-moz-appearance none
+					appearance none
+					display block
+					position absolute
+					bottom 0
+					right 0
+					margin 0
+					width calc(100% - 44px)
+					height 8px
+					border none
+					border-radius 4px
+					background linear-gradient(
+						45deg,
+						darken($theme-color, 10%) 25%,
+						$theme-color              25%,
+						$theme-color              50%,
+						darken($theme-color, 10%) 50%,
+						darken($theme-color, 10%) 75%,
+						$theme-color              75%,
+						$theme-color
+					)
+					background-size 32px 32px
+					animation bg 1.5s linear infinite
 
-				> .percentage
-					display inline-block
-					width 48px
-					text-align right
+					&.initing
+						opacity 0.3
 
-					color rgba($theme-color, 0.7)
-
-					&:after
-						content '%'
-
-			> progress
-				-webkit-appearance none
-				-moz-appearance none
-				appearance none
-				display block
-				position absolute
-				bottom 0
-				right 0
-				margin 0
-				width calc(100% - 44px)
-				height 8px
-				background transparent
-				border none
-				border-radius 4px
-				overflow hidden
-
-				&::-webkit-progress-value
-					background $theme-color
-
-				&::-webkit-progress-bar
-					background rgba($theme-color, 0.1)
-
-			> .progress
-				-webkit-appearance none
-				-moz-appearance none
-				appearance none
-				display block
-				position absolute
-				bottom 0
-				right 0
-				margin 0
-				width calc(100% - 44px)
-				height 8px
-				border none
-				border-radius 4px
-				background linear-gradient(
-					45deg,
-					darken($theme-color, 10%) 25%,
-					$theme-color              25%,
-					$theme-color              50%,
-					darken($theme-color, 10%) 50%,
-					darken($theme-color, 10%) 75%,
-					$theme-color              75%,
-					$theme-color
-				)
-				background-size 32px 32px
-				animation bg 1.5s linear infinite
-
-				&.initing
-					opacity 0.3
-
-				@keyframes bg
-					from {background-position: 0 0;}
-					to   {background-position: -64px 32px;}
+					@keyframes bg
+						from {background-position: 0 0;}
+						to   {background-position: -64px 32px;}
 
 	[name='file']
 		display none
