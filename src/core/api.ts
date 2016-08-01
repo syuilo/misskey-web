@@ -14,8 +14,8 @@ export default (endpoint: string, params: any = {}, user: any = null, withFile: 
 	const schema = config.api.secure ? 'https' : 'http';
 
 	const options: request.Options = {
-		url: config.api.internal
-			? `http://${config.api.internal}:${config.api.port}/${endpoint}`
+		url: config.api.internal.host
+			? `http://${config.api.internal.host}:${config.api.internal.port}/${endpoint}`
 			: `${schema}://${config.api.host}:${config.api.port}/${endpoint}`,
 		method: 'POST'
 	};
