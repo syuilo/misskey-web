@@ -126,11 +126,16 @@ gulp.task('build:scripts', done => {
 				})
 				.transform(ls)
 				.transform(aliasify, aliasifyConfig)
+				// \nに統一
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					return source.replace(/\r\n/g, '\n');
+				}))
 				// tagの{}の''を不要にする (その代わりスタイルの記法は使えなくなるけど)
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
 					let dist = '';
-					const lines = source.split('\r\n');
+					const lines = source.split('\n');
 					let flag = false;
 					lines.forEach(line => {
 						if (line === 'style.' || line === 'script.') {
@@ -140,14 +145,14 @@ gulp.task('build:scripts', done => {
 							if (line.replace(/\t/g, '')[0] === '|') {
 								through();
 							} else {
-								dist += line.replace(/([+=])\s?\{(.+?)\}/g, '$1"{$2}"') + '\r\n';
+								dist += line.replace(/([+=])\s?\{(.+?)\}/g, '$1"{$2}"') + '\n';
 							}
 						} else {
 							through();
 						}
 
 						function through() {
-							dist += line + '\r\n';
+							dist += line + '\n';
 						}
 					});
 					return dist;
@@ -156,7 +161,7 @@ gulp.task('build:scripts', done => {
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
 					let dist = '';
-					const lines = source.split('\r\n');
+					const lines = source.split('\n');
 					let flag = false;
 					lines.forEach(line => {
 						if (line === 'style.' || line === 'script.') {
@@ -177,14 +182,14 @@ gulp.task('build:scripts', done => {
 										line = line.replace(name, '(name=\'' + name.substr(1) + '\')');
 									}
 								}
-								dist += line + '\r\n';
+								dist += line + '\n';
 							}
 						} else {
 							through();
 						}
 
 						function through() {
-							dist += line + '\r\n';
+							dist += line + '\n';
 						}
 					});
 					return dist;
@@ -193,7 +198,7 @@ gulp.task('build:scripts', done => {
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
 					let dist = '';
-					const lines = source.split('\r\n');
+					const lines = source.split('\n');
 					let flag = false;
 					lines.forEach(line => {
 						if (line === 'style.' || line === 'script.') {
@@ -203,13 +208,13 @@ gulp.task('build:scripts', done => {
 							(line.match(/\{\s?([a-z-]+)\s?\}/g) || []).forEach(x => {
 								line = line.replace(x, camelCase(x));
 							});
-							dist += line + '\r\n';
+							dist += line + '\n';
 						} else {
 							through();
 						}
 
 						function through() {
-							dist += line + '\r\n';
+							dist += line + '\n';
 						}
 					});
 					return dist;
@@ -225,18 +230,18 @@ gulp.task('build:scripts', done => {
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
 					let dist = '';
-					const lines = source.split('\r\n');
+					const lines = source.split('\n');
 					lines.forEach(line => {
 						if (line === 'style.') {
 							through();
-							dist += '\t$theme-color = ' + config.themeColor + '\r\n';
-							dist += '\t$theme-color-foreground = ' + config.themeColorForeground + '\r\n';
+							dist += '\t$theme-color = ' + config.themeColor + '\n';
+							dist += '\t$theme-color-foreground = ' + config.themeColorForeground + '\n';
 						} else {
 							through();
 						}
 
 						function through() {
-							dist += line + '\r\n';
+							dist += line + '\n';
 						}
 					});
 					return dist;
@@ -245,7 +250,7 @@ gulp.task('build:scripts', done => {
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
 					let dist = '';
-					const lines = source.split('\r\n');
+					const lines = source.split('\n');
 					let flag = false;
 					lines.forEach(line => {
 						let next = false;
@@ -253,21 +258,21 @@ gulp.task('build:scripts', done => {
 							flag = false;
 						} else if (line === 'style.') {
 							through();
-							dist += '\t:scope\r\n';
+							dist += '\t:scope\n';
 							flag = true;
 							next = true;
 						}
 
 						if (!next) {
 							if (flag) {
-								dist += '\t\t' + line + '\r\n';
+								dist += '\t\t' + line + '\n';
 							} else {
 								through();
 							}
 						}
 
 						function through() {
-							dist += line + '\r\n';
+							dist += line + '\n';
 						}
 					});
 					return dist;
@@ -276,20 +281,20 @@ gulp.task('build:scripts', done => {
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
 					let dist = '';
-					const lines = source.split('\r\n');
+					const lines = source.split('\n');
 					let flag = false;
 					lines.forEach(line => {
 						if (line === 'style.' || line === 'script.') {
 							flag = true;
 						}
 						if (flag) {
-							dist += '\t' + line + '\r\n';
+							dist += '\t' + line + '\n';
 						} else {
 							through();
 						}
 
 						function through() {
-							dist += line + '\r\n';
+							dist += line + '\n';
 						}
 					});
 					return dist;
@@ -297,13 +302,13 @@ gulp.task('build:scripts', done => {
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
 					let dist = '';
-					const lines = source.split('\r\n');
+					const lines = source.split('\n');
 					let flag = false;
 					lines.forEach(line => {
 						if (line === '\tstyle.') {
-							dist += line = '\tstyle(type=\'stylus\', scoped).\r\n';
+							dist += line = '\tstyle(type=\'stylus\', scoped).\n';
 						} else {
-							dist += line + '\r\n';
+							dist += line + '\n';
 						}
 					});
 					return dist;
