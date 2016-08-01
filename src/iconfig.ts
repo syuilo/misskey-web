@@ -20,6 +20,7 @@ export interface IConfig {
 		host: string;
 		port: number;
 		secure: boolean;
+		internal: string;
 	};
 	mongodb: {
 		host: string;

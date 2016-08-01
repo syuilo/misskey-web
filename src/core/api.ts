@@ -15,7 +15,9 @@ export default (
 		: undefined;
 
 	const options: request.Options = {
-		url: `http://${config.api.host}:${config.api.port}/${endpoint}`,
+		url: config.api.internal
+			? `http://${config.api.internal}:${config.api.port}/${endpoint}`
+			: `http://${config.api.host}:${config.api.port}/${endpoint}`,
 		method: 'POST'
 	};
 

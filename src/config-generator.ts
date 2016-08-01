@@ -87,6 +87,12 @@ export default async () => {
 		},
 		{
 			type: 'input',
+			name: 'core_internal',
+			message: 'Internal core address:',
+			default: 'localhost'
+		},
+		{
+			type: 'input',
 			name: 'mongo_host',
 			message: 'MongoDB\'s host:',
 			default: 'localhost'
@@ -152,7 +158,8 @@ export default async () => {
 			key: as.api_key,
 			host: as.core_host,
 			port: parseInt(as.core_port, 10),
-			secure: as.core_secure
+			secure: as.core_secure,
+			internal: as.core_internal
 		},
 		mongodb: {
 			host: as.mongo_host,
