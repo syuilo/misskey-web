@@ -44,16 +44,14 @@ style.
 	[name='bg']
 		display block
 		position fixed
+		z-index 2048
 		top 0
+		left 0
 		width 100%
 		height 100%
-		pointer-events none
-
-	[name='bg']
-		z-index 2048
-		left 0
 		background rgba(0, 0, 0, 0.7)
 		opacity 0
+		pointer-events none
 
 	[name='form']
 		display block
@@ -68,6 +66,7 @@ style.
 		border-radius 6px
 		overflow hidden
 		opacity 0
+		pointer-events none
 
 		&.wait
 			&, *
