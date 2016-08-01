@@ -134,7 +134,7 @@ async function master(): Promise<boolean> {
 		return false;
 	}
 
-	const api = require('./core/api');
+	const api = require('./core/api').default;
 
 	// Get Core information
 	try {

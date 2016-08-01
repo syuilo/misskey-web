@@ -1,5 +1,4 @@
 import api from '../core/api';
-import UserSetting from '../db/models/user-settings';
 
 export default (username: string, password: string, session: any) => new Promise<void>(async (resove, reject) => {
 	const user = await api('signin', {
@@ -7,6 +6,8 @@ export default (username: string, password: string, session: any) => new Promise
 		password: password
 	});
 
+	save(user);
+/*
 	// ユーザー設定引き出し
 	const settings = await UserSetting.findOne({
 		userId: user.id
@@ -22,7 +23,7 @@ export default (username: string, password: string, session: any) => new Promise
 	} else {
 		save(user);
 	}
-
+*/
 	function save(user: any): void {
 		session.user = user.id;
 		session.save(() => {

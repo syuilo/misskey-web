@@ -11,7 +11,7 @@ recaptcha:
   siteKey: 6LdtwxUTAAAAAJlGBV9_fxy-szKJ-3hCscF3md76
   secretKey: 6LdtwxUTAAAAAHOcFtsjHZn0Cj-OILDyB1xA9rWc
 api:
-  key: 'himasaku#06160907'
+  key: 'Himasaku#06160907'
   host: api.misskey.local
   port: 616
   secure: false

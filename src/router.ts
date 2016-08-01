@@ -3,13 +3,10 @@
  */
 
 import * as express from 'express';
-import * as multer from 'multer';
 const subdomain = require('subdomain');
 
 import signin from './core/signin';
 import config from './config';
-
-const upload = multer({ dest: 'uploads/' });
 
 const subdomainOptions = {
 	base: config.host,
@@ -87,13 +84,6 @@ export default function(app: express.Express): void {
 
 	app.post('/_/api/account/create', require('./api/account/create').default);
 	app.post('/_/api/url/analyze', require('./api/url/analyze').default);
-	app.post('/_/api/avatar/update', require('./api/avatar/update').default);
-	app.post('/_/api/banner/update', require('./api/banner/update').default);
-	app.post('/_/api/home/update', require('./api/home/update').default);
-	app.post('/_/api/mobile-header-overlay/update', require('./api/mobile-header-overlay/update').default);
-	app.post('/_/api/user-settings/update', require('./api/user-settings/update').default);
-	app.post('/_/api/album/upload', upload.single('file'), require('./api/album/upload').default);
-	app.post('/_/api/posts/create-with-file', upload.single('file'), require('./api/posts/create-with-file').default);
 
 	/**
 	 * Not found handler
