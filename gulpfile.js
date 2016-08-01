@@ -316,7 +316,7 @@ gulp.task('build:scripts', done => {
 				.transform(riotify, {
 					template: 'pug',
 					type: 'livescript',
-					//expr: true,
+					expr: false,
 					compact: true,
 					parserOptions: {
 						template: {
