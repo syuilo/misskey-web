@@ -168,7 +168,8 @@ router(app);
 const server = config.https.enable ?
 	https.createServer({
 		key: fs.readFileSync(config.https.key),
-		cert: fs.readFileSync(config.https.cert)
+		cert: fs.readFileSync(config.https.cert),
+		ca: fs.readFileSync(config.https.ca)
 	}, app) :
 	http.createServer(app);
 

@@ -46,6 +46,12 @@ export default async () => {
 		},
 		{
 			type: 'input',
+			name: 'https_ca',
+			message: 'Path of tls ca:',
+			when: ctx => ctx.https
+		},
+		{
+			type: 'input',
 			name: 'session_secret',
 			message: 'Session secret:'
 		},
@@ -134,7 +140,8 @@ export default async () => {
 		https: {
 			enable: as.https,
 			key: as.https_key || null,
-			cert: as.https_cert || null
+			cert: as.https_cert || null,
+			ca: as.https_ca || null
 		},
 		sessionSecret: as.session_secret,
 		recaptcha: {

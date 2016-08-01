@@ -8,6 +8,7 @@ export interface IConfig {
 		enable: boolean;
 		key: string;
 		cert: string;
+		ca: string;
 	};
 	sessionSecret: string;
 	recaptcha: {
