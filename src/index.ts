@@ -142,8 +142,8 @@ async function master(): Promise<boolean> {
 		logDone('Core: available');
 		logInfo(`Core: maintainer: ${core.maintainer}`);
 		logInfo(`Core: commit: ${core.commit}`);
-	} catch (_) {
-		logFailed('Failed to connect to the Core');
+	} catch (e) {
+		logFailed(`Failed to connect to the Core: ${e}`);
 		return false;
 	}
 
