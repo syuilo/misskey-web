@@ -2,22 +2,21 @@ import * as request from 'request';
 
 import config from '../config';
 
-export default (
-	endpoint: string,
-	params: any = {},
-	user: any = null,
-	withFile: boolean = false
-) => new Promise<any>(async (resolve, reject) => {
+export default (endpoint: string, params: any = {}, user: any = null, withFile: boolean = false) =>
+	new Promise<any>(async (resolve, reject) =>
+{
 	const userId: string = user !== null
 		? typeof user === 'string'
 			? user
 			: user.id
 		: undefined;
 
+	const schema = config.api.secure ? 'https' : 'http';
+
 	const options: request.Options = {
 		url: config.api.internal
-			? `http://${config.api.internal}:${config.api.port}/${endpoint}`
-			: `http://${config.api.host}:${config.api.port}/${endpoint}`,
+			? `${schema}://${config.api.internal}:${config.api.port}/${endpoint}`
+			: `${schema}://${config.api.host}:${config.api.port}/${endpoint}`,
 		method: 'POST'
 	};
 
