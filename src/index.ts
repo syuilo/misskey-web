@@ -51,37 +51,86 @@ const env = process.env.NODE_ENV;
 const isProduction = env === 'production';
 const isDebug = !isProduction;
 
-// Master
-if (cluster.isMaster) {
-	master().then(ok => {
-		if (ok) {
-			logDone('OK');
-
-			console.log('\nStarting...\n');
-
-			// Count the machine's CPUs
-			const cpuCount = os.cpus().length;
-
-			// Create a worker for each CPU
-			for (let i = 0; i < cpuCount; i++) {
-				cluster.fork();
-			}
-		} else {
-			console.error('there was a problem starting');
-			process.exit();
-		}
-	});
+enum State {
+	success,
+	warn,
+	failed
 }
-// Workers
-else {
-	worker();
+
+main();
+
+/**
+ * Init proccess
+ */
+function main(): void {
+	// Master
+	if (cluster.isMaster) {
+		master();
+	}
+	// Workers
+	else {
+		worker();
+	}
 }
 
 /**
  * Init master proccess
  */
-async function master(): Promise<boolean> {
+async function master(): Promise<void> {
+	let state: State;
+
+	try {
+		// initialize app
+		state = await init();
+	} catch (e) {
+		console.error(e);
+		process.exit(1);
+	}
+
+	switch (state) {
+		// fatal error
+		case State.failed:
+			console.error('Fatal error occurred :(');
+			process.exit();
+			return;
+
+		// np
+		case State.success:
+			logDone('OK :)');
+			break;
+
+		// with warning(s)
+		case State.warn:
+			logWarn('Some warning(s) :|');
+			break;
+	}
+
+	console.log('\nStarting...\n');
+
+	// Count the machine's CPUs
+	const cpuCount = os.cpus().length;
+
+	// Create a worker for each CPU
+	for (let i = 0; i < cpuCount; i++) {
+		cluster.fork();
+	}
+}
+
+/**
+ * Init worker proccess
+ */
+function worker(): void {
+	// Start server
+	require('./server');
+}
+
+/**
+ * Init app
+ */
+async function init(): Promise<State> {
 	console.log('Welcome to Misskey!');
+
+	let warn = false;
 
 	// Get repository info
 	const repository = await Git.Repository.open(__dirname + '/../');
@@ -108,7 +157,7 @@ async function master(): Promise<boolean> {
 	} catch (e) {
 		if (e.code !== 'ENOENT') {
 			logFailed('Failed to load configuration');
-			return false;
+			return State.failed;
 		}
 
 		logWarn('Config not found');
@@ -117,7 +166,7 @@ async function master(): Promise<boolean> {
 			conf = config();
 		} else {
 			logFailed('Failed to load configuration');
-			return false;
+			return State.failed;
 		}
 	}
 
@@ -131,7 +180,7 @@ async function master(): Promise<boolean> {
 	// Check if a port is being used
 	if (await portUsed.check(conf.bindPort, '127.0.0.1')) {
 		logFailed(`Port: ${conf.bindPort} is already used!`);
-		return false;
+		return State.failed;
 	}
 
 	const api = require('./core/api').default;
@@ -144,17 +193,10 @@ async function master(): Promise<boolean> {
 		logInfo(`Core: commit: ${core.commit}`);
 	} catch (e) {
 		logFailed(`Failed to connect to the Core: ${e}`);
-		return false;
+		warn = true;
 	}
 
-	return true;
-}
-
-/**
- * Init worker proccess
- */
-function worker(): void {
-	require('./server');
+	return warn ? State.warn : State.success;
 }
 
 // Listen new workers

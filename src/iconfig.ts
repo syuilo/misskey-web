@@ -1,9 +1,7 @@
 export interface IConfig {
 	maintainer: string;
 	host: string;
-	bindIp: string;
 	port: number;
-	bindPort: number;
 	https: {
 		enable: boolean;
 		key: string;
@@ -15,15 +13,11 @@ export interface IConfig {
 		siteKey: string;
 		secretKey: string;
 	};
-	api: {
-		key: string;
+	core: {
+		apikey: string;
 		host: string;
 		port: number;
-		secure: boolean;
-		internal: {
-			host: string;
-			port: number;
-		};
+		www: string;
 	};
 	mongodb: {
 		host: string;

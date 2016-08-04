@@ -27,16 +27,8 @@ conf.themeColorForeground = '#fff';
 const host = conf.host;
 
 const scheme = conf.https.enable ? 'https' : 'http';
-const port = conf.https.enable
-	? conf.port === 443 ? '' : ':' + conf.port
-	: conf.port === 80 ? '' : ':' + conf.port;
 
-conf.url = `${scheme}://${host}` + port;
-
-conf.api.url =
-	(conf.api.secure ? 'https' : 'http') + '://'
-	+ conf.api.host
-	+ (conf.api.secure ? conf.api.port === 443 ? '' : ':' + conf.api.port : conf.api.port === 80 ? '' : ':' + conf.api.port);
+conf.url = `${scheme}://${host}`;
 
 const domains = {
 	about: 'about',

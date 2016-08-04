@@ -18,13 +18,8 @@ export default async () => {
 		},
 		{
 			type: 'input',
-			name: 'bind_port',
-			message: 'Listen port:'
-		},
-		{
-			type: 'input',
 			name: 'port',
-			message: 'Access port:'
+			message: 'Listen port:'
 		},
 		{
 			type: 'confirm',
@@ -73,7 +68,8 @@ export default async () => {
 		{
 			type: 'input',
 			name: 'core_host',
-			message: 'Core\'s host:'
+			message: 'Core\'s host:',
+			default: 'localhost'
 		},
 		{
 			type: 'input',
@@ -81,20 +77,9 @@ export default async () => {
 			message: 'Core\'s port:'
 		},
 		{
-			type: 'confirm',
-			name: 'core_secure',
-			message: 'Is Core secure?:'
-		},
-		{
 			type: 'input',
-			name: 'core_internal_host',
-			message: 'Internal core host:',
-			default: 'localhost'
-		},
-		{
-			type: 'input',
-			name: 'core_internal_port',
-			message: 'Internal core port:'
+			name: 'core_url',
+			message: 'Core URL:'
 		},
 		{
 			type: 'input',
@@ -147,7 +132,6 @@ export default async () => {
 		maintainer: as.maintainer,
 		host: as.host,
 		port: parseInt(as.port, 10),
-		bindPort: parseInt(as.bind_port, 10),
 		https: {
 			enable: as.https,
 			key: as.https_key || null,
@@ -159,15 +143,11 @@ export default async () => {
 			siteKey: as.recaptcha_site,
 			secretKey: as.recaptcha_secret
 		},
-		api: {
-			key: as.api_key,
+		core: {
+			apikey: as.api_key,
 			host: as.core_host,
 			port: parseInt(as.core_port, 10),
-			secure: as.core_secure,
-			internal: {
-				host: as.core_internal_host,
-				port: parseInt(as.core_internal_port, 10)
-			}
+			www: as.core_url
 		},
 		mongodb: {
 			host: as.mongo_host,

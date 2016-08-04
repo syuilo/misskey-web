@@ -11,16 +11,14 @@ export default (endpoint: string, params: any = {}, user: any = null, withFile: 
 			: user.id
 		: undefined;
 
-	const schema = config.api.secure ? 'https' : 'http';
-
 	const options: request.Options = {
-		url: config.api.internal.host
-			? `http://${config.api.internal.host}:${config.api.internal.port}/${endpoint}`
-			: `${schema}://${config.api.host}:${config.api.port}/${endpoint}`,
+		url: config.core.host
+			? `http://${config.core.host}:${config.core.port}/${endpoint}`
+			: `${config.core.www}/${endpoint}`,
 		method: 'POST'
 	};
 
-	params._web = config.api.key;
+	params._web = config.core.apikey;
 	params._user = userId;
 
 	if (withFile) {

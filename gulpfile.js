@@ -338,7 +338,7 @@ gulp.task('build:scripts', done => {
 				.bundle()
 				.pipe(source(entry.replace('src/web', 'resources').replace('.ls', '.js')))
 				.pipe(replace(/CONFIG\.themeColor/g, '"' + config.themeColor + '"'))
-				.pipe(replace(/CONFIG\.api\.url/g, '"' + config.api.url + '"'))
+				.pipe(replace(/CONFIG\.api\.url/g, '"' + config.core.www + '"'))
 				.pipe(replace(/CONFIG\.urls\.signin/g, '"' + config.urls.signin + '"'))
 				.pipe(replace(/CONFIG\.url/g, '"' + config.url + '"'));
 
