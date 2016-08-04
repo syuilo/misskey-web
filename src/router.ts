@@ -13,10 +13,10 @@ const subdomainOptions = {
 	prefix: '__'
 };
 
-const colorDomain = `/${subdomainOptions.prefix}/${config.domains.color}`;
-const signupDomain = `/${subdomainOptions.prefix}/${config.domains.signup}`;
-const signinDomain = `/${subdomainOptions.prefix}/${config.domains.signin}`;
-const signoutDomain = `/${subdomainOptions.prefix}/${config.domains.signout}`;
+const colorDomain = `/${subdomainOptions.prefix}/color`;
+const signupDomain = `/${subdomainOptions.prefix}/signup`;
+const signinDomain = `/${subdomainOptions.prefix}/signin`;
+const signoutDomain = `/${subdomainOptions.prefix}/signout`;
 
 export default function(app: express.Express): void {
 

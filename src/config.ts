@@ -7,7 +7,6 @@ let conf: IConfig & {
 	themeColorForeground: string;
 	host: string;
 	hosts: any;
-	domains: any;
 	urls: any;
 };
 
@@ -27,46 +26,32 @@ conf.themeColorForeground = themeColorForeground;
 const host = conf.host = conf.url.substr(conf.url.indexOf('://') + 3);
 const scheme = conf.url.substr(0, conf.url.indexOf('://'));
 
-const domains = conf.domains = {
-	about: 'about',
-	color: 'color',
-	help: 'help',
-	i: 'i',
-	resources: 'resources',
-	signup: 'signup',
-	signin: 'signin',
-	signout: 'signout',
-	share: 'share',
-	search: 'search',
-	talk: 'talk'
-};
-
 // Define hosts
-conf.hosts = {
-	i: `${domains.i}.${host}`,
-	about: `${scheme}${domains.about}.${host}`,
-	signup: `${domains.signup}.${host}`,
-	signin: `${domains.signin}.${host}`,
-	signout: `${domains.signout}.${host}`,
-	share: `${domains.share}.${host}`,
-	search: `${domains.search}.${host}`,
-	talk: `${domains.talk}.${host}`,
-	help: `${domains.help}.${host}`,
-	color: `${domains.color}.${host}`
+const hosts = conf.hosts = {
+	i: `i.${host}`,
+	about: `about.${host}`,
+	signup: `signup.${host}`,
+	signin: `signin.${host}`,
+	signout: `signout.${host}`,
+	share: `share.${host}`,
+	search: `search.${host}`,
+	talk: `talk.${host}`,
+	help: `help.${host}`,
+	color: `color.${host}`
 };
 
 // Define URLs
 conf.urls = {
-	i: `${scheme}://${domains.i}.${host}`,
-	about: `${scheme}://${domains.about}.${host}`,
-	signup: `${scheme}://${domains.signup}.${host}`,
-	signin: `${scheme}://${domains.signin}.${host}`,
-	signout: `${scheme}://${domains.signout}.${host}`,
-	share: `${scheme}://${domains.share}.${host}`,
-	search: `${scheme}://${domains.search}.${host}`,
-	talk: `${scheme}://${domains.talk}.${host}`,
-	help: `${scheme}://${domains.help}.${host}`,
-	color: `${scheme}://${domains.color}.${host}`
+	i: `${scheme}://${hosts.i}`,
+	about: `${scheme}://${hosts.about}`,
+	signup: `${scheme}://${hosts.signup}`,
+	signin: `${scheme}://${hosts.signin}`,
+	signout: `${scheme}://${hosts.signout}`,
+	share: `${scheme}://${hosts.share}`,
+	search: `${scheme}://${hosts.search}`,
+	talk: `${scheme}://${hosts.talk}`,
+	help: `${scheme}://${hosts.help}`,
+	color: `${scheme}://${hosts.color}`
 };
 
 export default conf;
