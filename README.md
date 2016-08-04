@@ -30,39 +30,31 @@
 ## Configuration
 
 ``` yaml
-# サーバーの管理者情報
 maintainer: Your Name <youremail@example.com>
 
-# URL
-url: <string>
+url: "https://misskey.xyz"
+port: 80
 
-# 待ち受けポート
-port: <number>
-
-# TLS設定
 https:
-  enable: <boolean>
-  key: <string>
-  cert: <string>
-  ca: <string>
+  enable: true
+  key: "path/of/your/tls/key"
+  cert: "path/of/your/tls/cert"
+  ca: "path/of/your/tls/ca"
 
-# Redis
 redis:
-  host: <string>
-  port: <number>
+  host: "localhost"
+  port: 6379
 
-# Coreサーバー情報
 core:
-  apikey: <string>
-  host: <string>
-  port: <string>
-  url: <string>
+  apikey: hoge
+  host: "192.168.179.2"
+  port: 616
+  www: "https://api.misskey.xyz"
 
-# reCAPTCHA設定
 # SEE: https://www.google.com/recaptcha/intro/index.html
 recaptcha:
-  siteKey: <string>
-  secretKey: <string>
+  siteKey: hima
+  secretKey: saku
 
 ```
 
