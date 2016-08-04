@@ -93,15 +93,13 @@ async function master(): Promise<void> {
 			console.error('Fatal error occurred :(');
 			process.exit();
 			return;
-
-		// np
-		case State.success:
-			logDone('OK :)');
-			break;
-
 		// with warning(s)
 		case State.warn:
 			logWarn('Some warning(s) :|');
+			break;
+		// np
+		case State.success:
+			logDone('OK :)');
 			break;
 	}
 
