@@ -1,6 +1,6 @@
 export interface IConfig {
 	maintainer: string;
-	host: string;
+	url: string;
 	port: number;
 	https: {
 		enable: boolean;
@@ -8,7 +8,6 @@ export interface IConfig {
 		cert: string;
 		ca: string;
 	};
-	sessionSecret: string;
 	recaptcha: {
 		siteKey: string;
 		secretKey: string;

@@ -4,10 +4,7 @@ import load from './load-config';
 let conf: IConfig & {
 	themeColor: string;
 	themeColorForeground: string;
-	url: string;
-	api: {
-		url: string;
-	};
+	host: string;
 	hosts: any;
 	domains: any;
 	urls: any;
@@ -24,11 +21,10 @@ try {
 conf.themeColor = '#ec6b43';
 conf.themeColorForeground = '#fff';
 
-const host = conf.host;
+const host = conf.url.substr(conf.url.indexOf('://') + 3);
+conf.host = host;
 
-const scheme = conf.https.enable ? 'https' : 'http';
-
-conf.url = `${scheme}://${host}`;
+const scheme = conf.url.substr(0, conf.url.indexOf('://'));
 
 const domains = {
 	about: 'about',

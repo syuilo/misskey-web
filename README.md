@@ -34,8 +34,8 @@
 # ex) "Your Name <youremail@example.com>"
 maintainer: <string>
 
-# アクセスするときのホスト
-host: <string>
+# URL
+url: <string>
 
 # 待ち受けポート
 port: <number>

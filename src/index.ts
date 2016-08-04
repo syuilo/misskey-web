@@ -192,7 +192,7 @@ async function init(): Promise<State> {
 	}
 
 	// Check if a port is being used
-	if (await portUsed.check(conf.bindPort)) {
+	if (await portUsed.check(conf.port)) {
 		logFailed(`Port: ${conf.bindPort} is already used!`);
 		return State.failed;
 	}

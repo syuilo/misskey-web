@@ -13,8 +13,8 @@ export default async () => {
 		},
 		{
 			type: 'input',
-			name: 'host',
-			message: 'Host:'
+			name: 'url',
+			message: 'WWW URL:'
 		},
 		{
 			type: 'input',
@@ -44,11 +44,6 @@ export default async () => {
 			name: 'https_ca',
 			message: 'Path of tls ca:',
 			when: ctx => ctx.https
-		},
-		{
-			type: 'input',
-			name: 'session_secret',
-			message: 'Session secret:'
 		},
 		{
 			type: 'input',
@@ -83,34 +78,6 @@ export default async () => {
 		},
 		{
 			type: 'input',
-			name: 'mongo_host',
-			message: 'MongoDB\'s host:',
-			default: 'localhost'
-		},
-		{
-			type: 'input',
-			name: 'mongo_port',
-			message: 'MongoDB\'s port:',
-			default: '27017'
-		},
-		{
-			type: 'input',
-			name: 'mongo_db',
-			message: 'MongoDB\'s db:',
-			default: 'misskey-web'
-		},
-		{
-			type: 'input',
-			name: 'mongo_user',
-			message: 'MongoDB\'s user:'
-		},
-		{
-			type: 'password',
-			name: 'mongo_pass',
-			message: 'MongoDB\'s password:'
-		},
-		{
-			type: 'input',
 			name: 'redis_host',
 			message: 'Redis\'s host:',
 			default: 'localhost'
@@ -130,7 +97,7 @@ export default async () => {
 
 	const conf: IConfig = {
 		maintainer: as.maintainer,
-		host: as.host,
+		url: as.url,
 		port: parseInt(as.port, 10),
 		https: {
 			enable: as.https,
@@ -138,7 +105,6 @@ export default async () => {
 			cert: as.https_cert || null,
 			ca: as.https_ca || null
 		},
-		sessionSecret: as.session_secret,
 		recaptcha: {
 			siteKey: as.recaptcha_site,
 			secretKey: as.recaptcha_secret
@@ -148,13 +114,6 @@ export default async () => {
 			host: as.core_host,
 			port: parseInt(as.core_port, 10),
 			www: as.core_url
-		},
-		mongodb: {
-			host: as.mongo_host,
-			port: parseInt(as.mongo_port, 10),
-			db: as.mongo_db,
-			user: as.mongo_user,
-			pass: as.mongo_pass
 		},
 		redis: {
 			host: as.redis_host,

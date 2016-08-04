@@ -91,7 +91,7 @@ const sessionExpires = 1000 * 60 * 60 * 24 * 365; // One Year
 const RedisStore = redis(session);
 app.use(session({
 	name: 's',
-	secret: config.sessionSecret,
+	secret: 'Himasaku#06160907',
 	resave: false,
 	saveUninitialized: true,
 	cookie: {
