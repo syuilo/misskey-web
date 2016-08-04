@@ -42,6 +42,7 @@
 		"./src/meta.ts",
 		"./src/router.ts",
 		"./src/server.ts",
-		"./src/utils/yesno.ts"
+		"./src/utils/cli/indicator.ts",
+		"./src/utils/cli/yesno.ts"
 	]
 }

@@ -39,7 +39,8 @@ import * as chalk from 'chalk';
 const Git = require('nodegit');
 const portUsed = require('tcp-port-used');
 import argv from './argv';
-import yesno from './utils/yesno';
+import yesno from './utils/cli/yesno';
+import Indicator from './utils/cli/indicator';
 import config from './load-config';
 import configGenerator from './config-generator';
 import checkDependencies from './check-dependencies';
@@ -200,12 +201,15 @@ async function init(): Promise<State> {
 	const api = require('./core/api').default;
 
 	// Get Core information
+	const i = new Indicator('[ WAIT ] Checking Core');
 	try {
 		const core = await api('meta');
+		i.end();
 		logDone('Core: available');
 		logInfo(`Core: maintainer: ${core.maintainer}`);
 		logInfo(`Core: commit: ${core.commit}`);
 	} catch (e) {
+		i.end();
 		logFailed(`Failed to connect to the Core: ${e}`);
 		warn = true;
 	}
