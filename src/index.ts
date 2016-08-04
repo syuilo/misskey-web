@@ -35,6 +35,7 @@ import * as os from 'os';
 import * as cluster from 'cluster';
 import name from 'named';
 import {logDone, logInfo, logWarn, logFailed} from 'log-cool';
+import * as chalk from 'chalk';
 const Git = require('nodegit');
 const portUsed = require('tcp-port-used');
 import argv from './argv';
@@ -83,6 +84,7 @@ async function master(): Promise<void> {
 		// initialize app
 		state = await init();
 	} catch (e) {
+		logFailed('Uncaught error occurred :(');
 		console.error(e);
 		process.exit(1);
 	}
@@ -126,13 +128,17 @@ function worker(): void {
  * Init app
  */
 async function init(): Promise<State> {
-	console.log('Welcome to Misskey!');
+	console.log('Welcome to Misskey!\n');
+
+	console.log(chalk.bold('Misskey Web <aoi>'));
 
 	let warn = false;
 
 	// Get repository info
 	const repository = await Git.Repository.open(__dirname + '/../');
-	console.log(`commit: ${(await repository.getHeadCommit()).sha()}`);
+	const commit = await repository.getHeadCommit();
+	console.log(`commit: ${commit.sha()}`);
+	console.log(`        ${commit.date()}`);
 
 	console.log('\nInitializing...\n');
 
@@ -176,7 +182,7 @@ async function init(): Promise<State> {
 	}
 
 	// Check if a port is being used
-	if (await portUsed.check(conf.bindPort, '127.0.0.1')) {
+	if (await portUsed.check(conf.bindPort)) {
 		logFailed(`Port: ${conf.bindPort} is already used!`);
 		return State.failed;
 	}
