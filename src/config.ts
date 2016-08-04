@@ -1,5 +1,6 @@
 import {IConfig} from './iconfig';
 import load from './load-config';
+import { themeColor, themeColorForeground } from './meta';
 
 let conf: IConfig & {
 	themeColor: string;
@@ -15,18 +16,18 @@ try {
 	conf = load();
 } catch (e) {
 	console.error('Failed to load config: ' + e);
-	process.exit(1);
+	if (process) {
+		process.exit(1);
+	}
 }
 
-conf.themeColor = '#ec6b43';
-conf.themeColorForeground = '#fff';
+conf.themeColor = themeColor;
+conf.themeColorForeground = themeColorForeground;
 
-const host = conf.url.substr(conf.url.indexOf('://') + 3);
-conf.host = host;
-
+const host = conf.host = conf.url.substr(conf.url.indexOf('://') + 3);
 const scheme = conf.url.substr(0, conf.url.indexOf('://'));
 
-const domains = {
+const domains = conf.domains = {
 	about: 'about',
 	color: 'color',
 	help: 'help',
@@ -39,8 +40,6 @@ const domains = {
 	search: 'search',
 	talk: 'talk'
 };
-
-conf.domains = domains;
 
 // Define hosts
 conf.hosts = {
