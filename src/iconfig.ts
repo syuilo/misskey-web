@@ -19,12 +19,6 @@ export interface IConfig {
 		port: number;
 		www: string;
 	};
-	mongodb: {
-		host: string;
-		db: string;
-		user: string;
-		pass: string;
-	};
 	redis: {
 		host: string;
 		port: number;

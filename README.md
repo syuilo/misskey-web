@@ -10,7 +10,7 @@
 ## External dependencies
 * Node.js
 * npm
-* MongoDB
+* Redis
 * GraphicsMagick (for trimming, compress, etc etc)
 
 ## How to build
@@ -53,13 +53,6 @@ https:
 # よく分からない
 sessionSecret: <string>
 
-# MongoDB
-mongo:
-  uri: <string>
-  options:
-   user: <string>
-   pass: <string>
-
 # Redis
 redis:
   host: <string>
@@ -70,6 +63,7 @@ core:
   apikey: <string>
   host: <string>
   port: <string>
+  # URL
   www: <string>
 
 # reCAPTCHA設定

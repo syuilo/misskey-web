@@ -36,7 +36,6 @@
 		"./src/config.ts",
 		"./src/core/api.ts",
 		"./src/core/signin.ts",
-		"./src/db/db.ts",
 		"./src/iconfig.ts",
 		"./src/index.ts",
 		"./src/load-config.ts",
