@@ -31,8 +31,7 @@
 
 ``` yaml
 # サーバーの管理者情報
-# ex) "Your Name <youremail@example.com>"
-maintainer: <string>
+maintainer: Your Name <youremail@example.com>
 
 # URL
 url: <string>
@@ -43,7 +42,6 @@ port: <number>
 # TLS設定
 https:
   enable: <boolean>
-  # 以下証明書設定。 enable が false の場合は省略
   key: <string>
   cert: <string>
   ca: <string>
@@ -58,8 +56,7 @@ core:
   apikey: <string>
   host: <string>
   port: <string>
-  # URL
-  www: <string>
+  url: <string>
 
 # reCAPTCHA設定
 # SEE: https://www.google.com/recaptcha/intro/index.html
