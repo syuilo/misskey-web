@@ -137,7 +137,7 @@ async function init(): Promise<State> {
 	console.log('\nInitializing...\n');
 
 	if (isDebug) {
-		logWarn('Productionモードではありません。本番環境で使用しないでください。');
+		logWarn('It is not in the Production mode. Do not use in the Production environment.');
 	}
 
 	logInfo(`environment: ${env}`);
