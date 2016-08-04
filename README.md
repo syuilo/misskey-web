@@ -48,9 +48,6 @@ https:
   cert: <string>
   ca: <string>
 
-# よく分からない
-sessionSecret: <string>
-
 # Redis
 redis:
   host: <string>
