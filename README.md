@@ -30,17 +30,15 @@
 ## Configuration
 
 ``` yaml
-# Misskey Web Configuration
-
 # サーバーの管理者情報
 # ex) "Your Name <youremail@example.com>"
 maintainer: <string>
 
 # アクセスするときのホスト
-host: "misskey.xyz"
+host: <string>
 
 # 待ち受けポート
-port: 80
+port: <number>
 
 # TLS設定
 https:
