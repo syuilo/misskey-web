@@ -36,17 +36,11 @@
 # ex) "Your Name <youremail@example.com>"
 maintainer: <string>
 
-# アクセスするときのドメイン
+# アクセスするときのホスト
 host: "misskey.xyz"
 
-# アクセスするときのポート
-# サーバー内部でlistenするポートではありません。ブラウザでアクセスするときの最終的なポートです。
-# 内部でプロキシを使用していたりなどの理由で、リクエストを待ち受けるポートを指定する場合は bindPorts の項目を設定してください。
+# 待ち受けポート
 port: 80
-
-# Listen時の設定
-bindIp: null
-bindPort: 80
 
 # TLS設定
 https:
@@ -54,9 +48,7 @@ https:
   # 以下証明書設定。 enable が false の場合は省略
   key: <string>
   cert: <string>
-
-# よく分からない
-cookiePass: <string>
+  ca: <string>
 
 # よく分からない
 sessionSecret: <string>
@@ -73,12 +65,12 @@ redis:
   host: <string>
   port: <number>
 
-# APIサーバー設定
-api:
+# Coreサーバー情報
+core:
+  apikey: <string>
   host: <string>
   port: <string>
-  secure: <boolean>
-  pass: <string>
+  www: <string>
 
 # reCAPTCHA設定
 # SEE: https://www.google.com/recaptcha/intro/index.html
