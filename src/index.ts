@@ -52,12 +52,19 @@ const env = process.env.NODE_ENV;
 const isProduction = env === 'production';
 const isDebug = !isProduction;
 
+/**
+ * Initialize state
+ */
 enum State {
 	success,
 	warn,
 	failed
 }
 
+// Set process title
+process.title = 'Misskey Web';
+
+// Start app
 main();
 
 /**
