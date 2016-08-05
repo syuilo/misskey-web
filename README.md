@@ -28,7 +28,7 @@
 `npm start -- -h`
 
 ## Configuration
-
+**初回起動時に表示されるウィザードに従えば自動的に設定ファイルが生成・設定されます**が、一応サンプル載せときます:
 ``` yaml
 maintainer: Your Name <youremail@example.com>
 
