@@ -135,7 +135,7 @@ async function master(): Promise<void> {
 		cluster.on('exit', worker => {
 			// Replace the dead worker,
 			// we're not sentimental
-			console.log(`\u001b[1;31m[${name(worker.id)}] died :(\u001b[0m`);
+			console.log(chalk.red(`${name(worker.id)} died :(`));
 			cluster.fork();
 		});
 	});
