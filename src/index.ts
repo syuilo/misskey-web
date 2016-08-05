@@ -117,23 +117,8 @@ async function master(): Promise<void> {
 			break;
 	}
 
-	// Count the machine's CPUs
-	const cpuCount = os.cpus().length;
-
-	const progress = new ProgressBar(cpuCount, 'Starting workers');
-
-	// Create a worker for each CPU
-	for (let i = 0; i < cpuCount; i++) {
-		const worker = cluster.fork();
-		worker.on('message', (message: any) => {
-			if (message === 'listening') {
-				progress.increment();
-			}
-		});
-	}
-
-	// on all workers started
-	progress.on('complete', () => {
+	// Spawn workers
+	spawn(() => {
 		console.log(chalk.bold.green(`\nMisskey Web is now running.`));
 
 		// Listen new workers
@@ -245,6 +230,31 @@ async function init(): Promise<State> {
 	}
 
 	return warn ? State.warn : State.success;
+}
+
+/**
+ * Spawn workers
+ */
+function spawn(callback: any): void {
+	// Count the machine's CPUs
+	const cpuCount = os.cpus().length;
+
+	const progress = new ProgressBar(cpuCount, 'Starting workers');
+
+	// Create a worker for each CPU
+	for (let i = 0; i < cpuCount; i++) {
+		const worker = cluster.fork();
+		worker.on('message', (message: any) => {
+			if (message === 'listening') {
+				progress.increment();
+			}
+		});
+	}
+
+	// on all workers started
+	progress.on('complete', () => {
+		callback();
+	});
 }
 
 // Dying away...
