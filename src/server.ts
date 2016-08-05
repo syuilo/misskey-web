@@ -3,7 +3,6 @@
  */
 
 // Core modules
-import * as cluster from 'cluster';
 import * as fs from 'fs';
 import * as http from 'http';
 import * as https from 'https';
@@ -21,16 +20,10 @@ import * as favicon from 'serve-favicon';
 import * as redis from 'connect-redis';
 const hsts = require('hsts');
 
-// Utility modules
-import name from 'named';
-
 // Internal modules
 import api from './core/api';
 import config from './config';
 import router from './router';
-
-const worker = cluster.worker;
-console.log(`Init ${name(worker.id)} server...`);
 
 /**
  * Init app
@@ -177,7 +170,5 @@ const server = config.https.enable ?
  * Server listen
  */
 server.listen(config.port, () => {
-	const h = server.address().address;
-	const p = server.address().port;
-	console.log(`\u001b[1;32m${name(worker.id)} is now listening at ${h}:${p}\u001b[0m`);
+	process.send('listening');
 });

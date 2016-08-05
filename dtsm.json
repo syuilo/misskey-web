@@ -78,6 +78,9 @@
     },
     "connect-redis/connect-redis.d.ts": {
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
+    },
+    "chalk/chalk.d.ts": {
+      "ref": "e65947027120a0dc77723266906e4ce6c28bd725"
     }
   }
 }
