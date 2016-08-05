@@ -1,4 +1,4 @@
-# require 'fetch'
+require 'fetch'
 
 window.api = (endpoint, data) ->
 	body = []
