@@ -4,9 +4,7 @@
   "version": "0.0.0",
   "description": "Misskey Web",
   "main": "./built/index.js",
-  "repository": {
-    "url": "https://github.com/syuilo/misskey-web.git"
-  },
+  "repository": "https://github.com/syuilo/misskey-web.git",
   "scripts": {
     "start-production": "NODE_ENV=production node ./built/index.js",
     "start": "node ./built/index.js",
@@ -65,6 +63,7 @@
     "cookie-parser": "1.4.3",
     "cors": "2.7.1",
     "csurf": "1.9.0",
+    "del": "^2.2.1",
     "escape-html": "1.0.3",
     "express": "4.14.0",
     "express-minify": "0.2.0",

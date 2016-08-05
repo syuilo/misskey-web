@@ -81,6 +81,9 @@
     },
     "chalk/chalk.d.ts": {
       "ref": "e65947027120a0dc77723266906e4ce6c28bd725"
+    },
+    "del/del.d.ts": {
+      "ref": "e65947027120a0dc77723266906e4ce6c28bd725"
     }
   }
 }

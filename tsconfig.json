@@ -32,6 +32,7 @@
 		"./src/api/url/analyze.ts",
 		"./src/argv.ts",
 		"./src/check-dependencies.ts",
+		"./src/check-for-update.ts",
 		"./src/config-generator.ts",
 		"./src/config.ts",
 		"./src/core/api.ts",

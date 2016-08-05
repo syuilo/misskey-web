@@ -36,6 +36,7 @@ import * as cluster from 'cluster';
 import name from 'named';
 import {logDone, logInfo, logWarn, logFailed} from 'log-cool';
 import * as chalk from 'chalk';
+import * as del from 'del';
 const Git = require('nodegit');
 const portUsed = require('tcp-port-used');
 import argv from './argv';
@@ -45,6 +46,7 @@ import ProgressBar from './utils/cli/progressbar';
 import config from './load-config';
 import configGenerator from './config-generator';
 import checkDependencies from './check-dependencies';
+import checkForUpdate from './check-for-update';
 
 // init babel
 require('babel-core/register');
@@ -180,6 +182,9 @@ async function init(): Promise<State> {
 	logInfo(`MACHINE: CPU: ${os.cpus().length}core`);
 	logInfo(`MACHINE: MEM: ${totalmem}GB (available: ${freemem}GB)`);
 
+	// Clean
+	await del(__dirname + '/../tmp/');
+
 	// Load config
 	let conf: any;
 	try {
@@ -203,8 +208,18 @@ async function init(): Promise<State> {
 	logDone('Success to load configuration');
 	logInfo(`maintainer: ${conf.maintainer}`);
 
+	// Check dependencies
 	if (!argv.options.hasOwnProperty('skip-check-dependencies')) {
 		checkDependencies();
+	}
+
+	// Check for update
+	if (!argv.options.hasOwnProperty('skip-check-for-update')) {
+		const update = await checkForUpdate();
+
+		if (update === null) {
+			warn = true;
+		}
 	}
 
 	// Check if a port is being used
