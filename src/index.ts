@@ -188,6 +188,7 @@ async function init(): Promise<State> {
 
 	logInfo(`environment: ${env}`);
 
+	// Get machine info
 	const totalmem = (os.totalmem() / 1024 / 1024 / 1024).toFixed(1);
 	const freemem = (os.freemem() / 1024 / 1024 / 1024).toFixed(1);
 	logInfo(`MACHINE: ${os.hostname()}`);
