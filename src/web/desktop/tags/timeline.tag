@@ -5,7 +5,6 @@ style.
 	display block
 
 	> mk-post
-		background #fff
 		border solid 1px #eaeaea
 
 		&:first-child
