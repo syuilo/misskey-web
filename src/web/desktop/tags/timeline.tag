@@ -3,3 +3,6 @@ mk-timeline
 
 style.
 	display block
+
+	> mk-post
+		border solid 1px #eaeaea

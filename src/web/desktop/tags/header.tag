@@ -13,7 +13,7 @@ style.
 	top 0
 	z-index 1024
 	width 100%
-	box-shadow 0 0 1px rgba(0, 0, 0, 0)
+	border-bottom solid 1px #eaeaea
 
 	> .main
 		margin 0
