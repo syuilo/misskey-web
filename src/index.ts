@@ -183,7 +183,7 @@ async function init(): Promise<State> {
 	logInfo(`MACHINE: MEM: ${totalmem}GB (available: ${freemem}GB)`);
 
 	// Clean
-	await del(__dirname + '/../tmp/');
+	await del(__dirname + '/../_tmp/');
 
 	// Load config
 	let conf: any;

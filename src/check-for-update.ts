@@ -11,7 +11,7 @@ export default async function(): Promise<boolean> {
 
 	try {
 		// Get remote repository
-		remote = await Git.Clone(pkg.repository, __dirname + '/../tmp');
+		remote = await Git.Clone(pkg.repository, __dirname + '/../_tmp');
 	} catch (e) {
 		i.end();
 		logFailed(`Check for update: ${e}`);

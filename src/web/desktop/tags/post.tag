@@ -31,9 +31,8 @@ script.
 style.
 	display block
 	position relative
-	margin 0 0 1px
+	margin 0
 	padding 12px 0
-	background #fff
 	border none
 	font-family 'Meiryo', 'メイリオ', 'sans-serif'
 
@@ -101,4 +100,4 @@ style.
 				padding 0
 				word-wrap break-word
 				font-size 1.1em
-				color #8c615a
+				color #717171
