@@ -1,8 +1,5 @@
 mk-post(tabindex='-1', title={ title })
-
-	mk-post-form@reply-form(reply={ post }, controller={ reply-form-controller })
-
-	// i.fa.fa-ellipsis-v.talk-ellipsis(if={reply_to.reply_to?})
+	//i.fa.fa-ellipsis-v.talk-ellipsis(if={reply_to.reply_to?})
 
 	div.reply-to(if={ post.reply_to })
 		mk-post-preview(post={ post.reply_to })
@@ -34,12 +31,19 @@ mk-post(tabindex='-1', title={ title })
 script.
 	@post = opts.post
 	@title = 'a'
+
+	@reply-form = null
 	@reply-form-controller = riot.observable!
 
 	@favorite = (e) ->
 		alert \favorited
 
 	@reply = ~>
+		if !@reply-form?
+			@reply-form = document.body.append-child document.create-element \mk-post-form
+			riot.mount @reply-form, do
+				controller: @reply-form-controller
+				reply: @post
 		@reply-form-controller.trigger \open
 
 style.
