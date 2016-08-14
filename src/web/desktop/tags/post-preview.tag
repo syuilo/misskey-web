@@ -50,15 +50,15 @@ style.
 
 			> .avatar
 				display block
-				width 58px
-				height 58px
+				width 52px
+				height 52px
 				margin 0
 				border-radius 8px
 				vertical-align bottom
 
 		> .main
 			float left
-			width calc(100% - 74px)
+			width calc(100% - 68px)
 
 			> header
 				margin-bottom 4px

@@ -53,10 +53,10 @@ style.
 
 	> .reply-to
 		padding 0 16px
-		background #fdfdfd
+		background #fcfcfc
 
 		> mk-post-preview
-			background #fdfdfd
+			background #fcfcfc
 
 	> article
 		position relative
