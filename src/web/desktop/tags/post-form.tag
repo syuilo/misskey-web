@@ -428,7 +428,7 @@ style.
 		display block
 		position absolute
 		bottom 16px
-		right 128px
+		right 138px
 		margin 0
 		line-height 40px
 		color rgba($theme-color, 0.5)
@@ -449,7 +449,7 @@ style.
 		box-sizing border-box
 		padding 0
 		margin 0
-		width 100px
+		width 110px
 		height 40px
 		font-size 1em
 		color $theme-color-foreground
