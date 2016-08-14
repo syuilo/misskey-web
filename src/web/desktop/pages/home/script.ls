@@ -14,6 +14,7 @@ require '../../tags/post-form.tag'
 require '../../tags/post.tag'
 require '../../tags/post-preview.tag'
 require '../../tags/home-widgets/timeline.tag'
+require '../../tags/home-widgets/donate.tag'
 tl = require '../../tags/timeline.tag'
 ui = require '../../tags/ui.tag'
 
