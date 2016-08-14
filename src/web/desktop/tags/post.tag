@@ -22,7 +22,7 @@ mk-post(tabindex='-1', title={ title })
 					| { post.text }
 			footer
 				button(onclick={ reply }): i.fa.fa-reply
-				button: i.fa.fa-retweet
+				button(onclick={ repost }): i.fa.fa-retweet
 				button: i.fa.fa-plus
 				button: i.fa.fa-ellipsis-h
 
@@ -35,8 +35,8 @@ script.
 	@reply-form = null
 	@reply-form-controller = riot.observable!
 
-	@favorite = (e) ->
-		alert \favorited
+	@repost-form = null
+	@repost-form-controller = riot.observable!
 
 	@reply = ~>
 		if !@reply-form?
@@ -45,6 +45,14 @@ script.
 				controller: @reply-form-controller
 				reply: @post
 		@reply-form-controller.trigger \open
+
+	@repost = ~>
+		if !@repost-form?
+			@repost-form = document.body.append-child document.create-element \mk-repost-form
+			riot.mount @repost-form, do
+				controller: @repost-form-controller
+				post: @post
+		@repost-form-controller.trigger \open
 
 style.
 	display block

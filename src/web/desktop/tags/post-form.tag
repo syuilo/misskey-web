@@ -559,10 +559,6 @@ script.
 	@opts.controller.on \close ~>
 		@close!
 
-	@clear = ~>
-		@text.value = ''
-		@update!
-
 	@toggle = ~>
 		if @is-open
 			@close!
@@ -632,6 +628,10 @@ script.
 	@repel-move = (e) ~>
 		e.stop-propagation!
 		return true
+
+	@clear = ~>
+		@text.value = ''
+		@update!
 
 	@select-file = ~>
 		@file.click!
