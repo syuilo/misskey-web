@@ -12,6 +12,7 @@ require '../../tags/header-post-button.tag'
 require '../../tags/header-search.tag'
 require '../../tags/post-form.tag'
 require '../../tags/post.tag'
+require '../../tags/post-preview.tag'
 tl = require '../../tags/timeline.tag'
 ui = require '../../tags/ui.tag'
 

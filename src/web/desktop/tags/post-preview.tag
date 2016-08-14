@@ -1,57 +1,38 @@
-mk-post(tabindex='-1', title={ title })
-
-	mk-post-form@reply-form(reply={ this }, controller={ reply-form-controller })
-
-	// i.fa.fa-ellipsis-v.talk-ellipsis(if={reply_to.reply_to?})
-
-	// mk-post(if={reply_to?})
-
-	article(lang={user.lang})
-		a.avatar-anchor(href= config.url + '/' + {user.username})
-			img.avatar(src={user.avatar_url}, alt='icon', data-user-card={user.username})
+mk-post-preview(title={ title })
+	article(lang={ post.user.lang })
+		a.avatar-anchor(href= config.url + '/' + { post.user.username })
+			img.avatar(src={ post.user.avatar_url }, alt='icon', data-user-card={ post.user.username })
 		div.main
 			header
 				div.left
-					a.name(href= config.url + '/' + {user.username})
-						| {user.name}
+					a.name(href= config.url + '/' + { post.user.username })
+						| { post.user.name }
 					span.username
-						| @{user.username}
+						| @{ post.user.username }
 				div.right
 					a.time
-						| {created_at}
+						| { post.created_at }
 			div.body
 				div.text
-					| {text}
-			footer
-				button(onclick={ reply }): i.fa.fa-reply
-				button: i.fa.fa-retweet
-				button: i.fa.fa-plus
-				button: i.fa.fa-ellipsis-h
-
-	// i.fa.fa-ellipsis-v.replies-ellipsis(if={replies_count > 0})
+					| { post.text }
 
 script.
 	@title = 'a'
-	@reply-form-controller = riot.observable!
-
-	@favorite = (e) ->
-		alert \favorited
-
-	@reply = ~>
-		@reply-form-controller.trigger \open
+	@post = @opts.post
 
 style.
 	display block
 	position relative
 	margin 0
-	padding 12px 0
+	padding 0
 	font-family 'Meiryo', 'メイリオ', 'sans-serif'
+	font-size 0.9em
 	background #fff
 	background-clip padding-box
 
 	> article
 		position relative
-		padding 16px 32px 6px 32px
+		padding 16px
 
 		&:after
 			content ""
@@ -120,17 +101,3 @@ style.
 					word-wrap break-word
 					font-size 1.1em
 					color #717171
-
-			> footer
-				> button
-					margin 0 28px 0 0
-					padding 8px
-					background transparent
-					border none
-					box-shadow none
-					font-size 1em
-					color #ddd
-					cursor pointer
-
-					&:hover
-						color #666

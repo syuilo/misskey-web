@@ -1,8 +1,8 @@
 mk-ui
-	mk-post-form(ui={ui})
+	mk-post-form(controller={ post-form-controller })
 
 	div.global@global
-		mk-header@header(ui={ui})
+		mk-header@header(ui={ ui })
 
 		mk-contents
 			| <yield/>
@@ -17,6 +17,16 @@ style.
 
 script.
 	@ui = riot.observable!
+	@post-form-controller = riot.observable!
+
+	@post-form-controller.on \opened ~>
+		@ui.trigger \blur
+
+	@post-form-controller.on \closed ~>
+		@ui.trigger \unblur 300ms
+
+	@ui.on \toggle-post-form ~>
+		@post-form-controller.trigger \toggle
 
 	@ui.on \blur (duration = 100ms) ~>
 		Velocity @global, \finish true

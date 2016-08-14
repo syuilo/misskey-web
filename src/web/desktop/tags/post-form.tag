@@ -3,11 +3,14 @@ mk-post-form
 	form@form(onclick={ repel-close }, class={ wait: wait })
 		header(onmousedown={ on-header-mousedown })
 			h1
-				| 新規投稿
+				span(if={ !opts.reply }) 新規投稿
+				span(if={ opts.reply }) 返信
 				span.files(if={ files.length != 0 }) 添付: { files.length }ファイル
 			button.close(title='閉じる', onmousedown={ repel-move }, onclick={ close }): i.fa.fa-times
+		div.ref(if={ opts.reply })
+			mk-post-preview(post={ opts.reply })
 		div.body
-			textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, oninput={ update }, placeholder='いまどうしてる？')
+			textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, oninput={ update }, placeholder={ opts.reply ? 'この投稿への返信...' : 'いまどうしてる？' })
 			div.attaches(if={ files.length != 0 })
 				ul.files@attaches
 					li.file(each={ files })
@@ -37,7 +40,7 @@ mk-post-form
 			button@upload(title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-upload
 			button@drive(title='ドライブからファイルを添付', onclick={ drive }): i.fa.fa-cloud
 			p.text-count(class={ over: text.value.length > 300 }) のこり{ 300 - text.value.length }文字
-			button@submit(disabled={ wait }, onclick={ post }) { wait ? '送信中...' : '投稿' }
+			button@submit(disabled={ wait }, onclick={ post }) { wait ? '投稿中...' : opts.reply ? '返信' : '投稿' }
 			input@file(type='file', accept='image/*', multiple, tabindex='-1', onchange={ change-file })
 
 style.
@@ -544,8 +547,14 @@ script.
 			if position.top + window-height > browser-height
 				@form.style.top = browser-height - window-height + \px
 
-	@opts.ui.on \toggle-post-form ~>
+	@opts.controller.on \toggle ~>
 		@toggle!
+
+	@opts.controller.on \open ~>
+		@open!
+
+	@opts.controller.on \close ~>
+		@close!
 
 	@clear = ~>
 		@text.value = ''
@@ -559,7 +568,7 @@ script.
 
 	@open = ~>
 		@is-open = true
-		@opts.ui.trigger \blur
+		@opts.controller.trigger \opened
 
 		@form.style.top = \15%
 		@form.style.left = (window.inner-width / 2) - (@form.offset-width / 2) + \px
@@ -590,7 +599,7 @@ script.
 
 	@close = ~>
 		@is-open = false
-		@opts.ui.trigger \unblur 300ms
+		@opts.controller.trigger \closed
 
 		@bg.style.pointer-events = \none
 		Velocity @bg, \finish true
