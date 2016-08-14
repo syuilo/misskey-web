@@ -432,6 +432,7 @@ style.
 		margin 0
 		line-height 40px
 		color rgba($theme-color, 0.5)
+		font-family sans-serif
 
 		&.over
 			color #ec3828
@@ -690,13 +691,14 @@ script.
 		@wait = true
 		api 'posts/create' do
 			text: @text.value
+			reply_to: if @opts.reply? then @opts.reply.id else null
 		.then (data) ~>
 			@close!
 			@clear!
-			@opts.ui.trigger \notification '投稿しました。'
+			#@opts.ui.trigger \notification '投稿しました。'
 		.catch (err) ~>
 			console.error err
-			@opts.ui.trigger \notification 'Error!'
+			#@opts.ui.trigger \notification 'Error!'
 		.then ~>
 			@wait = false
 			@update!

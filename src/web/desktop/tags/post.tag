@@ -4,9 +4,10 @@ mk-post(tabindex='-1', title={ title })
 
 	// i.fa.fa-ellipsis-v.talk-ellipsis(if={reply_to.reply_to?})
 
-	// mk-post(if={reply_to?})
+	div.reply-to(if={ post.reply_to })
+		mk-post-preview(post={ post.reply_to })
 
-	article(lang={ post.user.lang })
+	article
 		a.avatar-anchor(href= config.url + '/' + { post.user.username })
 			img.avatar(src={ post.user.avatar_url }, alt='icon', data-user-card={ post.user.username })
 		div.main
@@ -45,14 +46,21 @@ style.
 	display block
 	position relative
 	margin 0
-	padding 12px 0
+	padding 0
 	font-family 'Meiryo', 'メイリオ', 'sans-serif'
 	background #fff
 	background-clip padding-box
 
+	> .reply-to
+		padding 0 16px
+		background #fdfdfd
+
+		> mk-post-preview
+			background #fdfdfd
+
 	> article
 		position relative
-		padding 16px 32px 6px 32px
+		padding 28px 32px 18px 32px
 
 		&:after
 			content ""
@@ -105,7 +113,7 @@ style.
 
 				> .right
 					position absolute
-					top 16px
+					top 28px
 					right 32px
 
 					> .time

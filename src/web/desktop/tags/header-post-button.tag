@@ -33,7 +33,6 @@ style.
 		box-shadow none
 		transition background 0.1s ease
 		cursor pointer
-		font-family inherit
 
 		*
 			pointer-events none

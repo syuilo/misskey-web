@@ -1,5 +1,5 @@
 mk-post-preview(title={ title })
-	article(lang={ post.user.lang })
+	article
 		a.avatar-anchor(href= config.url + '/' + { post.user.username })
 			img.avatar(src={ post.user.avatar_url }, alt='icon', data-user-card={ post.user.username })
 		div.main
@@ -86,7 +86,7 @@ style.
 				> .right
 					position absolute
 					top 16px
-					right 32px
+					right 16px
 
 					> .time
 						color #b7a793
