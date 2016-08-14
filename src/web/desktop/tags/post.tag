@@ -1,27 +1,27 @@
 mk-post(tabindex='-1', title={ title })
 
-	mk-post-form@reply-form(reply={ this }, controller={ reply-form-controller })
+	mk-post-form@reply-form(reply={ post }, controller={ reply-form-controller })
 
 	// i.fa.fa-ellipsis-v.talk-ellipsis(if={reply_to.reply_to?})
 
 	// mk-post(if={reply_to?})
 
-	article(lang={user.lang})
-		a.avatar-anchor(href= config.url + '/' + {user.username})
-			img.avatar(src={user.avatar_url}, alt='icon', data-user-card={user.username})
+	article(lang={ post.user.lang })
+		a.avatar-anchor(href= config.url + '/' + { post.user.username })
+			img.avatar(src={ post.user.avatar_url }, alt='icon', data-user-card={ post.user.username })
 		div.main
 			header
 				div.left
-					a.name(href= config.url + '/' + {user.username})
-						| {user.name}
+					a.name(href= config.url + '/' + { post.user.username })
+						| { post.user.name }
 					span.username
-						| @{user.username}
+						| @{ post.user.username }
 				div.right
 					a.time
-						| {created_at}
+						| { post.created_at }
 			div.body
 				div.text
-					| {text}
+					| { post.text }
 			footer
 				button(onclick={ reply }): i.fa.fa-reply
 				button: i.fa.fa-retweet
@@ -31,6 +31,7 @@ mk-post(tabindex='-1', title={ title })
 	// i.fa.fa-ellipsis-v.replies-ellipsis(if={replies_count > 0})
 
 script.
+	@post = opts.post
 	@title = 'a'
 	@reply-form-controller = riot.observable!
 

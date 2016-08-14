@@ -1,5 +1,6 @@
 mk-timeline
-	mk-post(each={ opts.posts })
+	virtual(each={ post in opts.posts })
+		mk-post(post={ post })
 
 style.
 	display block

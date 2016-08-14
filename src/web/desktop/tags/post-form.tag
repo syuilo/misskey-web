@@ -6,6 +6,7 @@ mk-post-form
 				span(if={ !opts.reply }) 新規投稿
 				span(if={ opts.reply }) 返信
 				span.files(if={ files.length != 0 }) 添付: { files.length }ファイル
+				span.uploadings(if={ uploadings.length != 0 }) { uploadings.length }個のファイルをアップロード中
 			button.close(title='閉じる', onmousedown={ repel-move }, onclick={ close }): i.fa.fa-times
 		div.ref(if={ opts.reply })
 			mk-post-preview(post={ opts.reply })
@@ -111,6 +112,7 @@ style.
 				color #d0b4ac
 
 				> .files
+				> .uploadings
 					margin-left 8px
 					opacity 0.8
 
@@ -595,6 +597,7 @@ script.
 			easing: [ 300, 8 ]
 		}
 
+		console.log @text
 		@text.focus!
 
 	@close = ~>
