@@ -597,7 +597,6 @@ script.
 			easing: [ 300, 8 ]
 		}
 
-		console.log @text
 		@text.focus!
 
 	@close = ~>
