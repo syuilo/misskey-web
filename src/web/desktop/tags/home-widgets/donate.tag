@@ -22,7 +22,7 @@ style.
 		> h1
 			margin 0 0 5px 0
 			font-size 1em
-			color #666
+			color #777
 
 			> i
 				margin-right 0.25em
@@ -32,4 +32,4 @@ style.
 			z-index 1
 			margin 0
 			font-size 0.8em
-			color #777
+			color #888
