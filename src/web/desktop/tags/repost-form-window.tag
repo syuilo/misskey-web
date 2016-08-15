@@ -8,7 +8,7 @@ mk-repost-form-window
 		mk-post-preview(post={ parent.opts.post })
 		div
 			button.cancel(onclick={ parent.cancel }) キャンセル
-			button.ok Repost
+			button.ok(onclick={ parent.ok }) Repost
 		</yield>
 
 style.
@@ -89,5 +89,21 @@ style.
 							border 2px solid rgba($theme-color, 0.3)
 
 script.
+	@wait = false
+
 	@cancel = ~>
 		@opts.controller.trigger \close
+
+	@ok = ~>
+		@wait = true
+		api 'posts/create' do
+			repost: @opts.post.id
+		.then (data) ~>
+			@opts.controller.trigger \close
+			#@opts.ui.trigger \notification '投稿しました。'
+		.catch (err) ~>
+			console.error err
+			#@opts.ui.trigger \notification 'Error!'
+		.then ~>
+			@wait = false
+			@update!

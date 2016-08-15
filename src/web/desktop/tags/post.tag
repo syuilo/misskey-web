@@ -1,25 +1,30 @@
-mk-post(tabindex='-1', title={ title })
+mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 	//i.fa.fa-ellipsis-v.talk-ellipsis(if={reply_to.reply_to?})
 
-	div.reply-to(if={ post.reply_to })
-		mk-post-preview(post={ post.reply_to })
+	div.repost(if={ is-repost })
+		p
+			i.fa.fa-retweet
+			| { post.user.name }
+
+	div.reply-to(if={ p.reply_to })
+		mk-post-preview(post={ p.reply_to })
 
 	article
-		a.avatar-anchor(href= config.url + '/' + { post.user.username })
-			img.avatar(src={ post.user.avatar_url }, alt='icon', data-user-card={ post.user.username })
+		a.avatar-anchor(href= config.url + '/' + { p.user.username })
+			img.avatar(src={ p.user.avatar_url }, alt='icon', data-user-card={ p.user.username })
 		div.main
 			header
 				div.left
-					a.name(href= config.url + '/' + { post.user.username })
-						| { post.user.name }
+					a.name(href= config.url + '/' + { p.user.username })
+						| { p.user.name }
 					span.username
-						| @{ post.user.username }
+						| @{ p.user.username }
 				div.right
 					a.time
-						| { post.created_at }
+						| { p.created_at }
 			div.body
 				div.text
-					| { post.text }
+					| { p.text }
 			footer
 				button(onclick={ reply }): i.fa.fa-reply
 				button(onclick={ repost }): i.fa.fa-retweet
@@ -133,6 +138,8 @@ style.
 script.
 	@post = opts.post
 	@title = 'a'
+	@is-repost = @post.repost?
+	@p = if @is-repost then @post.repost else @post
 
 	@reply-form = null
 	@reply-form-controller = riot.observable!
