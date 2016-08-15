@@ -1,5 +1,5 @@
 mk-header-post-button
-	button(onclick={post}, title='新規投稿')
+	button(onclick={ post }, title='新規投稿')
 		i.fa.fa-pencil-square-o
 
 script.
