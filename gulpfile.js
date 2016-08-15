@@ -62,7 +62,6 @@ const project = ts.createProject('tsconfig.json', {
 // Full build
 gulp.task('build', [
 	'build-before',
-	'test',
 	'build:ts',
 	'copy:bower_components',
 	'build:scripts',
@@ -205,7 +204,7 @@ gulp.task('build:scripts', done => {
 							flag = true;
 						}
 						if (!flag) {
-							(line.match(/\{\s?([a-z-]+)\s?\}/g) || []).forEach(x => {
+							(line.match(/\{\s?\!?([a-z-]+)\s?\}/g) || []).forEach(x => {
 								line = line.replace(x, camelCase(x));
 							});
 							dist += line + '\n';

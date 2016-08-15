@@ -1,6 +1,7 @@
 require '../../base.ls'
 
 riot = require 'riot'
+require '../../tags/modal-bg.tag'
 require '../../tags/window.tag'
 require '../../tags/post.tag'
 require '../../tags/analog-clock.tag'

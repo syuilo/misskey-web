@@ -2,7 +2,8 @@ mk-header-account
 	button.header(data-active={ is-open }, onclick={ toggle })
 		span.username
 			| { USER.username }
-			i.fa.fa-angle-down
+			i.fa.fa-angle-down(if={ !is-open })
+			i.fa.fa-angle-up(if={ is-open })
 		img.avatar(src={ USER.avatar_url + '?size=64' }, alt='avatar')
 	div.menu(if={ is-open })
 		ul

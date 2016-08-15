@@ -2,7 +2,7 @@ mk-window
 	header(onmousedown={ on-header-mousedown })
 		h1(data-yield='header')
 			| <yield from="header"/>
-		button.close(title='閉じる', onmousedown={ repel-move }, onclick={ close }): i.fa.fa-times
+		button.close(if={ can-close }, onmousedown={ repel-move }, onclick={ close }, title='閉じる'): i.fa.fa-times
 	div.body(data-yield='content')
 		| <yield from="content"/>
 
@@ -17,7 +17,7 @@ style.
 	margin 0
 	background #fff
 	border-radius 6px
-	box-shadow 0 0 8px 0 rgba(0, 0, 0, 0.2)
+	box-shadow 0 2px 6px 0 rgba(0, 0, 0, 0.2)
 	overflow hidden
 	opacity 0
 	pointer-events none
@@ -73,26 +73,40 @@ style.
 
 script.
 	@is-open = false
+	@is-modal = if opts.is-modal? then opts.is-modal else false
+	@can-close = if opts.can-close? then opts.can-close else true
+
+	@bg = null
+	@bg-controller = riot.observable!
+
+	@bg-controller.on \click ~>
+		if @can-close
+			@close!
 
 	@on \mount ~>
+		if @is-modal
+			@bg = document.body.append-child document.create-element \mk-modal-bg
+			riot.mount @bg, do
+				controller: @bg-controller
+
 		window.add-event-listener \resize ~>
-			position = @form.get-bounding-client-rect!
+			position = @root.get-bounding-client-rect!
 			browser-width = window.inner-width
 			browser-height = window.inner-height
-			window-width = @form.offset-width
-			window-height = @form.offset-height
+			window-width = @root.offset-width
+			window-height = @root.offset-height
 
 			if position.left < 0
-				@form.style.left = 0
+				@root.style.left = 0
 
 			if position.top < 0
-				@form.style.top = 0
+				@root.style.top = 0
 
 			if position.left + window-width > browser-width
-				@form.style.left = browser-width - window-width + \px
+				@root.style.left = browser-width - window-width + \px
 
 			if position.top + window-height > browser-height
-				@form.style.top = browser-height - window-height + \px
+				@root.style.top = browser-height - window-height + \px
 
 	@opts.controller.on \toggle ~>
 		@toggle!
@@ -116,6 +130,9 @@ script.
 		@root.style.top = \15%
 		@root.style.left = (window.inner-width / 2) - (@root.offset-width / 2) + \px
 
+		if @is-modal
+			@bg-controller.trigger \show
+
 		@root.style.pointer-events = \auto
 		Velocity @root, \finish true
 		Velocity @root, {scale: 1.2} 0ms
@@ -131,6 +148,9 @@ script.
 	@close = ~>
 		@is-open = false
 		@opts.controller.trigger \closed
+
+		if @is-modal
+			@bg-controller.trigger \hide
 
 		@root.style.pointer-events = \none
 		Velocity @root, \finish true
