@@ -7,7 +7,7 @@ mk-repost-form
 		<yield to="content">
 		mk-post-preview(post={ opts.post })
 		div
-			button.cancel キャンセル
+			button.cancel(onclick={ parent.cancel }) キャンセル
 			button.ok Repost
 		</yield>
 
@@ -86,3 +86,7 @@ style.
 					&:focus
 						&:after
 							border 2px solid rgba($theme-color, 0.3)
+
+script.
+	@cancel = ~>
+		@opts.controller.trigger \close

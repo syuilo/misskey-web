@@ -76,6 +76,8 @@ script.
 	@is-modal = if opts.is-modal? then opts.is-modal else false
 	@can-close = if opts.can-close? then opts.can-close else true
 
+	@controller = @opts.controller
+
 	@bg = null
 	@bg-controller = riot.observable!
 
@@ -108,13 +110,13 @@ script.
 			if position.top + window-height > browser-height
 				@root.style.top = browser-height - window-height + \px
 
-	@opts.controller.on \toggle ~>
+	@controller.on \toggle ~>
 		@toggle!
 
-	@opts.controller.on \open ~>
+	@controller.on \open ~>
 		@open!
 
-	@opts.controller.on \close ~>
+	@controller.on \close ~>
 		@close!
 
 	@toggle = ~>
@@ -125,7 +127,7 @@ script.
 
 	@open = ~>
 		@is-open = true
-		@opts.controller.trigger \opened
+		@controller.trigger \opened
 
 		@root.style.top = \15%
 		@root.style.left = (window.inner-width / 2) - (@root.offset-width / 2) + \px
@@ -147,7 +149,7 @@ script.
 
 	@close = ~>
 		@is-open = false
-		@opts.controller.trigger \closed
+		@controller.trigger \closed
 
 		if @is-modal
 			@bg-controller.trigger \hide
