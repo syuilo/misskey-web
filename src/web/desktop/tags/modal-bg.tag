@@ -13,10 +13,12 @@ style.
 	pointer-events none
 
 script.
-	@click = ~>
-		@opts.controller.trigger \click
+	@controller = @opts.controller
 
-	@opts.controller.on \show ~>
+	@click = ~>
+		@controller.trigger \click
+
+	@controller.on \show ~>
 		@root.style.pointer-events = \auto
 		Velocity @root, \finish true
 		Velocity @root, {
@@ -27,7 +29,7 @@ script.
 			easing: \linear
 		}
 
-	@opts.controller.on \hide ~>
+	@controller.on \hide ~>
 		@root.style.pointer-events = \none
 		Velocity @root, \finish true
 		Velocity @root, {
