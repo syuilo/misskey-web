@@ -15,10 +15,13 @@ style.
 script.
 	@controller = @opts.controller
 
+	@mixin \ui
+
 	@click = ~>
 		@controller.trigger \click
 
 	@controller.on \show ~>
+		@ui.trigger \blur
 		@root.style.pointer-events = \auto
 		Velocity @root, \finish true
 		Velocity @root, {
@@ -30,6 +33,7 @@ script.
 		}
 
 	@controller.on \hide ~>
+		@ui.trigger \unblur 300ms
 		@root.style.pointer-events = \none
 		Velocity @root, \finish true
 		Velocity @root, {

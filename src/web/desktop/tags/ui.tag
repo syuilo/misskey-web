@@ -14,13 +14,10 @@ style.
 
 script.
 	@ui = riot.observable!
+	riot.mixin \ui do
+		ui: @ui
+
 	@post-form-controller = riot.observable!
-
-	@post-form-controller.on \opened ~>
-		@ui.trigger \blur
-
-	@post-form-controller.on \closed ~>
-		@ui.trigger \unblur 300ms
 
 	@ui.on \toggle-post-form ~>
 		@post-form-controller.trigger \toggle
