@@ -4,16 +4,13 @@ mk-ui
 	div.global@global
 		mk-header@header(ui={ ui })
 
-		mk-contents
+		div.contents
 			| <yield/>
 
 	mk-go-top
 
 style.
 	display block
-
-	> .global
-		display block
 
 script.
 	@ui = riot.observable!
