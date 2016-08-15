@@ -71,6 +71,7 @@ style.
 
 				> .ok
 					right 16px
+					font-weight bold
 					color $theme-color-foreground
 					background linear-gradient(to bottom, lighten($theme-color, 25%) 0%, lighten($theme-color, 10%) 100%)
 					border solid 1px lighten($theme-color, 15%)
