@@ -1,5 +1,5 @@
 mk-ui
-	mk-post-form(controller={ post-form-controller })
+	mk-post-form-window(controller={ post-form-controller })
 
 	div.global@global
 		mk-header@header(ui={ ui })

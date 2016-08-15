@@ -28,32 +28,6 @@ mk-post(tabindex='-1', title={ title })
 
 	// i.fa.fa-ellipsis-v.replies-ellipsis(if={replies_count > 0})
 
-script.
-	@post = opts.post
-	@title = 'a'
-
-	@reply-form = null
-	@reply-form-controller = riot.observable!
-
-	@repost-form = null
-	@repost-form-controller = riot.observable!
-
-	@reply = ~>
-		if !@reply-form?
-			@reply-form = document.body.append-child document.create-element \mk-post-form
-			riot.mount @reply-form, do
-				controller: @reply-form-controller
-				reply: @post
-		@reply-form-controller.trigger \open
-
-	@repost = ~>
-		if !@repost-form?
-			@repost-form = document.body.append-child document.create-element \mk-repost-form
-			riot.mount @repost-form, do
-				controller: @repost-form-controller
-				post: @post
-		@repost-form-controller.trigger \open
-
 style.
 	display block
 	position relative
@@ -155,3 +129,29 @@ style.
 
 					&:hover
 						color #666
+
+script.
+	@post = opts.post
+	@title = 'a'
+
+	@reply-form = null
+	@reply-form-controller = riot.observable!
+
+	@repost-form = null
+	@repost-form-controller = riot.observable!
+
+	@reply = ~>
+		if !@reply-form?
+			@reply-form = document.body.append-child document.create-element \mk-post-form-window
+			riot.mount @reply-form, do
+				controller: @reply-form-controller
+				reply: @post
+		@reply-form-controller.trigger \open
+
+	@repost = ~>
+		if !@repost-form?
+			@repost-form = document.body.append-child document.create-element \mk-repost-form-window
+			riot.mount @repost-form, do
+				controller: @repost-form-controller
+				post: @post
+		@repost-form-controller.trigger \open

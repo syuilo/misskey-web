@@ -1,11 +1,11 @@
-mk-repost-form
+mk-repost-form-window
 	mk-window(controller={ opts.controller }, is-modal={ true })
 		<yield to="header">
 		i.fa.fa-retweet
 		| この投稿をRepostしますか？
 		</yield>
 		<yield to="content">
-		mk-post-preview(post={ opts.post })
+		mk-post-preview(post={ parent.opts.post })
 		div
 			button.cancel(onclick={ parent.cancel }) キャンセル
 			button.ok Repost
