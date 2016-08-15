@@ -1,16 +1,11 @@
 mk-header-clock
 	div.header
-		time@time(datetime= Date.now())
+		time@time
 	div.content
 		mk-analog-clock
 
 script.
-	self = @
-
-	draw!
-	set-interval draw, 1000ms
-
-	function draw
+	@draw = ~>
 		now = new Date!
 
 		yyyy = now.get-full-year!
@@ -27,8 +22,11 @@ script.
 		else
 			hhmm .= replace \: '<span style=\'visibility:hidden\'>:</span>'
 
-		clock = self.time
-		clock.innerHTML = "#yyyymmdd<br>#hhmm"
+		@time.innerHTML = "#yyyymmdd<br>#hhmm"
+
+	@on \mount ~>
+		@draw!
+		set-interval @draw, 1000ms
 
 style.
 	$ui-controll-background-color = #fffbfb
