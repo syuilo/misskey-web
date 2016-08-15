@@ -1,13 +1,12 @@
 mk-header-account
-	div.bg(role='presentation')
-	button.header(data-active='false')
+	button.header(data-active={ is-open }, onclick={ toggle })
 		span.username
-			| {USER.username}
+			| { USER.username }
 			i.fa.fa-angle-down
-		img.avatar(src={USER.avatar_url + '?size=64'}, alt='avatar')
-	div.body(show={false})
+		img.avatar(src={ USER.avatar_url + '?size=64' }, alt='avatar')
+	div.menu(if={ is-open })
 		ul
-			li: a.ui-waves-effect(href= config.url + '/' + {USER.username})
+			li: a.ui-waves-effect(href= config.url + '/' + { USER.username })
 				i.fa.fa-user
 				| プロフィール
 				i.fa.fa-angle-right
@@ -15,7 +14,7 @@ mk-header-account
 				i.fa.fa-cloud
 				| ドライブ
 				i.fa.fa-angle-right
-			li: a.ui-waves-effect(href= config.url + '/{USER.username}/likes')
+			li: a.ui-waves-effect(href= config.url + '/{ USER.username }/likes')
 				i.fa.fa-star
 				| お気に入り
 				i.fa.fa-angle-right
@@ -37,23 +36,6 @@ style.
 	display block
 	float left
 	position relative
-
-	> .bg
-		display block
-		position fixed
-		top 48px
-		left 0
-		z-index -1
-		width 100%
-		height 100%
-		background rgba(0, 0, 0, 0.5)
-		opacity 0
-		pointer-events none
-		transition opacity 1s cubic-bezier(0, 1, 0, 1)
-
-		&[data-show=true]
-			opacity 1
-			pointer-events auto
 
 	&[data-active='true']
 		> .header
@@ -87,13 +69,14 @@ style.
 		&:active
 			color darken($ui-controll-foreground-color, 30%)
 
-		> .screen-name
+		> .username
 			display block
 			float left
 			margin 0 12px 0 16px
 			max-width 16em
 			line-height 48px
 			font-weight bold
+			font-family Meiryo, sans-serif
 			text-decoration none
 
 			i
@@ -110,15 +93,40 @@ style.
 			margin 8px 8px 8px 0
 			border-radius 4px
 
-	> .body
+	> .menu
 		display block
 		position absolute
-		z-index -1
-		right 0
-		width 256px
+		top 56px
+		right -2px
+		width 230px
+		font-size 0.8em
 		background #fff
-		transition top 1s cubic-bezier(0, 1, 0, 1)
-		font-family 'Proxima Nova Reg', "FOT-スーラ Pro M", 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Meiryo', 'メイリオ', sans-serif
+		border-radius 4px
+		box-shadow 0 1px 4px rgba(0, 0, 0, 0.25)
+
+		&:before
+			content ""
+			pointer-events none
+			display block
+			position absolute
+			top -28px
+			right 12px
+			border-top solid 14px transparent
+			border-right solid 14px transparent
+			border-bottom solid 14px rgba(0, 0, 0, 0.1)
+			border-left solid 14px transparent
+
+		&:after
+			content ""
+			pointer-events none
+			display block
+			position absolute
+			top -27px
+			right 12px
+			border-top solid 14px transparent
+			border-right solid 14px transparent
+			border-bottom solid 14px #fff
+			border-left solid 14px transparent
 
 		ul
 			display block
@@ -133,8 +141,8 @@ style.
 					display block
 					position relative
 					z-index 1
-					padding 16px 32px
-					line-height 1em
+					padding 0 32px
+					line-height 42px
 					color #868C8C
 					cursor pointer
 
@@ -151,10 +159,27 @@ style.
 						right 8px
 						z-index 1
 						padding 0 24px
+						font-size 1.2em
 						line-height 42px
-						line-height calc(1em + 32px)
 
 					&:hover, &:active
 						text-decoration none
 						background $theme-color
 						color $theme-color-foreground
+
+script.
+	@is-open = false
+
+	@toggle = ~>
+		if @is-open
+			@close!
+		else
+			@open!
+
+	@open = ~>
+		@is-open = true
+		#document.add-event-listener \mousedown @close
+
+	@close = ~>
+		@is-open = false
+		#document.remove-event-listener \mousedown @close
