@@ -204,7 +204,7 @@ gulp.task('build:scripts', done => {
 							flag = true;
 						}
 						if (!flag) {
-							(line.match(/\{\s?\!?([a-z-]+)\s?\}/g) || []).forEach(x => {
+							(line.match(/\{.+?\}/g) || []).forEach(x => {
 								line = line.replace(x, camelCase(x));
 							});
 							dist += line + '\n';
@@ -219,8 +219,7 @@ gulp.task('build:scripts', done => {
 					return dist;
 
 					function camelCase(str) {
-						str = str.charAt(0).toLowerCase() + str.slice(1);
-						return str.replace(/[-_](.)/g, (match, group1) => {
+						return str.replace(/-([^\s])/g, (match, group1) => {
 							return group1.toUpperCase();
 						});
 					}
