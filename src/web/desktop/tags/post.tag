@@ -41,6 +41,12 @@ style.
 	font-family 'Meiryo', 'メイリオ', 'sans-serif'
 	background #fff
 	background-clip padding-box
+	overflow hidden
+
+	> .repost
+		> p
+			margin 0
+			padding 16px
 
 	> .reply-to
 		padding 0 16px
@@ -152,7 +158,7 @@ script.
 			@reply-form = document.body.append-child document.create-element \mk-post-form-window
 			riot.mount @reply-form, do
 				controller: @reply-form-controller
-				reply: @post
+				reply: @p
 		@reply-form-controller.trigger \open
 
 	@repost = ~>
@@ -160,5 +166,5 @@ script.
 			@repost-form = document.body.append-child document.create-element \mk-repost-form-window
 			riot.mount @repost-form, do
 				controller: @repost-form-controller
-				post: @post
+				post: @p
 		@repost-form-controller.trigger \open

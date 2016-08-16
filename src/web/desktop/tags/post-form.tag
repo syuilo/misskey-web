@@ -29,7 +29,7 @@ mk-post-form
 	button@upload(title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-upload
 	button@drive(title='ドライブからファイルを添付', onclick={ drive }): i.fa.fa-cloud
 	p.text-count(class={ over: text.value.length > 300 }) のこり{ 300 - text.value.length }文字
-	button@submit(disabled={ wait }, onclick={ post }) { wait ? '投稿中...' : opts.reply ? '返信' : '投稿' }
+	button@submit(class={ wait: wait }, disabled={ wait || (text.value.length == 0 && files.length == 0) }, onclick={ post }) { wait ? '投稿中...' : opts.reply ? '返信' : '投稿' }
 	input@file(type='file', accept='image/*', multiple, tabindex='-1', onchange={ change-file })
 
 style.
@@ -340,11 +340,14 @@ style.
 		border-radius 4px
 		box-shadow none
 
-		&:hover
+		&:not(:disabled)
+			font-weight bold
+
+		&:hover:not(:disabled)
 			background linear-gradient(to bottom, lighten($theme-color, 8%) 0%, darken($theme-color, 8%) 100%)
 			border-color $theme-color
 
-		&:active
+		&:active:not(:disabled)
 			background $theme-color
 			border-color $theme-color
 
@@ -360,6 +363,10 @@ style.
 				border 2px solid rgba($theme-color, 0.3)
 				border-radius 8px
 
+		&:disabled
+			opacity 0.7
+			cursor default
+
 		&.wait
 			background linear-gradient(
 				45deg,
@@ -374,6 +381,7 @@ style.
 			background-size 32px 32px
 			animation stripe-bg 1.5s linear infinite
 			opacity 0.7
+			cursor wait
 
 			@keyframes stripe-bg
 				from {background-position: 0 0;}
