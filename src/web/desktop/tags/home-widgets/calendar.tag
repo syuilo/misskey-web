@@ -10,8 +10,6 @@ style.
 	padding 16px 0
 	color #777
 	background #fff
-	border solid 1px #eaeaea
-	border-radius 4px
 	text-align center
 
 	p

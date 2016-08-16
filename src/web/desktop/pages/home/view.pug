@@ -11,9 +11,10 @@ block head
 block body
 	mk-ui
 		div#home
-			div.side-left: div.body
+			div.widgets.side-left: div.body
 				mk-calendar-home-widget
-			main: div.body
+			main.widgets: div.body
 				mk-timeline-home-widget
-			div.side-right: div.body
+			div.widgets.side-right: div.body
+				mk-user-recommendation-home-widget
 				mk-donate-home-widget

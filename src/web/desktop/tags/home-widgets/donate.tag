@@ -13,8 +13,6 @@ mk-donate-home-widget
 style.
 	display block
 	background #fff
-	border solid 1px #eaeaea
-	border-radius 4px
 
 	> article
 		padding 20px
