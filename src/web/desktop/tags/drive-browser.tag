@@ -4,12 +4,14 @@ mk-drive-browser
 			p { folder.name }
 		div.file(each={ file in files })
 			img(src={ file.url + '/thumbnail?size=128' }, alt='')
-			p { file.name }
+			p.name { file.name }
 
 style.
 	display block
 
 	> .main
+		box-sizing border-box
+		padding 8px
 		height 100%
 		overflow auto
 
@@ -20,6 +22,25 @@ style.
 
 		> .file
 			float left
+			margin 4px
+			padding 8px 0 0 0
+			width 144px
+			height 180px
+
+			&:hover
+				background rgba(0, 0, 0, 0.05)
+
+			> img
+				display block
+				margin 0 auto
+
+			> .name
+				display block
+				margin 4px 0 0 0
+				font-size 0.8em
+				text-align center
+				word-break break-all
+				color #444
 
 script.
 	@files = null
