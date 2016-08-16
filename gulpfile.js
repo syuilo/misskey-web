@@ -21,7 +21,6 @@ const es = require('event-stream');
 const replace = require('gulp-replace');
 const stylus = require('gulp-stylus');
 const cssnano = require('gulp-cssnano');
-const autoprefixer = require('gulp-autoprefixer');
 const uglify = require('gulp-uglify');
 const ls = require('browserify-livescript');
 const aliasify = require('aliasify');
@@ -364,12 +363,6 @@ gulp.task('build:styles', ['copy:bower_components'], () => {
 	return gulp.src('./src/web/**/*.styl')
 		.pipe(replace(/url\("#/g, 'url\("' + config.urls.resources))
 		.pipe(stylus())
-		.pipe(autoprefixer({
-			// ☆IEは9以上、Androidは4以上、iOS Safariは8以上
-			// その他は最新2バージョンで必要なベンダープレフィックスを付与する設定
-			browsers: ['last 2 versions', 'ie >= 9', 'Android >= 4', 'ios_saf >= 8'],
-			cascade: false
-		}))
 		.pipe(isProduction
 			? cssnano({
 				safe: true // 高度な圧縮は無効にする (一部デザインが不適切になる場合があるため)
