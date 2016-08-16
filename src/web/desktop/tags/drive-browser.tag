@@ -3,7 +3,23 @@ mk-drive-browser
 		div.folder(each={ folder in folders })
 			p { folder.name }
 		div.file(each={ file in files })
+			img(src={ file.url + '/thumbnail?size=128' }, alt='')
 			p { file.name }
+
+style.
+	display block
+
+	> .main
+		height 100%
+		overflow auto
+
+		&:after
+			content ""
+			display block
+			clear both
+
+		> .file
+			float left
 
 script.
 	@files = null

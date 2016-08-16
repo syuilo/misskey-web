@@ -1,4 +1,4 @@
-mk-window
+mk-window(class={ flexible: opts.height == null })
 	div.bg@bg(show={ is-modal }, onclick={ bg-click })
 	div.main@main
 		header(onmousedown={ on-header-mousedown })
@@ -36,10 +36,13 @@ style.
 		pointer-events none
 
 		> header
+			position relative
+			z-index 1
 			cursor move
 			background #fff
 			background-clip padding-box
-			border-bottom solid 1px rgba($theme-color, 0.1)
+			//border-bottom solid 1px rgba($theme-color, 0.1)
+			box-shadow 0 1px 0 rgba($theme-color, 0.1)
 
 			> h1
 				pointer-events none
@@ -83,11 +86,17 @@ style.
 
 		> .body
 			position relative
+			height 100%
+
+	&:not(.flexible)
+		> .main > .body
+			height calc(100% - 40px)
 
 script.
 	@mixin \ui
 
 	@is-open = false
+	@is-child = if opts.is-child? then opts.is-child else false
 	@is-modal = if opts.is-modal? then opts.is-modal else false
 	@can-close = if opts.can-close? then opts.can-close else true
 
@@ -139,7 +148,11 @@ script.
 		@main.style.left = (window.inner-width / 2) - (@main.offset-width / 2) + \px
 
 		if @is-modal
-			@ui.trigger \blur
+			if !@is-child
+				# TODO
+				#window.disable-scroll!
+				@ui.trigger \blur
+
 			@bg.style.pointer-events = \auto
 			Velocity @bg, \finish true
 			Velocity @bg, {
@@ -167,7 +180,11 @@ script.
 		@controller.trigger \closed
 
 		if @is-modal
-			@ui.trigger \unblur 300ms
+			if !@is-child
+				# TODO
+				#window.enable-scroll!
+				@ui.trigger \unblur 300ms
+
 			@bg.style.pointer-events = \none
 			Velocity @bg, \finish true
 			Velocity @bg, {

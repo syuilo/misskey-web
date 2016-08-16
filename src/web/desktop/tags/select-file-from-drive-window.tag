@@ -1,5 +1,5 @@
 mk-select-file-from-drive-window
-	mk-window(controller={ opts.controller }, is-modal={ true }, width={ '700px' }, height={ '400px' })
+	mk-window(controller={ opts.controller }, is-modal={ true }, is-child={ opts.is-child }, width={ '700px' }, height={ '400px' })
 		<yield to="header">
 		i.fa.fa-file-o
 		| ファイルを選択
@@ -7,6 +7,12 @@ mk-select-file-from-drive-window
 		<yield to="content">
 		mk-drive-browser
 		</yield>
+
+style.
+	> mk-window
+		[data-yield='content']
+			> mk-drive-browser
+				height 100%
 
 script.
 	@cancel = ~>
