@@ -27,8 +27,6 @@ style.
 		z-index 2048
 		top 15%
 		left 0
-		width 100%
-		max-width 530px
 		margin 0
 		background #fff
 		border-radius 6px
@@ -96,6 +94,9 @@ script.
 	@controller = @opts.controller
 
 	@on \mount ~>
+		@main.style.width = @opts.width || \530px
+		@main.style.height = @opts.height || \auto
+
 		window.add-event-listener \resize ~>
 			position = @main.get-bounding-client-rect!
 			browser-width = window.inner-width

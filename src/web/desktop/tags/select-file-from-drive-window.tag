@@ -1,5 +1,5 @@
 mk-select-file-from-drive-window
-	mk-window(controller={ opts.controller }, is-modal={ true })
+	mk-window(controller={ opts.controller }, is-modal={ true }, width={ '700px' }, height={ '400px' })
 		<yield to="header">
 		i.fa.fa-file-o
 		| ファイルを選択
