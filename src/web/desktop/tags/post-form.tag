@@ -27,7 +27,7 @@ mk-post-form
 			div.progress.initing(if={ progress == undefined })
 			div.progress.waiting(if={ progress.value == progress.max })
 	button@upload(title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-upload
-	button@drive(title='ドライブからファイルを添付', onclick={ drive }): i.fa.fa-cloud
+	button@drive(title='ドライブからファイルを添付', onclick={ select-file-from-drive }): i.fa.fa-cloud
 	p.text-count(class={ over: text.value.length > 300 }) のこり{ 300 - text.value.length }文字
 	button@submit(class={ wait: wait }, disabled={ wait || (text.value.length == 0 && files.length == 0) }, onclick={ post }) { wait ? '投稿中...' : opts.reply ? '返信' : '投稿' }
 	input@file(type='file', accept='image/*', multiple, tabindex='-1', onchange={ change-file })
@@ -448,6 +448,13 @@ script.
 
 	@select-file = ~>
 		@file.click!
+
+	@select-file-from-drive = ~>
+		browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
+		browser-controller = riot.observable!
+		riot.mount browser, do
+			controller: browser-controller
+		browser-controller.trigger \open
 
 	@change-file = ~>
 		files = @file.files

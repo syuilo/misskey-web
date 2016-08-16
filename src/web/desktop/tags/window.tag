@@ -1,114 +1,119 @@
 mk-window
-	header(onmousedown={ on-header-mousedown })
-		h1(data-yield='header')
-			| <yield from="header"/>
-		button.close(if={ can-close }, onmousedown={ repel-move }, onclick={ close }, title='閉じる'): i.fa.fa-times
-	div.body(data-yield='content')
-		| <yield from="content"/>
+	div.bg@bg(show={ is-modal }, onclick={ bg-click })
+	div.main@main
+		header(onmousedown={ on-header-mousedown })
+			h1(data-yield='header')
+				| <yield from="header"/>
+			button.close(if={ can-close }, onmousedown={ repel-move }, onclick={ close }, title='閉じる'): i.fa.fa-times
+		div.body(data-yield='content')
+			| <yield from="content"/>
 
 style.
-	display block
-	position fixed
-	z-index 2049
-	top 15%
-	left 0
-	width 100%
-	max-width 530px
-	margin 0
-	background #fff
-	border-radius 6px
-	box-shadow 0 2px 6px 0 rgba(0, 0, 0, 0.2)
-	overflow hidden
-	opacity 0
-	pointer-events none
+	> .bg
+		display block
+		position fixed
+		z-index 2048
+		top 0
+		left 0
+		width 100%
+		height 100%
+		background rgba(0, 0, 0, 0.7)
+		opacity 0
+		pointer-events none
 
-	> header
-		cursor move
+	> .main
+		display block
+		position fixed
+		z-index 2048
+		top 15%
+		left 0
+		width 100%
+		max-width 530px
+		margin 0
 		background #fff
-		background-clip padding-box
-		border-bottom solid 1px rgba($theme-color, 0.1)
+		border-radius 6px
+		box-shadow 0 2px 6px 0 rgba(0, 0, 0, 0.2)
+		overflow hidden
+		opacity 0
+		pointer-events none
 
-		> h1
-			pointer-events none
-			display block
-			margin 0
-			text-align center
-			font-size 1em
-			line-height 40px
-			font-weight normal
-			color #d0b4ac
+		> header
+			cursor move
+			background #fff
+			background-clip padding-box
+			border-bottom solid 1px rgba($theme-color, 0.1)
 
-		> .close
-			-webkit-appearance none
-			-moz-appearance none
-			appearance none
-			cursor pointer
-			display block
-			position absolute
-			top 0
-			right 0
-			z-index 1
-			margin 0
-			padding 0
-			font-size 1.2em
-			color rgba($theme-color, 0.4)
-			border none
-			outline none
-			box-shadow none
-			background transparent
-
-			&:hover
-				color rgba($theme-color, 0.6)
-
-			&:active
-				color darken($theme-color, 30%)
-
-			> i
-				padding 0
-				width 40px
+			> h1
+				pointer-events none
+				display block
+				margin 0
+				text-align center
+				font-size 1em
 				line-height 40px
+				font-weight normal
+				color #d0b4ac
 
-	> .body
-		position relative
+			> .close
+				-webkit-appearance none
+				-moz-appearance none
+				appearance none
+				cursor pointer
+				display block
+				position absolute
+				top 0
+				right 0
+				z-index 1
+				margin 0
+				padding 0
+				font-size 1.2em
+				color rgba($theme-color, 0.4)
+				border none
+				outline none
+				box-shadow none
+				background transparent
+
+				&:hover
+					color rgba($theme-color, 0.6)
+
+				&:active
+					color darken($theme-color, 30%)
+
+				> i
+					padding 0
+					width 40px
+					line-height 40px
+
+		> .body
+			position relative
 
 script.
+	@mixin \ui
+
 	@is-open = false
 	@is-modal = if opts.is-modal? then opts.is-modal else false
 	@can-close = if opts.can-close? then opts.can-close else true
 
 	@controller = @opts.controller
 
-	@bg = null
-	@bg-controller = riot.observable!
-
-	@bg-controller.on \click ~>
-		if @can-close
-			@close!
-
 	@on \mount ~>
-		if @is-modal
-			@bg = document.body.append-child document.create-element \mk-modal-bg
-			riot.mount @bg, do
-				controller: @bg-controller
-
 		window.add-event-listener \resize ~>
-			position = @root.get-bounding-client-rect!
+			position = @main.get-bounding-client-rect!
 			browser-width = window.inner-width
 			browser-height = window.inner-height
-			window-width = @root.offset-width
-			window-height = @root.offset-height
+			window-width = @main.offset-width
+			window-height = @main.offset-height
 
 			if position.left < 0
-				@root.style.left = 0
+				@main.style.left = 0
 
 			if position.top < 0
-				@root.style.top = 0
+				@main.style.top = 0
 
 			if position.left + window-width > browser-width
-				@root.style.left = browser-width - window-width + \px
+				@main.style.left = browser-width - window-width + \px
 
 			if position.top + window-height > browser-height
-				@root.style.top = browser-height - window-height + \px
+				@main.style.top = browser-height - window-height + \px
 
 	@controller.on \toggle ~>
 		@toggle!
@@ -129,16 +134,25 @@ script.
 		@is-open = true
 		@controller.trigger \opened
 
-		@root.style.top = \15%
-		@root.style.left = (window.inner-width / 2) - (@root.offset-width / 2) + \px
+		@main.style.top = \15%
+		@main.style.left = (window.inner-width / 2) - (@main.offset-width / 2) + \px
 
 		if @is-modal
-			@bg-controller.trigger \show
+			@ui.trigger \blur
+			@bg.style.pointer-events = \auto
+			Velocity @bg, \finish true
+			Velocity @bg, {
+				opacity: 1
+			} {
+				queue: false
+				duration: 100ms
+				easing: \linear
+			}
 
-		@root.style.pointer-events = \auto
-		Velocity @root, \finish true
-		Velocity @root, {scale: 1.2} 0ms
-		Velocity @root, {
+		@main.style.pointer-events = \auto
+		Velocity @main, \finish true
+		Velocity @main, {scale: 1.2} 0ms
+		Velocity @main, {
 			opacity: 1
 			scale: 1
 		} {
@@ -152,11 +166,20 @@ script.
 		@controller.trigger \closed
 
 		if @is-modal
-			@bg-controller.trigger \hide
+			@ui.trigger \unblur 300ms
+			@bg.style.pointer-events = \none
+			Velocity @bg, \finish true
+			Velocity @bg, {
+				opacity: 0
+			} {
+				queue: false
+				duration: 300ms
+				easing: \linear
+			}
 
-		@root.style.pointer-events = \none
-		Velocity @root, \finish true
-		Velocity @root, {
+		@main.style.pointer-events = \none
+		Velocity @main, \finish true
+		Velocity @main, {
 			opacity: 0
 			scale: 0.8
 		} {
@@ -169,8 +192,12 @@ script.
 		e.stop-propagation!
 		return true
 
+	@bg-click = ~>
+		if @can-close
+			@close!
+
 	@on-header-mousedown = (e) ~>
-		position = @root.get-bounding-client-rect!
+		position = @main.get-bounding-client-rect!
 
 		click-x = e.client-x
 		click-y = e.client-y
@@ -178,8 +205,8 @@ script.
 		move-base-y = click-y - position.top
 		browser-width = window.inner-width
 		browser-height = window.inner-height
-		window-width = @root.offset-width
-		window-height = @root.offset-height
+		window-width = @main.offset-width
+		window-height = @main.offset-height
 
 		mousemove = (me) ~>
 			move-left = me.client-x - move-base-x
@@ -197,8 +224,8 @@ script.
 			if move-top + window-height > browser-height
 				move-top = browser-height - window-height
 
-			@root.style.left = move-left + \px
-			@root.style.top = move-top + \px
+			@main.style.left = move-left + \px
+			@main.style.top = move-top + \px
 
 		clear = ~>
 			window.remove-event-listener \mousemove mousemove

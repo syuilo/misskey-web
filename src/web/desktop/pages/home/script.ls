@@ -1,9 +1,10 @@
 require '../../base.ls'
 
 riot = require 'riot'
-require '../../tags/modal-bg.tag'
 require '../../tags/window.tag'
 require '../../tags/follow-button.tag'
+require '../../tags/drive-browser.tag'
+require '../../tags/select-file-from-drive-window.tag'
 require '../../tags/post.tag'
 require '../../tags/analog-clock.tag'
 require '../../tags/go-top.tag'
