@@ -43,7 +43,8 @@ try
 catch
 	console.log 'oops'
 
-socket = io CONFIG.api.url + '/'
+socket = io CONFIG.api.url, do
+	transports: [\websocket]
 
 socket.on \connect ->
 	console.log \connected
