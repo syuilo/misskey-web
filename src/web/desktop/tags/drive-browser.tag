@@ -18,7 +18,7 @@ mk-drive-browser
 				p { folder.name }
 		virtual(each={ file in files })
 			div.file(class={ selected: file._selected }, onclick={ file._click }, title={ file._title })
-				img(src={ file.url + '/thumbnail?size=128' }, alt='')
+				img(src={ file.url + '?thumbnail&size=128' }, alt='')
 				p.name
 					| { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
 					span.ext(if={ file.name.lastIndexOf('.') != -1 }) { file.name.substr(file.name.lastIndexOf('.')) }
