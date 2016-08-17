@@ -10,6 +10,7 @@ style.
 	width 240px
 	font-size 0.8em
 	background #fff
+	border-radius 0 4px 4px 4px
 	box-shadow 2px 2px 8px rgba(0, 0, 0, 0.2)
 
 	ul
