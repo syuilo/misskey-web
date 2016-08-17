@@ -26,7 +26,7 @@ mk-drive-browser
 					p.name
 						| { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
 						span.ext(if={ file.name.lastIndexOf('.') != -1 }) { file.name.substr(file.name.lastIndexOf('.')) }
-		div.no-files(if={ files.length == 0 && !loading })
+		div.no-files(if={ files.length == 0 && folders.length == 0 && !loading })
 			p ファイルはありません。
 		div.loading(if={ loading }).
 			<div class="spinner">
@@ -42,6 +42,7 @@ style.
 	> nav
 		display block
 		position relative
+		z-index 1
 		box-sizing border-box
 		width 100%
 		overflow auto
@@ -90,6 +91,7 @@ style.
 				&.separator
 					margin 0 8px
 					opacity 0.5
+					cursor default
 
 					> i
 						margin 0
@@ -135,6 +137,12 @@ style.
 		height calc(100% - 38px)
 		overflow auto
 
+		&, *
+			-ms-user-select none
+			-moz-user-select none
+			-webkit-user-select none
+			user-select none
+
 		&.loading
 			&, *
 				cursor wait !important
@@ -159,10 +167,6 @@ style.
 				border-radius 4px
 
 				&, *
-					-ms-user-select none
-					-moz-user-select none
-					-webkit-user-select none
-					user-select none
 					cursor pointer
 
 				&:hover
@@ -194,10 +198,6 @@ style.
 				overflow hidden
 
 				&, *
-					-ms-user-select none
-					-moz-user-select none
-					-webkit-user-select none
-					user-select none
 					cursor pointer
 
 				&:hover
@@ -237,7 +237,7 @@ style.
 		> .no-files
 			padding 16px
 			text-align center
-			color #888
+			color #999
 
 			> p
 				margin 0

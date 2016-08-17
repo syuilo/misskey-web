@@ -10,7 +10,7 @@ style.
 	width 240px
 	font-size 0.8em
 	background #fff
-	box-shadow 0 1px 2px rgba(0, 0, 0, 0.2)
+	box-shadow 2px 2px 8px rgba(0, 0, 0, 0.2)
 
 	ul
 		display block

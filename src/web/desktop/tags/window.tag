@@ -1,7 +1,7 @@
 mk-window(class={ flexible: opts.height == null })
 	div.bg@bg(show={ is-modal }, onclick={ bg-click })
 	div.main@main
-		header(onmousedown={ on-header-mousedown })
+		header@header(onmousedown={ on-header-mousedown })
 			h1(data-yield='header')
 				| <yield from="header"/>
 			button.close(if={ can-close }, onmousedown={ repel-move }, onclick={ close }, title='閉じる'): i.fa.fa-times
@@ -39,7 +39,7 @@ style.
 
 		> header
 			position relative
-			z-index 1
+			z-index 128
 			cursor move
 			background #fff
 			background-clip padding-box
@@ -116,6 +116,9 @@ script.
 
 		@main.style.top = \15%
 		@main.style.left = (window.inner-width / 2) - (@main.offset-width / 2) + \px
+
+		@header.add-event-listener \contextmenu (e) ~>
+			e.prevent-default!
 
 		window.add-event-listener \resize ~>
 			position = @main.get-bounding-client-rect!

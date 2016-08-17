@@ -3,7 +3,7 @@ mk-drive-browser-base-contextmenu
 		ul
 			li(onclick={ parent.create-folder }): p
 				i.fa.fa-folder-o
-				| フォルダを作成
+				| フォルダーを作成
 			li(onclick={ parent.upload }): p
 				i.fa.fa-upload
 				| ファイルをアップロード
