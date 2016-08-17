@@ -207,6 +207,9 @@ script.
 	@controller.on \upload ~>
 		@file-input.click!
 
+	@controller.on \create-folder ~>
+		# something
+
 	@change-file-input = ~>
 		files = @file-input.files
 		for i from 0 to files.length - 1

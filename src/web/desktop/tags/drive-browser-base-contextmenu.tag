@@ -1,7 +1,7 @@
 mk-drive-browser-base-contextmenu
 	mk-contextmenu(controller={ ctx-controller })
 		ul
-			li: p
+			li(onclick={ parent.create-folder }): p
 				i.fa.fa-folder-o
 				| フォルダを作成
 			li(onclick={ parent.upload }): p
@@ -18,6 +18,10 @@ script.
 
 	@ctx-controller.on \closed ~>
 		@unmount!
+
+	@create-folder = ~>
+		@browser-controller.trigger \create-folder
+		@ctx-controller.trigger \close
 
 	@upload = ~>
 		@browser-controller.trigger \upload

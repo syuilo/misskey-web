@@ -51,7 +51,7 @@ script.
 	@controller.on \close ~>
 		@close!
 
-	@window-controller.on \closed ~>
+	@window-controller.on \closing ~>
 		@is-open = false
 
 	@form-controller.on \post ~>

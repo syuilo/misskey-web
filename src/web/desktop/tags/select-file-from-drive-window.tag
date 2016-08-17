@@ -158,6 +158,9 @@ script.
 	@controller.on \close ~>
 		@window-controller.trigger \close
 
+	@window-controller.on \closed ~>
+		@unmount!
+
 	@browser-controller.on \selected (file) ~>
 		@file = file
 		@ok!

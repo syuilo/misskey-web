@@ -142,7 +142,7 @@ script.
 
 	@open = ~>
 		@is-open = true
-		@controller.trigger \opened
+		@controller.trigger \opening
 
 		@main.style.top = \15%
 		@main.style.left = (window.inner-width / 2) - (@main.offset-width / 2) + \px
@@ -175,9 +175,13 @@ script.
 			easing: [ 300, 8 ]
 		}
 
+		set-timeout ~>
+			@controller.trigger \opened
+		, 300ms
+
 	@close = ~>
 		@is-open = false
-		@controller.trigger \closed
+		@controller.trigger \closing
 
 		if @is-modal
 			if !@is-child
@@ -205,6 +209,10 @@ script.
 			duration: 300ms
 			easing: [ 0.5, -0.5, 1, 0.5 ]
 		}
+
+		set-timeout ~>
+			@controller.trigger \closed
+		, 300ms
 
 	@repel-move = (e) ~>
 		e.stop-propagation!
