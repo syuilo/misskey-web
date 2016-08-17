@@ -40,7 +40,7 @@ style.
 	position relative
 	margin 0
 	padding 0
-	font-family 'Meiryo', 'メイリオ', 'sans-serif'
+	font-family 'Meiryo', 'メイリオ', sans-serif
 	background #fff
 	background-clip padding-box
 	overflow hidden

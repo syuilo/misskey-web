@@ -454,8 +454,11 @@ script.
 		browser-controller = riot.observable!
 		riot.mount browser, do
 			is-child: if @opts.is-in-window? then @opts.is-in-window else false
+			multiple: true
 			controller: browser-controller
 		browser-controller.trigger \open
+		browser-controller.one \selected (files) ~>
+			files.for-each @add-file
 
 	@change-file = ~>
 		files = @file.files
@@ -489,22 +492,13 @@ script.
 		xhr.open \POST CONFIG.api.url + '/drive/files/create' true
 		xhr.onload = (e) ~>
 			drive-file = JSON.parse e.target.response
-			drive-file._remove = ~>
-				@files = @files.filter (x) -> x.id != drive-file.id
-				@controller.trigger \change-files @files
-				@update!
 
-			@files.push drive-file
-			@controller.trigger \change-files @files
+			@add-file drive-file
 
 			@uploadings = @uploadings.filter (x) -> x.id != id
 			@controller.trigger \change-uploading-files @uploadings
 
 			@update!
-
-			Sortable.create @attaches, do
-				draggable: \.file
-				animation: 150ms
 
 		xhr.upload.onprogress = (e) ~>
 			if e.length-computable
@@ -515,6 +509,20 @@ script.
 				@update!
 
 		xhr.send data
+
+	@add-file = (file) ~>
+		file._remove = ~>
+			@files = @files.filter (x) -> x.id != file.id
+			@controller.trigger \change-files @files
+			@update!
+
+		@files.push file
+		@controller.trigger \change-files @files
+		@update!
+
+		Sortable.create @attaches, do
+			draggable: \.file
+			animation: 150ms
 
 	@post = (e) ~>
 		@wait = true
