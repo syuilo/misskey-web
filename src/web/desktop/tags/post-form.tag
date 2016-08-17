@@ -8,24 +8,7 @@ mk-post-form
 			li.add(if={ files.length < 4 }, title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-plus
 		p.remain
 			| 残り{ 4 - files.length }
-	ul.uploadings(if={ uploadings.length != 0 })
-		li(each={ uploadings })
-			div.img(style='background-image: url({ img })')
-			p.name
-				i.fa.fa-spinner.fa-pulse
-				| { name }
-			p.status
-				span.initing(if={ progress == undefined }) 待機中...
-				span.kb(if={ progress != undefined })
-					| { String(Math.floor(progress.value / 1024)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') }
-					i KB
-					= ' / '
-					| { String(Math.floor(progress.max / 1024)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') }
-					i KB
-				span.percentage(if={ progress != undefined }) { Math.floor((progress.value / progress.max) * 100) }
-			progress(if={ progress != undefined && progress.value != progress.max }, value={ progress.value }, max={ progress.max })
-			div.progress.initing(if={ progress == undefined })
-			div.progress.waiting(if={ progress.value == progress.max })
+	mk-uploader(controller={ uploader-controller })
 	button@upload(title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-upload
 	button@drive(title='ドライブからファイルを添付', onclick={ select-file-from-drive }): i.fa.fa-cloud
 	p.text-count(class={ over: text.value.length > 300 }) のこり{ 300 - text.value.length }文字
@@ -124,133 +107,11 @@ style.
 					font-size 1.2em
 					color rgba($theme-color, 0.2)
 
-	> .uploadings
+	> mk-uploader
 		margin 8px 0 0 0
 		padding 8px
 		border solid 1px rgba($theme-color, 0.2)
 		border-radius 4px
-		list-style none
-
-		> li
-			display block
-			position relative
-			margin 8px 0 0 0
-			padding 0
-			height 36px
-			box-shadow 0 -1px 0 rgba($theme-color, 0.1)
-			border-top solid 8px transparent
-
-			&:first-child
-				margin 0
-				box-shadow none
-				border-top none
-
-			> .img
-				display block
-				position absolute
-				top 0
-				left 0
-				width 36px
-				height 36px
-				background-size cover
-				background-position center center
-
-			> .name
-				display block
-				position absolute
-				top 0
-				left 44px
-				margin 0
-				padding 0
-				max-width 256px
-				font-size 0.8em
-				color rgba($theme-color, 0.7)
-				white-space nowrap
-				text-overflow ellipsis
-				overflow hidden
-
-				> i
-					margin-right 4px
-
-			> .status
-				display block
-				position absolute
-				top 0
-				right 0
-				margin 0
-				padding 0
-				font-size 0.8em
-
-				> .initing
-					color rgba($theme-color, 0.5)
-
-				> .kb
-					color rgba($theme-color, 0.5)
-
-				> .percentage
-					display inline-block
-					width 48px
-					text-align right
-
-					color rgba($theme-color, 0.7)
-
-					&:after
-						content '%'
-
-			> progress
-				-webkit-appearance none
-				-moz-appearance none
-				appearance none
-				display block
-				position absolute
-				bottom 0
-				right 0
-				margin 0
-				width calc(100% - 44px)
-				height 8px
-				background transparent
-				border none
-				border-radius 4px
-				overflow hidden
-
-				&::-webkit-progress-value
-					background $theme-color
-
-				&::-webkit-progress-bar
-					background rgba($theme-color, 0.1)
-
-			> .progress
-				-webkit-appearance none
-				-moz-appearance none
-				appearance none
-				display block
-				position absolute
-				bottom 0
-				right 0
-				margin 0
-				width calc(100% - 44px)
-				height 8px
-				border none
-				border-radius 4px
-				background linear-gradient(
-					45deg,
-					darken($theme-color, 10%) 25%,
-					$theme-color              25%,
-					$theme-color              50%,
-					darken($theme-color, 10%) 50%,
-					darken($theme-color, 10%) 75%,
-					$theme-color              75%,
-					$theme-color
-				)
-				background-size 32px 32px
-				animation bg 1.5s linear infinite
-
-				&.initing
-					opacity 0.3
-
-				@keyframes bg
-					from {background-position: 0 0;}
-					to   {background-position: -64px 32px;}
 
 	[name='file']
 		display none
@@ -437,6 +298,8 @@ script.
 	@uploadings = []
 	@files = []
 
+	@uploader-controller = riot.observable!
+
 	@controller = @opts.controller
 
 	@controller.on \focus ~>
@@ -467,48 +330,13 @@ script.
 			@upload file
 
 	@upload = (file) ~>
-		id = Math.random!
+		@uploader-controller.trigger \upload file
 
-		ctx =
-			id: id
-			name: file.name
-			progress: undefined
+	@uploader-controller.on \uploaded (file) ~>
+		@add-file file
 
-		@uploadings.push ctx
-		@controller.trigger \change-uploading-files @uploadings
-		@update!
-
-		reader = new FileReader!
-		reader.onload = (e) ~>
-			ctx.img = e.target.result
-			@update!
-		reader.read-as-data-URL file
-
-		data = new FormData!
-		data.append \_i USER._web
-		data.append \file file
-
-		xhr = new XMLHttpRequest!
-		xhr.open \POST CONFIG.api.url + '/drive/files/create' true
-		xhr.onload = (e) ~>
-			drive-file = JSON.parse e.target.response
-
-			@add-file drive-file
-
-			@uploadings = @uploadings.filter (x) -> x.id != id
-			@controller.trigger \change-uploading-files @uploadings
-
-			@update!
-
-		xhr.upload.onprogress = (e) ~>
-			if e.length-computable
-				if ctx.progress == undefined
-					ctx.progress = {}
-				ctx.progress.max = e.total
-				ctx.progress.value = e.loaded
-				@update!
-
-		xhr.send data
+	@uploader-controller.on \change-uploads (uploads) ~>
+		@controller.trigger \change-uploading-files uploads
 
 	@add-file = (file) ~>
 		file._remove = ~>

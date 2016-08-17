@@ -12,7 +12,7 @@ mk-drive-browser
 			li.folder(if={ folder != null })
 				| { folder.name }
 		input.search(type='search', placeholder!='&#xf002; 検索')
-	div.main
+	div.main(class={ uploading: uploads.length > 0 })
 		virtual(each={ folder in folders })
 			div.folder
 				p { folder.name }
@@ -22,6 +22,7 @@ mk-drive-browser
 				p.name
 					| { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
 					span.ext(if={ file.name.lastIndexOf('.') != -1 }) { file.name.substr(file.name.lastIndexOf('.')) }
+	mk-uploader(controller={ uploader-controller })
 	input@file-input(type='file', accept='*/*', multiple, tabindex='-1', onchange={ change-file-input })
 
 style.
@@ -113,6 +114,9 @@ style.
 			display block
 			clear both
 
+		&.uploading
+			height calc(100% - 38px - 100px)
+
 		> .file
 			float left
 			margin 4px
@@ -162,12 +166,18 @@ style.
 				> .ext
 					opacity 0.5
 
+	> mk-uploader
+		height 100px
+		padding 16px
+
 	> input
 		display none
 
 script.
 	@files = []
 	@folders = []
+
+	@uploads = []
 
 	# 現在の階層(フォルダ)
 	# * null でルートを表す
@@ -176,6 +186,8 @@ script.
 	@controller = @opts.controller
 	# Note: Riot3.0.0にしたら xmultiple を multiple に変更 (2.xでは、真理値属性と判定され__がプレフィックスされてしまう)
 	@multiple = if @opts.xmultiple? then @opts.xmultiple else false
+
+	@uploader-controller = riot.observable!
 
 	@on \mount ~>
 		@load!
@@ -190,13 +202,20 @@ script.
 			@upload file
 
 	@upload = (file) ~>
-		id = Math.random!
-		# todo
+		@uploader-controller.trigger \upload file
+
+	@uploader-controller.on \uploaded (file) ~>
+		if (file.folder == null and @folder == null) or (file.folder? and @folder? and file.folder.id == @folder.id)
+			@add-file file, true
+
+	@uploader-controller.on \change-uploads (uploads) ~>
+		@uploads = uploads
+		@update!
 
 	@get-selection = ~>
 		@files.filter (file) -> file._selected
 
-	@add-file = (file) ~>
+	@add-file = (file, unshift = false) ~>
 		file._title = file.name + '\n' + file.type
 
 		file._click = ~>
@@ -215,7 +234,12 @@ script.
 					file._selected = true
 					@controller.trigger \change-selection @get-selection!
 
-		@files.push file
+		if unshift
+			@files.unshift file
+		else
+			@files.push file
+
+		@update!
 
 	@load = ~>
 		api 'drive/files' do
