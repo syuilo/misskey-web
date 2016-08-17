@@ -14,14 +14,19 @@ style.
 
 	ul
 		display block
-		margin 12px 0
+		margin 10px 0
 		padding 0
 		list-style none
+
+		& + ul
+			padding-top 10px
+			border-top solid 1px #eee
 
 		> li
 			display block
 
 			> p
+			> a
 				display block
 				position relative
 				z-index 1
@@ -29,6 +34,7 @@ style.
 				padding 0 32px 0 38px
 				line-height 38px
 				color #868C8C
+				text-decoration none
 				cursor pointer
 
 				*

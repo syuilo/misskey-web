@@ -12,7 +12,7 @@ mk-drive-browser
 			li.folder.current(if={ folder != null })
 				| { folder.name }
 		input.search(type='search', placeholder!='&#xf002; 検索')
-	div.main@main(class={ uploading: uploads.length > 0, loading: loading })
+	div.main@main(class={ uploading: uploads.length > 0, loading: loading }, oncontextmenu={ oncontextmenu })
 		div.folders
 			virtual(each={ folder in folders })
 				div.folder(onclick={ folder._click }, title={ folder._title })
@@ -21,7 +21,7 @@ mk-drive-browser
 						| { folder.name }
 		div.files(if={ files.length > 0 })
 			virtual(each={ file in files })
-				div.file(class={ selected: file._selected }, onclick={ file._click }, title={ file._title })
+				div.file(class={ selected: file._selected }, onclick={ file._click }, oncontextmenu={ file._contextmenu }, title={ file._title })
 					img(src={ file.url + '?thumbnail&size=128' }, alt='')
 					p.name
 						| { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
@@ -317,17 +317,19 @@ script.
 	@uploader-controller = riot.observable!
 
 	@on \mount ~>
-		@main.add-event-listener \contextmenu (e) ~>
-			e.prevent-default!
-			ctx = document.body.append-child document.create-element \mk-drive-browser-base-contextmenu
-			ctx-controller = riot.observable!
-			riot.mount ctx, do
-				controller: ctx-controller
-				browser-controller: @controller
-			ctx-controller.trigger \open do
-				x: e.page-x - window.page-x-offset
-				y: e.page-y - window.page-y-offset
 		@load!
+
+	@oncontextmenu = (e) ~>
+		e.stop-immediate-propagation!
+		ctx = document.body.append-child document.create-element \mk-drive-browser-base-contextmenu
+		ctx-controller = riot.observable!
+		riot.mount ctx, do
+			controller: ctx-controller
+			browser-controller: @controller
+		ctx-controller.trigger \open do
+			x: e.page-x - window.page-x-offset
+			y: e.page-y - window.page-y-offset
+		return false
 
 	@controller.on \upload ~>
 		@file-input.click!
@@ -428,6 +430,19 @@ script.
 						file._selected = false
 					file._selected = true
 					@controller.trigger \change-selection @get-selection!
+
+		file._contextmenu = (e) ~>
+			e.stop-immediate-propagation!
+			ctx = document.body.append-child document.create-element \mk-drive-browser-file-contextmenu
+			ctx-controller = riot.observable!
+			riot.mount ctx, do
+				controller: ctx-controller
+				browser-controller: @controller
+				file: file
+			ctx-controller.trigger \open do
+				x: e.page-x - window.page-x-offset
+				y: e.page-y - window.page-y-offset
+			return false
 
 		if unshift
 			@files.unshift file
