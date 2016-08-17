@@ -10,6 +10,7 @@ mk-select-file-from-drive-window
 		mk-drive-browser(controller={ parent.browser-controller }, xmultiple={ parent.multiple })
 		div
 			button.upload(title='PCからドライブにファイルをアップロード', onclick={ parent.upload }): i.fa.fa-upload
+			button.cancel(onclick={ parent.cancel }) キャンセル
 			button.ok(disabled={ parent.multiple && parent.file.length == 0 }, onclick={ parent.ok }) 決定
 		</yield>
 
@@ -77,37 +78,23 @@ style.
 							border-radius 8px
 
 				.ok
+				.cancel
 					-webkit-appearance none
 					-moz-appearance none
 					appearance none
 					display block
 					position absolute
 					bottom 16px
-					right 16px
 					cursor pointer
 					box-sizing border-box
 					padding 0
 					margin 0
-					width 110px
+					width 120px
 					height 40px
 					font-size 1em
-					color $theme-color-foreground
-					background linear-gradient(to bottom, lighten($theme-color, 25%) 0%, lighten($theme-color, 10%) 100%)
 					outline none
-					border solid 1px lighten($theme-color, 15%)
 					border-radius 4px
 					box-shadow none
-
-					&:not(:disabled)
-						font-weight bold
-
-					&:hover:not(:disabled)
-						background linear-gradient(to bottom, lighten($theme-color, 8%) 0%, darken($theme-color, 8%) 100%)
-						border-color $theme-color
-
-					&:active:not(:disabled)
-						background $theme-color
-						border-color $theme-color
 
 					&:focus
 						&:after
@@ -124,6 +111,37 @@ style.
 					&:disabled
 						opacity 0.7
 						cursor default
+
+				.ok
+					right 16px
+					color $theme-color-foreground
+					background linear-gradient(to bottom, lighten($theme-color, 25%) 0%, lighten($theme-color, 10%) 100%)
+					border solid 1px lighten($theme-color, 15%)
+
+					&:not(:disabled)
+						font-weight bold
+
+					&:hover:not(:disabled)
+						background linear-gradient(to bottom, lighten($theme-color, 8%) 0%, darken($theme-color, 8%) 100%)
+						border-color $theme-color
+
+					&:active:not(:disabled)
+						background $theme-color
+						border-color $theme-color
+
+				.cancel
+					right 148px
+					color #888
+					background linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%)
+					border solid 1px #e2e2e2
+
+					&:hover
+						background linear-gradient(to bottom, #f9f9f9 0%, #ececec 100%)
+						border-color #dcdcdc
+
+					&:active
+						background #ececec
+						border-color #dcdcdc
 
 script.
 	@file = []

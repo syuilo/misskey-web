@@ -49,6 +49,7 @@ style.
 							right -5px
 							bottom -5px
 							left -5px
+							border 2px solid rgba($theme-color, 0.3)
 							border-radius 8px
 
 				> .cancel
@@ -65,10 +66,6 @@ style.
 						background #ececec
 						border-color #dcdcdc
 
-					&:focus
-						&:after
-							border 2px solid rgba($theme-color, 0.3)
-
 				> .ok
 					right 16px
 					font-weight bold
@@ -83,10 +80,6 @@ style.
 					&:active
 						background $theme-color
 						border-color $theme-color
-
-					&:focus
-						&:after
-							border 2px solid rgba($theme-color, 0.3)
 
 script.
 	@wait = false
