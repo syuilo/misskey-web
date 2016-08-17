@@ -1,9 +1,11 @@
 require '../../base.ls'
 
 riot = require 'riot'
+require '../../tags/contextmenu.tag'
 require '../../tags/window.tag'
 require '../../tags/follow-button.tag'
 require '../../tags/uploader.tag'
+require '../../tags/drive-browser-base-contextmenu.tag'
 require '../../tags/drive-browser.tag'
 require '../../tags/select-file-from-drive-window.tag'
 require '../../tags/post.tag'

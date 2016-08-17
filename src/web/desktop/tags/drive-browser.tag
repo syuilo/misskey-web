@@ -12,7 +12,7 @@ mk-drive-browser
 			li.folder(if={ folder != null })
 				| { folder.name }
 		input.search(type='search', placeholder!='&#xf002; 検索')
-	div.main(class={ uploading: uploads.length > 0 })
+	div.main@main(class={ uploading: uploads.length > 0 })
 		virtual(each={ folder in folders })
 			div.folder
 				p { folder.name }
@@ -104,6 +104,7 @@ style.
 				color $ui-controll-foreground-color
 
 	> .main
+		position relative
 		box-sizing border-box
 		padding 8px
 		height calc(100% - 38px)
@@ -191,6 +192,16 @@ script.
 	@uploader-controller = riot.observable!
 
 	@on \mount ~>
+		@main.add-event-listener \contextmenu (e) ~>
+			e.prevent-default!
+			ctx = document.body.append-child document.create-element \mk-drive-browser-base-contextmenu
+			ctx-controller = riot.observable!
+			riot.mount ctx, do
+				controller: ctx-controller
+				browser-controller: @controller
+			ctx-controller.trigger \open do
+				x: e.page-x
+				y: e.page-y
 		@load!
 
 	@controller.on \upload ~>
