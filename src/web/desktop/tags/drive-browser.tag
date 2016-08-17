@@ -15,9 +15,9 @@ mk-drive-browser
 	div.main@main(class={ uploading: uploads.length > 0, loading: loading }, oncontextmenu={ oncontextmenu })
 		div.folders
 			virtual(each={ folder in folders })
-				div.folder(onclick={ folder._click }, title={ folder._title })
+				div.folder(onclick={ folder._click }, onmouseover={ folder._onmouseover }, onmouseout={ folder._onmouseout }, title={ folder._title })
 					p.name
-						i.fa.fa-folder-o
+						i.fa.fa-fw(class={ fa-folder-o: !folder._hover, fa-folder-open-o: folder._hover })
 						| { folder.name }
 		div.files(if={ files.length > 0 })
 			virtual(each={ file in files })
@@ -182,6 +182,8 @@ style.
 
 					> i
 						margin-right 4px
+					  margin-left 2px
+						text-align left
 
 		> .files
 			&:after
@@ -407,9 +409,18 @@ script.
 
 	@add-folder = (folder, unshift = false) ~>
 		folder._title = folder.name
+		folder._hover = false
 
 		folder._click = ~>
 			@move folder.id
+
+		folder._onmouseover = ~>
+			folder._hover = true
+			@update!
+
+		folder._onmouseout = ~>
+			folder._hover = false
+			@update!
 
 		if unshift
 			@folders.unshift folder

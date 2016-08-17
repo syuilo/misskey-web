@@ -114,12 +114,6 @@ gulp.task('copy:bower_components', () => {
 gulp.task('build:scripts', done => {
 	gutil.log('フロントサイドスクリプトを構築します...');
 
-	function camelCase(str) {
-		return str.replace(/-([^\s])/g, (match, group1) => {
-			return group1.toUpperCase();
-		});
-	}
-
 	const config = require('./src/config.ts').default;
 
 	glob('./src/web/**/*.ls', (err, files) => {
@@ -195,6 +189,12 @@ gulp.task('build:scripts', done => {
 						function through() {
 							dist += line + '\n';
 						}
+
+						function camelCase(str) {
+							return str.replace(/-([^\s])/g, (match, group1) => {
+								return group1.toUpperCase();
+							});
+						}
 					});
 					return dist;
 				}))
@@ -219,6 +219,18 @@ gulp.task('build:scripts', done => {
 
 						function through() {
 							dist += line + '\n';
+						}
+
+						function camelCase(str) {
+							str = str.replace(/([a-z\-]+):/g, (match, group1) => {
+								return group1.replace(/\-/g, '###') + ':';
+							});
+							str = str.replace(/-([^\s])/g, (match, group1) => {
+								return group1.toUpperCase();
+							});
+							str = str.replace(/###/g, '-');
+
+							return str;
 						}
 					});
 					return dist;
