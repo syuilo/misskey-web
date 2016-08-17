@@ -3,12 +3,14 @@ mk-select-file-from-drive-window
 		<yield to="header">
 		i.fa.fa-file-o
 		| ファイルを選択
+		span.count(if={ parent.multiple && parent.file.length > 0 }) ({ parent.file.length }ファイル選択中)
 		</yield>
 		<yield to="content">
 		// Note: Riot3.0.0にしたら xmultiple を multiple に変更 (2.xでは、真理値属性と判定され__がプレフィックスされてしまう)
 		mk-drive-browser(controller={ parent.browser-controller }, xmultiple={ parent.multiple })
 		div
-			button.ok(onclick={ parent.ok }) 決定
+			button.upload(title='PCからドライブにファイルをアップロード', onclick={ parent.upload }): i.fa.fa-upload
+			button.ok(disabled={ parent.multiple && parent.file.length == 0 }, onclick={ parent.ok }) 決定
 		</yield>
 
 style.
@@ -17,31 +19,50 @@ style.
 			> i
 				margin-right 4px
 
+			.count
+				margin-left 8px
+				opacity 0.7
+
 		[data-yield='content']
 			> mk-drive-browser
 				height calc(100% - 72px)
 
 			> div
+				position relative
 				height 72px
 				background lighten($theme-color, 95%)
 
-				button
+				.upload
 					-webkit-appearance none
 					-moz-appearance none
 					appearance none
-					display block
+					display inline-block
 					position absolute
-					bottom 16px
+					top 8px
+					left 16px
 					cursor pointer
 					box-sizing border-box
 					padding 0
-					margin 0
-					width 120px
+					margin 8px 4px 0 0
+					width 40px
 					height 40px
 					font-size 1em
+					color rgba($theme-color, 0.5)
+					background transparent
 					outline none
+					border solid 1px transparent
 					border-radius 4px
 					box-shadow none
+
+					&:hover
+						background transparent
+						border-color rgba($theme-color, 0.3)
+
+					&:active
+						color rgba($theme-color, 0.6)
+						background transparent
+						border-color rgba($theme-color, 0.5)
+						box-shadow 0 2px 4px rgba(darken($theme-color, 50%), 0.15) inset
 
 					&:focus
 						&:after
@@ -52,44 +73,57 @@ style.
 							right -5px
 							bottom -5px
 							left -5px
+							border 2px solid rgba($theme-color, 0.3)
 							border-radius 8px
 
-				> .cancel
-					right 148px
-					color #888
-					background linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%)
-					border solid 1px #e2e2e2
-
-					&:hover
-						background linear-gradient(to bottom, #f9f9f9 0%, #ececec 100%)
-						border-color #dcdcdc
-
-					&:active
-						background #ececec
-						border-color #dcdcdc
-
-					&:focus
-						&:after
-							border 2px solid rgba($theme-color, 0.3)
-
-				> .ok
+				.ok
+					-webkit-appearance none
+					-moz-appearance none
+					appearance none
+					display block
+					position absolute
+					bottom 16px
 					right 16px
-					font-weight bold
+					cursor pointer
+					box-sizing border-box
+					padding 0
+					margin 0
+					width 110px
+					height 40px
+					font-size 1em
 					color $theme-color-foreground
 					background linear-gradient(to bottom, lighten($theme-color, 25%) 0%, lighten($theme-color, 10%) 100%)
+					outline none
 					border solid 1px lighten($theme-color, 15%)
+					border-radius 4px
+					box-shadow none
 
-					&:hover
+					&:not(:disabled)
+						font-weight bold
+
+					&:hover:not(:disabled)
 						background linear-gradient(to bottom, lighten($theme-color, 8%) 0%, darken($theme-color, 8%) 100%)
 						border-color $theme-color
 
-					&:active
+					&:active:not(:disabled)
 						background $theme-color
 						border-color $theme-color
 
 					&:focus
 						&:after
+							content ""
+							pointer-events none
+							position absolute
+							top -5px
+							right -5px
+							bottom -5px
+							left -5px
 							border 2px solid rgba($theme-color, 0.3)
+							border-radius 8px
+
+					&:disabled
+						opacity 0.7
+						cursor default
 
 script.
 	@file = []
@@ -112,9 +146,13 @@ script.
 
 	@browser-controller.on \change-selection (files) ~>
 		@file = files
+		@update!
+
+	@upload = ~>
+		@browser-controller.trigger \upload
 
 	@cancel = ~>
-		@opts.controller.trigger \close
+		@controller.trigger \close
 
 	@ok = ~>
 		@controller.trigger \selected @file

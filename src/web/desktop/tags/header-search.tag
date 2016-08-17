@@ -35,7 +35,7 @@ style.
 			border-radius 0
 			box-shadow none
 			transition color 0.5s ease, border 0.5s ease
-			font-family FontAwesome, 'Helvetica','Arial','Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3','Meiryo UI','Meiryo, メイリオ','sans-serif'
+			font-family FontAwesome, 'Meiryo UI', 'Meiryo', 'メイリオ', sans-serif
 
 			&[data-active='true']
 				background #fff

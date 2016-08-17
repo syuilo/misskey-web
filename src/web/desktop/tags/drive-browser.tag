@@ -1,6 +1,6 @@
 mk-drive-browser
 	nav
-		ol
+		ol.path
 			li.root(class={ current: folder == null })
 				i.fa.fa-cloud
 				| ドライブ
@@ -11,6 +11,7 @@ mk-drive-browser
 			li.separator(if={ folder != null }): i.fa.fa-angle-right
 			li.folder(if={ folder != null })
 				| { folder.name }
+		input.search(type='search', placeholder!='&#xf002; 検索')
 	div.main
 		virtual(each={ folder in folders })
 			div.folder
@@ -21,6 +22,7 @@ mk-drive-browser
 				p.name
 					| { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
 					span.ext(if={ file.name.lastIndexOf('.') != -1 }) { file.name.substr(file.name.lastIndexOf('.')) }
+	input@file-input(type='file', accept='*/*', multiple, tabindex='-1', onchange={ change-file-input })
 
 style.
 	display block
@@ -29,7 +31,6 @@ style.
 		display block
 		position relative
 		box-sizing border-box
-		padding 0 12px
 		width 100%
 		overflow auto
 		font-size 0.9em
@@ -38,10 +39,13 @@ style.
 		//border-bottom 1px solid #dfdfdf
 		box-shadow 0 1px 0 rgba(0, 0, 0, 0.05)
 
-		> ol
-			display block
+		> .path
+			display inline-block
+			vertical-align bottom
+			box-sizing border-box
 			margin 0
-			padding 0
+			padding 0 16px
+			width calc(100% - 200px)
 			line-height 38px
 			list-style none
 			white-space nowrap
@@ -63,6 +67,40 @@ style.
 
 					> i
 						margin 0
+
+		> .search
+			display inline-block
+			vertical-align bottom
+			-webkit-appearance none
+			-moz-appearance none
+			appearance none
+			user-select text
+			-moz-user-select text
+			-webkit-user-select text
+			-ms-user-select text
+			cursor auto
+			box-sizing border-box
+			margin 0
+			padding 0 18px
+			width 200px
+			font-size 1em
+			line-height 38px
+			background transparent
+			outline none
+			//border solid 1px #ddd
+			border none
+			border-radius 0
+			box-shadow none
+			transition color 0.5s ease, border 0.5s ease
+			font-family FontAwesome, 'Meiryo UI', 'Meiryo', 'メイリオ', sans-serif
+
+			&[data-active='true']
+				background #fff
+
+			&::-webkit-input-placeholder,
+			&:-ms-input-placeholder,
+			&:-moz-placeholder
+				color $ui-controll-foreground-color
 
 	> .main
 		box-sizing border-box
@@ -124,6 +162,9 @@ style.
 				> .ext
 					opacity 0.5
 
+	> input
+		display none
+
 script.
 	@files = []
 	@folders = []
@@ -138,6 +179,19 @@ script.
 
 	@on \mount ~>
 		@load!
+
+	@controller.on \upload ~>
+		@file-input.click!
+
+	@change-file-input = ~>
+		files = @file-input.files
+		for i from 0 to files.length - 1
+			file = files.item i
+			@upload file
+
+	@upload = (file) ~>
+		id = Math.random!
+		# todo
 
 	@get-selection = ~>
 		@files.filter (file) -> file._selected

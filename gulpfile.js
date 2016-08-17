@@ -114,6 +114,12 @@ gulp.task('copy:bower_components', () => {
 gulp.task('build:scripts', done => {
 	gutil.log('フロントサイドスクリプトを構築します...');
 
+	function camelCase(str) {
+		return str.replace(/-([^\s])/g, (match, group1) => {
+			return group1.toUpperCase();
+		});
+	}
+
 	const config = require('./src/config.ts').default;
 
 	glob('./src/web/**/*.ls', (err, files) => {
@@ -175,9 +181,9 @@ gulp.task('build:scripts', done => {
 									const match = line.match(/@[a-z-]+/);
 									let name = match[0];
 									if (line[line.indexOf(name) + name.length] === '(') {
-										line = line.replace(name + '(', '(name=\'' + name.substr(1) + '\',');
+										line = line.replace(name + '(', '(name=\'' + camelCase(name.substr(1)) + '\',');
 									} else {
-										line = line.replace(name, '(name=\'' + name.substr(1) + '\')');
+										line = line.replace(name, '(name=\'' + camelCase(name.substr(1)) + '\')');
 									}
 								}
 								dist += line + '\n';
@@ -216,12 +222,6 @@ gulp.task('build:scripts', done => {
 						}
 					});
 					return dist;
-
-					function camelCase(str) {
-						return str.replace(/-([^\s])/g, (match, group1) => {
-							return group1.toUpperCase();
-						});
-					}
 				}))
 				// tagのstyleの定数
 				.transform(transformify((source, file) => {
