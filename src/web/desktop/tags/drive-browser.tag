@@ -247,7 +247,8 @@ script.
 			folder: if @folder? then @folder.id else null
 			limit: 30
 		.then (files) ~>
-			files.for-each @add-file
+			files.for-each (file) ~>
+				@add-file file
 			@update!
 		.catch (err, text-status) ->
 			console.error err
