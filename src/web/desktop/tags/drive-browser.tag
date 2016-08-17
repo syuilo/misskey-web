@@ -325,8 +325,8 @@ script.
 				controller: ctx-controller
 				browser-controller: @controller
 			ctx-controller.trigger \open do
-				x: e.page-x
-				y: e.page-y
+				x: e.page-x - window.page-x-offset
+				y: e.page-y - window.page-y-offset
 		@load!
 
 	@controller.on \upload ~>
