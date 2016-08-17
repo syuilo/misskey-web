@@ -17,6 +17,7 @@ script.
 		@ctx-controller.trigger \open pos
 
 	@ctx-controller.on \closed ~>
+		@controller.trigger \closed
 		@unmount!
 
 	@create-folder = ~>

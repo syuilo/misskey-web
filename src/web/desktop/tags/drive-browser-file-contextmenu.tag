@@ -1,9 +1,16 @@
 mk-drive-browser-file-contextmenu
 	mk-contextmenu(controller={ ctx-controller })
 		ul
+			li(onclick={ parent.rename }): p
+				i.fa.fa-i-cursor
+				| 名前を変更
 			li: a(href={ parent.file.url + '?download' }, download={ parent.file.name }, onclick={ parent.download })
 				i.fa.fa-download
 				| ダウンロード
+		ul
+			li(onclick={ parent.delete }): p
+				i.fa.fa-trash-o
+				| 削除
 		ul
 			li(onclick={ parent.create-folder }): p
 				i.fa.fa-folder-o
@@ -22,6 +29,7 @@ script.
 		@ctx-controller.trigger \open pos
 
 	@ctx-controller.on \closed ~>
+		@controller.trigger \closed
 		@unmount!
 
 	@download = ~>

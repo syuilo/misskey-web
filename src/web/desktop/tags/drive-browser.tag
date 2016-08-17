@@ -21,7 +21,7 @@ mk-drive-browser
 						| { folder.name }
 		div.files(if={ files.length > 0 })
 			virtual(each={ file in files })
-				div.file(class={ selected: file._selected }, onclick={ file._click }, oncontextmenu={ file._contextmenu }, title={ file._title })
+				div.file(class={ selected: file._selected, contextmenu: file._contextmenuing }, onclick={ file._click }, oncontextmenu={ file._contextmenu }, title={ file._title })
 					img(src={ file.url + '?thumbnail&size=128' }, alt='')
 					p.name
 						| { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
@@ -209,6 +209,9 @@ style.
 				&.selected
 					background $theme-color
 
+					&.contextmenu
+						outline solid 1px darken($theme-color, 10%)
+
 					&:hover
 						background lighten($theme-color, 10%)
 
@@ -217,6 +220,9 @@ style.
 
 					> .name
 						color $theme-color-foreground
+
+				&.contextmenu
+					outline solid 1px $theme-color
 
 				> img
 					display block
@@ -433,6 +439,8 @@ script.
 
 		file._contextmenu = (e) ~>
 			e.stop-immediate-propagation!
+			file._contextmenuing = true
+			@update!
 			ctx = document.body.append-child document.create-element \mk-drive-browser-file-contextmenu
 			ctx-controller = riot.observable!
 			riot.mount ctx, do
@@ -442,6 +450,9 @@ script.
 			ctx-controller.trigger \open do
 				x: e.page-x - window.page-x-offset
 				y: e.page-y - window.page-y-offset
+			ctx-controller.on \closed ~>
+				file._contextmenuing = false
+				@update!
 			return false
 
 		if unshift
