@@ -1,11 +1,15 @@
 mk-user-recommendation-home-widget
 	div.user(each={ user in users })
-		p { user.name }
+		p.name { user.name }
+		p.username { user.username }
 		mk-follow-button(user={ user })
 
 style.
 	display block
 	background #fff
+
+	> .user
+		border-bottom solid 1px #eee
 
 script.
 	@users = null
