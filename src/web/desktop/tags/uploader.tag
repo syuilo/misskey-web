@@ -158,7 +158,7 @@ script.
 
 	@controller = @opts.controller
 
-	@controller.on \upload (file) ~>
+	@controller.on \upload (file, folder) ~>
 		id = Math.random!
 
 		ctx =
@@ -179,6 +179,9 @@ script.
 		data = new FormData!
 		data.append \_i USER._web
 		data.append \file file
+
+		if folder?
+			data.append \folder folder
 
 		xhr = new XMLHttpRequest!
 		xhr.open \POST CONFIG.api.url + '/drive/files/create' true

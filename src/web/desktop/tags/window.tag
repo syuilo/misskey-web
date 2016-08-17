@@ -9,6 +9,8 @@ mk-window(class={ flexible: opts.height == null })
 			| <yield from="content"/>
 
 style.
+	display block
+
 	> .bg
 		display block
 		position fixed
@@ -43,6 +45,12 @@ style.
 			background-clip padding-box
 			//border-bottom solid 1px rgba($theme-color, 0.1)
 			box-shadow 0 1px 0 rgba($theme-color, 0.1)
+
+			&, *
+				-ms-user-select none
+				-moz-user-select none
+				-webkit-user-select none
+				user-select none
 
 			> h1
 				pointer-events none
@@ -106,6 +114,9 @@ script.
 		@main.style.width = @opts.width || \530px
 		@main.style.height = @opts.height || \auto
 
+		@main.style.top = \15%
+		@main.style.left = (window.inner-width / 2) - (@main.offset-width / 2) + \px
+
 		window.add-event-listener \resize ~>
 			position = @main.get-bounding-client-rect!
 			browser-width = window.inner-width
@@ -143,9 +154,6 @@ script.
 	@open = ~>
 		@is-open = true
 		@controller.trigger \opening
-
-		@main.style.top = \15%
-		@main.style.left = (window.inner-width / 2) - (@main.offset-width / 2) + \px
 
 		if @is-modal
 			if !@is-child

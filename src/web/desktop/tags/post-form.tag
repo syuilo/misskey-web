@@ -136,7 +136,7 @@ style.
 		border solid 1px rgba($theme-color, 0.1)
 		border-radius 4px
 		transition border-color .3s ease
-		font-family 'Meiryo', 'メイリオ', 'Meiryo UI', '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', sans-serif
+		font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
 
 		&:hover
 			border-color rgba($theme-color, 0.2)
