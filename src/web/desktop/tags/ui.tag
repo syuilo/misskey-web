@@ -13,6 +13,7 @@ style.
 	display block
 
 script.
+	# ↓ CSS backdrop-filter が広く実装され次第廃止(主にChrome待ち)
 	@ui = riot.observable!
 	riot.mixin \ui do
 		ui: @ui
