@@ -76,7 +76,7 @@ script.
 
 	@open = (pos) ~>
 		all = document.query-selector-all 'body *'
-		all.for-each (el) ~>
+		Array.prototype.for-each.call all, (el) ~>
 			el.add-event-listener \mousedown @mousedown
 		@root.style.display = \block
 		@root.style.left = pos.x + \px
@@ -84,7 +84,7 @@ script.
 
 	@close = ~>
 		all = document.query-selector-all 'body *'
-		all.for-each (el) ~>
+		Array.prototype.for-each.call all, (el) ~>
 			el.remove-event-listener \mousedown @mousedown
 		@controller.trigger \closed
 		@unmount!
