@@ -22,6 +22,12 @@ script.
 	@ui.on \toggle-post-form ~>
 		@post-form-controller.trigger \toggle
 
+	@post-form-controller.on \opening ~>
+		@ui.trigger \blur 100ms
+
+	@post-form-controller.on \closing ~>
+		@ui.trigger \unblur 300ms
+
 	@ui.on \blur (duration = 100ms) ~>
 		Velocity @global, \finish true
 		Velocity @global, { blur: 5 } duration

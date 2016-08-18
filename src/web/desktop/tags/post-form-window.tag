@@ -51,8 +51,13 @@ script.
 	@controller.on \close ~>
 		@close!
 
+	@window-controller.on \opening ~>
+		@is-open = true
+		@controller.trigger \opening
+
 	@window-controller.on \closing ~>
 		@is-open = false
+		@controller.trigger \closing
 
 	@form-controller.on \post ~>
 		@close!
@@ -72,10 +77,8 @@ script.
 			@open!
 
 	@open = ~>
-		@is-open = true
 		@window-controller.trigger \open
 		@form-controller.trigger \focus
 
 	@close = ~>
-		@is-open = false
 		@window-controller.trigger \close
