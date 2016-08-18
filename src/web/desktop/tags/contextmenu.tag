@@ -46,9 +46,14 @@ style.
 					margin-left -28px
 					text-align center
 
-				&:hover, &:active
+				&:hover
 					text-decoration none
 					background $theme-color
+					color $theme-color-foreground
+
+				&:active
+					text-decoration none
+					background darken($theme-color, 10%)
 					color $theme-color-foreground
 
 script.

@@ -16,7 +16,7 @@ mk-drive-browser
 		div.selection@selection
 		div.folders
 			virtual(each={ folder in folders })
-				div.folder(onclick={ folder._click }, onmouseover={ folder._onmouseover }, onmouseout={ folder._onmouseout }, title={ folder._title })
+				div.folder(class={ contextmenu: folder._contextmenuing }, onclick={ folder._click }, onmouseover={ folder._onmouseover }, onmouseout={ folder._onmouseout }, oncontextmenu={ folder._contextmenu }, title={ folder._title })
 					p.name
 						i.fa.fa-fw(class={ fa-folder-o: !folder._hover, fa-folder-open-o: folder._hover })
 						| { folder.name }
@@ -187,6 +187,9 @@ style.
 				&:active
 					background lighten($theme-color, 85%)
 
+				&.contextmenu
+					outline solid 1px $theme-color
+
 				> .name
 					margin 0
 					font-size 0.9em
@@ -337,7 +340,10 @@ script.
 	@uploader-controller = riot.observable!
 
 	@on \mount ~>
-		@load!
+		if @opts.folder?
+			@move @opts.folder
+		else
+			@load!
 
 	@onmousedown = (e) ~>
 		rect = @main.get-bounding-client-rect!
@@ -391,6 +397,12 @@ script.
 	@controller.on \upload ~>
 		@file-input.click!
 
+	@controller.on \move (folder) ~>
+		@move folder
+
+	@controller.on \new-window (folder) ~>
+		@new-window folder
+
 	@controller.on \create-folder ~>
 		@input-dialog do
 			'フォルダー作成'
@@ -429,6 +441,15 @@ script.
 
 	@get-selection = ~>
 		@files.filter (file) -> file._selected
+
+	@new-window = (folder-id) ~>
+		browser = document.body.append-child document.create-element \mk-drive-browser-window
+		browser-controller = riot.observable!
+		riot.mount browser, do
+			is-child: true
+			controller: browser-controller
+			folder: folder-id
+		browser-controller.trigger \open
 
 	@move = (folder-id) ~>
 		if folder-id == null
@@ -470,6 +491,24 @@ script.
 		folder._onmouseout = ~>
 			folder._hover = false
 			@update!
+
+		folder._contextmenu = (e) ~>
+			e.stop-immediate-propagation!
+			folder._contextmenuing = true
+			@update!
+			ctx = document.body.append-child document.create-element \mk-drive-browser-folder-contextmenu
+			ctx-controller = riot.observable!
+			riot.mount ctx, do
+				controller: ctx-controller
+				browser-controller: @controller
+				folder: folder
+			ctx-controller.trigger \open do
+				x: e.page-x - window.page-x-offset
+				y: e.page-y - window.page-y-offset
+			ctx-controller.on \closed ~>
+				folder._contextmenuing = false
+				@update!
+			return false
 
 		if unshift
 			@folders.unshift folder
