@@ -160,8 +160,14 @@ style.
 			user-select none
 
 		&.loading
-			&, *
-				cursor wait !important
+			cursor wait !important
+
+			*
+				pointer-events none
+
+			> .folders
+			> .files
+				opacity 0.5
 
 		&.uploading
 			height calc(100% - 38px - 100px)
