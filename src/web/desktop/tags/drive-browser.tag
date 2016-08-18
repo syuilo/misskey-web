@@ -12,7 +12,8 @@ mk-drive-browser
 			li.folder.current(if={ folder != null })
 				| { folder.name }
 		input.search(type='search', placeholder!='&#xf002; 検索')
-	div.main@main(class={ uploading: uploads.length > 0, loading: loading }, oncontextmenu={ oncontextmenu })
+	div.main@main(class={ uploading: uploads.length > 0, loading: loading }, onmousedown={ onmousedown }, oncontextmenu={ oncontextmenu })
+		div.selection@selection
 		div.folders
 			virtual(each={ folder in folders })
 				div.folder(onclick={ folder._click }, onmouseover={ folder._onmouseover }, onmouseout={ folder._onmouseout }, title={ folder._title })
@@ -42,7 +43,7 @@ style.
 	> nav
 		display block
 		position relative
-		z-index 1
+		z-index 2
 		box-sizing border-box
 		width 100%
 		overflow auto
@@ -149,6 +150,17 @@ style.
 
 		&.uploading
 			height calc(100% - 38px - 100px)
+
+		> .selection
+			display none
+			box-sizing border-box
+			position absolute
+			top 0
+			left 0
+			z-index 1
+			border solid 1px $theme-color
+			background rgba($theme-color, 0.5)
+			pointer-events none
 
 		> .folders
 			&:after
@@ -326,6 +338,43 @@ script.
 
 	@on \mount ~>
 		@load!
+
+	@onmousedown = (e) ~>
+		rect = @main.get-bounding-client-rect!
+
+		left = e.page-x + @main.scroll-left - rect.left - window.page-x-offset
+		top = e.page-y + @main.scroll-top - rect.top - window.page-y-offset
+
+		move = (e) ~>
+			@selection.style.display = \block
+
+			cursor-x = e.page-x + @main.scroll-left - rect.left - window.page-x-offset
+			cursor-y = e.page-y + @main.scroll-top - rect.top - window.page-y-offset
+			w = cursor-x - left
+			h = cursor-y - top
+
+			if w > 0
+				@selection.style.width = w + \px
+				@selection.style.left = left + \px
+			else
+				@selection.style.width = -w + \px
+				@selection.style.left = cursor-x + \px
+
+			if h > 0
+				@selection.style.height = h + \px
+				@selection.style.top = top + \px
+			else
+				@selection.style.height = -h + \px
+				@selection.style.top = cursor-y + \px
+
+		up = (e) ~>
+			document.document-element.remove-event-listener \mousemove move
+			document.document-element.remove-event-listener \mouseup up
+
+			@selection.style.display = \none
+
+		document.document-element.add-event-listener \mousemove move
+		document.document-element.add-event-listener \mouseup up
 
 	@oncontextmenu = (e) ~>
 		e.stop-immediate-propagation!
