@@ -1,4 +1,4 @@
-mk-window(class={ flexible: opts.height == null })
+mk-window(class={ flexible: opts.height == null }, ondragover={ ondragover })
 	div.bg@bg(show={ is-modal }, onclick={ bg-click })
 	div.main@main
 		header@header(onmousedown={ on-header-mousedown })
@@ -262,3 +262,6 @@ script.
 		window.add-event-listener \mouseup clear
 		window.add-event-listener \dragstart clear
 		window.add-event-listener \dragend clear
+
+	@ondragover = (e) ~>
+		e.data-transfer.drop-effect = \none

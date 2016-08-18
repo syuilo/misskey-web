@@ -12,7 +12,7 @@ mk-drive-browser
 			li.folder.current(if={ folder != null })
 				| { folder.name }
 		input.search(type='search', placeholder!='&#xf002; 検索')
-	div.main@main(class={ uploading: uploads.length > 0, loading: loading }, onmousedown={ onmousedown }, oncontextmenu={ oncontextmenu })
+	div.main@main(class={ uploading: uploads.length > 0, loading: loading }, onmousedown={ onmousedown }, ondragover={ ondragover }, ondragenter={ ondragenter }, ondragleave={ ondragleave }, ondrop={ ondrop }, oncontextmenu={ oncontextmenu })
 		div.selection@selection
 		div.folders@folders-container
 			virtual(each={ folder in folders })
@@ -27,8 +27,15 @@ mk-drive-browser
 					p.name
 						| { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
 						span.ext(if={ file.name.lastIndexOf('.') != -1 }) { file.name.substr(file.name.lastIndexOf('.')) }
-		div.no-files(if={ files.length == 0 && folders.length == 0 && !loading })
-			p ファイルはありません。
+		div.empty(if={ files.length == 0 && folders.length == 0 && !loading })
+			p(if={ draghover })
+				| ドロップですか？いいですよ、ボクはカワイイですからね
+			p(if={ !draghover && folder == null })
+				strong ドライブには何もありません。
+				br
+				| 右クリックして「ファイルをアップロード」を選んだり、ファイルをドラッグ&ドロップすることでもアップロードできます。
+			p(if={ !draghover && folder != null })
+				| このフォルダーは空です
 		div.loading(if={ loading }).
 			<div class="spinner">
 				<div class="dot1"></div>
@@ -64,16 +71,17 @@ style.
 			vertical-align bottom
 			box-sizing border-box
 			margin 0
-			padding 0 16px
+			padding 0 8px
 			width calc(100% - 200px)
 			line-height 38px
 			list-style none
 			white-space nowrap
 
 			> li
-				display inline
+				display inline-block
 				margin 0
-				padding 0
+				padding 0 8px
+				line-height 38px
 				cursor pointer
 
 				i
@@ -96,7 +104,8 @@ style.
 						text-decoration none
 
 				&.separator
-					margin 0 8px
+					margin 0
+					padding 0
 					opacity 0.5
 					cursor default
 
@@ -288,10 +297,11 @@ style.
 					> .ext
 						opacity 0.5
 
-		> .no-files
+		> .empty
 			padding 16px
 			text-align center
 			color #999
+			pointer-events none
 
 			> p
 				margin 0
@@ -479,7 +489,7 @@ script.
 			(name) ~>
 				api 'drive/folders/create' do
 					name: name
-					folder: if @folder? then @folder.id else null
+					folder: if @folder? then @folder.id else undefined
 				.then (folder) ~>
 					@add-folder folder, true
 					@update!
@@ -490,13 +500,15 @@ script.
 		files = @file-input.files
 		for i from 0 to files.length - 1
 			file = files.item i
-			@upload file
+			@upload file, @folder
 
-	@upload = (file) ~>
+	@upload = (file, folder) ~>
+		if folder? and typeof folder == \object
+			folder = folder.id
 		@uploader-controller.trigger do
 			\upload
 			file
-			if @folder == null then null else @folder.id
+			folder
 
 	@uploader-controller.on \uploaded (file) ~>
 		@add-file file, true
@@ -641,7 +653,7 @@ script.
 
 		file._ondragstart = (e) ~>
 			e.data-transfer.effect-allowed = \move
-			e.data-transfer.set-data 'text/plain' file.id
+			e.data-transfer.set-data 'text' file.id
 			file._dragging = true
 
 		file._ondragend = (e) ~>
@@ -654,10 +666,44 @@ script.
 
 		@update!
 
+	@ondragover = (e) ~>
+		# ドラッグされてきたものがファイルだったら
+		if e.data-transfer.effect-allowed == \all
+			e.stop-propagation!
+			e.data-transfer.drop-effect = \copy
+			return false
+		else
+			e.data-transfer.drop-effect = \none
+
+	@ondragenter = (e) ~>
+		# ドラッグされてきたものがファイルだったら
+		if e.data-transfer.effect-allowed == \all
+			@draghover = true
+
+	@ondragleave = (e) ~>
+		# ドラッグされてきたものがファイルだったら
+		if e.data-transfer.effect-allowed == \all
+			@draghover = false
+
+	@ondrop = (e) ~>
+		# ドラッグされてきたものがファイルだったら
+		if e.data-transfer.files.length > 0
+			e.stop-propagation!
+			@draghover = false
+
+			Array.prototype.for-each.call e.data-transfer.files, (file) ~>
+				@upload file, @folder
+
+			return false
+
 	@attach-drag-events-to-folder-context = (folder) ~>
 		folder._ondragover = (e) ~>
-			e.prevent-default!
-			e.data-transfer.drop-effect = \move
+			e.stop-propagation!
+			# ドラッグされてきたものがファイルだったら
+			if e.data-transfer.effect-allowed == \all
+				e.data-transfer.drop-effect = \copy
+			else
+				e.data-transfer.drop-effect = \move
 			return false
 
 		folder._ondragenter = ~>
@@ -669,16 +715,25 @@ script.
 		folder._ondrop = (e) ~>
 			e.stop-propagation!
 			folder._draghover = false
-			file = e.data-transfer.get-data 'text/plain'
-			@files = @files.filter (f) -> f.id != file
 
-			api 'drive/files/update' do
-				file: file
-				folder: folder.id
-			.then ~>
-				# something
-			.catch (err, text-status) ~>
-				console.error err
+			# ファイルだったら
+			if e.data-transfer.files.length > 0
+				Array.prototype.for-each.call e.data-transfer.files, (file) ~>
+					@upload file, folder
+			else
+				file = e.data-transfer.get-data 'text'
+				if !file?
+					return false
+
+				@files = @files.filter (f) -> f.id != file
+
+				api 'drive/files/update' do
+					file: file
+					folder: folder.id
+				.then ~>
+					# something
+				.catch (err, text-status) ~>
+					console.error err
 
 			return false
 
