@@ -4,7 +4,7 @@ window.api = (endpoint, data) ->
 	body = []
 
 	for k, v of data
-		if v? then body.push "#k=#v"
+		if v != undefined then body.push "#k=#v"
 
 	if SIGNIN
 		body.push "_i=#{USER._web}"
@@ -31,7 +31,7 @@ window.webapi = (endpoint, data) ->
 	body = ["_csrf=#{CSRF_TOKEN}"]
 
 	for k, v of data
-		if v? then body.push "#k=#v"
+		if v != undefined then body.push "#k=#v"
 
 	ep = if (endpoint.index-of '://') == -1
 		then "#{CONFIG.url}/_/api/#{endpoint}"

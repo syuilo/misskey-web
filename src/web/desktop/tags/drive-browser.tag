@@ -1,12 +1,12 @@
 mk-drive-browser
 	nav
-		ol.path
-			li.root(class={ current: folder == null }, onclick={ go-root })
+		ol.path(oncontextmenu={ path-oncontextmenu })
+			li.root(class={ current: folder == null, draghover: virtual-root-folder._draghover }, onclick={ go-root }, ondragover={ virtual-root-folder._ondragover }, ondragenter={ virtual-root-folder._ondragenter }, ondragleave={ virtual-root-folder._ondragleave }, ondrop={ virtual-root-folder._ondrop })
 				i.fa.fa-cloud
 				| ドライブ
 			virtual(each={ folder in hierarchy-folders })
 				li.separator: i.fa.fa-angle-right
-				li.folder(onclick={ folder._click })
+				li.folder(class={ contextmenu: folder._contextmenuing, draghover: folder._draghover }, onclick={ folder._click }, ondragover={ folder._ondragover }, ondragenter={ folder._ondragenter }, ondragleave={ folder._ondragleave }, ondrop={ folder._ondrop })
 					| { folder.name }
 			li.separator(if={ folder != null }): i.fa.fa-angle-right
 			li.folder.current(if={ folder != null })
@@ -14,15 +14,15 @@ mk-drive-browser
 		input.search(type='search', placeholder!='&#xf002; 検索')
 	div.main@main(class={ uploading: uploads.length > 0, loading: loading }, onmousedown={ onmousedown }, oncontextmenu={ oncontextmenu })
 		div.selection@selection
-		div.folders
+		div.folders@folders-container
 			virtual(each={ folder in folders })
-				div.folder(class={ contextmenu: folder._contextmenuing }, onclick={ folder._click }, onmouseover={ folder._onmouseover }, onmouseout={ folder._onmouseout }, oncontextmenu={ folder._contextmenu }, title={ folder._title })
+				div.folder(class={ contextmenu: folder._contextmenuing, draghover: folder._draghover }, onclick={ folder._click }, onmouseover={ folder._onmouseover }, onmouseout={ folder._onmouseout }, ondragover={ folder._ondragover }, ondragenter={ folder._ondragenter }, ondragleave={ folder._ondragleave }, ondrop={ folder._ondrop }, oncontextmenu={ folder._oncontextmenu }, title={ folder._title })
 					p.name
 						i.fa.fa-fw(class={ fa-folder-o: !folder._hover, fa-folder-open-o: folder._hover })
 						| { folder.name }
-		div.files(if={ files.length > 0 })
+		div.files@files-container(if={ files.length > 0 })
 			virtual(each={ file in files })
-				div.file(class={ selected: file._selected, contextmenu: file._contextmenuing }, onclick={ file._click }, oncontextmenu={ file._contextmenu }, title={ file._title })
+				div.file(class={ selected: file._selected, contextmenu: file._contextmenuing, dragging: file._dragging }, onclick={ file._click }, oncontextmenu={ file._oncontextmenu }, draggable='true', ondragstart={ file._ondragstart }, ondragend={ file._ondragend }, title={ file._title })
 					img(src={ file.url + '?thumbnail&size=128' }, alt='')
 					p.name
 						| { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
@@ -79,8 +79,14 @@ style.
 				i
 					margin-right 4px
 
+				*
+					pointer-events none
+
 				&:hover
 					text-decoration underline
+
+				&.draghover
+					background #eee
 
 				&.current
 					font-weight bold
@@ -169,6 +175,7 @@ style.
 				clear both
 
 			> .folder
+				position relative
 				float left
 				box-sizing border-box
 				margin 4px
@@ -181,6 +188,9 @@ style.
 				&, *
 					cursor pointer
 
+				*
+					pointer-events none
+
 				&:hover
 					background lighten($theme-color, 90%)
 
@@ -188,7 +198,20 @@ style.
 					background lighten($theme-color, 85%)
 
 				&.contextmenu
-					outline solid 1px $theme-color
+				&.draghover
+					&:after
+						content ""
+						pointer-events none
+						position absolute
+						top -4px
+						right -4px
+						bottom -4px
+						left -4px
+						border 2px dashed rgba($theme-color, 0.3)
+						border-radius 4px
+
+				&.draghover
+					background lighten($theme-color, 90%)
 
 				> .name
 					margin 0
@@ -207,12 +230,13 @@ style.
 				clear both
 
 			> .file
+				position relative
 				float left
 				margin 4px
 				padding 8px 0 0 0
 				width 144px
 				height 180px
-				overflow hidden
+				border-radius 4px
 
 				&, *
 					cursor pointer
@@ -226,9 +250,6 @@ style.
 				&.selected
 					background $theme-color
 
-					&.contextmenu
-						outline solid 1px darken($theme-color, 10%)
-
 					&:hover
 						background lighten($theme-color, 10%)
 
@@ -239,7 +260,16 @@ style.
 						color $theme-color-foreground
 
 				&.contextmenu
-					outline solid 1px $theme-color
+					&:after
+						content ""
+						pointer-events none
+						position absolute
+						top -4px
+						right -4px
+						bottom -4px
+						left -4px
+						border 2px dashed rgba($theme-color, 0.3)
+						border-radius 4px
 
 				> img
 					display block
@@ -253,6 +283,7 @@ style.
 					text-align center
 					word-break break-all
 					color #444
+					overflow hidden
 
 					> .ext
 						opacity 0.5
@@ -341,7 +372,13 @@ script.
 	@uploader-controller = riot.observable!
 
 	@on \mount ~>
+		@virtual-root-folder =
+			id: null
+
+		@attach-drag-events-to-folder-context @virtual-root-folder
+
 		@stream.on \drive_file_created @on-stream-drive-file-created
+		@stream.on \drive_file_updated @on-stream-drive-file-updated
 		@stream.on \drive_folder_created @on-stream-drive-folder-created
 
 		if @opts.folder?
@@ -351,15 +388,28 @@ script.
 
 	@on \unmount ~>
 		@stream.off \drive_file_created @on-stream-drive-file-created
+		@stream.off \drive_file_updated @on-stream-drive-file-updated
 		@stream.off \drive_folder_created @on-stream-drive-folder-created
 
 	@on-stream-drive-file-created = (file) ~>
 		@add-file file, true
 
+	@on-stream-drive-file-updated = (file) ~>
+		current = if @folder? then @folder.id else null
+		updated-file-parent = if file.folder? then file.folder else null
+		if current != updated-file-parent
+			@files = @files.filter (f) -> f.id != file.id
+			@update!
+		else
+			@add-file file, true
+
 	@on-stream-drive-folder-created = (folder) ~>
 		@add-folder folder, true
 
 	@onmousedown = (e) ~>
+		if (contains @folders-container, e.target) or (contains @files-container, e.target)
+			return true
+
 		rect = @main.get-bounding-client-rect!
 
 		left = e.page-x + @main.scroll-left - rect.left - window.page-x-offset
@@ -395,6 +445,10 @@ script.
 
 		document.document-element.add-event-listener \mousemove move
 		document.document-element.add-event-listener \mouseup up
+
+	@path-oncontextmenu = (e) ~>
+		e.stop-immediate-propagation!
+		return false
 
 	@oncontextmenu = (e) ~>
 		e.stop-immediate-propagation!
@@ -474,15 +528,18 @@ script.
 			.then (folder) ~>
 				@folder = folder
 				@hierarchy-folders = []
+
 				x = (f) ~>
 					f._click = ~>
 						@move f.id
+					@attach-drag-events-to-folder-context f
 					@hierarchy-folders.unshift f
 					if f.folder?
 						x f.folder
+
 				if folder.folder?
 					x folder.folder
-				console.log @hierarchy-folders
+
 				@update!
 				@load!
 			.catch (err, text-status) ->
@@ -491,7 +548,7 @@ script.
 	@add-folder = (folder, unshift = false) ~>
 		current = if @folder? then @folder.id else null
 		addee-parent = if folder.folder? then folder.folder else null
-		if (current != addee-parent)
+		if current != addee-parent
 			return
 
 		if (@folders.some (f) ~> f.id == folder.id)
@@ -505,13 +562,13 @@ script.
 
 		folder._onmouseover = ~>
 			folder._hover = true
-			@update!
 
 		folder._onmouseout = ~>
 			folder._hover = false
-			@update!
 
-		folder._contextmenu = (e) ~>
+		@attach-drag-events-to-folder-context folder
+
+		folder._oncontextmenu = (e) ~>
 			e.stop-immediate-propagation!
 			folder._contextmenuing = true
 			@update!
@@ -539,10 +596,11 @@ script.
 	@add-file = (file, unshift = false) ~>
 		current = if @folder? then @folder.id else null
 		addee-parent = if file.folder? then file.folder else null
-		if (current != addee-parent)
+		if current != addee-parent
 			return
 
 		if (@files.some (f) ~> f.id == file.id)
+			# TODO: ただreturnするのではなく情報を更新する
 			return
 
 		file._title = file.name + '\n' + file.type
@@ -563,7 +621,7 @@ script.
 					file._selected = true
 					@controller.trigger \change-selection @get-selection!
 
-		file._contextmenu = (e) ~>
+		file._oncontextmenu = (e) ~>
 			e.stop-immediate-propagation!
 			file._contextmenuing = true
 			@update!
@@ -581,12 +639,48 @@ script.
 				@update!
 			return false
 
+		file._ondragstart = (e) ~>
+			e.data-transfer.effect-allowed = \move
+			e.data-transfer.set-data 'text/plain' file.id
+			file._dragging = true
+
+		file._ondragend = (e) ~>
+			file._dragging = false
+
 		if unshift
 			@files.unshift file
 		else
 			@files.push file
 
 		@update!
+
+	@attach-drag-events-to-folder-context = (folder) ~>
+		folder._ondragover = (e) ~>
+			e.prevent-default!
+			e.data-transfer.drop-effect = \move
+			return false
+
+		folder._ondragenter = ~>
+			folder._draghover = true
+
+		folder._ondragleave = ~>
+			folder._draghover = false
+
+		folder._ondrop = (e) ~>
+			e.stop-propagation!
+			folder._draghover = false
+			file = e.data-transfer.get-data 'text/plain'
+			@files = @files.filter (f) -> f.id != file
+
+			api 'drive/files/update' do
+				file: file
+				folder: folder.id
+			.then ~>
+				# something
+			.catch (err, text-status) ~>
+				console.error err
+
+			return false
 
 	@go-root = ~>
 		if @folder != null
@@ -623,3 +717,11 @@ script.
 		.then ~>
 			@loading = false
 			@update!
+
+	function contains(parent, child)
+		node = child.parent-node
+		while (node != null)
+			if (node == parent)
+				return true
+			node = node.parent-node
+		return false
