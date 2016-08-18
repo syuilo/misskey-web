@@ -408,7 +408,6 @@ script.
 			'フォルダー作成'
 			'フォルダー名'
 			null
-			if @opts.is-in-window? then @opts.is-in-window else false
 			(name) ~>
 				api 'drive/folders/create' do
 					name: name
@@ -446,7 +445,6 @@ script.
 		browser = document.body.append-child document.create-element \mk-drive-browser-window
 		browser-controller = riot.observable!
 		riot.mount browser, do
-			is-child: true
 			controller: browser-controller
 			folder: folder-id
 		browser-controller.trigger \open

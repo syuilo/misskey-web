@@ -101,10 +101,7 @@ style.
 			height calc(100% - 40px)
 
 script.
-	@mixin \ui
-
 	@is-open = false
-	@is-child = if opts.is-child? then opts.is-child else false
 	@is-modal = if opts.is-modal? then opts.is-modal else false
 	@can-close = if opts.can-close? then opts.can-close else true
 
@@ -159,11 +156,6 @@ script.
 		@controller.trigger \opening
 
 		if @is-modal
-			if !@is-child
-				# TODO
-				#window.disable-scroll!
-				@ui.trigger \blur
-
 			@bg.style.pointer-events = \auto
 			Velocity @bg, \finish true
 			Velocity @bg, {
@@ -195,11 +187,6 @@ script.
 		@controller.trigger \closing
 
 		if @is-modal
-			if !@is-child
-				# TODO
-				#window.enable-scroll!
-				@ui.trigger \unblur 300ms
-
 			@bg.style.pointer-events = \none
 			Velocity @bg, \finish true
 			Velocity @bg, {

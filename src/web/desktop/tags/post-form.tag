@@ -316,7 +316,6 @@ script.
 		browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
 		browser-controller = riot.observable!
 		riot.mount browser, do
-			is-child: if @opts.is-in-window? then @opts.is-in-window else false
 			multiple: true
 			controller: browser-controller
 		browser-controller.trigger \open

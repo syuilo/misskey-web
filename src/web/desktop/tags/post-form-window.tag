@@ -13,7 +13,7 @@ mk-post-form-window
 		div.ref(if={ parent.opts.reply })
 			mk-post-preview(post={ parent.opts.reply })
 		div.body
-			mk-post-form(controller={ parent.form-controller }, reply={ parent.opts.reply }, is-in-window={ true })
+			mk-post-form(controller={ parent.form-controller }, reply={ parent.opts.reply })
 		</yield>
 
 style.

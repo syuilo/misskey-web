@@ -1,5 +1,5 @@
 mk-input-dialog
-	mk-window(controller={ window-controller }, is-modal={ true }, is-child={ opts.is-child }, width={ '500px' })
+	mk-window(controller={ window-controller }, is-modal={ true }, width={ '500px' })
 		<yield to="header">
 		i.fa.fa-i-cursor
 		| { parent.title }
