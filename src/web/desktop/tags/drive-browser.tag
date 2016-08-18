@@ -321,7 +321,8 @@ style.
 		display none
 
 script.
-	@mixin \ui
+	@mixin \input-dialog
+	@mixin \stream
 
 	@files = []
 	@folders = []
@@ -340,10 +341,23 @@ script.
 	@uploader-controller = riot.observable!
 
 	@on \mount ~>
+		@stream.on \drive_file_created @on-stream-drive-file-created
+		@stream.on \drive_folder_created @on-stream-drive-folder-created
+
 		if @opts.folder?
 			@move @opts.folder
 		else
 			@load!
+
+	@on \unmount ~>
+		@stream.off \drive_file_created @on-stream-drive-file-created
+		@stream.off \drive_folder_created @on-stream-drive-folder-created
+
+	@on-stream-drive-file-created = (file) ~>
+		@add-file file, true
+
+	@on-stream-drive-folder-created = (folder) ~>
+		@add-folder folder, true
 
 	@onmousedown = (e) ~>
 		rect = @main.get-bounding-client-rect!
@@ -431,8 +445,7 @@ script.
 			if @folder == null then null else @folder.id
 
 	@uploader-controller.on \uploaded (file) ~>
-		if (file.folder == null and @folder == null) or (file.folder? and @folder? and file.folder == @folder.id)
-			@add-file file, true
+		@add-file file, true
 
 	@uploader-controller.on \change-uploads (uploads) ~>
 		@uploads = uploads
@@ -476,6 +489,14 @@ script.
 				console.error err
 
 	@add-folder = (folder, unshift = false) ~>
+		current = if @folder? then @folder.id else null
+		addee-parent = if folder.folder? then folder.folder else null
+		if (current != addee-parent)
+			return
+
+		if (@folders.some (f) ~> f.id == folder.id)
+			return
+
 		folder._title = folder.name
 		folder._hover = false
 
@@ -516,6 +537,14 @@ script.
 		@update!
 
 	@add-file = (file, unshift = false) ~>
+		current = if @folder? then @folder.id else null
+		addee-parent = if file.folder? then file.folder else null
+		if (current != addee-parent)
+			return
+
+		if (@files.some (f) ~> f.id == file.id)
+			return
+
 		file._title = file.name + '\n' + file.type
 
 		file._click = ~>

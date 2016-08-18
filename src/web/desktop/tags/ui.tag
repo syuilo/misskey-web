@@ -16,14 +16,6 @@ script.
 	@ui = riot.observable!
 	riot.mixin \ui do
 		ui: @ui
-		input-dialog: (title, placeholder, default-value, on-ok, on-cancel) ~>
-			dialog = document.body.append-child document.create-element \mk-input-dialog
-			riot.mount dialog, do
-				title: title
-				placeholder: placeholder
-				default: default-value
-				on-ok: on-ok
-				on-cancel: on-cancel
 
 	@post-form-controller = riot.observable!
 

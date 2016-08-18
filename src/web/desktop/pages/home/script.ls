@@ -33,6 +33,26 @@ require '../../tags/home-widgets/donate.tag'
 tl = require '../../tags/timeline.tag'
 ui = require '../../tags/ui.tag'
 
+socket = io CONFIG.api.url, do
+	transports: [\websocket]
+
+socket.on \connect ->
+	console.log \connected
+	socket.emit \authentication do
+		_i: USER._web
+
+socket.on \unauthorized ->
+	console.log \unauthorized
+
+socket.on \authenticated ->
+	console.log \authenticated
+
+socket.on \disconnect ->
+	console.log \disconnect
+
+riot.mixin \stream do
+	stream: socket
+
 riot.mount ui
 
 tl = (riot.mount tl).0
@@ -51,22 +71,6 @@ try
 catch
 	console.log 'oops'
 
-socket = io CONFIG.api.url, do
-	transports: [\websocket]
-
-socket.on \connect ->
-	console.log \connected
-	socket.emit \authentication do
-		_i: USER._web
-
-socket.on \unauthorized ->
-	console.log \unauthorized
-
-socket.on \authenticated ->
-	console.log \authenticated
-
-socket.on \disconnect ->
-	console.log \disconnect
 
 socket.on \post (post) ->
 	console.log post
