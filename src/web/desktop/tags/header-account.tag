@@ -11,7 +11,7 @@ mk-header-account
 				i.fa.fa-user
 				| プロフィール
 				i.fa.fa-angle-right
-			li: a.ui-waves-effect(href= config.url + '/i/drive')
+			li(onclick={ drive }): p
 				i.fa.fa-cloud
 				| ドライブ
 				i.fa.fa-angle-right
@@ -139,6 +139,7 @@ style.
 				display block
 
 				> a
+				> p
 					display block
 					position relative
 					z-index 1
@@ -179,8 +180,36 @@ script.
 
 	@open = ~>
 		@is-open = true
-		#document.add-event-listener \mousedown @close
+		@update!
+		all = document.query-selector-all 'body *'
+		Array.prototype.for-each.call all, (el) ~>
+			el.add-event-listener \mousedown @mousedown
 
 	@close = ~>
 		@is-open = false
-		#document.remove-event-listener \mousedown @close
+		@update!
+		all = document.query-selector-all 'body *'
+		Array.prototype.for-each.call all, (el) ~>
+			el.remove-event-listener \mousedown @mousedown
+
+	@mousedown = (e) ~>
+		e.prevent-default!
+		if (!contains @root, e.target) and (@root != e.target)
+			@close!
+		return false
+
+	@drive = ~>
+		@close!
+		browser = document.body.append-child document.create-element \mk-drive-browser-window
+		browser-controller = riot.observable!
+		riot.mount browser, do
+			controller: browser-controller
+		browser-controller.trigger \open
+
+	function contains(parent, child)
+		node = child.parent-node
+		while (node != null)
+			if (node == parent)
+				return true
+			node = node.parent-node
+		return false
