@@ -23,18 +23,23 @@ script.
 
 	@ondragover = (e) ~>
 		e.stop-propagation!
+		# このフォルダがルートかつカレントディレクトリならドロップ禁止
+		if @folder == null and @browser.folder == null
+			e.data-transfer.drop-effect = \none
 		# ドラッグされてきたものがファイルだったら
-		if e.data-transfer.effect-allowed == \all
+		else if e.data-transfer.effect-allowed == \all
 			e.data-transfer.drop-effect = \copy
 		else
 			e.data-transfer.drop-effect = \move
 		return false
 
 	@ondragenter = ~>
-		@draghover = true
+		if @folder != null or @browser.folder != null
+			@draghover = true
 
 	@ondragleave = ~>
-		@draghover = false
+		if @folder != null or @browser.folder != null
+			@draghover = false
 
 	@ondrop = (e) ~>
 		e.stop-propagation!
