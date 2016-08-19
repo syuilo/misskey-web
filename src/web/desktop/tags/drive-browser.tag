@@ -1,41 +1,32 @@
 mk-drive-browser
 	nav
-		ol.path(oncontextmenu={ path-oncontextmenu })
-			li.root(class={ current: folder == null, draghover: virtual-root-folder._draghover }, onclick={ go-root }, ondragover={ virtual-root-folder._ondragover }, ondragenter={ virtual-root-folder._ondragenter }, ondragleave={ virtual-root-folder._ondragleave }, ondrop={ virtual-root-folder._ondrop })
-				i.fa.fa-cloud
-				| ドライブ
+		div.path(oncontextmenu={ path-oncontextmenu })
+			mk-drive-browser-nav-folder(class={ current: folder == null }, folder={ null })
 			virtual(each={ folder in hierarchy-folders })
-				li.separator: i.fa.fa-angle-right
-				li.folder(class={ contextmenu: folder._contextmenuing, draghover: folder._draghover }, onclick={ folder._click }, ondragover={ folder._ondragover }, ondragenter={ folder._ondragenter }, ondragleave={ folder._ondragleave }, ondrop={ folder._ondrop })
-					| { folder.name }
-			li.separator(if={ folder != null }): i.fa.fa-angle-right
-			li.folder.current(if={ folder != null })
+				span.separator: i.fa.fa-angle-right
+				mk-drive-browser-nav-folder(folder={ folder })
+			span.separator(if={ folder != null }): i.fa.fa-angle-right
+			span.folder.current(if={ folder != null })
 				| { folder.name }
 		input.search(type='search', placeholder!='&#xf002; 検索')
 	div.main@main(class={ uploading: uploads.length > 0, loading: loading }, onmousedown={ onmousedown }, ondragover={ ondragover }, ondragenter={ ondragenter }, ondragleave={ ondragleave }, ondrop={ ondrop }, oncontextmenu={ oncontextmenu })
 		div.selection@selection
-		div.folders@folders-container
-			virtual(each={ folder in folders })
-				div.folder(class={ contextmenu: folder._contextmenuing, draghover: folder._draghover }, onclick={ folder._click }, onmouseover={ folder._onmouseover }, onmouseout={ folder._onmouseout }, ondragover={ folder._ondragover }, ondragenter={ folder._ondragenter }, ondragleave={ folder._ondragleave }, ondrop={ folder._ondrop }, oncontextmenu={ folder._oncontextmenu }, title={ folder._title })
-					p.name
-						i.fa.fa-fw(class={ fa-folder-o: !folder._hover, fa-folder-open-o: folder._hover })
-						| { folder.name }
-		div.files@files-container(if={ files.length > 0 })
-			virtual(each={ file in files })
-				div.file(class={ selected: file._selected, contextmenu: file._contextmenuing, dragging: file._dragging }, onclick={ file._click }, oncontextmenu={ file._oncontextmenu }, draggable='true', ondragstart={ file._ondragstart }, ondragend={ file._ondragend }, title={ file._title })
-					img(src={ file.url + '?thumbnail&size=128' }, alt='')
-					p.name
-						| { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
-						span.ext(if={ file.name.lastIndexOf('.') != -1 }) { file.name.substr(file.name.lastIndexOf('.')) }
-		div.empty(if={ files.length == 0 && folders.length == 0 && !loading })
-			p(if={ draghover })
-				| ドロップですか？いいですよ、ボクはカワイイですからね
-			p(if={ !draghover && folder == null })
-				strong ドライブには何もありません。
-				br
-				| 右クリックして「ファイルをアップロード」を選んだり、ファイルをドラッグ&ドロップすることでもアップロードできます。
-			p(if={ !draghover && folder != null })
-				| このフォルダーは空です
+		div.contents@contents
+			div.folders@folders-container(if={ folders.length > 0 })
+				virtual(each={ folder in folders })
+					mk-drive-browser-folder.folder(folder={ folder })
+			div.files@files-container(if={ files.length > 0 })
+				virtual(each={ file in files })
+					mk-drive-browser-file.file(file={ file })
+			div.empty(if={ files.length == 0 && folders.length == 0 && !loading })
+				p(if={ draghover })
+					| ドロップですか？いいですよ、ボクはカワイイですからね
+				p(if={ !draghover && folder == null })
+					strong ドライブには何もありません。
+					br
+					| 右クリックして「ファイルをアップロード」を選んだり、ファイルをドラッグ&ドロップすることでもアップロードできます。
+				p(if={ !draghover && folder != null })
+					| このフォルダーは空です
 		div.loading(if={ loading }).
 			<div class="spinner">
 				<div class="dot1"></div>
@@ -74,10 +65,9 @@ style.
 			padding 0 8px
 			width calc(100% - 200px)
 			line-height 38px
-			list-style none
 			white-space nowrap
 
-			> li
+			> *
 				display inline-block
 				margin 0
 				padding 0 8px
@@ -92,9 +82,6 @@ style.
 
 				&:hover
 					text-decoration underline
-
-				&.draghover
-					background #eee
 
 				&.current
 					font-weight bold
@@ -148,10 +135,8 @@ style.
 
 	> .main
 		position relative
-		box-sizing border-box
-		padding 8px
 		height calc(100% - 38px)
-		overflow auto
+		overflow hidden
 
 		&, *
 			-ms-user-select none
@@ -165,8 +150,7 @@ style.
 			*
 				pointer-events none
 
-			> .folders
-			> .files
+			> .contents
 				opacity 0.5
 
 		&.uploading
@@ -183,134 +167,40 @@ style.
 			background rgba($theme-color, 0.5)
 			pointer-events none
 
-		> .folders
-			&:after
-				content ""
-				display block
-				clear both
+		> .contents
+			position relative
+			box-sizing border-box
+			padding 8px
+			width 100%
+			height 100%
+			overflow auto
 
-			> .folder
-				position relative
-				float left
-				box-sizing border-box
-				margin 4px
-				padding 8px
-				width 144px
-				height 64px
-				background lighten($theme-color, 95%)
-				border-radius 4px
+			> .folders
+				&:after
+					content ""
+					display block
+					clear both
 
-				&, *
-					cursor pointer
+				> .folder
+					float left
 
-				*
-					pointer-events none
+			> .files
+				&:after
+					content ""
+					display block
+					clear both
 
-				&:hover
-					background lighten($theme-color, 90%)
+				> .file
+					float left
 
-				&:active
-					background lighten($theme-color, 85%)
+			> .empty
+				padding 16px
+				text-align center
+				color #999
+				pointer-events none
 
-				&.contextmenu
-				&.draghover
-					&:after
-						content ""
-						pointer-events none
-						position absolute
-						top -4px
-						right -4px
-						bottom -4px
-						left -4px
-						border 2px dashed rgba($theme-color, 0.3)
-						border-radius 4px
-
-				&.draghover
-					background lighten($theme-color, 90%)
-
-				> .name
+				> p
 					margin 0
-					font-size 0.9em
-					color darken($theme-color, 30%)
-
-					> i
-						margin-right 4px
-					  margin-left 2px
-						text-align left
-
-		> .files
-			&:after
-				content ""
-				display block
-				clear both
-
-			> .file
-				position relative
-				float left
-				margin 4px
-				padding 8px 0 0 0
-				width 144px
-				height 180px
-				border-radius 4px
-
-				&, *
-					cursor pointer
-
-				&:hover
-					background rgba(0, 0, 0, 0.05)
-
-				&:active
-					background rgba(0, 0, 0, 0.1)
-
-				&.selected
-					background $theme-color
-
-					&:hover
-						background lighten($theme-color, 10%)
-
-					&:active
-						background darken($theme-color, 10%)
-
-					> .name
-						color $theme-color-foreground
-
-				&.contextmenu
-					&:after
-						content ""
-						pointer-events none
-						position absolute
-						top -4px
-						right -4px
-						bottom -4px
-						left -4px
-						border 2px dashed rgba($theme-color, 0.3)
-						border-radius 4px
-
-				> img
-					display block
-					margin 0 auto
-					pointer-events none
-
-				> .name
-					display block
-					margin 4px 0 0 0
-					font-size 0.8em
-					text-align center
-					word-break break-all
-					color #444
-					overflow hidden
-
-					> .ext
-						opacity 0.5
-
-		> .empty
-			padding 16px
-			text-align center
-			color #999
-			pointer-events none
-
-			> p
-				margin 0
 
 		> .loading
 			.spinner
@@ -388,11 +278,6 @@ script.
 	@uploader-controller = riot.observable!
 
 	@on \mount ~>
-		@virtual-root-folder =
-			id: null
-
-		@attach-drag-events-to-folder-context @virtual-root-folder
-
 		@stream.on \drive_file_created @on-stream-drive-file-created
 		@stream.on \drive_file_updated @on-stream-drive-file-updated
 		@stream.on \drive_folder_created @on-stream-drive-folder-created
@@ -534,23 +419,23 @@ script.
 			folder: folder-id
 		browser-controller.trigger \open
 
-	@move = (folder-id) ~>
-		if folder-id == null
+	@move = (target-folder) ~>
+		if target-folder? and typeof target-folder == \object
+			target-folder = target-folder.id
+
+		if target-folder == null
 			@go-root!
 		else
 			@loading = true
 			@update!
 
 			api 'drive/folders/show' do
-				folder: folder-id
+				folder: target-folder
 			.then (folder) ~>
 				@folder = folder
 				@hierarchy-folders = []
 
 				x = (f) ~>
-					f._click = ~>
-						@move f.id
-					@attach-drag-events-to-folder-context f
 					@hierarchy-folders.unshift f
 					if f.folder?
 						x f.folder
@@ -572,38 +457,6 @@ script.
 		if (@folders.some (f) ~> f.id == folder.id)
 			return
 
-		folder._title = folder.name
-		folder._hover = false
-
-		folder._click = ~>
-			@move folder.id
-
-		folder._onmouseover = ~>
-			folder._hover = true
-
-		folder._onmouseout = ~>
-			folder._hover = false
-
-		@attach-drag-events-to-folder-context folder
-
-		folder._oncontextmenu = (e) ~>
-			e.stop-immediate-propagation!
-			folder._contextmenuing = true
-			@update!
-			ctx = document.body.append-child document.create-element \mk-drive-browser-folder-contextmenu
-			ctx-controller = riot.observable!
-			riot.mount ctx, do
-				controller: ctx-controller
-				browser-controller: @controller
-				folder: folder
-			ctx-controller.trigger \open do
-				x: e.page-x - window.page-x-offset
-				y: e.page-y - window.page-y-offset
-			ctx-controller.on \closed ~>
-				folder._contextmenuing = false
-				@update!
-			return false
-
 		if unshift
 			@folders.unshift folder
 		else
@@ -621,55 +474,17 @@ script.
 			# TODO: ただreturnするのではなく情報を更新する
 			return
 
-		file._title = file.name + '\n' + file.type
-
-		file._click = ~>
-			if @multiple
-				if file._selected?
-					file._selected = !file._selected
-				else
-					file._selected = true
-				@controller.trigger \change-selection @get-selection!
-			else
-				if file._selected
-					@controller.trigger \selected file
-				else
-					@files.for-each (file) ~>
-						file._selected = false
-					file._selected = true
-					@controller.trigger \change-selection @get-selection!
-
-		file._oncontextmenu = (e) ~>
-			e.stop-immediate-propagation!
-			file._contextmenuing = true
-			@update!
-			ctx = document.body.append-child document.create-element \mk-drive-browser-file-contextmenu
-			ctx-controller = riot.observable!
-			riot.mount ctx, do
-				controller: ctx-controller
-				browser-controller: @controller
-				file: file
-			ctx-controller.trigger \open do
-				x: e.page-x - window.page-x-offset
-				y: e.page-y - window.page-y-offset
-			ctx-controller.on \closed ~>
-				file._contextmenuing = false
-				@update!
-			return false
-
-		file._ondragstart = (e) ~>
-			e.data-transfer.effect-allowed = \move
-			e.data-transfer.set-data 'text' file.id
-			file._dragging = true
-
-		file._ondragend = (e) ~>
-			file._dragging = false
-
 		if unshift
 			@files.unshift file
 		else
 			@files.push file
 
+		@update!
+
+	@remove-file = (file) ~>
+		if typeof file == \object
+			file = file.id
+		@files = @files.filter (f) -> f.id != file
 		@update!
 
 	@ondragover = (e) ~>
@@ -699,47 +514,6 @@ script.
 
 			Array.prototype.for-each.call e.data-transfer.files, (file) ~>
 				@upload file, @folder
-
-			return false
-
-	@attach-drag-events-to-folder-context = (folder) ~>
-		folder._ondragover = (e) ~>
-			e.stop-propagation!
-			# ドラッグされてきたものがファイルだったら
-			if e.data-transfer.effect-allowed == \all
-				e.data-transfer.drop-effect = \copy
-			else
-				e.data-transfer.drop-effect = \move
-			return false
-
-		folder._ondragenter = ~>
-			folder._draghover = true
-
-		folder._ondragleave = ~>
-			folder._draghover = false
-
-		folder._ondrop = (e) ~>
-			e.stop-propagation!
-			folder._draghover = false
-
-			# ファイルだったら
-			if e.data-transfer.files.length > 0
-				Array.prototype.for-each.call e.data-transfer.files, (file) ~>
-					@upload file, folder
-			else
-				file = e.data-transfer.get-data 'text'
-				if !file?
-					return false
-
-				@files = @files.filter (f) -> f.id != file
-
-				api 'drive/files/update' do
-					file: file
-					folder: folder.id
-				.then ~>
-					# something
-				.catch (err, text-status) ~>
-					console.error err
 
 			return false
 
