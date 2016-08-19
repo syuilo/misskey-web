@@ -163,7 +163,7 @@ script.
 
 		ctx =
 			id: id
-			name: file.name
+			name: file.name || \untitled
 			progress: undefined
 
 		@uploads.push ctx
