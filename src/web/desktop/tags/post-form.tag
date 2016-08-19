@@ -1,5 +1,5 @@
 mk-post-form
-	textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, oninput={ update }, placeholder={ opts.reply ? 'この投稿への返信...' : 'いまどうしてる？' })
+	textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, oninput={ update }, onpaste={ onpaste }, placeholder={ opts.reply ? 'この投稿への返信...' : 'いまどうしてる？' })
 	div.attaches(if={ files.length != 0 })
 		ul.files@attaches
 			li.file(each={ files })
@@ -308,6 +308,15 @@ script.
 	@clear = ~>
 		@text.value = ''
 		@update!
+
+	@onpaste = (e) ~>
+		data = e.clipboard-data
+		items = data.items
+		for i from 0 to items.length - 1
+			item = items[i]
+			switch (item.kind)
+				| \file =>
+					@upload item.get-as-file!
 
 	@select-file = ~>
 		@file.click!
