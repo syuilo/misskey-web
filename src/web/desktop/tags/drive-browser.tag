@@ -135,8 +135,10 @@ style.
 
 	> .main
 		position relative
+		box-sizing border-box
+		padding 8px
 		height calc(100% - 38px)
-		overflow hidden
+		overflow auto
 
 		&, *
 			-ms-user-select none
@@ -168,12 +170,6 @@ style.
 			pointer-events none
 
 		> .contents
-			position relative
-			box-sizing border-box
-			padding 8px
-			width 100%
-			height 100%
-			overflow auto
 
 			> .folders
 				&:after
@@ -530,13 +526,15 @@ script.
 		@loading = true
 		@update!
 
+		load-folders = null
+		load-files = null
+
 		api 'drive/folders' do
 			folder: if @folder? then @folder.id else null
 			limit: 30
 		.then (folders) ~>
-			folders.for-each (folder) ~>
-				@add-folder folder
-			@update!
+			load-folders := folders
+			complete!
 		.catch (err, text-status) ~>
 			console.error err
 
@@ -544,14 +542,22 @@ script.
 			folder: if @folder? then @folder.id else null
 			limit: 30
 		.then (files) ~>
-			files.for-each (file) ~>
-				@add-file file
-			@update!
+			load-files := files
+			complete!
 		.catch (err, text-status) ~>
 			console.error err
-		.then ~>
-			@loading = false
-			@update!
+
+		flag = false
+		complete = ~>
+			if flag
+				load-folders.for-each (folder) ~>
+					@add-folder folder
+				load-files.for-each (file) ~>
+					@add-file file
+				@loading = false
+				@update!
+			else
+				flag := true
 
 	function contains(parent, child)
 		node = child.parent-node
