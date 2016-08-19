@@ -82,6 +82,16 @@ script.
 		@root.style.left = pos.x + \px
 		@root.style.top = pos.y + \px
 
+		Velocity @root, \finish true
+		Velocity @root, { opacity: 0 } 0ms
+		Velocity @root, {
+			opacity: 1
+		} {
+			queue: false
+			duration: 100ms
+			easing: \linear
+		}
+
 	@close = ~>
 		all = document.query-selector-all 'body *'
 		Array.prototype.for-each.call all, (el) ~>

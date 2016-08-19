@@ -32,11 +32,13 @@ mk-drive-browser
 				<div class="dot1"></div>
 				<div class="dot2"></div>
 			</div>
+	div.dropzone(if={ draghover })
 	mk-uploader(controller={ uploader-controller })
 	input@file-input(type='file', accept='*/*', multiple, tabindex='-1', onchange={ change-file-input })
 
 style.
 	display block
+	position relative
 
 	> nav
 		display block
@@ -245,6 +247,16 @@ style.
 				}
 			}
 
+	> .dropzone
+		position absolute
+		box-sizing border-box
+		left 0
+		top 38px
+		width 100%
+		height calc(100% - 38px)
+		border dashed 2px rgba($theme-color, 0.5)
+		pointer-events none
+
 	> mk-uploader
 		height 100px
 		padding 16px
@@ -272,6 +284,8 @@ script.
 	@multiple = if @opts.xmultiple? then @opts.xmultiple else false
 
 	@uploader-controller = riot.observable!
+
+	@draghover = false
 
 	@on \mount ~>
 		@stream.on \drive_file_created @on-stream-drive-file-created
@@ -346,6 +360,37 @@ script.
 	@path-oncontextmenu = (e) ~>
 		e.stop-immediate-propagation!
 		return false
+
+	@ondragover = (e) ~>
+		# ドラッグされてきたものがファイルだったら
+		if e.data-transfer.effect-allowed == \all
+			e.stop-propagation!
+			e.data-transfer.drop-effect = \copy
+			@draghover = true
+			return false
+		else
+			e.data-transfer.drop-effect = \none
+
+	@ondragenter = (e) ~>
+		# ドラッグされてきたものがファイルだったら
+		if e.data-transfer.effect-allowed == \all
+			@draghover = true
+
+	@ondragleave = (e) ~>
+		# ドラッグされてきたものがファイルだったら
+		if e.data-transfer.effect-allowed == \all
+			@draghover = false
+
+	@ondrop = (e) ~>
+		# ドラッグされてきたものがファイルだったら
+		if e.data-transfer.files.length > 0
+			e.stop-propagation!
+			@draghover = false
+
+			Array.prototype.for-each.call e.data-transfer.files, (file) ~>
+				@upload file, @folder
+
+			return false
 
 	@oncontextmenu = (e) ~>
 		e.stop-immediate-propagation!
@@ -482,36 +527,6 @@ script.
 			file = file.id
 		@files = @files.filter (f) -> f.id != file
 		@update!
-
-	@ondragover = (e) ~>
-		# ドラッグされてきたものがファイルだったら
-		if e.data-transfer.effect-allowed == \all
-			e.stop-propagation!
-			e.data-transfer.drop-effect = \copy
-			return false
-		else
-			e.data-transfer.drop-effect = \none
-
-	@ondragenter = (e) ~>
-		# ドラッグされてきたものがファイルだったら
-		if e.data-transfer.effect-allowed == \all
-			@draghover = true
-
-	@ondragleave = (e) ~>
-		# ドラッグされてきたものがファイルだったら
-		if e.data-transfer.effect-allowed == \all
-			@draghover = false
-
-	@ondrop = (e) ~>
-		# ドラッグされてきたものがファイルだったら
-		if e.data-transfer.files.length > 0
-			e.stop-propagation!
-			@draghover = false
-
-			Array.prototype.for-each.call e.data-transfer.files, (file) ~>
-				@upload file, @folder
-
-			return false
 
 	@go-root = ~>
 		if @folder != null
