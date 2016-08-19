@@ -131,20 +131,27 @@ style.
 
 		ul
 			display block
-			margin 16px 0
+			margin 10px 0
 			padding 0
 			list-style none
 
+			& + ul
+				padding-top 10px
+				border-top solid 1px #eee
+
 			> li
 				display block
+				margin 0
+				padding 0
 
 				> a
 				> p
 					display block
 					position relative
 					z-index 1
-					padding 0 32px
-					line-height 42px
+					padding 0 28px
+					margin 0
+					line-height 40px
 					color #868C8C
 					cursor pointer
 
@@ -152,7 +159,7 @@ style.
 						pointer-events none
 
 					> i:first-of-type
-						margin-right 0.3em
+						margin-right 6px
 
 					> i:last-of-type
 						display block
@@ -160,9 +167,9 @@ style.
 						top 0
 						right 8px
 						z-index 1
-						padding 0 24px
+						padding 0 20px
 						font-size 1.2em
-						line-height 42px
+						line-height 40px
 
 					&:hover, &:active
 						text-decoration none
