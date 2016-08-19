@@ -1,4 +1,4 @@
-mk-header
+mk-ui-header
 	div.main: div.container
 		div.left
 			mk-header-nav
@@ -13,7 +13,7 @@ style.
 	top 0
 	z-index 1024
 	width 100%
-	border-bottom solid 1px #eaeaea
+	box-shadow 0 1px 0 rgba(0, 0, 0, 0.075)
 
 	> .main
 		margin 0

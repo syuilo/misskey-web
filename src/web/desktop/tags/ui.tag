@@ -2,7 +2,7 @@ mk-ui
 	mk-post-form-window(controller={ post-form-controller })
 
 	div.global@global
-		mk-header@header(ui={ ui })
+		mk-ui-header@header(ui={ ui })
 
 		div.contents
 			| <yield/>
