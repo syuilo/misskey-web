@@ -1,4 +1,4 @@
-mk-drive-browser-folder(data-is-contextmenu-showing={ is-contextmenu-showing }, data-draghover={ draghover }, onclick={ onclick }, onmouseover={ onmouseover }, onmouseout={ onmouseout }, ondragover={ ondragover }, ondragenter={ ondragenter }, ondragleave={ ondragleave }, ondrop={ ondrop }, oncontextmenu={ oncontextmenu }, title={ title })
+mk-drive-browser-folder(data-is-contextmenu-showing={ is-contextmenu-showing }, data-draghover={ draghover }, onclick={ onclick }, onmouseover={ onmouseover }, onmouseout={ onmouseout }, ondragover={ ondragover }, ondragenter={ ondragenter }, ondragleave={ ondragleave }, ondrop={ ondrop }, oncontextmenu={ oncontextmenu }, draggable='true', ondragstart={ ondragstart }, ondragend={ ondragend }, title={ title })
 	p.name
 		i.fa.fa-fw(class={ fa-folder-o: !hover, fa-folder-open-o: hover })
 		| { folder.name }
@@ -91,13 +91,20 @@ script.
 		if e.data-transfer.files.length > 0
 			Array.prototype.for-each.call e.data-transfer.files, (file) ~>
 				@browser.upload file, @folder
-		else
-			file = e.data-transfer.get-data 'text'
-			if !file?
-				return false
+			return false
 
+		# データ取得
+		data = e.data-transfer.get-data 'text'
+		if !data?
+			return false
+
+		# パース
+		obj = JSON.parse data
+
+		# (ドライブの)ファイルだったら
+		if obj.type == \file
+			file = obj.id
 			@browser.remove-file file
-
 			api 'drive/files/update' do
 				file: file
 				folder: @folder.id
@@ -106,7 +113,32 @@ script.
 			.catch (err, text-status) ~>
 				console.error err
 
+		# (ドライブの)フォルダーだったら
+		else if obj.type == \folder
+			folder = obj.id
+			# 移動先が自分自身ならreject
+			if folder == @folder.id
+				return false
+			@browser.remove-folder folder
+			api 'drive/folders/update' do
+				folder: folder
+				parent: @folder.id
+			.then ~>
+				# something
+			.catch (err, text-status) ~>
+				console.error err
+
 		return false
+
+	@ondragstart = (e) ~>
+		e.data-transfer.effect-allowed = \move
+		e.data-transfer.set-data 'text' JSON.stringify do
+			type: \folder
+			id: @folder.id
+		@is-dragging = true
+
+	@ondragend = (e) ~>
+		@is-dragging = false
 
 	@oncontextmenu = (e) ~>
 		e.stop-immediate-propagation!

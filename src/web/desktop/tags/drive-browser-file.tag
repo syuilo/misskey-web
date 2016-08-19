@@ -116,7 +116,9 @@ script.
 
 	@ondragstart = (e) ~>
 		e.data-transfer.effect-allowed = \move
-		e.data-transfer.set-data 'text' @file.id
+		e.data-transfer.set-data 'text' JSON.stringify do
+			type: \file
+			id: @file.id
 		@is-dragging = true
 
 	@ondragend = (e) ~>

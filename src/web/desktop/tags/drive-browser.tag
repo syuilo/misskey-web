@@ -291,6 +291,7 @@ script.
 		@stream.on \drive_file_created @on-stream-drive-file-created
 		@stream.on \drive_file_updated @on-stream-drive-file-updated
 		@stream.on \drive_folder_created @on-stream-drive-folder-created
+		@stream.on \drive_folder_updated @on-stream-drive-folder-updated
 
 		if @opts.folder?
 			@move @opts.folder
@@ -301,6 +302,7 @@ script.
 		@stream.off \drive_file_created @on-stream-drive-file-created
 		@stream.off \drive_file_updated @on-stream-drive-file-updated
 		@stream.off \drive_folder_created @on-stream-drive-folder-created
+		@stream.off \drive_folder_updated @on-stream-drive-folder-updated
 
 	@on-stream-drive-file-created = (file) ~>
 		@add-file file, true
@@ -309,13 +311,20 @@ script.
 		current = if @folder? then @folder.id else null
 		updated-file-parent = if file.folder? then file.folder else null
 		if current != updated-file-parent
-			@files = @files.filter (f) -> f.id != file.id
-			@update!
+			@remove-file file
 		else
 			@add-file file, true
 
 	@on-stream-drive-folder-created = (folder) ~>
 		@add-folder folder, true
+
+	@on-stream-drive-folder-updated = (folder) ~>
+		current = if @folder? then @folder.id else null
+		updated-folder-parent = if folder.folder? then folder.folder else null
+		if current != updated-folder-parent
+			@remove-folder folder
+		else
+			@add-folder folder, true
 
 	@onmousedown = (e) ~>
 		if (contains @folders-container, e.target) or (contains @files-container, e.target)
@@ -520,6 +529,12 @@ script.
 		else
 			@files.push file
 
+		@update!
+
+	@remove-folder = (folder) ~>
+		if typeof folder == \object
+			folder = folder.id
+		@folders = @folders.filter (f) -> f.id != folder
 		@update!
 
 	@remove-file = (file) ~>
