@@ -7,7 +7,7 @@ mk-header-account
 		img.avatar(src={ USER.avatar_url + '?size=64' }, alt='avatar')
 	div.menu(if={ is-open })
 		ul
-			li: a.ui-waves-effect(href= config.url + '/' + { USER.username })
+			li: a(href= config.url + '/' + { USER.username })
 				i.fa.fa-user
 				| プロフィール
 				i.fa.fa-angle-right
@@ -15,17 +15,17 @@ mk-header-account
 				i.fa.fa-cloud
 				| ドライブ
 				i.fa.fa-angle-right
-			li: a.ui-waves-effect(href= config.url + '/{ USER.username }/likes')
+			li: a(href= config.url + '/{ USER.username }/likes')
 				i.fa.fa-star
 				| お気に入り
 				i.fa.fa-angle-right
 		ul
-			li: a.ui-waves-effect(href= config.url + '/i/settings')
+			li(onclick={ settings }): p
 				i.fa.fa-cog
 				| 設定
 				i.fa.fa-angle-right
 		ul
-			li: a.ui-waves-effect(href= config.signoutUrl)
+			li: a(href= config.signoutUrl)
 				i(class='fa fa-power-off')
 				| サインアウト
 				i.fa.fa-angle-right
@@ -212,6 +212,14 @@ script.
 		riot.mount browser, do
 			controller: browser-controller
 		browser-controller.trigger \open
+
+	@settings = ~>
+		@close!
+		w = document.body.append-child document.create-element \mk-settings-window
+		w-controller = riot.observable!
+		riot.mount w, do
+			controller: w-controller
+		w-controller.trigger \open
 
 	function contains(parent, child)
 		node = child.parent-node

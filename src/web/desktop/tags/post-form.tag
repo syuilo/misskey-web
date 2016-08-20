@@ -309,7 +309,7 @@ script.
 		@text.value = ''
 		@update!
 
-	@onkeypress = (e) ->
+	@onkeypress = (e) ~>
 		if (e.char-code == 10 || e.char-code == 13) && e.ctrl-key
 			@post!
 		else

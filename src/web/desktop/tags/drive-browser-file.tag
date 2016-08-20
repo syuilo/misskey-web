@@ -89,12 +89,12 @@ script.
 			@browser.controller.trigger \change-selection @browser.get-selection!
 		else
 			if @file._selected
-				@browser.controller.trigger \selected file
+				@browser.controller.trigger \selected @file
 			else
 				@browser.files.for-each (file) ~>
 					file._selected = false
 				@file._selected = true
-				@browser.controller.trigger \change-selection @browser.get-selection!
+				@browser.controller.trigger \change-selection @file
 
 	@oncontextmenu = (e) ~>
 		e.stop-immediate-propagation!

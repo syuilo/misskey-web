@@ -41,7 +41,7 @@ const aliasifyConfig = {
 		"ripple.js": "./bower_components/ripple.js/ripple.js",
 		"strength.js": "./bower_components/password-strength.js/strength.js",
 		"js-cookie": "./bower_components/js-cookie/src/js.cookie.js",
-		"cropper": "./bower_components/cropper/dist/cropper.js",
+		"cropper": "./bower_components/cropperjs/dist/cropper.js",
 		"moment": "./bower_components/moment/moment.js",
 		"Sortable": "./bower_components/Sortable/Sortable.js",
 		"fastclick": "./bower_components/fastclick/lib/fastclick.js",
@@ -374,7 +374,9 @@ gulp.task('build:styles', ['copy:bower_components'], () => {
 
 	return gulp.src('./src/web/**/*.styl')
 		.pipe(replace(/url\("#/g, 'url\("' + config.urls.resources))
-		.pipe(stylus())
+		.pipe(stylus({
+			'include css': true
+		}))
 		.pipe(isProduction
 			? cssnano({
 				safe: true // 高度な圧縮は無効にする (一部デザインが不適切になる場合があるため)

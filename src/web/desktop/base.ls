@@ -11,3 +11,6 @@ riot.mixin \input-dialog do
 			default: default-value
 			on-ok: on-ok
 			on-cancel: on-cancel
+
+riot.mixin \cropper do
+	Cropper: require 'cropper'
