@@ -1,7 +1,7 @@
 mk-drive-browser-file(data-is-selected={ file._selected }, data-is-contextmenu-showing={ is-contextmenu-showing }, onclick={ onclick }, oncontextmenu={ oncontextmenu }, draggable='true', ondragstart={ ondragstart }, ondragend={ ondragend }, title={ title })
 	div.thumbnail: img(src={ file.url + '?thumbnail&size=128' }, alt='')
 	p.name
-		| { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
+		span { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
 		span.ext(if={ file.name.lastIndexOf('.') != -1 }) { file.name.substr(file.name.lastIndexOf('.')) }
 
 style.
