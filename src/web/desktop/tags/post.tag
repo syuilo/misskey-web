@@ -13,7 +13,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 
 	article
 		a.avatar-anchor(href= config.url + '/' + { p.user.username })
-			img.avatar(src={ p.user.avatar_url }, alt='avatar', data-user-card={ p.user.username })
+			img.avatar(src={ p.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-card={ p.user.username })
 		div.main
 			header
 				div.left
