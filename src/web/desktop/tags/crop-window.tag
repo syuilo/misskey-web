@@ -109,3 +109,4 @@ script.
 	@ok = ~>
 		@cropper.get-cropped-canvas!.to-blob (blob) ~>
 			@controller.trigger \cropped blob
+			@window-controller.trigger \close
