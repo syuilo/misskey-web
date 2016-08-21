@@ -13,6 +13,7 @@ mk-donate-home-widget
 style.
 	display block
 	background #fff
+	font-family 'Meiryo', 'メイリオ', sans-serif
 
 	> article
 		padding 20px

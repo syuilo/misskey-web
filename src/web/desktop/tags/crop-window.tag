@@ -87,6 +87,88 @@ style.
 				}
 			}
 
+			> .action
+				position relative
+				height 72px
+				background lighten($theme-color, 95%)
+
+				.ok
+				.cancel
+				.skip
+					-webkit-appearance none
+					-moz-appearance none
+					appearance none
+					display block
+					position absolute
+					bottom 16px
+					cursor pointer
+					box-sizing border-box
+					padding 0
+					margin 0
+					height 40px
+					font-size 1em
+					outline none
+					border-radius 4px
+					box-shadow none
+
+					&:focus
+						&:after
+							content ""
+							pointer-events none
+							position absolute
+							top -5px
+							right -5px
+							bottom -5px
+							left -5px
+							border 2px solid rgba($theme-color, 0.3)
+							border-radius 8px
+
+					&:disabled
+						opacity 0.7
+						cursor default
+
+				.ok
+				.cancel
+					width 120px
+
+				.ok
+					right 16px
+					color $theme-color-foreground
+					background linear-gradient(to bottom, lighten($theme-color, 25%) 0%, lighten($theme-color, 10%) 100%)
+					border solid 1px lighten($theme-color, 15%)
+
+					&:not(:disabled)
+						font-weight bold
+
+					&:hover:not(:disabled)
+						background linear-gradient(to bottom, lighten($theme-color, 8%) 0%, darken($theme-color, 8%) 100%)
+						border-color $theme-color
+
+					&:active:not(:disabled)
+						background $theme-color
+						border-color $theme-color
+
+				.cancel
+				.skip
+					color #888
+					background linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%)
+					border solid 1px #e2e2e2
+
+					&:hover
+						background linear-gradient(to bottom, #f9f9f9 0%, #ececec 100%)
+						border-color #dcdcdc
+
+					&:active
+						background #ececec
+						border-color #dcdcdc
+
+				.cancel
+					right 148px
+
+				.skip
+					left 16px
+					width 150px
+
 script.
 	@mixin \cropper
 

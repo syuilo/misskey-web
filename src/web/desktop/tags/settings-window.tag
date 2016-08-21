@@ -1,5 +1,5 @@
 mk-settings-window
-	mk-window(controller={ window-controller }, is-modal={ true }, width={ '700px' }, height={ '500px' })
+	mk-window(controller={ window-controller }, is-modal={ true }, width={ '700px' }, height={ '550px' })
 		<yield to="header">
 		i.fa.fa-cog
 		| 設定

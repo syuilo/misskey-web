@@ -4,7 +4,7 @@ mk-header-account
 			| { USER.username }
 			i.fa.fa-angle-down(if={ !is-open })
 			i.fa.fa-angle-up(if={ is-open })
-		img.avatar(src={ USER.avatar_url + '?size=64' }, alt='avatar')
+		img.avatar(src={ USER.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 	div.menu(if={ is-open })
 		ul
 			li: a(href= config.url + '/' + { USER.username })

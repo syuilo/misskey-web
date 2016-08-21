@@ -2,9 +2,22 @@ mk-settings
 	div.nav
 		a アカウント
 	div.pages
-		div(show={ page == 'account' })
+		section.account(show={ page == 'account' })
 			h1 アカウント
-			button(onclick={ avatar }) アバター選択
+			div.avatar
+				p アバター
+				img.avatar(src={ user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+				button.style-normal(onclick={ avatar }) 画像を選択
+			label
+				p 名前
+				input@account-name(type='text', value={ user.name })
+			label
+				p 場所
+				input@account-location(type='text', value={ user.location })
+			label
+				p 自己紹介
+				textarea@account-bio { user.bio }
+			button.style-primary(onclick={ update-account }) 保存
 
 style.
 	display block
@@ -14,6 +27,19 @@ style.
 		top 0
 		left 0
 		width 200px
+		height 100%
+		box-sizing border-box
+		padding 16px 0 0 0
+		background lighten($theme-color, 95%)
+		border-right solid 1px lighten($theme-color, 85%)
+
+		> a
+			display block
+			padding 10px
+			background #fff
+			border-top solid 1px lighten($theme-color, 85%)
+			border-bottom solid 1px lighten($theme-color, 85%)
+			box-shadow 1px 0 #fff
 
 	> .pages
 		position absolute
@@ -21,7 +47,53 @@ style.
 		left 200px
 		width calc(100% - 200px)
 
+		> section
+			padding 32px
+
+			& + section
+				margin-top 16px
+
+			h1
+				display block
+				margin 0
+				padding 0 0 8px 0
+				font-size 1em
+				color #444
+				border-bottom solid 1px #eee
+
+			div
+			label
+				display block
+				margin 16px 0
+
+				&:after
+					content ""
+					display block
+					clear both
+
+				> p
+					margin 0 0 8px 0
+					font-weight bold
+					color #555
+
+			&.account
+				> .avatar
+					position relative
+
+					> img
+						display block
+						float left
+						width 64px
+						height 64px
+						border-radius 4px
+
+					> button
+						float left
+						margin-left 8px
+
 script.
+	@user = window.USER
+
 	@page = \account
 
 	@avatar = ~>
@@ -66,8 +138,10 @@ script.
 
 				api 'i/update' do
 					avatar: file.id
-				.then (data) ~>
+				.then (i) ~>
 					# something
+					@user.avatar_url = i.avatar_url
+					@update!
 				.catch (err) ~>
 					console.error err
 					#@opts.ui.trigger \notification 'Error!'
@@ -81,3 +155,13 @@ script.
 			#		@update!
 
 			xhr.send data
+
+	@update-account = ~>
+		api 'i/update' do
+			name: @account-name.value
+			location: @account-location.value
+			bio: @account-bio.value
+		.then (i) ~>
+			alert \ok
+		.catch (err) ~>
+			console.error err

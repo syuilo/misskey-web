@@ -45,14 +45,122 @@ html, body
 	padding 0
 	scroll-behavior smooth
 	text-size-adjust 100%
-	font-family 'Meiryo', 'メイリオ', sans-serif
+	font-family sans-serif
 
 button
+	-ms-appearance none
+	-moz-appearance none
+	-webkit-appearance none
+	appearance none
 	-ms-user-select none
 	-moz-user-select none
 	-webkit-user-select none
 	user-select none
 	font-family sans-serif
+
+	&.style-normal
+	&.style-primary
+		display block
+		position relative
+		cursor pointer
+		box-sizing border-box
+		padding 0 16px
+		margin 0
+		min-width 100px
+		height 40px
+		font-size 1em
+		outline none
+		border-radius 4px
+		box-shadow none
+
+		&:focus
+			&:after
+				content ""
+				pointer-events none
+				position absolute
+				top -5px
+				right -5px
+				bottom -5px
+				left -5px
+				border 2px solid rgba($theme-color, 0.3)
+				border-radius 8px
+
+		&:disabled
+			opacity 0.7
+			cursor default
+
+	&.style-normal
+		color #888
+		background linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%)
+		border solid 1px #e2e2e2
+
+		&:hover
+			background linear-gradient(to bottom, #f9f9f9 0%, #ececec 100%)
+			border-color #dcdcdc
+
+		&:active
+			background #ececec
+			border-color #dcdcdc
+
+	&.style-primary
+		color $theme-color-foreground
+		background linear-gradient(to bottom, lighten($theme-color, 25%) 0%, lighten($theme-color, 10%) 100%)
+		border solid 1px lighten($theme-color, 15%)
+
+		&:not(:disabled)
+			font-weight bold
+
+		&:hover:not(:disabled)
+			background linear-gradient(to bottom, lighten($theme-color, 8%) 0%, darken($theme-color, 8%) 100%)
+			border-color $theme-color
+
+		&:active:not(:disabled)
+			background $theme-color
+			border-color $theme-color
+
+input[type='text']
+input[type='password']
+input[type='email']
+textarea
+	-ms-appearance none
+	-moz-appearance none
+	-webkit-appearance none
+	appearance none
+	-ms-user-select text
+	-moz-user-select text
+	-webkit-user-select text
+	user-select text
+	display inline-block
+	cursor auto
+	box-sizing border-box
+	padding 8px 10px
+	margin 0
+	font-size 1em
+	color #444 !important
+	background #fff
+	outline none
+	border solid 1px #ddd
+	border-radius 4px
+	box-shadow 0 1px 1px rgba(0, 0, 0, 0.025) inset
+	transition all .3s ease
+
+	&:hover
+		border-color #ccc
+		transition border-color 0.1s ease
+
+	&:focus
+		color $theme-color !important
+		border-color $theme-color
+		//box-shadow 0 0 0 1024px #fff inset, 0 0 0 4px rgba($theme-color, 10%)
+		transition color 0s ease, border-color 0s ease, box-shadow 0s ease
+
+	&:disabled
+		opacity 0.5
+
+textarea
+	display block
+	width 100%
+	min-height 4em
 
 a
 	text-decoration none

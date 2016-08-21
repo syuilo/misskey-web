@@ -25,9 +25,6 @@ style.
 				padding 16px
 
 				> input
-					-webkit-appearance none
-					-moz-appearance none
-					appearance none
 					display block
 					box-sizing border-box
 					padding 8px
@@ -42,8 +39,8 @@ style.
 					outline none
 					border solid 1px rgba($theme-color, 0.1)
 					border-radius 4px
+					box-shadow none
 					transition border-color .3s ease
-					font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
 
 					&:hover
 						border-color rgba($theme-color, 0.2)
