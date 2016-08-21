@@ -6,7 +6,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 
 	div.repost(if={ is-repost })
 		p
-			a.avatar-anchor(href= config.url + '/' + { post.user.username }): img.avatar(src={ post.user.avatar_url }, alt='avatar', data-user-card={ post.user.username })
+			a.avatar-anchor(href= config.url + '/' + { post.user.username }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar', data-user-card={ post.user.username })
 			i.fa.fa-retweet
 			a.name(href= config.url + '/' + { post.user.username }) { post.user.name }
 			| がRepost
