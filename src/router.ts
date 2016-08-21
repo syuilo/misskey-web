@@ -98,7 +98,7 @@ export default function(app: express.Express): void {
 	 * Error handlers
 	 */
 
-	app.use((err, req, res, next) => {
+	app.use((err: any, req: express.Request, res: express.Response, next: any) => {
 		if (err.code !== 'EBADCSRFTOKEN') {
 			return next(err);
 		}
@@ -107,7 +107,7 @@ export default function(app: express.Express): void {
 		res.status(403).send('detected csrf');
 	});
 
-	app.use((err, req, res, next) => {
+	app.use((err: any, req: express.Request, res: express.Response, next: any) => {
 		console.error(err);
 		//render(req, res, 'error', err);
 		res.render(`${__dirname}/web/error`, {

@@ -53,6 +53,8 @@ style.
 			text-align left
 
 script.
+	@mixin \dialog
+
 	@folder = @opts.folder
 	@browser = @parent
 
@@ -125,8 +127,14 @@ script.
 				parent: @folder.id
 			.then ~>
 				# something
-			.catch (err, text-status) ~>
-				console.error err
+			.catch (err) ~>
+				if err == 'detected-circular-definition'
+					@dialog do
+						'<i class="fa fa-exclamation-triangle"></i>操作を完了できません'
+						'移動先のフォルダーは、移動するフォルダーのサブフォルダーです。'
+						[
+							text: \OK
+						]
 
 		return false
 

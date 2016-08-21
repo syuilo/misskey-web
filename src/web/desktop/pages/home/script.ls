@@ -2,6 +2,7 @@ require '../../base.ls'
 
 riot = require 'riot'
 require '../../tags/contextmenu.tag'
+require '../../tags/dialog.tag'
 require '../../tags/window.tag'
 require '../../tags/input-dialog.tag'
 require '../../tags/follow-button.tag'

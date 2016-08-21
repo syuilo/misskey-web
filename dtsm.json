@@ -84,6 +84,9 @@
     },
     "del/del.d.ts": {
       "ref": "e65947027120a0dc77723266906e4ce6c28bd725"
+    },
+    "inquirer/inquirer.d.ts": {
+      "ref": "55c3e254e151847b8d37ca09b1a566ad4a48a66a"
     }
   }
 }

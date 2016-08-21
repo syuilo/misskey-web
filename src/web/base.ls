@@ -21,7 +21,8 @@ window.api = (endpoint, data) ->
 			else if res.status == 204
 				resolve!
 			else
-				reject!
+				res.json!.then (err) ->
+					reject err.error
 		.then (data) ->
 			resolve data
 		.catch (e) ->
