@@ -1,6 +1,5 @@
 require '../../base.ls'
 
-ReconnectingWebSocket = require 'reconnecting-websocket'
 riot = require 'riot'
 require '../../tags/contextmenu.tag'
 require '../../tags/dialog.tag'
@@ -42,34 +41,4 @@ require '../../tags/stream-indicator.tag'
 require '../../tags/timeline.tag'
 require '../../tags/ui.tag'
 
-state = riot.observable!
-event = riot.observable!
-
-socket = new ReconnectingWebSocket CONFIG.api.url.replace \http \ws
-
-socket.onopen = ~>
-	state.trigger \connected
-	socket.send JSON.stringify do
-		i: USER._web
-
-socket.onclose = ~>
-	state.trigger \closed
-
-socket.onmessage = (message) ~>
-	try
-		message = JSON.parse message.data
-		if message.type?
-			event.trigger message.type, message.body
-	catch
-		# ignore
-
-riot.mixin \stream do
-	stream: event
-	stream-state: state
-
 riot.mount '*'
-
-try
-	Notification.request-permission!
-catch
-	console.log 'oops'
