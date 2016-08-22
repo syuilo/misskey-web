@@ -46,7 +46,8 @@ const aliasifyConfig = {
 		"Sortable": "./bower_components/Sortable/Sortable.js",
 		"fastclick": "./bower_components/fastclick/lib/fastclick.js",
 		"fuck-adblock": "./bower_components/fuck-adblock/fuckadblock.js",
-		"Swiper": "./bower_components/Swiper/dist/js/swiper.js"
+		"Swiper": "./bower_components/Swiper/dist/js/swiper.js",
+		"reconnecting-websocket": "./bower_components/reconnectingWebsocket/reconnecting-websocket.js"
 	},
 	appliesTo: {
 		"includeExtensions": ['.js', '.ls']

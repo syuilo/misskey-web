@@ -30,11 +30,11 @@ style.
 			margin-right 0.25em
 
 script.
-	riot.mixin \stream
+	@mixin \stream
 
 	@state = 'initializing'
 
-	@stream.on \connect ~>
+	@stream-state.on \connected ~>
 		@state = 'connected'
 		@update!
 		set-timeout ~>
@@ -43,6 +43,9 @@ script.
 			} 200ms \linear
 		, 1000ms
 
-	@stream.on \disconnect ~>
+	@stream-state.on \closed ~>
 		@state = 'reconnecting'
 		@update!
+		Velocity @root, {
+			opacity: 1
+		} 0ms

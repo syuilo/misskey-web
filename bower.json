@@ -26,6 +26,7 @@
     "password-strength.js": "latest",
     "ripple.js": "latest",
     "fetch": "",
-    "velocity": "1.2.3"
+    "velocity": "1.2.3",
+    "reconnectingWebsocket": ""
   }
 }

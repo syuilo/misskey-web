@@ -1,5 +1,6 @@
 require '../../base.ls'
 
+ReconnectingWebSocket = require 'reconnecting-websocket'
 riot = require 'riot'
 require '../../tags/contextmenu.tag'
 require '../../tags/dialog.tag'
@@ -37,37 +38,38 @@ require '../../tags/home-widgets/user-recommendation.tag'
 require '../../tags/home-widgets/timeline.tag'
 require '../../tags/home-widgets/calendar.tag'
 require '../../tags/home-widgets/donate.tag'
-require '../../tags/stream-indicator.tag'
+stream-indicator = require '../../tags/stream-indicator.tag'
 tl = require '../../tags/timeline.tag'
 ui = require '../../tags/ui.tag'
 
-socket = new WebSocket CONFIG.api.url.replace \http \ws
+state = riot.observable!
+event = riot.observable!
 
-socket.add-event-listener \open ~>
+socket = new ReconnectingWebSocket CONFIG.api.url.replace \http \ws
+
+socket.onopen = ~>
+	state.trigger \connected
 	socket.send JSON.stringify do
 		i: USER._web
 
-socket._listeners = {}
-socket.on = (ev, fn) ~>
-	_fn = (message) ~>
+socket.onclose = ~>
+	state.trigger \closed
+
+socket.onmessage = (message) ~>
+	try
 		message = JSON.parse message.data
-		if message.type? and message.type == ev
-			fn message.body
-	if !(ev in socket._listeners)
-		socket._listeners[ev] = []
-	socket._listeners[ev].push _fn
-	socket.add-event-listener \message _fn
-socket.off = (ev, fn) ~>
-	listeners = socket._listeners[ev]
-	listeners.for-each (listener, i) ~>
-		if listener == fn
-			stack.splice i, 1
-			socket.remove-event-listener \message listener
+		if message.type?
+			event.trigger message.type, message.body
+	catch
+		# ignore
 
 riot.mixin \stream do
-	stream: socket
+	stream: event
+	stream-state: state
 
 riot.mount ui
+
+riot.mount stream-indicator
 
 tl = (riot.mount tl).0
 
@@ -85,7 +87,7 @@ try
 catch
 	console.log 'oops'
 
-socket.on \post (post) ->
+event.on \post (post) ->
 	console.log post
 	tl.opts.posts.unshift post
 	tl.update!
