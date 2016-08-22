@@ -321,6 +321,7 @@ script.
 			switch (item.kind)
 				| \file =>
 					@upload item.get-as-file!
+		return true
 
 	@select-file = ~>
 		@file.click!
