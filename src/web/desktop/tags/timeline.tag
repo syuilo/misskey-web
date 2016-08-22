@@ -1,5 +1,5 @@
 mk-timeline
-	virtual(each={ _post in opts.posts })
+	virtual(each={ _post in posts })
 		mk-post(post={ _post })
 
 style.
@@ -19,3 +19,15 @@ style.
 
 		& + mk-post
 			border-top none
+
+script.
+	@posts = []
+	@controller = @opts.controller
+
+	@controller.on \set-posts (posts) ~>
+		@posts = posts
+		@update!
+
+	@controller.on \add-post (post) ~>
+		@posts.unshift post
+		@update!

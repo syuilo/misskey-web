@@ -38,9 +38,9 @@ require '../../tags/home-widgets/user-recommendation.tag'
 require '../../tags/home-widgets/timeline.tag'
 require '../../tags/home-widgets/calendar.tag'
 require '../../tags/home-widgets/donate.tag'
-stream-indicator = require '../../tags/stream-indicator.tag'
-tl = require '../../tags/timeline.tag'
-ui = require '../../tags/ui.tag'
+require '../../tags/stream-indicator.tag'
+require '../../tags/timeline.tag'
+require '../../tags/ui.tag'
 
 state = riot.observable!
 event = riot.observable!
@@ -67,27 +67,9 @@ riot.mixin \stream do
 	stream: event
 	stream-state: state
 
-riot.mount ui
-
-riot.mount stream-indicator
-
-tl = (riot.mount tl).0
-
-api 'posts/timeline'
-	.then (posts) ->
-		tl.update opts: posts: posts
-	.catch (err, text-status) ->
-		console.error err
-
-is-active = yes
-unread-count = 0
+riot.mount '*'
 
 try
 	Notification.request-permission!
 catch
 	console.log 'oops'
-
-event.on \post (post) ->
-	console.log post
-	tl.opts.posts.unshift post
-	tl.update!
