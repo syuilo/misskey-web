@@ -391,7 +391,7 @@ script.
 			@draghover = false
 
 	@ondrop = (e) ~>
-		# ドラッグされてきたものがファイルだったら
+		# ドロップされてきたものがファイルだったら
 		if e.data-transfer.files.length > 0
 			e.stop-propagation!
 			@draghover = false
