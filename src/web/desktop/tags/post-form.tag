@@ -3,7 +3,7 @@ mk-post-form
 	div.attaches(if={ files.length != 0 })
 		ul.files@attaches
 			li.file(each={ files })
-				div.img(style='background-image: url({ url })', title={ name })
+				div.img(style='background-image: url({ url + "?thumbnail&size=64" })', title={ name })
 				img.remove(onclick={ _remove }, src='/_/resources/desktop/remove.png', title='添付取り消し', alt='')
 			li.add(if={ files.length < 4 }, title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-plus
 		p.remain
