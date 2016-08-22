@@ -1,4 +1,4 @@
-mk-post-form
+mk-post-form(ondragover={ ondragover }, ondragenter={ ondragenter }, ondragleave={ ondragleave }, ondrop={ ondrop })
 	textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, oninput={ update }, onkeypress={ onkeypress }, onpaste={ onpaste }, placeholder={ opts.reply ? 'この投稿への返信...' : 'いまどうしてる？' })
 	div.attaches(if={ files.length != 0 })
 		ul.files@attaches
@@ -14,6 +14,7 @@ mk-post-form
 	p.text-count(class={ over: text.value.length > 300 }) のこり{ 300 - text.value.length }文字
 	button@submit(class={ wait: wait }, disabled={ wait || (text.value.length == 0 && files.length == 0) }, onclick={ post }) { wait ? '投稿中...' : opts.reply ? '返信' : '投稿' }
 	input@file(type='file', accept='image/*', multiple, tabindex='-1', onchange={ change-file })
+	div.dropzone(if={ draghover })
 
 style.
 	display block
@@ -289,6 +290,16 @@ style.
 				border 2px solid rgba($theme-color, 0.3)
 				border-radius 8px
 
+	> .dropzone
+		position absolute
+		box-sizing border-box
+		left 0
+		top 0
+		width 100%
+		height 100%
+		border dashed 2px rgba($theme-color, 0.5)
+		pointer-events none
+
 script.
 	Sortable = require '../../../../bower_components/Sortable/Sortable.js'
 
@@ -306,6 +317,46 @@ script.
 	@clear = ~>
 		@text.value = ''
 		@update!
+
+	@ondragover = (e) ~>
+		e.stop-propagation!
+		@draghover = true
+		# ドラッグされてきたものがファイルだったら
+		if e.data-transfer.effect-allowed == \all
+			e.data-transfer.drop-effect = \copy
+		else
+			e.data-transfer.drop-effect = \move
+		return false
+
+	@ondragenter = (e) ~>
+		@draghover = true
+
+	@ondragleave = (e) ~>
+		@draghover = false
+
+	@ondrop = (e) ~>
+		e.stop-propagation!
+		@draghover = false
+
+		# ファイルだったら
+		if e.data-transfer.files.length > 0
+			Array.prototype.for-each.call e.data-transfer.files, (file) ~>
+				@upload file
+			return false
+
+		# データ取得
+		data = e.data-transfer.get-data 'text'
+		if !data?
+			return false
+
+		# パース
+		obj = JSON.parse data
+
+		# (ドライブの)ファイルだったら
+		if obj.type == \file
+			@add-file obj.file
+
+		return false
 
 	@onkeypress = (e) ~>
 		if (e.char-code == 10 || e.char-code == 13) && e.ctrl-key

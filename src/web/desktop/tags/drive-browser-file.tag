@@ -119,6 +119,7 @@ script.
 		e.data-transfer.set-data 'text' JSON.stringify do
 			type: \file
 			id: @file.id
+			file: @file
 		@is-dragging = true
 
 	@ondragend = (e) ~>
