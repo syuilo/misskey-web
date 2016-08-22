@@ -349,12 +349,15 @@ script.
 		if !data?
 			return false
 
-		# パース
-		obj = JSON.parse data
+		try
+			# パース
+			obj = JSON.parse data
 
-		# (ドライブの)ファイルだったら
-		if obj.type == \file
-			@add-file obj.file
+			# (ドライブの)ファイルだったら
+			if obj.type == \file
+				@add-file obj.file
+		catch
+			# ignore
 
 		return false
 
