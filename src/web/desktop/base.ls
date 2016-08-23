@@ -3,6 +3,47 @@ riot = require 'riot'
 require 'velocity'
 ReconnectingWebSocket = require 'reconnecting-websocket'
 
+riot = require 'riot'
+require './tags/contextmenu.tag'
+require './tags/dialog.tag'
+require './tags/window.tag'
+require './tags/input-dialog.tag'
+require './tags/follow-button.tag'
+require './tags/uploader.tag'
+require './tags/drive/base-contextmenu.tag'
+require './tags/drive/file-contextmenu.tag'
+require './tags/drive/folder-contextmenu.tag'
+require './tags/drive/file.tag'
+require './tags/drive/folder.tag'
+require './tags/drive/nav-folder.tag'
+require './tags/drive/browser-window.tag'
+require './tags/drive/browser.tag'
+require './tags/select-file-from-drive-window.tag'
+require './tags/crop-window.tag'
+require './tags/settings.tag'
+require './tags/settings-window.tag'
+require './tags/post.tag'
+require './tags/analog-clock.tag'
+require './tags/go-top.tag'
+require './tags/ui-header.tag'
+require './tags/header-account.tag'
+require './tags/header-clock.tag'
+require './tags/header-nav.tag'
+require './tags/header-post-button.tag'
+require './tags/header-search.tag'
+require './tags/post-form-window.tag'
+require './tags/post-form.tag'
+require './tags/post.tag'
+require './tags/post-preview.tag'
+require './tags/repost-form-window.tag'
+require './tags/home-widgets/user-recommendation.tag'
+require './tags/home-widgets/timeline.tag'
+require './tags/home-widgets/calendar.tag'
+require './tags/home-widgets/donate.tag'
+require './tags/stream-indicator.tag'
+require './tags/timeline.tag'
+require './tags/ui.tag'
+
 riot.mixin \dialog do
 	dialog: (title, text, buttons, can-through, on-through) ~>
 		dialog = document.body.append-child document.create-element \mk-dialog
@@ -29,12 +70,6 @@ riot.mixin \input-dialog do
 
 riot.mixin \cropper do
 	Cropper: require 'cropper'
-
-# ブラウザが通知をサポートしているか確認
-if \Notification in window
-	# 許可を得ていない場合は許可を得る
-	if Notification.permission == \default
-		Notification.request-permission!
 
 state = riot.observable!
 event = riot.observable!
@@ -66,3 +101,11 @@ event.on \drive_file_created (file) ~>
 riot.mixin \stream do
 	stream: event
 	stream-state: state
+
+riot.mount '*'
+
+# ブラウザが通知をサポートしているか確認
+if \Notification in window
+	# 許可を得ていない場合は許可を得る
+	if Notification.permission == \default
+		Notification.request-permission!
