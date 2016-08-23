@@ -1,6 +1,20 @@
 mk-settings
 	div.nav
-		a アカウント
+		p(class={ active: page == 'account' }, onclick={ page-account })
+			i.fa.fa-fw.fa-user
+			| アカウント
+		p(class={ active: page == 'drive' }, onclick={ page-drive })
+			i.fa.fa-fw.fa-cloud
+			| ドライブ
+		p(class={ active: page == 'apps' }, onclick={ page-apps })
+			i.fa.fa-fw.fa-puzzle-piece
+			| アプリ
+		p(class={ active: page == 'signin' }, onclick={ page-signin })
+			i.fa.fa-fw.fa-sign-in
+			| ログイン履歴
+		p(class={ active: page == 'password' }, onclick={ page-password })
+			i.fa.fa-fw.fa-unlock-alt
+			| パスワード
 	div.pages
 		section.account(show={ page == 'account' })
 			h1 アカウント
@@ -32,14 +46,31 @@ style.
 		padding 16px 0 0 0
 		background lighten($theme-color, 95%)
 		border-right solid 1px lighten($theme-color, 85%)
+		cursor pointer
 
-		> a
+		> p
 			display block
 			padding 10px
-			background #fff
+			margin 0 0 -1px 0
+			color lighten($theme-color, 30%)
+			background rgba(#fff, 0.5)
 			border-top solid 1px lighten($theme-color, 85%)
 			border-bottom solid 1px lighten($theme-color, 85%)
-			box-shadow 1px 0 #fff
+
+			-ms-user-select none
+			-moz-user-select none
+			-webkit-user-select none
+			user-select none
+
+			> i
+				margin-right 4px
+
+			&.active
+				color $theme-color
+				background #fff
+				border-top solid 1px lighten($theme-color, 85%)
+				border-bottom solid 1px lighten($theme-color, 85%)
+				box-shadow 1px 0 #fff
 
 	> .pages
 		position absolute
@@ -95,6 +126,21 @@ script.
 	@user = window.USER
 
 	@page = \account
+
+	@page-account = ~>
+		@page = \account
+
+	@page-apps = ~>
+		@page = \apps
+
+	@page-drive = ~>
+		@page = \drive
+
+	@page-signin = ~>
+		@page = \signin
+
+	@page-password = ~>
+		@page = \password
 
 	@avatar = ~>
 		browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
