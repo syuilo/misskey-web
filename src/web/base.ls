@@ -4,7 +4,9 @@ window.api = (endpoint, data) ->
 	body = []
 
 	for k, v of data
-		if v != undefined then body.push "#k=#v"
+		if v != undefined
+			v = encodeURIComponent v
+			body.push "#k=#v"
 
 	if SIGNIN
 		body.push "_i=#{USER._web}"
