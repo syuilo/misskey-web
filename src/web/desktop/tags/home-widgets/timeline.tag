@@ -12,6 +12,12 @@ script.
 
 	@on \mount ~>
 		document.add-event-listener \visibilitychange @window-on-visibilitychange, false
+		document.add-event-listener \keydown (e) ~>
+			tag = e.target.tag-name.to-lower-case!
+			if tag != \input and tag != \textarea
+				if e.which == 84 # t
+					@controller.trigger \focus
+
 		api \posts/timeline
 			.then (posts) ~>
 				@controller.trigger \set-posts posts

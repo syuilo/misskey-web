@@ -31,3 +31,6 @@ script.
 	@controller.on \add-post (post) ~>
 		@posts.unshift post
 		@update!
+
+	@controller.on \focus ~>
+		@tags['mk-post'].0.root.focus!
