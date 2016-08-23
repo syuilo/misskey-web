@@ -15,7 +15,6 @@ import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
-import * as csrf from 'csurf';
 import * as favicon from 'serve-favicon';
 import * as redis from 'connect-redis';
 const hsts = require('hsts');
@@ -102,13 +101,6 @@ app.use(session({
 }));
 
 /**
- * CSRF
- */
-app.use(csrf({
-	cookie: false
-}));
-
-/**
  * Parse user-agent
  */
 app.use(useragent.express());
@@ -122,10 +114,7 @@ app.use(async (req, res, next): Promise<any> =>
 	res.header('X-Frame-Options', 'DENY');
 
 	// See http://web-tan.forum.impressrd.jp/e/2013/05/17/15269
-	res.header('Vary', 'User-Agent, Cookie');
-
-	// Get CSRF token
-	res.locals.csrftoken = req.csrfToken();
+	res.header('Vary', 'User-Agent');
 
 	// Check signin
 	res.locals.signin =

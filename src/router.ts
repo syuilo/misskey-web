@@ -95,18 +95,8 @@ export default function(app: express.Express): void {
 	});
 
 	/**
-	 * Error handlers
+	 * Error handler
 	 */
-
-	app.use((err: any, req: express.Request, res: express.Response, next: any) => {
-		if (err.code !== 'EBADCSRFTOKEN') {
-			return next(err);
-		}
-
-		// handle CSRF token errors
-		res.status(403).send('detected csrf');
-	});
-
 	app.use((err: any, req: express.Request, res: express.Response, next: any) => {
 		console.error(err);
 		//render(req, res, 'error', err);

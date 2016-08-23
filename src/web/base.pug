@@ -19,7 +19,6 @@ html(lang='ja', dir='ltr')
 		script!= 'document.domain="' + config.host + '"'
 		script!= 'window.SIGNIN=' + signin.toString()
 		script!= 'eval(decodeURIComponent("' + encodeURIComponent('window.USER=' + JSON.stringify(user)) + '"))'
-		script!= 'window.CSRF_TOKEN="' + csrftoken + '"'
 		//-
 			script(type='application/ld+json').
 				{

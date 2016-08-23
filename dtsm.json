@@ -43,9 +43,6 @@
     "request/request.d.ts": {
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
     },
-    "gm/gm.d.ts": {
-      "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
-    },
     "socket.io/socket.io.d.ts": {
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
     },
@@ -56,9 +53,6 @@
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
     },
     "redis/redis.d.ts": {
-      "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
-    },
-    "csurf/csurf.d.ts": {
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
     },
     "serve-favicon/serve-favicon.d.ts": {
