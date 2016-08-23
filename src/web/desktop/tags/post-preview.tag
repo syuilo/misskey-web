@@ -1,7 +1,7 @@
 mk-post-preview(title={ title })
 	article
 		a.avatar-anchor(href= config.url + '/' + { post.user.username })
-			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar', data-user-card={ post.user.username })
+			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-card={ post.user.username })
 		div.main
 			header
 				div.left

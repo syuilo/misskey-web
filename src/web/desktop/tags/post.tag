@@ -25,8 +25,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 					a.time
 						| { p.created_at }
 			div.body
-				div.text
-					| { p.text }
+				div.text@text
 			footer
 				button(onclick={ reply }, title='返信'): i.fa.fa-reply
 				button(onclick={ repost }, title='Repost'): i.fa.fa-retweet
@@ -43,7 +42,21 @@ style.
 	font-family 'Meiryo', 'メイリオ', sans-serif
 	background #fff
 	background-clip padding-box
-	overflow hidden
+	//overflow hidden
+
+	&:focus
+		z-index 1
+
+		&:after
+			content ""
+			pointer-events none
+			position absolute
+			top -4px
+			right -4px
+			bottom -4px
+			left -4px
+			border 2px solid rgba($theme-color, 0.3)
+			border-radius 4px
 
 	> .repost
 		color #9dbb00
@@ -184,6 +197,9 @@ script.
 	@repost-form = null
 	@repost-form-controller = riot.observable!
 
+	@on \mount ~>
+		@text.innerHTML = @parse-text @p.text
+
 	@reply = ~>
 		if !@reply-form?
 			@reply-form = document.body.append-child document.create-element \mk-post-form-window
@@ -199,3 +215,38 @@ script.
 				controller: @repost-form-controller
 				post: @p
 		@repost-form-controller.trigger \open
+
+	@parse-text = (text) ~>
+		if !text?
+			return null
+		return analyzeHashtags(analyzeMentions(analyzeUrl(analyzeStrike(analyzeBold(escapeHtml(text)))))).replace(/(\r\n|\r|\n)/g, '<br>');
+
+		function escapeHtml(text) {
+			return text.replace(/>/g,'&gt;').replace(/</g,'&lt;');
+		}
+
+		function analyzeUrl(text) {
+			'use strict';
+			return text.replace(/https?:(\/\/(([-.0-9_a-z~]|%[0-9a-f][0-9a-f]|[!$&-,:;=])*@)?(\[(([0-9a-f]{1,4}:){6}([0-9a-f]{1,4}:[0-9a-f]{1,4}|(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5]))|::([0-9a-f]{1,4}:){5}([0-9a-f]{1,4}:[0-9a-f]{1,4}|(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5]))|([0-9a-f]{1,4})?::([0-9a-f]{1,4}:){4}([0-9a-f]{1,4}:[0-9a-f]{1,4}|(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5]))|(([0-9a-f]{1,4}:)?[0-9a-f]{1,4})?::([0-9a-f]{1,4}:){3}([0-9a-f]{1,4}:[0-9a-f]{1,4}|(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5]))|(([0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::([0-9a-f]{1,4}:){2}([0-9a-f]{1,4}:[0-9a-f]{1,4}|(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5]))|(([0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::[0-9a-f]{1,4}:([0-9a-f]{1,4}:[0-9a-f]{1,4}|(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5]))|(([0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::([0-9a-f]{1,4}:[0-9a-f]{1,4}|(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5]))|(([0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(([0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::|v[0-9a-f]+\.[!$&-.0-;=_a-z~]+)\]|(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])|([-.0-9_a-z~]|%[0-9a-f][0-9a-f]|[!$&-,;=])*)(:\d*)?(\/([-.0-9_a-z~]|%[0-9a-f][0-9a-f]|[!$&-,:;=@])*)*|\/(([-.0-9_a-z~]|%[0-9a-f][0-9a-f]|[!$&-,:;=@])+(\/([-.0-9_a-z~]|%[0-9a-f][0-9a-f]|[!$&-,:;=@])*)*)?|([-.0-9_a-z~]|%[0-9a-f][0-9a-f]|[!$&-,:;=@])+(\/([-.0-9_a-z~]|%[0-9a-f][0-9a-f]|[!$&-,:;=@])*)*)?(\?([-.0-9_a-z~]|%[0-9a-f][0-9a-f]|[!$&-,\/:;=?@])*)?(#([-.0-9_a-z~]|%[0-9a-f][0-9a-f]|[!$&-,\/:;=?@])*)?/gi, function(url) {
+				return '<a href="' + url + '" title="' + url + '" target="_blank" class="url" rel="nofollow">' + url + '</a>';
+			});
+		}
+		function analyzeMentions(text) {
+			'use strict';
+			return text.replace(/@([a-zA-Z0-9\-]+)/g, function(arg, screenName) {
+				return '<a href="' + config.url + '/' + screenName + '" class="mention" data-user-card="' + screenName + '">@' + screenName + '</a>';
+			});
+		}
+
+		function analyzeBold(text) {
+			'use strict';
+			return text.replace(/\*\*(.+?)\*\*/g, function(arg, boldee) {
+				return '<strong>' + boldee + '</strong>';
+			});
+		}
+		function analyzeHashtags(text) {
+			'use strict';
+			return text.replace(/(^|\s)#(\S+)/g, function(arg, _, tag) {
+				return _ + '<a href="' + config.url + '/search/hashtag:' + tag + '" class="hashtag">#' + tag + '</a>';
+			});
+		}
