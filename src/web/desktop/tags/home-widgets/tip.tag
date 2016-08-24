@@ -11,7 +11,7 @@ style.
 	> p
 		display block
 		margin 0
-		padding 8px
+		padding 8px 12px
 		text-align center
 		font-size 0.8em
 		color #999
