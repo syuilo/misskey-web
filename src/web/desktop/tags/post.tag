@@ -1,5 +1,4 @@
 mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
-	//i.fa.fa-ellipsis-v.talk-ellipsis(if={reply_to.reply_to?})
 
 	div.reply-to(if={ p.reply_to })
 		mk-post-preview(post={ p.reply_to })
@@ -27,12 +26,14 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 			div.body
 				div.text@text
 			footer
-				button(onclick={ reply }, title='返信'): i.fa.fa-reply
-				button(onclick={ repost }, title='Repost'): i.fa.fa-retweet
+				button(onclick={ reply }, title='返信')
+					i.fa.fa-reply
+					p.count(if={ p.replies_count > 0 }) { p.replies_count }
+				button(onclick={ repost }, title='Repost')
+					i.fa.fa-retweet
+					p.count(if={ p.repost_count > 0 }) { p.repost_count }
 				button: i.fa.fa-plus
 				button: i.fa.fa-ellipsis-h
-
-	// i.fa.fa-ellipsis-v.replies-ellipsis(if={replies_count > 0})
 
 style.
 	display block
@@ -42,7 +43,6 @@ style.
 	font-family 'Meiryo', 'メイリオ', sans-serif
 	background #fff
 	background-clip padding-box
-	//overflow hidden
 
 	&:focus
 		z-index 1
@@ -184,6 +184,11 @@ style.
 
 					&:hover
 						color #666
+
+					> .count
+						display inline
+						margin 0 0 0 8px
+						color #999
 
 script.
 	@post = opts.post

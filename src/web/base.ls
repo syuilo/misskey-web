@@ -11,12 +11,22 @@ window.api = (endpoint, data) ->
 	if SIGNIN
 		body.push "_i=#{USER._web}"
 
+	web = (endpoint.index-of '://') > -1
+
+	opts =
+		method: \POST
+		headers:
+			'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+		body: body.join \&
+
+	if web
+		ep = endpoint
+		opts.credentials = \include
+	else
+		ep = "#{CONFIG.api.url}/#{endpoint}"
+
 	new Promise (resolve, reject) ->
-		fetch "#{CONFIG.api.url}/#{endpoint}" do
-			method: \POST
-			headers:
-				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-			body: body.join \&
+		fetch ep, opts
 		.then (res) ->
 			if res.status == 200
 				res.json!

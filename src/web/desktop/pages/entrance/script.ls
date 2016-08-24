@@ -227,7 +227,7 @@ function init-signin-form
 		$submit-button = $form.find '[type=submit]'
 			..attr \disabled on
 
-		webapi CONFIG.urls.signin, do
+		api CONFIG.urls.signin, do
 			username: $form.find '[name="username"]' .val!
 			password: $form.find '[name="password"]' .val!
 		.then ->
@@ -354,7 +354,7 @@ function init-signup-form
 
 		$ \html .add-class \logging
 
-		webapi 'account/create' do
+		api 'account/create' do
 			username: username
 			password: password
 			'g-recaptcha-response': grecaptcha.get-response!
