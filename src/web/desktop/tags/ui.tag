@@ -42,3 +42,9 @@ script.
 
 	@on \mount ~>
 		document.body.style.margin-top = @header.client-height + \px
+		document.add-event-listener \keydown (e) ~>
+			tag = e.target.tag-name.to-lower-case!
+			if tag != \input and tag != \textarea
+				if e.which == 80 or e.which == 78 # p or n
+					e.prevent-default!
+					@post-form-controller.trigger \open

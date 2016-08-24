@@ -100,3 +100,15 @@ script.
 		.then ~>
 			@wait = false
 			@update!
+
+	@on-document-keydown = (e) ~>
+		tag = e.target.tag-name.to-lower-case!
+		if tag != \input and tag != \textarea
+			if e.which == 27 # Esc
+				@opts.controller.trigger \close
+
+	@on \mount ~>
+		document.add-event-listener \keydown @on-document-keydown
+
+	@on \unmount ~>
+		document.remove-event-listener \keydown @on-document-keydown
