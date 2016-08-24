@@ -38,6 +38,8 @@ export default function(app: express.Express): void {
 		render(req, res, 'color');
 	});
 
+	app.post(`${signupDomain}/`, require('./api/account/create').default);
+
 	app.get(`${signupDomain}/`, (req, res) => {
 		if (res.locals.signin) {
 			res.redirect(config.url);
@@ -81,14 +83,11 @@ export default function(app: express.Express): void {
 	/**
 	 * API handlers
 	 */
-
-	app.post('/_/api/account/create', require('./api/account/create').default);
 	app.post('/_/api/url/analyze', require('./api/url/analyze').default);
 
 	/**
 	 * Not found handler
 	 */
-
 	app.use((req, res) => {
 		res.status(404);
 		render(req, res, 'not-found');

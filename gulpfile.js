@@ -350,6 +350,7 @@ gulp.task('build:scripts', done => {
 				.pipe(replace(/CONFIG\.themeColor/g, '"' + config.themeColor + '"'))
 				.pipe(replace(/CONFIG\.api\.url/g, '"' + config.core.www + '"'))
 				.pipe(replace(/CONFIG\.urls\.signin/g, '"' + config.urls.signin + '"'))
+				.pipe(replace(/CONFIG\.urls\.signup/g, '"' + config.urls.signup + '"'))
 				.pipe(replace(/CONFIG\.url/g, '"' + config.url + '"'));
 
 			if (isProduction) {

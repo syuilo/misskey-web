@@ -354,7 +354,7 @@ function init-signup-form
 
 		$ \html .add-class \logging
 
-		api 'account/create' do
+		api CONFIG.urls.signup, do
 			username: username
 			password: password
 			'g-recaptcha-response': grecaptcha.get-response!
