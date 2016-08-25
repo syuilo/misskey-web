@@ -60,6 +60,8 @@ style.
 			right 0
 			bottom 0
 			margin auto
+			max-width 128px
+			max-height 128px
 			pointer-events none
 
 	> .name
