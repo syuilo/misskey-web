@@ -11,7 +11,7 @@ style.
 	> p
 		display block
 		margin 0
-		padding 8px 12px
+		padding 12px 12px
 		text-align center
 		font-size 0.8em
 		color #999
@@ -21,7 +21,7 @@ style.
 
 		kbd
 			display inline
-			padding 2px 6px
+			padding 0 6px
 			margin 0 2px
 			font-size 1em
 			font-family inherit
