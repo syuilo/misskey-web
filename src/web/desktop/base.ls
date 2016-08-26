@@ -1,5 +1,4 @@
 require '../base.ls'
-riot = require 'riot'
 require 'velocity'
 ReconnectingWebSocket = require 'reconnecting-websocket'
 
@@ -103,7 +102,7 @@ riot.mixin \stream do
 	stream: event
 	stream-state: state
 
-riot.mount '*'
+riot.mount 'mk-ui'
 
 # ブラウザが通知をサポートしているか確認
 if \Notification in window
