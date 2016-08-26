@@ -25,8 +25,6 @@ script.
 	@controller = riot.observable!
 
 	@on \mount ~>
-		alert \mount
-
 		document.add-event-listener \visibilitychange @window-on-visibilitychange, false
 		document.add-event-listener \keydown (e) ~>
 			tag = e.target.tag-name.to-lower-case!
