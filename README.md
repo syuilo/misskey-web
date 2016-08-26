@@ -10,8 +10,7 @@
 ## External dependencies
 * Node.js
 * npm
-* Redis
-* GraphicsMagick (for trimming, compress, etc etc)
+* Redis (for store session date)
 
 ## How to build
 1. `git clone git://github.com/syuilo/misskey-web.git`
