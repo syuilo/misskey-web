@@ -8,8 +8,6 @@ export default (username: string, password: string, res: express.Response) => ne
 		password: password
 	});
 
-	console.log(user);
-
 	const expires = 1000 * 60 * 60 * 24 * 365; // One Year
 	res.cookie('i', user._web, {
 		path: '/',
