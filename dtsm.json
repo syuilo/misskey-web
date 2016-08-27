@@ -25,9 +25,6 @@
     "cookie-parser/cookie-parser.d.ts": {
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
     },
-    "express-session/express-session.d.ts": {
-      "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
-    },
     "moment/moment.d.ts": {
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
     },
@@ -35,9 +32,6 @@
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
     },
     "compression/compression.d.ts": {
-      "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
-    },
-    "connect-mongo/connect-mongo.d.ts": {
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
     },
     "request/request.d.ts": {
@@ -50,9 +44,6 @@
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
     },
     "cookie/cookie.d.ts": {
-      "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
-    },
-    "redis/redis.d.ts": {
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
     },
     "serve-favicon/serve-favicon.d.ts": {
@@ -70,13 +61,7 @@
     "express-useragent/express-useragent.d.ts": {
       "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
     },
-    "connect-redis/connect-redis.d.ts": {
-      "ref": "0d1048c7bbac722c592c5e9af54e310fc5658053"
-    },
     "chalk/chalk.d.ts": {
-      "ref": "e65947027120a0dc77723266906e4ce6c28bd725"
-    },
-    "del/del.d.ts": {
       "ref": "e65947027120a0dc77723266906e4ce6c28bd725"
     },
     "inquirer/inquirer.d.ts": {

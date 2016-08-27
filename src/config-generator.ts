@@ -75,23 +75,6 @@ export default async function(): Promise<void> {
 			type: 'input',
 			name: 'core_url',
 			message: 'Core URL:'
-		},
-		{
-			type: 'input',
-			name: 'redis_host',
-			message: 'Redis\'s host:',
-			default: 'localhost'
-		},
-		{
-			type: 'input',
-			name: 'redis_port',
-			message: 'Redis\'s port:',
-			default: '6379'
-		},
-		{
-			type: 'password',
-			name: 'redis_pass',
-			message: 'Redis\'s password:'
 		}
 	]);
 
@@ -114,11 +97,6 @@ export default async function(): Promise<void> {
 			host: as.core_host,
 			port: parseInt(as.core_port, 10),
 			www: as.core_url
-		},
-		redis: {
-			host: as.redis_host,
-			port: parseInt(as.redis_port, 10),
-			pass: as.redis_pass
 		}
 	};
 

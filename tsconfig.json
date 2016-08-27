@@ -28,7 +28,6 @@
 	"files": [
 		"./node_modules/typescript/lib/lib.es6.d.ts",
 		"./typings/bundle.d.ts",
-		"./src/api/account/create.ts",
 		"./src/api/url/analyze.ts",
 		"./src/argv.ts",
 		"./src/check-dependencies.ts",
@@ -37,6 +36,7 @@
 		"./src/config.ts",
 		"./src/core/api.ts",
 		"./src/core/signin.ts",
+		"./src/core/signup.ts",
 		"./src/iconfig.ts",
 		"./src/index.ts",
 		"./src/load-config.ts",

@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as request from 'request';
-import api from '../../core/api';
-import config from '../../config';
+import api from '../core/api';
+import config from '../config';
 
 export default (req: express.Request, res: express.Response) => {
 	request({

@@ -7,10 +7,8 @@
 
 *Misskey* official client for the Web.
 
-## External dependencies
-* Node.js
-* npm
-* Redis (for store session date)
+## Dependencies
+**Nothing** except for *Node.js*
 
 ## How to build
 1. `git clone git://github.com/syuilo/misskey-web.git`
@@ -39,10 +37,6 @@ https:
   key: "path/of/your/tls/key"
   cert: "path/of/your/tls/cert"
   ca: "path/of/your/tls/ca"
-
-redis:
-  host: "localhost"
-  port: 6379
 
 core:
   apikey: hoge

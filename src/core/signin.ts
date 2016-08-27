@@ -1,33 +1,24 @@
+import * as express from 'express';
 import api from '../core/api';
+import config from '../config';
 
-export default (username: string, password: string, session: any) => new Promise<void>(async (resove, reject) => {
+export default (username: string, password: string, res: express.Response) => new Promise<void>(async (resove, reject) => {
 	const user = await api('signin', {
 		username: username,
 		password: password
 	});
 
-	save(user);
-/*
-	// ユーザー設定引き出し
-	const settings = await UserSetting.findOne({
-		userId: user.id
+	console.log(user);
+
+	const expires = 1000 * 60 * 60 * 24 * 365; // One Year
+	res.cookie('i', user._web, {
+		path: '/',
+		domain: `.${config.host}`,
+		secure: config.https.enable,
+		httpOnly: true,
+		expires: new Date(Date.now() + expires),
+		maxAge: expires
 	});
 
-	if (settings === null) {
-		// ユーザー設定が無ければ作成
-		UserSetting.create({
-			userId: user.id
-		}, () => {
-			save(user);
-		});
-	} else {
-		save(user);
-	}
-*/
-	function save(user: any): void {
-		session.user = user.id;
-		session.save(() => {
-			resove();
-		});
-	}
+	res.sendStatus(204);
 });

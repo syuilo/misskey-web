@@ -18,9 +18,4 @@ export interface IConfig {
 		port: number;
 		www: string;
 	};
-	redis: {
-		host: string;
-		port: number;
-		pass: string;
-	};
 }

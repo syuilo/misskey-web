@@ -38,7 +38,7 @@ export default function(app: express.Express): void {
 		render(req, res, 'color');
 	});
 
-	app.post(`${signupDomain}/`, require('./api/account/create').default);
+	app.post(`${signupDomain}/`, require('./core/signup').default);
 
 	app.get(`${signupDomain}/`, (req, res) => {
 		if (res.locals.signin) {
@@ -49,22 +49,12 @@ export default function(app: express.Express): void {
 	});
 
 	app.post(`${signinDomain}/`, (req, res) => {
-		signin(req.body.username, req.body.password, req.session).then(() => {
-			res.sendStatus(204);
-		}, err => {
-			res.status(err.statusCode).send(err.body);
-		});
+		signin(req.body.username, req.body.password, res);
 	});
 
 	app.get(`${signinDomain}/`, (req, res) => {
 		if (res.locals.signin) {
 			res.redirect(config.url);
-		} else if (req.query.username && req.query.password) {
-			signin(req.query.username, req.query.password, req.session).then(() => {
-				res.redirect(config.url);
-			}, err => {
-				res.status(err.statusCode).send(err.body);
-			});
 		} else {
 			render(req, res, 'signin');
 		}
