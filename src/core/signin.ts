@@ -2,7 +2,7 @@ import * as express from 'express';
 import api from '../core/api';
 import config from '../config';
 
-export default (username: string, password: string, res: express.Response) => new Promise<void>(async (resove, reject) => {
+export default async function (username: string, password: string, res: express.Response): Promise<void> {
 	const user = await api('signin', {
 		username: username,
 		password: password
@@ -19,4 +19,4 @@ export default (username: string, password: string, res: express.Response) => ne
 	});
 
 	res.sendStatus(204);
-});
+};
