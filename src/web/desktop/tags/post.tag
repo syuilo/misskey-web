@@ -203,7 +203,8 @@ script.
 	@repost-form-controller = riot.observable!
 
 	@on \mount ~>
-		@text.innerHTML = @parse-text @p.text
+		if @p.text?
+			@text.innerHTML = @parse-text @p.text
 
 	@reply = ~>
 		if !@reply-form?

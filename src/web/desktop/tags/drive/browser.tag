@@ -15,9 +15,13 @@ mk-drive-browser
 			div.folders@folders-container(if={ folders.length > 0 })
 				virtual(each={ folder in folders })
 					mk-drive-browser-folder.folder(folder={ folder })
+				p(if={ more-folders })
+					| もっと読み込む
 			div.files@files-container(if={ files.length > 0 })
 				virtual(each={ file in files })
 					mk-drive-browser-file.file(file={ file })
+				p(if={ more-files })
+					| もっと読み込む
 			div.empty(if={ files.length == 0 && folders.length == 0 && !loading })
 				p(if={ draghover })
 					| ドロップですか？いいですよ、ボクはカワイイですからね
@@ -553,16 +557,24 @@ script.
 	@load = ~>
 		@folders = []
 		@files = []
+		@more-folders = false
+		@more-files = false
 		@loading = true
 		@update!
 
 		load-folders = null
 		load-files = null
 
+		folders-max = 30
+		files-max = 30
+
 		api 'drive/folders' do
 			folder: if @folder? then @folder.id else null
-			limit: 30
+			limit: folders-max + 1
 		.then (folders) ~>
+			if folders.length == folders-max + 1
+				@more-folders = true
+				folders.pop!
 			load-folders := folders
 			complete!
 		.catch (err, text-status) ~>
@@ -570,8 +582,11 @@ script.
 
 		api 'drive/files' do
 			folder: if @folder? then @folder.id else null
-			limit: 30
+			limit: files-max + 1
 		.then (files) ~>
+			if files.length == files-max + 1
+				@more-files = true
+				files.pop!
 			load-files := files
 			complete!
 		.catch (err, text-status) ~>

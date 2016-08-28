@@ -421,8 +421,14 @@ script.
 
 	@post = (e) ~>
 		@wait = true
+
+		files = if @files?
+			then @files.map (f) -> f.id
+			else undefined
+
 		api 'posts/create' do
 			text: @text.value
+			files: files
 			reply_to: if @opts.reply? then @opts.reply.id else undefined
 		.then (data) ~>
 			@controller.trigger \post
