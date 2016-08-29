@@ -89,7 +89,7 @@ style.
 				margin 0
 				padding 0 0 8px 0
 				font-size 1em
-				color #444
+				color #555
 				border-bottom solid 1px #eee
 
 			div
@@ -105,7 +105,7 @@ style.
 				> p
 					margin 0 0 8px 0
 					font-weight bold
-					color #555
+					color #666
 
 			&.account
 				> .avatar

@@ -140,7 +140,7 @@ style.
 						display inline
 						margin 0
 						padding 0
-						color #736060
+						color #777
 						font-size 1em
 						font-weight 700
 						text-align left
@@ -152,13 +152,13 @@ style.
 					> .username
 						text-align left
 						margin 0 0 0 8px
-						color #e2d1c1
+						color #ccc
 
 				> .right
 					float right
 
 					> .time
-						color #b7a793
+						color #c0c0c0
 
 			> .body
 
