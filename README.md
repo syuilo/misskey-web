@@ -1,5 +1,5 @@
-![](./web.png)
------------------------------
+Misskey Web
+===========
 
 [![][travis-badge]][travis-link]
 [![][dependencies-badge]][dependencies-link]
@@ -7,10 +7,12 @@
 
 *Misskey* official client for the Web.
 
-## Dependencies
+Required
+--------
 **Nothing** except for *Node.js*
 
-## How to build
+Build
+-----
 1. `git clone git://github.com/syuilo/misskey-web.git`
 2. `cd misskey-web`
 3. `npm install`
@@ -18,13 +20,12 @@
 4. `./node_modules/.bin/bower install --allow-root`
 5. `npm run build`
 
-## How to launch
+Launch
+------
 `npm start`
 
-## Show options
-`npm start -- -h`
-
-## Configuration
+Configuration
+-------------
 **初回起動時に表示されるウィザードに従えば自動的に設定ファイルが生成・設定されます**が、一応サンプル載せときます:
 ``` yaml
 maintainer: Your Name <youremail@example.com>
@@ -51,15 +52,14 @@ recaptcha:
 
 ```
 
-## People
+Repositories
+------------
+* **misskey-web** ... :round_pushpin: This repository
+* [misskey-core](https://github.com/syuilo/misskey-core) ... Core API server
+* [misskey-file](https://github.com/syuilo/misskey-file) ... Drive file server
 
-The original author of Misskey is [syuilo](https://github.com/syuilo)
-
-The current lead maintainer is [syuilo](https://github.com/syuilo)
-
-[List of all contributors](https://github.com/syuilo/misskey-web/graphs/contributors)
-
-## License
+License
+-------
 [MIT](LICENSE)
 
 [mit]:                http://opensource.org/licenses/MIT
