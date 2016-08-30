@@ -94,14 +94,14 @@ app.use(async (req, res, next): Promise<any> =>
 
 	if (i === undefined) {
 		res.locals.signin = false;
-		res.locals.user = null;
+		res.locals.i = null;
 		return next();
 	}
 
 	// Fetch user data
 	try {
 		res.locals.signin = true;
-		res.locals.user = await api('i', { _i: i });
+		res.locals.i = await api('i', { _i: i });
 	} catch (e) {
 		console.error(e);
 		res.status(500).send('Core Error');

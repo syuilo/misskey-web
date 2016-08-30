@@ -1,13 +1,13 @@
 mk-header-account
 	button.header(data-active={ is-open }, onclick={ toggle })
 		span.username
-			| { USER.username }
+			| { I.username }
 			i.fa.fa-angle-down(if={ !is-open })
 			i.fa.fa-angle-up(if={ is-open })
-		img.avatar(src={ USER.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+		img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 	div.menu(if={ is-open })
 		ul
-			li: a(href= config.url + '/' + { USER.username })
+			li: a(href= config.url + '/' + { I.username })
 				i.fa.fa-user
 				| プロフィール
 				i.fa.fa-angle-right
@@ -15,7 +15,7 @@ mk-header-account
 				i.fa.fa-cloud
 				| ドライブ
 				i.fa.fa-angle-right
-			li: a(href= config.url + '/{ USER.username }/likes')
+			li: a(href= config.url + '/{ I.username }/likes')
 				i.fa.fa-star
 				| お気に入り
 				i.fa.fa-angle-right

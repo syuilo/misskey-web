@@ -9,7 +9,7 @@ window.api = (endpoint, data) ->
 			body.push "#k=#v"
 
 	if SIGNIN
-		body.push "_i=#{USER._web}"
+		body.push "_i=#{I._web}"
 
 	web = (endpoint.index-of '://') > -1
 

@@ -7,6 +7,7 @@ const subdomain = require('subdomain');
 
 import signin from './core/signin';
 import config from './config';
+import api from './core/api';
 
 const subdomainOptions = {
 	base: config.host,
@@ -32,6 +33,15 @@ export default function(app: express.Express): void {
 
 	app.get('/_/terms-of-use', (req, res) => {
 		render(req, res, 'terms-of-use');
+	});
+
+	app.get('/:username', async (req, res) => {
+		const user = await api('users/show', {
+			username: req.params.username
+		});
+		render(req, res, 'user', {
+			user: user
+		});
 	});
 
 	app.get(`${colorDomain}/`, (req, res) => {

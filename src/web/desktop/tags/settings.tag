@@ -123,7 +123,7 @@ style.
 						margin-left 8px
 
 script.
-	@user = window.USER
+	@user = window.I
 
 	@page = \account
 

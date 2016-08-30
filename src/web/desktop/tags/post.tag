@@ -25,6 +25,9 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 						| { p.created_at }
 			div.body
 				div.text@text
+				div.images(if={ p.images })
+					virtual(each={ file in p.images })
+						img(src={ file.url + '?thumbnail&size=512' }, alt={ file.name }, title={ file.name })
 			footer
 				button(onclick={ reply }, title='返信')
 					i.fa.fa-reply
@@ -170,6 +173,11 @@ style.
 					word-wrap break-word
 					font-size 1.1em
 					color #717171
+
+				> .images
+					> img
+						display block
+						max-width 100%
 
 			> footer
 				> button

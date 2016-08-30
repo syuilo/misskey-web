@@ -79,7 +79,7 @@ socket = new ReconnectingWebSocket CONFIG.api.url.replace \http \ws
 socket.onopen = ~>
 	state.trigger \connected
 	socket.send JSON.stringify do
-		i: USER._web
+		i: I._web
 
 socket.onclose = ~>
 	state.trigger \closed

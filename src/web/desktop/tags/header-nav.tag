@@ -1,11 +1,11 @@
-mk-header-nav: ul(if={SIGNIN})
+mk-header-nav: ul(if={ SIGNIN })
 	li.home.active: a(href= config.url)
 		i.fa.fa-home
 		p ホーム
 	li.mentions: a(href= config.url + '/i/mentions')
 		i.fa.fa-at
 		p あなた宛て
-	li.talks: a(href= config.talkUrl)
+	li.talks: a(href= config.talkUrl, onclick={ talk })
 		i.fa.fa-comments
 		p トーク
 
@@ -70,3 +70,7 @@ style.
 				> p
 					display inline
 					margin 0
+
+script.
+	@talk = ~>
+		riot.mount document.body.append-child document.create-element \mk-talk-window
