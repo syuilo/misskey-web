@@ -3,8 +3,14 @@ mk-talk
 			div.form
 				label(for='search-input')
 					i.fa.fa-search
-				input(type='search', placeholder='ユーザーを探してトークを開始', title='ユーザー名を入力してユーザーを探します')
+				input@search-input(type='search', oninput={ search }, placeholder='ユーザーを探してトークを開始', title='ユーザー名を入力してユーザーを探します')
 			div.result
+				ol.users(if={ search-result.length > 0 })
+					li(each={ user in search-result })
+						a
+							img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
+							span.name { user.name }
+							span.username @{ user.username }
 	div.main
 		div.history(if={ history.length > 0 })
 			virtual(each={ message in history })
@@ -100,13 +106,13 @@ style.
 			padding 0
 			background #fff
 
-			> ol.users
+			> .users
 				margin 0
 				padding 0
 				list-style none
 
-				li
-					a
+				> li
+					> a
 						display inline-block
 						z-index 1
 						box-sizing border-box
@@ -126,7 +132,7 @@ style.
 							.name
 								color #fff
 
-							.screen-name
+							.username
 								color #fff
 
 						&:active
@@ -136,7 +142,7 @@ style.
 							.name
 								color #fff
 
-							.screen-name
+							.username
 								color #fff
 
 						.avatar
@@ -154,7 +160,7 @@ style.
 							font-weight normal
 							color rgba(0, 0, 0, 0.8)
 
-						.screen-name
+						.username
 							font-weight normal
 							color rgba(0, 0, 0, 0.3)
 
@@ -389,6 +395,8 @@ style.
 						font-size 0.7em
 
 script.
+	@search-result = []
+
 	@on \mount ~>
 		api \talk/history
 		.then (history) ~>
@@ -397,3 +405,16 @@ script.
 			@update!
 		.catch (err) ~>
 			console.error err
+
+	@search = ~>
+		q = @search-input.value
+		if q == ''
+			@search-result = []
+		else
+			api \users/search do
+				query: q
+			.then (users) ~>
+				@search-result = users
+				@update!
+			.catch (err) ~>
+				console.error err

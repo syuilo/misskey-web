@@ -16,8 +16,8 @@ script.
 
 	@on \mount ~>
 		api 'users/recommendation'
-			.then (users) ~>
-				@users = users
-				@update!
-			.catch (err, text-status) ->
-				console.error err
+		.then (users) ~>
+			@users = users
+			@update!
+		.catch (err, text-status) ->
+			console.error err

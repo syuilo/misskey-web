@@ -33,14 +33,14 @@ script.
 					@controller.trigger \focus
 
 		api \posts/timeline
-			.then (posts) ~>
-				@is-loading = false
-				if posts.length == 0
-					@is-empty = true
-				@update!
-				@controller.trigger \set-posts posts
-			.catch (err) ~>
-				console.error err
+		.then (posts) ~>
+			@is-loading = false
+			if posts.length == 0
+				@is-empty = true
+			@update!
+			@controller.trigger \set-posts posts
+		.catch (err) ~>
+			console.error err
 
 	@stream.on \post (post) ~>
 		@is-empty = false
