@@ -42,6 +42,9 @@ require './tags/home-widgets/donate.tag'
 require './tags/home-widgets/tip.tag'
 require './tags/stream-indicator.tag'
 require './tags/timeline.tag'
+require './tags/talk/window.tag'
+require './tags/talk/room.tag'
+require './tags/talk/index.tag'
 require './tags/ui.tag'
 
 riot.mixin \dialog do

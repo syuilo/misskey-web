@@ -45,7 +45,7 @@ block body
 				label.user-name
 					input#username(name='username'
 						type='text'
-						pattern='^[a-z0-9\-]{3,20}$'
+						pattern='^[a-zA-Z0-9\-]{3,20}$'
 						placeholder='ユーザー名'
 						autofocus
 						required)
@@ -66,8 +66,8 @@ block body
 					| ユーザー名
 				input(name='username'
 					type='text'
-					pattern='^[a-z0-9\-]{3,20}$'
-					placeholder='a~z、0~9、-が使えます'
+					pattern='^[a-zA-Z0-9\-]{3,20}$'
+					placeholder='a~z、A~Z、0~9、-'
 					autocomplete='off'
 					required)
 				p.profile-page-url-preview

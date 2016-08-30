@@ -248,7 +248,7 @@ function init-signup-form
 		un = $form.find '.username > input' .val!
 		if un != ''
 			err = switch
-				| not un.match /^[a-z0-9\-]+$/ => '小文字のa~z、0~9、-(ハイフン)が使えます'
+				| not un.match /^[a-zA-Z0-9\-]+$/ => 'a~z、A~Z、0~9、-(ハイフン)が使えます'
 				| un.length < 3chars           => '3文字以上でお願いします！'
 				| un.length > 20chars          => '20文字以内でお願いします'
 				| _                            => null
@@ -362,7 +362,11 @@ function init-signup-form
 			$submit-button
 				.find \span .text 'サインイン中...'
 
-			location.href = "#{CONFIG.urls.signin}?username=#{username}&password=#{password}"
+			api CONFIG.urls.signin, do
+				username: username
+				password: password
+			.then ->
+				location.href = CONFIG.url
 		.catch ->
 			alert '何らかの原因によりアカウントの作成に失敗しました。再度お試しください。'
 
