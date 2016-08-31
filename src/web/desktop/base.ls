@@ -45,6 +45,7 @@ require './tags/timeline.tag'
 require './tags/talk/window.tag'
 require './tags/talk/room.tag'
 require './tags/talk/room-window.tag'
+require './tags/talk/message.tag'
 require './tags/talk/index.tag'
 require './tags/ui.tag'
 
