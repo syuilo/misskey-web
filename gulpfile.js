@@ -328,6 +328,16 @@ gulp.task('build:scripts', done => {
 					if (file.substr(-4) !== '.tag') return source;
 					return source.replace(/\t/g, '  ');
 				}))
+				.transform(transformify((source, file) => {
+					return source
+						.replace(/CONFIG\.theme-color/g, `'${config.themeColor}'`)
+						.replace(/CONFIG\.themeColor/g, `'${config.themeColor}'`)
+						.replace(/CONFIG\.api\.url/g, `'${config.core.www}'`)
+						.replace(/CONFIG\.urls\.signin/g, `'${config.urls.signin}'`)
+						.replace(/CONFIG\.urls\.signup/g, `'${config.urls.signup}'`)
+						.replace(/CONFIG\.url/g, `'${config.url}'`)
+						;
+				}))
 				.transform(riotify, {
 					template: 'pug',
 					type: 'livescript',
@@ -335,7 +345,8 @@ gulp.task('build:scripts', done => {
 					compact: true,
 					parserOptions: {
 						template: {
-							config: config
+							config: config,
+							CONFIG: config
 						}
 					}
 				})
@@ -346,12 +357,7 @@ gulp.task('build:scripts', done => {
 					return source.replace(/class="\{\(\{(.+?)\}\)\}"/g, 'class="{$1}"');
 				}))*/
 				.bundle()
-				.pipe(source(entry.replace('src/web', 'resources').replace('.ls', '.js')))
-				.pipe(replace(/CONFIG\.themeColor/g, '"' + config.themeColor + '"'))
-				.pipe(replace(/CONFIG\.api\.url/g, '"' + config.core.www + '"'))
-				.pipe(replace(/CONFIG\.urls\.signin/g, '"' + config.urls.signin + '"'))
-				.pipe(replace(/CONFIG\.urls\.signup/g, '"' + config.urls.signup + '"'))
-				.pipe(replace(/CONFIG\.url/g, '"' + config.url + '"'));
+				.pipe(source(entry.replace('src/web', 'resources').replace('.ls', '.js')));
 
 			if (isProduction) {
 				bundle = bundle
