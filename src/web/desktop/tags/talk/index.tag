@@ -7,7 +7,7 @@ mk-talk
 			div.result
 				ol.users(if={ search-result.length > 0 })
 					li(each={ user in search-result })
-						a
+						a(onclick={ user._click })
 							img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
 							span.name { user.name }
 							span.username @{ user.username }
@@ -395,6 +395,7 @@ style.
 						font-size 0.7em
 
 script.
+	@event = @opts.event
 	@search-result = []
 
 	@on \mount ~>
@@ -414,6 +415,10 @@ script.
 			api \users/search do
 				query: q
 			.then (users) ~>
+				users.for-each (user) ~>
+					user._click = ~>
+						@event.trigger \navigate-user user
+						@search-result = []
 				@search-result = users
 				@update!
 			.catch (err) ~>
