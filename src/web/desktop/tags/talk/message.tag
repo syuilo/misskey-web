@@ -192,6 +192,25 @@ style.
 			> .is-edited
 				margin-left 4px
 
+	> .avatar-anchor
+		float left
+
+	> .content-container
+		float left
+
+		> .balloon
+			background #eee
+
+			&:before
+				left -14px
+				border-top solid 8px transparent
+				border-right solid 8px #eee
+				border-bottom solid 8px transparent
+				border-left solid 8px transparent
+
+		> footer
+			text-align left
+
 	&[data-is-me='true']
 		> .avatar-anchor
 			float right
@@ -204,6 +223,7 @@ style.
 
 				&:before
 					right -14px
+					left auto
 					border-top solid 8px transparent
 					border-right solid 8px transparent
 					border-bottom solid 8px transparent
@@ -222,26 +242,6 @@ style.
 
 			> footer
 				text-align right
-
-	&[data-is-me='false']
-		> .avatar-anchor
-			float left
-
-		> .content-container
-			float left
-
-			> .balloon
-				background #eee
-
-				&:before
-					left -14px
-					border-top solid 8px transparent
-					border-right solid 8px #eee
-					border-bottom solid 8px transparent
-					border-left solid 8px transparent
-
-			> footer
-				text-align left
 
 	&[data-is-deleted='true']
 			> .content-container

@@ -13,8 +13,17 @@ mk-talk
 							span.username @{ user.username }
 	div.main
 		div.history(if={ history.length > 0 })
-			virtual(each={ message in history })
-				p a
+			virtual(each={ history })
+				a(data-is-me={ _is_me }, onclick={ _click })
+					img.avatar(src={ (_is_me ? recipient.avatar_url : user.avatar_url) + '?thumbnail&size=32' }, alt='')
+					header
+						span.name { _is_me ? recipient.name : user.name }
+						span.username { '@' + (_is_me ? recipient.username : user.username ) }
+						time { created_at }
+					div.body
+						p.text
+							span.me(if={ _is_me }) あなた:
+							| { text }
 		p.no-history(if={ history.length == 0 })
 			| 履歴はありません。
 			br
@@ -167,24 +176,19 @@ style.
 	> .main
 		padding-top 56px
 
-		> .talks
-			margin 0
-			padding 0
-			list-style none
+		> .history
 
-			> .talk
+			> a
+				display block
 				position relative
-				padding 0
+				padding 20px 30px
 				background #fff
 				border-bottom solid 1px #eee
 
 				&:hover
 					background #fafafa
 
-					> a > article > header > h2
-						color $theme-color
-
-					> a > article > .avatar
+					> .avatar
 						filter saturate(200%)
 						-webkit-filter saturate(200%)
 						-moz-filter saturate(200%)
@@ -195,133 +199,125 @@ style.
 					background #eee
 
 				&[data-is-unread='false']
-				&[data-is-my-message='true']
+				&[data-is-me='true']
 					opacity 0.8
 
 				&[data-is-unread='true'] > a > article
-					//background-image url("/resources/desktop/pages/i/talks-widget/unread.svg")
+					background-image url("/_/resources/desktop/pages/i/talks-widget/unread.svg")
 					background-repeat no-repeat
 					background-position 0 center
 
-				> a
+				&:after
+					content ""
 					display block
-					text-decoration none
+					clear both
 
-					> article
-						position relative
-						padding 20px 30px
+				> header
+					margin-bottom 2px
+					white-space nowrap
+					overflow hidden
 
-						&:after
-							content ""
+					> .name
+						text-align left
+						display inline
+						margin 0
+						padding 0
+						font-size 1em
+						color rgba(0, 0, 0, 0.9)
+						font-weight bold
+						transition all 0.1s ease
+
+					> time
+						position absolute
+						top 16px
+						right 16px
+						display inline
+						color rgba(0, 0, 0, 0.5)
+						font-size small
+
+		&.user
+			> a
+				> article
+
+					> header
+
+						> .screen-name
+							text-align left
+							margin 0 0 0 8px
+							color rgba(0, 0, 0, 0.5)
+
+					> .avatar
+						float left
+						width 54px
+						height 54px
+						margin 0 18px 4px 0
+						border-radius 8px
+						transition all 0.1s ease
+
+					> .body
+
+						> .text
 							display block
-							clear both
-
-						> header
-							margin-bottom 2px
-							white-space nowrap
+							margin 0 0 0 0
+							padding 0
 							overflow hidden
+							word-wrap break-word
+							font-size 1.1em
+							color rgba(0, 0, 0, 0.8)
 
-							> h2
-								text-align left
-								display inline
-								margin 0
-								padding 0
-								font-size 1em
-								color rgba(0, 0, 0, 0.9)
-								font-weight bold
-								transition all 0.1s ease
+							.me
+								color rgba(0, 0, 0, 0.4)
 
-							> time
-								position absolute
-								top 16px
-								right 16px
-								display inline
-								color rgba(0, 0, 0, 0.5)
-								font-size small
+						> .image
+							display block
+							max-width 100%
+							max-height 512px
 
-				&.user
-					> a
-						> article
+		&.group
+			> a
+				> article
 
-							> header
+					> header
 
-								> .screen-name
-									text-align left
-									margin 0 0 0 8px
-									color rgba(0, 0, 0, 0.5)
+						> .members-count
+							text-align left
+							margin 0 0 0 8px
+							color rgba(0, 0, 0, 0.5)
 
-							> .avatar
-								float left
-								width 54px
-								height 54px
-								margin 0 18px 4px 0
-								border-radius 8px
-								transition all 0.1s ease
+					> .mark
+						$stroke = 2px
+						position absolute
+						top 17px
+						left 21px
+						text-shadow 0 $stroke 0 #fff, $stroke 0 0 #fff, 0 -$stroke 0 #fff, -$stroke 0 0 #fff, -$stroke -$stroke 0 #fff, $stroke -$stroke 0 #fff, -$stroke $stroke 0 #fff, $stroke $stroke 0 #fff
+						color #9FA7A6
 
-							> .body
+					> .icon
+						float left
+						width 54px
+						height 54px
+						margin 0 18px 4px 0
+						border-radius 8px
+						transition all 0.1s ease
 
-								> .text
-									display block
-									margin 0 0 0 0
-									padding 0
-									overflow hidden
-									word-wrap break-word
-									font-size 1.1em
-									color rgba(0, 0, 0, 0.8)
+					> .body
 
-									.me
-										color rgba(0, 0, 0, 0.4)
+						> .text
+							display block
+							margin 0 0 0 0
+							padding 0
+							overflow hidden
+							word-wrap break-word
+							font-size 1.1em
+							color rgba(0, 0, 0, 0.8)
 
-								> .image
-									display block
-									max-width 100%
-									max-height 512px
+							.me
+								color rgba(0, 0, 0, 0.4)
 
-				&.group
-					> a
-						> article
-
-							> header
-
-								> .members-count
-									text-align left
-									margin 0 0 0 8px
-									color rgba(0, 0, 0, 0.5)
-
-							> .mark
-								$stroke = 2px
-								position absolute
-								top 17px
-								left 21px
-								text-shadow 0 $stroke 0 #fff, $stroke 0 0 #fff, 0 -$stroke 0 #fff, -$stroke 0 0 #fff, -$stroke -$stroke 0 #fff, $stroke -$stroke 0 #fff, -$stroke $stroke 0 #fff, $stroke $stroke 0 #fff
-								color #9FA7A6
-
-							> .icon
-								float left
-								width 54px
-								height 54px
-								margin 0 18px 4px 0
-								border-radius 8px
-								transition all 0.1s ease
-
-							> .body
-
-								> .text
-									display block
-									margin 0 0 0 0
-									padding 0
-									overflow hidden
-									word-wrap break-word
-									font-size 1.1em
-									color rgba(0, 0, 0, 0.8)
-
-									.me
-										color rgba(0, 0, 0, 0.4)
-
-								> .image
-									display block
-									max-width 100%
-									max-height 512px
+						> .image
+							display block
+							max-width 100%
+							max-height 512px
 
 		> .no-history
 			margin 0
@@ -402,6 +398,16 @@ script.
 		api \talk/history
 		.then (history) ~>
 			@is-loading = false
+			history.for-each (message) ~>
+				message._is_me = message.user? and message.user.id == I.id
+				message._click = ~>
+					if message.recipient?
+						if message._is_me
+							@event.trigger \navigate-user message.recipient
+						else
+							@event.trigger \navigate-user message.user
+					else if message.group?
+						@event.trigger \navigate-group message.group
 			@history = history
 			@update!
 		.catch (err) ~>
