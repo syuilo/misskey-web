@@ -214,6 +214,13 @@ style.
 									text-align center
 
 	> .stream
+		position absolute
+		top 0
+		left 0
+		width 100%
+		height calc(100% - 100px)
+		overflow auto
+
 		> .empty
 			box-sizing border-box
 			width 100%
@@ -297,16 +304,13 @@ style.
 				//background rgba(0, 0, 0, 0.2)
 
 		textarea
-			user-select text
-			-moz-user-select text
-			-webkit-user-select text
-			-ms-user-select text
 			cursor auto
 			display block
 			box-sizing border-box
 			width 100%
 			min-width 100%
 			max-width 100%
+			height 64px
 			margin 0
 			padding 8px
 			font-size 1em
