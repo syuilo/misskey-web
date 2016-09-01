@@ -50,9 +50,6 @@ style.
 				-ms-filter saturate(200%)
 
 	> .header
-		-webkit-appearance none
-		-moz-appearance none
-		appearance none
 		display block
 		margin 0
 		padding 0
@@ -69,6 +66,9 @@ style.
 
 		&:active
 			color darken($ui-controll-foreground-color, 30%)
+
+		&[data-active='true']
+			color darken($ui-controll-foreground-color, 20%)
 
 		> .username
 			display block
