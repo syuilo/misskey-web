@@ -428,7 +428,7 @@ script.
 
 		api 'posts/create' do
 			text: @text.value
-			files: files
+			images: files
 			reply_to: if @opts.reply? then @opts.reply.id else undefined
 		.then (data) ~>
 			@controller.trigger \post
