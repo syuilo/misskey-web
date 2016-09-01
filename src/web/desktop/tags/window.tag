@@ -168,14 +168,14 @@ script.
 
 		@main.style.pointer-events = \auto
 		Velocity @main, \finish true
-		Velocity @main, {scale: 1.2} 0ms
+		Velocity @main, {scale: 1.1} 0ms
 		Velocity @main, {
 			opacity: 1
 			scale: 1
 		} {
 			queue: false
-			duration: 1000ms
-			easing: [ 300, 8 ]
+			duration: 200ms
+			easing: \ease-out
 		}
 
 		set-timeout ~>
