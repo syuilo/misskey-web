@@ -1,18 +1,20 @@
 mk-user-recommendation-home-widget
-	p おすすめユーザー
-	div.user(each={ user in users })
+	p.title おすすめユーザー
+	div.user(if={ users.length != 0 }, each={ user in users })
 		a.avatar-anchor(href= config.url + '/' + { user.username })
 			img.avatar(src={ user.avatar_url + '?thumbnail&size=64' }, alt='', data-user-card={ user.username })
 		div.body
 			p.name { user.name }
 			p.username @{ user.username }
 		mk-follow-button(user={ user })
+	p.empty(if={ users.length == 0 })
+		| いません！
 
 style.
 	display block
 	background #fff
 
-	> p
+	> .title
 		margin 0
 		padding 16px
 		font-weight bold
@@ -46,6 +48,13 @@ style.
 			> .username
 				margin 0
 				color #ccc
+	
+	> .empty
+		margin 0
+		padding 16px
+		text-align center
+		color #aaa
+		border-top solid 1px #eee
 
 script.
 	@users = null
