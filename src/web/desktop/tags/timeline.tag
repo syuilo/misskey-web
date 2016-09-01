@@ -1,6 +1,8 @@
 mk-timeline
 	virtual(each={ _post in posts })
 		mk-post(post={ _post })
+	footer
+		i.fa.fa-moon-o
 
 style.
 	display block
@@ -12,13 +14,12 @@ style.
 			border-top-left-radius 4px
 			border-top-right-radius 4px
 
-		&:last-child
-			border-bottom-left-radius 4px
-			border-bottom-right-radius 4px
-			border-bottom none
-
-		& + mk-post
-			border-top none
+	> footer
+		padding 16px
+		text-align center
+		color #ccc
+		border-bottom-left-radius 4px
+		border-bottom-right-radius 4px
 
 script.
 	@posts = []
