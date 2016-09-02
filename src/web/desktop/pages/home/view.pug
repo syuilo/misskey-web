@@ -11,11 +11,14 @@ block body
 	mk-ui
 		div#home
 			div.widgets.side-left: div.body
+				mk-profile-home-widget
 				mk-calendar-home-widget
 			main.widgets: div.body
 				mk-timeline-home-widget
 			div.widgets.side-right: div.body
+				mk-notifications-home-widget
 				mk-user-recommendation-home-widget
 				mk-donate-home-widget
+				mk-nav-home-widget
 				mk-tip-home-widget
 	mk-stream-indicator
