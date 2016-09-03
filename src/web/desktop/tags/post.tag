@@ -35,8 +35,8 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 				button(onclick={ repost }, title='Repost')
 					i.fa.fa-retweet
 					p.count(if={ p.repost_count > 0 }) { p.repost_count }
-				button: i.fa.fa-thumbs-o-up
-				button: i.fa.fa-ellipsis-h
+				button(onclick={ like }, title='善哉'): i.fa.fa-thumbs-o-up
+				button(onclick={ NotImplementedException }): i.fa.fa-ellipsis-h
 
 style.
 	display block

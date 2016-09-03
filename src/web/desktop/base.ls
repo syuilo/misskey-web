@@ -52,19 +52,29 @@ require './tags/talk/message.tag'
 require './tags/talk/index.tag'
 require './tags/ui.tag'
 
+dialog = (title, text, buttons, can-through, on-through) ~>
+	dialog = document.body.append-child document.create-element \mk-dialog
+	controller = riot.observable!
+	riot.mount dialog, do
+		controller: controller
+		title: title
+		text: text
+		buttons: buttons
+		can-through: can-through
+		on-through: on-through
+	controller.trigger \open
+	return controller
+
+window.NotImplementedException = ~>
+	dialog do
+		'<i class="fa fa-exclamation-triangle"></i>Not Implemented'
+		'要求された操作は実装されていません。'
+		[
+			text: \OK
+		]
+
 riot.mixin \dialog do
-	dialog: (title, text, buttons, can-through, on-through) ~>
-		dialog = document.body.append-child document.create-element \mk-dialog
-		controller = riot.observable!
-		riot.mount dialog, do
-			controller: controller
-			title: title
-			text: text
-			buttons: buttons
-			can-through: can-through
-			on-through: on-through
-		controller.trigger \open
-		return controller
+	dialog: dialog
 
 riot.mixin \input-dialog do
 	input-dialog: (title, placeholder, default-value, on-ok, on-cancel) ~>
