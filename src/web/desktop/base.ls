@@ -67,8 +67,8 @@ dialog = (title, text, buttons, can-through, on-through) ~>
 
 window.NotImplementedException = ~>
 	dialog do
-		'<i class="fa fa-exclamation-triangle"></i>Not Implemented'
-		'要求された操作は実装されていません。'
+		'<i class="fa fa-exclamation-triangle"></i>Not implemented yet'
+		'要求された操作は実装されていません。<br>→<a href="https://github.com/syuilo/misskey-web" target="_blank">Misskeyの開発に参加する</a>'
 		[
 			text: \OK
 		]
