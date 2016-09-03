@@ -4,6 +4,9 @@ mk-drive-browser-file-contextmenu
 			li(onclick={ parent.rename }): p
 				i.fa.fa-i-cursor
 				| 名前を変更
+			li(onclick={ parent.copy-url }): p
+				i.fa.fa-link
+				| URLをコピー
 			li: a(href={ parent.file.url + '?download' }, download={ parent.file.name }, onclick={ parent.download })
 				i.fa.fa-download
 				| ダウンロード
@@ -31,6 +34,9 @@ script.
 	@ctx-controller.on \closed ~>
 		@controller.trigger \closed
 		@unmount!
+	
+	@copy-url = ~>
+		NotImplementedException!
 
 	@download = ~>
 		#@browser-controller.trigger \download @file
