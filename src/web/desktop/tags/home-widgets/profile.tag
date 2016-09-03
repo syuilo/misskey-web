@@ -16,7 +16,7 @@ style.
 	> .avatar-anchor
 		display block
 		position absolute
-		top 72px
+		top 76px
 		left 16px
 
 		> .avatar
