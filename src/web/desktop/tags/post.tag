@@ -35,7 +35,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 				button(onclick={ repost }, title='Repost')
 					i.fa.fa-retweet
 					p.count(if={ p.repost_count > 0 }) { p.repost_count }
-				button: i.fa.fa-plus
+				button: i.fa.fa-thumbs-o-up
 				button: i.fa.fa-ellipsis-h
 
 style.
@@ -54,10 +54,10 @@ style.
 			content ""
 			pointer-events none
 			position absolute
-			top -4px
-			right -4px
-			bottom -4px
-			left -4px
+			top 2px
+			right 2px
+			bottom 2px
+			left 2px
 			border 2px solid rgba($theme-color, 0.3)
 			border-radius 4px
 

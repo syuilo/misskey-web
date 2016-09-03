@@ -5,15 +5,16 @@ mk-tip-home-widget
 
 style.
 	display block
-	background #fff
+	background transparent !important
+	border none !important
 	font-family 'Meiryo', 'メイリオ', sans-serif
 
 	> p
 		display block
 		margin 0
-		padding 12px 12px
+		padding 0 12px
 		text-align center
-		font-size 0.8em
+		font-size 0.7em
 		color #999
 
 		> i
@@ -37,6 +38,8 @@ script.
 		'ドライブにファイルをドラッグ&ドロップしてアップロードできます'
 		'ドライブでファイルをドラッグしてフォルダ移動できます'
 		'ドライブでフォルダをドラッグしてフォルダ移動できます'
+		'ホームをカスタマイズできます(準備中)'
+		'$write コマンドを使うと、テキストファイルを生成できます'
 		'MisskeyはMIT Licenseです'
 	]
 
