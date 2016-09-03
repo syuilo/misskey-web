@@ -18,7 +18,10 @@ mk-settings
 	div.pages
 		section.account(show={ page == 'account' })
 			h1 アカウント
-			div.avatar
+			div.id
+				p ユーザーID:
+				code { user.id }
+			label.avatar
 				p アバター
 				img.avatar(src={ user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 				button.style-normal(onclick={ avatar }) 画像を選択
@@ -92,7 +95,6 @@ style.
 				color #555
 				border-bottom solid 1px #eee
 
-			div
 			label
 				display block
 				margin 16px 0
@@ -108,6 +110,17 @@ style.
 					color #666
 
 			&.account
+				> .id
+					position absolute
+					top 32px
+					right 34px
+					color #aaa
+
+					> p
+						display inline
+						margin 0 4px 0 0
+						font-weight bold
+
 				> .avatar
 					position relative
 
