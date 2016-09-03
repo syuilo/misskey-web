@@ -35,7 +35,9 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 				button(onclick={ repost }, title='Repost')
 					i.fa.fa-retweet
 					p.count(if={ p.repost_count > 0 }) { p.repost_count }
-				button(onclick={ like }, title='善哉'): i.fa.fa-thumbs-o-up
+				button(onclick={ like }, title='善哉')
+					i.fa.fa-thumbs-o-up
+					p.count(if={ p.likes_count > 0 }) { p.likes_count }
 				button(onclick={ NotImplementedException }): i.fa.fa-ellipsis-h
 
 style.
@@ -229,6 +231,10 @@ script.
 				controller: @repost-form-controller
 				post: @p
 		@repost-form-controller.trigger \open
+	
+	@like = ~>
+		api \posts/likes/create do
+			post: @p.id
 
 	@parse-text = (text) ~>
 		hashtags mentions url bold escape text
