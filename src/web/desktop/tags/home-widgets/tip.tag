@@ -8,6 +8,7 @@ style.
 	background transparent !important
 	border none !important
 	font-family 'Meiryo', 'メイリオ', sans-serif
+	overflow visible !important
 
 	> p
 		display block
