@@ -1,3 +1,4 @@
+# ↓ iOS待ちPolyfill (SEE: http://caniuse.com/#feat=fetch)
 require 'fetch'
 
 window.api = (endpoint, data) ->
