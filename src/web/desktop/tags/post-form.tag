@@ -422,7 +422,7 @@ script.
 	@post = (e) ~>
 		@wait = true
 
-		files = if @files?
+		files = if @files? and @files.length > 0
 			then @files.map (f) -> f.id
 			else undefined
 
