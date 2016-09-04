@@ -5,6 +5,7 @@ mk-ui-header
 		div.right
 			mk-header-search
 			mk-header-account(if={SIGNIN})
+			mk-header-notifications(if={SIGNIN})
 			mk-header-post-button(if={SIGNIN}, ui={opts.ui})
 			mk-header-clock
 
