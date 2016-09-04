@@ -3,6 +3,9 @@ mk-settings
 		p(class={ active: page == 'account' }, onmousedown={ page-account })
 			i.fa.fa-fw.fa-user
 			| アカウント
+		p(class={ active: page == 'web' }, onmousedown={ page-web })
+			i.fa.fa-fw.fa-desktop
+			| Web
 		p(class={ active: page == 'notification' }, onmousedown={ page-notification })
 			i.fa.fa-fw.fa-bell-o
 			| 通知
