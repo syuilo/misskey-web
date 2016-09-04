@@ -31,6 +31,10 @@ style.
 		&:active
 			color #999
 
+	> mk-notifications
+		max-height 300px
+		overflow auto
+
 script.
 	@settings = ~>
 		w = document.body.append-child document.create-element \mk-settings-window
