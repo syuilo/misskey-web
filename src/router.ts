@@ -14,6 +14,7 @@ const subdomainOptions = {
 	prefix: '__'
 };
 
+const aboutDomain = `/${subdomainOptions.prefix}/about`;
 const colorDomain = `/${subdomainOptions.prefix}/color`;
 const signupDomain = `/${subdomainOptions.prefix}/signup`;
 const signinDomain = `/${subdomainOptions.prefix}/signin`;
@@ -42,6 +43,10 @@ export default function(app: express.Express): void {
 		render(req, res, 'user', {
 			user: user
 		});
+	});
+
+	app.get(`${aboutDomain}/staff`, (req, res) => {
+		renderAbout(req, res, 'staff');
 	});
 
 	app.get(`${colorDomain}/`, (req, res) => {
@@ -108,4 +113,8 @@ export default function(app: express.Express): void {
 function render(req: express.Request, res: express.Response, path: string, data?: any): void {
 	const ua = res.locals.useragent.isMobile ? 'mobile' : 'desktop';
 	res.render(`${__dirname}/web/${ua}/pages/${path}/view`, data);
+}
+
+function renderAbout(req: express.Request, res: express.Response, path: string): void {
+	res.render(`${__dirname}/web/common/pages/about/pages/${path}`);
 }
