@@ -2,7 +2,7 @@ mk-header-notifications
 	button.header(data-active={ is-open }, onclick={ toggle })
 		i.fa.fa-bell-o
 	div.notifications(if={ is-open })
-		p texet
+		mk-notifications
 
 style.
 	$ui-controll-background-color = #fffbfb
@@ -44,7 +44,6 @@ style.
 		top 56px
 		right -10px
 		width 230px
-		font-size 0.8em
 		background #fff
 		border-radius 4px
 		box-shadow 0 1px 4px rgba(0, 0, 0, 0.25)
@@ -72,7 +71,6 @@ style.
 			border-right solid 14px transparent
 			border-bottom solid 14px #fff
 			border-left solid 14px transparent
-
 
 script.
 	@is-open = false
