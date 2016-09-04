@@ -2,7 +2,7 @@ mk-profile-home-widget
 	div.banner(style={ 'background-image: url(' + I.banner_url + '?thumbnail&size=256)' })
 	a.avatar-anchor(href= config.url + '/' + { I.username })
 		img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-card={ I.username })
-	p.name { I.name }
+	a.name(href= config.url + '/' + { I.username }) { I.name }
 	p.username @{ I.username }
 
 style.
