@@ -156,7 +156,6 @@ script.
 		@stream.off \notification @on-notification
 	
 	@on-notification = (notification) ~>
-		console.log notification
 		@notifications.unshift notification
 		@update!
 
