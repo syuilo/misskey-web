@@ -3,9 +3,9 @@ mk-notifications-home-widget
 	button(onclick={ settings }, title='通知の設定'): i.fa.fa-cog
 	div.notifications(if={ notifications.length != 0 })
 		virtual(each={ notification in notifications })
-			div.notification.like(if={ notification.type == 'like' })
+			div.notification(class={ notification.type })
 				time { notification.created_at }
-				div.main
+				div.main(if={ notification.type == 'like' })
 					a.avatar-anchor
 						img.avatar(src={ notification.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
 					div.text
@@ -13,6 +13,13 @@ mk-notifications-home-widget
 							i.fa.fa-thumbs-o-up
 							a(href= config.url + '/' + { notification.user.username }) { notification.user.name }
 						a.post-preview { notification.post.text }
+				div.main(if={ notification.type == 'follow' })
+					a.avatar-anchor
+						img.avatar(src={ notification.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
+					div.text
+						p
+							i.fa.fa-user-plus
+							a(href= config.url + '/' + { notification.user.username }) { notification.user.name }
 	p.empty(if={ notifications.length == 0 })
 		| ありません！
 
