@@ -24,7 +24,7 @@ style.
 		padding 16px
 		font-size 1em
 		line-height 1em
-		color #bbb
+		color #ccc
 
 		&:hover
 			color #aaa
@@ -41,6 +41,14 @@ style.
 
 script.
 	@notifications = []
+
+	@on \mount ~>
+		api \i/notifications
+		.then (notifications) ~>
+			@notifications = notifications
+			@update!
+		.catch (err, text-status) ->
+			console.error err
 
 	@settings = ~>
 		w = document.body.append-child document.create-element \mk-settings-window

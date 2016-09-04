@@ -60,7 +60,7 @@ script.
 	@users = null
 
 	@on \mount ~>
-		api 'users/recommendation'
+		api \users/recommendation
 		.then (users) ~>
 			@users = users
 			@update!

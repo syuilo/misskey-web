@@ -1,18 +1,21 @@
 mk-settings
 	div.nav
-		p(class={ active: page == 'account' }, onclick={ page-account })
+		p(class={ active: page == 'account' }, onmousedown={ page-account })
 			i.fa.fa-fw.fa-user
 			| アカウント
-		p(class={ active: page == 'drive' }, onclick={ page-drive })
+		p(class={ active: page == 'notification' }, onmousedown={ page-notification })
+			i.fa.fa-fw.fa-bell-o
+			| 通知
+		p(class={ active: page == 'drive' }, onmousedown={ page-drive })
 			i.fa.fa-fw.fa-cloud
 			| ドライブ
-		p(class={ active: page == 'apps' }, onclick={ page-apps })
+		p(class={ active: page == 'apps' }, onmousedown={ page-apps })
 			i.fa.fa-fw.fa-puzzle-piece
 			| アプリ
-		p(class={ active: page == 'signin' }, onclick={ page-signin })
+		p(class={ active: page == 'signin' }, onmousedown={ page-signin })
 			i.fa.fa-fw.fa-sign-in
 			| ログイン履歴
-		p(class={ active: page == 'password' }, onclick={ page-password })
+		p(class={ active: page == 'password' }, onmousedown={ page-password })
 			i.fa.fa-fw.fa-unlock-alt
 			| パスワード
 	div.pages
@@ -49,7 +52,6 @@ style.
 		padding 16px 0 0 0
 		background lighten($theme-color, 95%)
 		border-right solid 1px lighten($theme-color, 85%)
-		cursor pointer
 
 		> p
 			display block
@@ -59,6 +61,7 @@ style.
 			background rgba(#fff, 0.5)
 			border-top solid 1px lighten($theme-color, 85%)
 			border-bottom solid 1px lighten($theme-color, 85%)
+			cursor pointer
 
 			-ms-user-select none
 			-moz-user-select none
