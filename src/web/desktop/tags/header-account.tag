@@ -38,17 +38,6 @@ style.
 	float left
 	position relative
 
-	&[data-active='true']
-		> .header
-			background #fff
-
-			> .avatar
-				filter saturate(200%)
-				-webkit-filter saturate(200%)
-				-moz-filter saturate(200%)
-				-o-filter saturate(200%)
-				-ms-filter saturate(200%)
-
 	> .header
 		display block
 		margin 0
@@ -69,6 +58,13 @@ style.
 
 		&[data-active='true']
 			color darken($ui-controll-foreground-color, 20%)
+
+			> .avatar
+				$saturate = 150%
+				filter saturate($saturate)
+				-webkit-filter saturate($saturate)
+				-moz-filter saturate($saturate)
+				-ms-filter saturate($saturate)
 
 		> .username
 			display block
@@ -93,6 +89,7 @@ style.
 			max-height 32px
 			margin 8px 8px 8px 0
 			border-radius 4px
+			transition filter 100ms ease
 
 	> .menu
 		display block
