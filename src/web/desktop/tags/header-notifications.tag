@@ -42,7 +42,7 @@ style.
 		display block
 		position absolute
 		top 56px
-		right -2px
+		right -10px
 		width 230px
 		font-size 0.8em
 		background #fff
