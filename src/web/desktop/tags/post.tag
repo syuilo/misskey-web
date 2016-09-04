@@ -35,7 +35,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 				button(onclick={ repost }, title='Repost')
 					i.fa.fa-retweet
 					p.count(if={ p.repost_count > 0 }) { p.repost_count }
-				button(onclick={ like }, title='善哉')
+				button(class={ liked: p.is_liked }, onclick={ like }, title='善哉')
 					i.fa.fa-thumbs-o-up
 					p.count(if={ p.likes_count > 0 }) { p.likes_count }
 				button(onclick={ NotImplementedException }): i.fa.fa-ellipsis-h
@@ -199,6 +199,9 @@ style.
 						display inline
 						margin 0 0 0 8px
 						color #999
+					
+					&.liked
+						color $theme-color
 
 script.
 	@post = opts.post
@@ -235,6 +238,9 @@ script.
 	@like = ~>
 		api \posts/likes/create do
 			post: @p.id
+		.then ~>
+			@p.is_liked = true
+			@update!
 
 	@parse-text = (text) ~>
 		hashtags mentions url bold escape text
