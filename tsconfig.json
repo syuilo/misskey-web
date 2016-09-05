@@ -29,6 +29,7 @@
 		"./node_modules/typescript/lib/lib.es6.d.ts",
 		"./typings/bundle.d.ts",
 		"./src/api/url/analyze.ts",
+		"./src/api/rss-proxy.ts",
 		"./src/argv.ts",
 		"./src/check-dependencies.ts",
 		"./src/check-for-update.ts",

@@ -66,6 +66,9 @@
     },
     "inquirer/inquirer.d.ts": {
       "ref": "55c3e254e151847b8d37ca09b1a566ad4a48a66a"
+    },
+    "x2js/xml2json.d.ts": {
+      "ref": "084e55916674ff7128722bf72150aa55acea08d9"
     }
   }
 }

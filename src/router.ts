@@ -89,6 +89,7 @@ export default function(app: express.Express): void {
 	 * API handlers
 	 */
 	app.post('/_/api/url/analyze', require('./api/url/analyze').default);
+	app.get('/_/api/rss-proxy/:url(*)', require('./api/rss-proxy').default);
 
 	/**
 	 * Not found handler
