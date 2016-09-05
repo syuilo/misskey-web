@@ -18,6 +18,7 @@ style.
 
 script.
 	@mixin \stream
+	@mixin \get-post-summary
 
 	@is-loading = true
 	@is-empty = false
@@ -50,7 +51,7 @@ script.
 		if document.hidden
 			@unread-count++
 			# TODO
-			document.title = '(' + @unread-count + ') ' + 'hoge'
+			document.title = '(' + @unread-count + ') ' + @get-post-summary post
 
 	@window-on-visibilitychange = ~>
 		if !document.hidden

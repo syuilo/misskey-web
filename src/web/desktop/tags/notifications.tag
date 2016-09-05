@@ -10,7 +10,7 @@ mk-notifications
 						p
 							i.fa.fa-thumbs-o-up
 							a(href= config.url + '/' + { notification.user.username }) { notification.user.name }
-						a.post-preview { notification.post.text }
+						a.post-preview { get-post-summary(notification.post) }
 				div.main(if={ notification.type == 'repost' })
 					a.avatar-anchor
 						img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
@@ -18,7 +18,7 @@ mk-notifications
 						p
 							i.fa.fa-retweet
 							a(href= config.url + '/' + { notification.post.user.username }) { notification.post.user.name }
-						a.post-preview { notification.post.repost.text }
+						a.post-preview { get-post-summary(notification.post.repost) }
 				div.main(if={ notification.type == 'follow' })
 					a.avatar-anchor
 						img.avatar(src={ notification.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
@@ -131,6 +131,7 @@ style.
 
 script.
 	@mixin \stream
+	@mixin \get-post-summary
 
 	@notifications = []
 	@loading = true
