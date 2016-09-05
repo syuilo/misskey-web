@@ -42,8 +42,8 @@ style.
 		display block
 		position absolute
 		top 56px
-		right -10px
-		width 230px
+		right -18px
+		width 250px
 		background #fff
 		border-radius 4px
 		box-shadow 0 1px 4px rgba(0, 0, 0, 0.25)
@@ -54,7 +54,7 @@ style.
 			display block
 			position absolute
 			top -28px
-			right 12px
+			right 20px
 			border-top solid 14px transparent
 			border-right solid 14px transparent
 			border-bottom solid 14px rgba(0, 0, 0, 0.1)
@@ -66,11 +66,15 @@ style.
 			display block
 			position absolute
 			top -27px
-			right 12px
+			right 20px
 			border-top solid 14px transparent
 			border-right solid 14px transparent
 			border-bottom solid 14px #fff
 			border-left solid 14px transparent
+		
+		> mk-notifications
+			max-height 350px
+			overflow auto
 
 script.
 	@is-open = false
