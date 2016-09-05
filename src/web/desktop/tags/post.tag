@@ -236,11 +236,18 @@ script.
 		@repost-form-controller.trigger \open
 	
 	@like = ~>
-		api \posts/likes/create do
-			post: @p.id
-		.then ~>
-			@p.is_liked = true
-			@update!
+		if @p.is_liked
+			api \posts/likes/delete do
+				post: @p.id
+			.then ~>
+				@p.is_liked = false
+				@update!
+		else
+			api \posts/likes/create do
+				post: @p.id
+			.then ~>
+				@p.is_liked = true
+				@update!
 
 	@parse-text = (text) ~>
 		hashtags mentions url bold escape text
