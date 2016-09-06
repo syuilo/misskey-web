@@ -42,8 +42,8 @@ style.
 		display block
 		position absolute
 		top 56px
-		right -18px
-		width 250px
+		right -72px
+		width 300px
 		background #fff
 		border-radius 4px
 		box-shadow 0 1px 4px rgba(0, 0, 0, 0.25)
@@ -54,7 +54,7 @@ style.
 			display block
 			position absolute
 			top -28px
-			right 20px
+			right 74px
 			border-top solid 14px transparent
 			border-right solid 14px transparent
 			border-bottom solid 14px rgba(0, 0, 0, 0.1)
@@ -66,7 +66,7 @@ style.
 			display block
 			position absolute
 			top -27px
-			right 20px
+			right 74px
 			border-top solid 14px transparent
 			border-right solid 14px transparent
 			border-bottom solid 14px #fff
@@ -74,6 +74,7 @@ style.
 		
 		> mk-notifications
 			max-height 350px
+			font-size 1rem
 			overflow auto
 
 script.
