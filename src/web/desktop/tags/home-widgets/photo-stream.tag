@@ -45,7 +45,8 @@ style.
 			height 80px
 			background-position center center
 			background-size cover
-			border solid 4px #fff
+			background-clip content-box
+			border solid 4px transparent
 
 	> .initializing
 	> .empty
