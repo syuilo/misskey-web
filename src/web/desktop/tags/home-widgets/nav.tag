@@ -1,7 +1,9 @@
 mk-nav-home-widget
-	a Misskeyについて
+	a(href= CONFIG.urls.about) Misskeyについて
 	i ・
-	a リポジトリ
+	a(href= CONFIG.url + '/_/status') ステータス
+	i ・
+	a(href='https://github.com/syuilo/misskey-web') リポジトリ
 	i ・
 	a 開発者
 	i ・

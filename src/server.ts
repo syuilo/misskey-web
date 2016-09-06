@@ -38,6 +38,11 @@ app.locals.env = process.env.NODE_ENV;
 app.locals.compileDebug = false;
 app.locals.cache = true;
 
+app.use(require('express-status-monitor')({
+	title: 'Misskey Web Status',
+	path: '/_/status'
+}));
+
 /**
  * Compressions
  */

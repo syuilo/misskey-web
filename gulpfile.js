@@ -333,6 +333,7 @@ gulp.task('build:scripts', done => {
 						.replace(/CONFIG\.theme-color/g, `'${config.themeColor}'`)
 						.replace(/CONFIG\.themeColor/g, `'${config.themeColor}'`)
 						.replace(/CONFIG\.api\.url/g, `'${config.core.www}'`)
+						.replace(/CONFIG\.urls\.about/g, `'${config.urls.about}'`)
 						.replace(/CONFIG\.urls\.signin/g, `'${config.urls.signin}'`)
 						.replace(/CONFIG\.urls\.signup/g, `'${config.urls.signup}'`)
 						.replace(/CONFIG\.url/g, `'${config.url}'`)
