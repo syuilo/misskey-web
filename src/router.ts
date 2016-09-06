@@ -3,26 +3,20 @@
  */
 
 import * as express from 'express';
-const subdomain = require('subdomain');
 
 import signin from './core/signin';
 import config from './config';
 import api from './core/api';
 
-const subdomainOptions = {
-	base: config.host,
-	prefix: '__'
-};
+const subdomainPrefix = '__';
 
-const aboutDomain = `/${subdomainOptions.prefix}/about`;
-const colorDomain = `/${subdomainOptions.prefix}/color`;
-const signupDomain = `/${subdomainOptions.prefix}/signup`;
-const signinDomain = `/${subdomainOptions.prefix}/signin`;
-const signoutDomain = `/${subdomainOptions.prefix}/signout`;
+const aboutDomain = `/${subdomainPrefix}/about`;
+const colorDomain = `/${subdomainPrefix}/color`;
+const signupDomain = `/${subdomainPrefix}/signup`;
+const signinDomain = `/${subdomainPrefix}/signin`;
+const signoutDomain = `/${subdomainPrefix}/signout`;
 
 export default function(app: express.Express): void {
-
-	app.use(subdomain(subdomainOptions));
 
 	app.get('/', (req, res) => {
 		if (res.locals.signin) {

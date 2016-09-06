@@ -16,6 +16,7 @@ import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as favicon from 'serve-favicon';
 const hsts = require('hsts');
+const subdomain = require('subdomain');
 
 // Internal modules
 import api from './core/api';
@@ -38,9 +39,12 @@ app.locals.env = process.env.NODE_ENV;
 app.locals.compileDebug = false;
 app.locals.cache = true;
 
-app.use(require('express-status-monitor')({
-	title: 'Misskey Web Status',
-	path: '/_/status'
+/**
+ * Subdomain
+ */
+app.use(subdomain({
+	base: config.host,
+	prefix: '__'
 }));
 
 /**
@@ -72,6 +76,14 @@ app.use(favicon(`${__dirname}/resources/favicon.ico`));
 app.use('/_/resources', express.static(`${__dirname}/resources`));
 app.get('/manifest.json', (req, res) => res.sendFile(__dirname + '/resources/manifest.json'));
 app.get('/apple-touch-icon.png', (req, res) => res.sendFile(__dirname + '/resources/apple-touch-icon.png'));
+
+/**
+ * Server status
+ */
+app.use(require('express-status-monitor')({
+	title: 'Misskey Web Status',
+	path: '/__/about/status'
+}));
 
 /**
  * Basic parsers
