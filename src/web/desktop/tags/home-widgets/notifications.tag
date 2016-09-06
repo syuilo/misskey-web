@@ -1,5 +1,7 @@
 mk-notifications-home-widget
-	p.title 通知
+	p.title
+		i.fa.fa-bell-o
+		| 通知
 	button(onclick={ settings }, title='通知の設定'): i.fa.fa-cog
 	mk-notifications
 
@@ -15,6 +17,9 @@ style.
 		font-weight bold
 		color #888
 		border-bottom solid 1px #eee
+
+		> i
+			margin-right 4px
 	
 	> button
 		position absolute

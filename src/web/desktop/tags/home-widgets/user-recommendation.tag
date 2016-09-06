@@ -1,5 +1,7 @@
 mk-user-recommendation-home-widget
-	p.title おすすめユーザー
+	p.title
+		i.fa.fa-users
+		| おすすめユーザー
 	div.user(if={ users.length != 0 }, each={ user in users })
 		a.avatar-anchor(href= config.url + '/' + { user.username })
 			img.avatar(src={ user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-card={ user.username })
@@ -19,6 +21,9 @@ style.
 		padding 16px
 		font-weight bold
 		color #888
+
+		> i
+			margin-right 4px
 
 	> .user
 		position relative
