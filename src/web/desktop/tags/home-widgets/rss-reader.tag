@@ -48,6 +48,10 @@ style.
 			display block
 			padding 4px 0
 			color #666
+			border-bottom dashed 1px #eee
+
+			&:last-child
+				border-bottom none
 
 	> .initializing
 		margin 0
