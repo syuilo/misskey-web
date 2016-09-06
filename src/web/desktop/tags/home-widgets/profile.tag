@@ -1,5 +1,5 @@
 mk-profile-home-widget
-	div.banner(style={ 'background-image: url(' + I.banner_url + '?thumbnail&size=256)' })
+	div.banner(style={ I.banner_url ? 'background-image: url(' + I.banner_url + '?thumbnail&size=256)' : '' })
 	a.avatar-anchor(href= config.url + '/' + { I.username })
 		img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-card={ I.username })
 	a.name(href= config.url + '/' + { I.username }) { I.name }
