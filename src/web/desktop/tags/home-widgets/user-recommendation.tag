@@ -18,7 +18,8 @@ style.
 
 	> .title
 		margin 0
-		padding 16px
+		padding 14px 16px
+		font-size 0.9em
 		font-weight bold
 		color #888
 
