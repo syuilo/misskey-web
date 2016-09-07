@@ -2,7 +2,7 @@ mk-notifications
 	div.notifications(if={ notifications.length != 0 })
 		virtual(each={ notification in notifications })
 			div.notification(class={ notification.type })
-				time { notification.created_at }
+				mk-time(time={ notification.created_at })
 				div.main(if={ notification.type == 'like' })
 					a.avatar-anchor
 						img.avatar(src={ notification.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
@@ -50,7 +50,7 @@ style.
 				display block
 				clear both
 
-			> time
+			> mk-time
 				display inline
 				position absolute
 				top 16px

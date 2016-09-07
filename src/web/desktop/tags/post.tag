@@ -22,7 +22,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 						| @{ p.user.username }
 				div.right
 					a.time
-						| { p.created_at }
+						mk-time(time={ p.created_at })
 			div.body
 				div.text@text
 				div.images(if={ p.images })

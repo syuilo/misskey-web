@@ -11,7 +11,7 @@ mk-post-preview(title={ title })
 						| @{ post.user.username }
 				div.right
 					a.time
-						| { post.created_at }
+						mk-time(time={ post.created_at })
 			div.body
 				div.text
 					| { post.text }
