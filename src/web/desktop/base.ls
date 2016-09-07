@@ -54,6 +54,7 @@ require './tags/talk/room.tag'
 require './tags/talk/room-window.tag'
 require './tags/talk/message.tag'
 require './tags/talk/index.tag'
+require './tags/time.tag'
 require './tags/ui.tag'
 
 dialog = (title, text, buttons, can-through, on-through) ~>
