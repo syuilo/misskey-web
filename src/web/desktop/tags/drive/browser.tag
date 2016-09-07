@@ -270,6 +270,7 @@ style.
 		display none
 
 script.
+	@mixin \dialog
 	@mixin \input-dialog
 	@mixin \stream
 
@@ -375,35 +376,77 @@ script.
 		return false
 
 	@ondragover = (e) ~>
+		e.stop-propagation!
 		# ドラッグされてきたものがファイルだったら
 		if e.data-transfer.effect-allowed == \all
-			e.stop-propagation!
 			e.data-transfer.drop-effect = \copy
-			@draghover = true
-			return false
 		else
-			e.data-transfer.drop-effect = \none
+			e.data-transfer.drop-effect = \move
+		@draghover = true
+		return false
 
 	@ondragenter = (e) ~>
-		# ドラッグされてきたものがファイルだったら
-		if e.data-transfer.effect-allowed == \all
-			@draghover = true
+		@draghover = true
 
 	@ondragleave = (e) ~>
-		# ドラッグされてきたものがファイルだったら
-		if e.data-transfer.effect-allowed == \all
-			@draghover = false
+		@draghover = false
 
 	@ondrop = (e) ~>
+		e.stop-propagation!
+		@draghover = false
+
 		# ドロップされてきたものがファイルだったら
 		if e.data-transfer.files.length > 0
-			e.stop-propagation!
-			@draghover = false
-
 			Array.prototype.for-each.call e.data-transfer.files, (file) ~>
 				@upload file, @folder
-
 			return false
+
+		# データ取得
+		data = e.data-transfer.get-data 'text'
+		if !data?
+			return false
+
+		# パース
+		obj = JSON.parse data
+
+		# (ドライブの)ファイルだったら
+		if obj.type == \file
+			file = obj.id
+			if (@files.some (f) ~> f.id == file)
+				return false
+			@remove-file file
+			api 'drive/files/update' do
+				file: file
+				folder: if @folder? then @folder.id else \null
+			.then ~>
+				# something
+			.catch (err, text-status) ~>
+				console.error err
+
+		# (ドライブの)フォルダーだったら
+		else if obj.type == \folder
+			folder = obj.id
+			# 移動先が自分自身ならreject
+			if @folder? and folder == @folder.id
+				return false
+			if (@folders.some (f) ~> f.id == folder)
+				return false
+			@remove-folder folder
+			api 'drive/folders/update' do
+				folder: folder
+				parent: if @folder? then @folder.id else \null
+			.then ~>
+				# something
+			.catch (err) ~>
+				if err == 'detected-circular-definition'
+					@dialog do
+						'<i class="fa fa-exclamation-triangle"></i>操作を完了できません'
+						'移動先のフォルダーは、移動するフォルダーのサブフォルダーです。'
+						[
+							text: \OK
+						]
+
+		return false
 
 	@oncontextmenu = (e) ~>
 		e.stop-immediate-propagation!
