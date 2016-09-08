@@ -2,13 +2,13 @@ mk-user-recommendation-home-widget
 	p.title
 		i.fa.fa-users
 		| おすすめユーザー
-	div.user(if={ users.length != 0 }, each={ user in users })
-		a.avatar-anchor(href= config.url + '/' + { user.username })
-			img.avatar(src={ user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-card={ user.username })
+	div.user(if={ users.length != 0 }, each={ _user in users })
+		a.avatar-anchor(href= config.url + '/' + { _user.username })
+			img.avatar(src={ _user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-card={ _user.username })
 		div.body
-			p.name { user.name }
-			p.username @{ user.username }
-		mk-follow-button(user={ user })
+			p.name { _user.name }
+			p.username @{ _user.username }
+		mk-follow-button(user={ _user })
 	p.empty(if={ users.length == 0 })
 		| いません！
 	p.init(if={ init })
