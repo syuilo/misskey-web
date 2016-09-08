@@ -118,7 +118,8 @@ script.
 	@init = true
 
 	@on \mount ~>
-		api \users/recommendation
+		api \users/recommendation do
+			limit: 6users
 		.then (users) ~>
 			@init = false
 			@users = users
