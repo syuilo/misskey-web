@@ -7,6 +7,7 @@ mk-rss-reader-home-widget
 		virtual(each={ item in items })
 			a(href={ item.link }, target='_blank') { item.title }
 	p.initializing(if={ initializing })
+		i.fa.fa-spinner.fa-pulse.fa-fw
 		| 読み込んでいます...
 
 style.
@@ -58,6 +59,9 @@ style.
 		padding 16px
 		text-align center
 		color #aaa
+
+		> i
+			margin-right 4px
 
 script.
 

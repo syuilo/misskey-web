@@ -29,6 +29,7 @@ mk-notifications
 	p.empty(if={ notifications.length == 0 && !loading })
 		| ありません！
 	p.loading(if={ loading })
+		i.fa.fa-spinner.fa-pulse.fa-fw
 		| 読み込んでいます...
 
 style.
@@ -128,6 +129,9 @@ style.
 		padding 16px
 		text-align center
 		color #aaa
+
+		> i
+			margin-right 4px
 
 script.
 	@mixin \stream

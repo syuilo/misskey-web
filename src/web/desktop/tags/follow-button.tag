@@ -46,7 +46,7 @@ style.
 				border 2px solid rgba($theme-color, 0.3)
 				border-radius 8px
 
-		&.unfollow
+		&.follow
 			color #888
 			background linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%)
 			border solid 1px #e2e2e2
@@ -59,7 +59,7 @@ style.
 				background #ececec
 				border-color #dcdcdc
 
-		&.follow
+		&.unfollow
 			color $theme-color-foreground
 			background linear-gradient(to bottom, lighten($theme-color, 25%) 0%, lighten($theme-color, 10%) 100%)
 			border solid 1px lighten($theme-color, 15%)

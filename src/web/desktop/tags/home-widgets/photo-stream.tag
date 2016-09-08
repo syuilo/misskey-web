@@ -3,6 +3,7 @@ mk-photo-stream-home-widget
 		i.fa.fa-camera
 		| フォトストリーム
 	p.initializing(if={ initializing })
+		i.fa.fa-spinner.fa-pulse.fa-fw
 		| 読み込んでいます...
 	div.stream(if={ !initializing && images.length > 0 })
 		virtual(each={ image in images })
@@ -55,6 +56,9 @@ style.
 		padding 16px
 		text-align center
 		color #aaa
+
+		> i
+			margin-right 4px
 
 script.
 	@mixin \stream

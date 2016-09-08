@@ -11,6 +11,9 @@ mk-user-recommendation-home-widget
 		mk-follow-button(user={ user })
 	p.empty(if={ users.length == 0 })
 		| いません！
+	p.init(if={ init })
+		i.fa.fa-spinner.fa-pulse.fa-fw
+		| 読み込んでいます...
 
 style.
 	display block
@@ -22,6 +25,7 @@ style.
 		font-size 0.9em
 		font-weight bold
 		color #888
+		border-bottom solid 1px #eee
 
 		> i
 			margin-right 4px
@@ -29,7 +33,10 @@ style.
 	> .user
 		position relative
 		padding 16px
-		border-top solid 1px #eee
+		border-bottom solid 1px #eee
+
+		&:last-child
+			border-bottom none
 
 		&:after
 			content ""
@@ -71,14 +78,24 @@ style.
 		padding 16px
 		text-align center
 		color #aaa
-		border-top solid 1px #eee
+
+	> .init
+		margin 0
+		padding 16px
+		text-align center
+		color #aaa
+
+		> i
+			margin-right 4px
 
 script.
 	@users = null
+	@init = true
 
 	@on \mount ~>
 		api \users/recommendation
 		.then (users) ~>
+			@init = false
 			@users = users
 			@update!
 		.catch (err, text-status) ->
