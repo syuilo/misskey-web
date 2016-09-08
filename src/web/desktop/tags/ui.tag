@@ -7,8 +7,6 @@ mk-ui
 		div.contents
 			| <yield/>
 
-	mk-go-top
-
 style.
 	display block
 
