@@ -38,7 +38,7 @@ style.
 		justify-content center
 		flex-wrap wrap
 		position relative
-		padding 4px
+		padding 8px
 
 		> .img
 			flex 1 1 33%
@@ -48,7 +48,7 @@ style.
 			background-position center center
 			background-size cover
 			background-clip content-box
-			border solid 4px transparent
+			border solid 2px transparent
 
 	> .initializing
 	> .empty
