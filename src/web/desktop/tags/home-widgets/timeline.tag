@@ -1,4 +1,5 @@
 mk-timeline-home-widget
+	mk-following-setuper(if={ no-following })
 	p.loading(if={ is-loading })
 		i.fa.fa-spinner.fa-pulse.fa-fw
 		| 読み込んでいます...
@@ -10,6 +11,9 @@ mk-timeline-home-widget
 style.
 	display block
 	background #fff
+
+	> mk-following-setuper
+		border-bottom solid 1px #eee
 
 	> p
 		display block
@@ -35,12 +39,14 @@ script.
 
 	@is-loading = true
 	@is-empty = false
+	@no-following = I.following_count == 0
 	@unread-count = 0
 	@controller = riot.observable!
 
 	@on \mount ~>
 		@stream.on \post @on-stream-post
 		@stream.on \follow @on-stream-follow
+		@stream.on \unfollow @on-stream-unfollow
 
 		document.add-event-listener \visibilitychange @window-on-visibilitychange, false
 		document.add-event-listener \keydown (e) ~>
@@ -54,6 +60,7 @@ script.
 	@on \unmount ~>
 		@stream.off \post @on-stream-post
 		@stream.off \follow @on-stream-follow
+		@stream.off \unfollow @on-stream-unfollow
 	
 	@load = ~>
 		@controller.trigger \clear
@@ -81,6 +88,9 @@ script.
 			document.title = '(' + @unread-count + ') ' + @get-post-summary post
 	
 	@on-stream-follow = ~>
+		@load!
+
+	@on-stream-unfollow = ~>
 		@load!
 
 	@window-on-visibilitychange = ~>

@@ -87,11 +87,16 @@ style.
 			opacity 0.7
 
 script.
+	@mixin \stream
+
 	@user = @opts.user
 	@init = false
 	@wait = false
 
 	@on \mount ~>
+		@stream.on \follow @on-stream-follow
+		@stream.on \unfollow @on-stream-unfollow
+
 		if !@user.is_following?
 			@init = true
 			api \users/show do
@@ -100,6 +105,20 @@ script.
 				@user = user
 				@init = false
 				@update!
+
+	@on \unmount ~>
+		@stream.off \follow @on-stream-follow
+		@stream.off \unfollow @on-stream-unfollow
+
+	@on-stream-follow = (user) ~>
+		if user.id == @user.id
+			@user = user
+			@update!
+
+	@on-stream-unfollow = (user) ~>
+		if user.id == @user.id
+			@user = user
+			@update!
 
 	@onclick = ~>
 		@wait = true
