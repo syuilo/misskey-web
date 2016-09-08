@@ -61,17 +61,12 @@ script.
 		@stream.off \unfollow @on-stream-unfollow
 	
 	@load = ~>
-		@controller.trigger \clear
-		@is-loading = true
-		@update!
 		api \posts/timeline
 		.then (posts) ~>
 			@is-loading = false
-			if posts.length == 0
-				@is-empty = true
-			else
-				@is-empty = false
+			@is-empty = posts.length == 0
 			@update!
+			@controller.trigger \clear
 			@controller.trigger \set-posts posts
 		.catch (err) ~>
 			console.error err
