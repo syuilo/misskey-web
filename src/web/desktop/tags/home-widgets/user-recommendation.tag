@@ -21,7 +21,8 @@ style.
 
 	> .title
 		margin 0
-		padding 14px 16px
+		padding 0 16px
+		line-height 42px
 		font-size 0.9em
 		font-weight bold
 		color #888

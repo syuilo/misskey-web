@@ -20,8 +20,8 @@ style.
 		position relative
 		z-index 1
 		margin 0
-		padding 14px 16px
-		line-height 1em
+		padding 0 16px
+		line-height 42px
 		font-size 0.9em
 		font-weight bold
 		color #888
