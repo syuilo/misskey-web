@@ -142,8 +142,9 @@ style.
 						margin-left 8px
 
 script.
-	@user = window.I
+	@mixin \dialog
 
+	@user = window.I
 	@page = \account
 
 	@page-account = ~>
@@ -204,7 +205,12 @@ script.
 				api 'i/update' do
 					avatar: file.id
 				.then (i) ~>
-					# something
+					@dialog do
+						'<i class="fa fa-info-circle"></i>アバターを更新しました'
+						'新しいアバターが反映されるまで時間がかかる場合があります。'
+						[
+							text: \わかった
+						]
 					@user.avatar_url = i.avatar_url
 					@update!
 				.catch (err) ~>
