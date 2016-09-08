@@ -351,6 +351,16 @@ gulp.task('build:scripts', done => {
 						}
 					}
 				})
+				.transform(transformify((source, file) => {
+					if (file.indexOf('\\post-form-window') == -1) return source;
+					console.log(source);
+					return source;
+				}))
+				// Riotが謎の空白を挿入する
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+					return source.replace(/\s<mk\-ellipsis>/g, '<mk-ellipsis>');
+				}))
 				/*
 				// LiveScruptがHTMLクラスのショートカットを変な風に生成するのでそれを修正
 				.transform(transformify((source, file) => {

@@ -4,7 +4,8 @@ mk-photo-stream-home-widget
 		| フォトストリーム
 	p.initializing(if={ initializing })
 		i.fa.fa-spinner.fa-pulse.fa-fw
-		| 読み込んでいます...
+		| 読み込んでいます
+		mk-ellipsis
 	div.stream(if={ !initializing && images.length > 0 })
 		virtual(each={ image in images })
 			div.img(style={ 'background-image: url(' + image.url + '?thumbnail&size=256)' })

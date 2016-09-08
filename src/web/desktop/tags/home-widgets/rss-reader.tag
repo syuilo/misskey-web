@@ -8,7 +8,8 @@ mk-rss-reader-home-widget
 			a(href={ item.link }, target='_blank') { item.title }
 	p.initializing(if={ initializing })
 		i.fa.fa-spinner.fa-pulse.fa-fw
-		| 読み込んでいます...
+		| 読み込んでいます
+		mk-ellipsis
 
 style.
 	display block

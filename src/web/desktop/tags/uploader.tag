@@ -6,7 +6,9 @@ mk-uploader
 				i.fa.fa-spinner.fa-pulse
 				| { name }
 			p.status
-				span.initing(if={ progress == undefined }) 待機中...
+				span.initing(if={ progress == undefined })
+					| 待機中
+					mk-ellipsis
 				span.kb(if={ progress != undefined })
 					| { String(Math.floor(progress.value / 1024)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') }
 					i KB
@@ -135,12 +137,12 @@ style.
 				border-radius 4px
 				background linear-gradient(
 					45deg,
-					darken($theme-color, 10%) 25%,
-					$theme-color              25%,
-					$theme-color              50%,
-					darken($theme-color, 10%) 50%,
-					darken($theme-color, 10%) 75%,
-					$theme-color              75%,
+					lighten($theme-color, 30%) 25%,
+					$theme-color               25%,
+					$theme-color               50%,
+					lighten($theme-color, 30%) 50%,
+					lighten($theme-color, 30%) 75%,
+					$theme-color               75%,
 					$theme-color
 				)
 				background-size 32px 32px

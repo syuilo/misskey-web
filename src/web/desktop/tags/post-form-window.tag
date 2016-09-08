@@ -6,7 +6,9 @@ mk-post-form-window
 		span(if={ !parent.opts.reply }) 新規投稿
 		span(if={ parent.opts.reply }) 返信
 		span.files(if={ parent.files.length != 0 }) 添付: { parent.files.length }ファイル
-		span.uploading-files(if={ parent.uploading-files.length != 0 }) { parent.uploading-files.length }個のファイルをアップロード中
+		span.uploading-files(if={ parent.uploading-files.length != 0 })
+			| { parent.uploading-files.length }個のファイルをアップロード中
+			mk-ellipsis
 		</yield>
 
 		<yield to="content">

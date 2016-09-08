@@ -1,8 +1,7 @@
 mk-timeline-home-widget
 	mk-following-setuper(if={ no-following })
-	p.loading(if={ is-loading })
-		i.fa.fa-spinner.fa-pulse.fa-fw
-		| 読み込んでいます...
+	div.loading(if={ is-loading })
+		mk-ellipsis-icon
 	p.empty(if={ is-empty })
 		i.fa.fa-comments-o
 		| 自分の投稿や、自分がフォローしているユーザーの投稿が表示されます。
@@ -15,17 +14,16 @@ style.
 	> mk-following-setuper
 		border-bottom solid 1px #eee
 
-	> p
-		display block
-		margin 0
-		padding 16px
-		text-align center
-		color #999
-	
+	> .loading
+		padding 32px
+
 	> .empty
+		display block
 		margin 0 auto
 		padding 32px
 		max-width 400px
+		text-align center
+		color #999
 
 		> i
 			display block

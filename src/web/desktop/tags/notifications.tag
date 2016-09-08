@@ -30,7 +30,8 @@ mk-notifications
 		| ありません！
 	p.loading(if={ loading })
 		i.fa.fa-spinner.fa-pulse.fa-fw
-		| 読み込んでいます...
+		| 読み込んでいます
+		mk-ellipsis
 
 style.
 	display block

@@ -1,10 +1,14 @@
 mk-stream-indicator
 	p(if={ state == 'initializing' })
 		i.fa.fa-spinner.fa-spin
-		span 接続中...
+		span
+			| 接続中
+			mk-ellipsis
 	p(if={ state == 'reconnecting' })
 		i.fa.fa-spinner.fa-spin
-		span 切断されました 接続中...
+		span
+			| 切断されました 接続中
+			mk-ellipsis
 	p(if={ state == 'connected' })
 		i.fa.fa-check
 		span 接続完了

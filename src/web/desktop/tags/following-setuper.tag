@@ -11,7 +11,8 @@ mk-following-setuper
 		| おすすめのユーザーは見つかりませんでした。
 	p.init(if={ init })
 		i.fa.fa-spinner.fa-pulse.fa-fw
-		| 読み込んでいます...
+		| 読み込んでいます
+		mk-ellipsis
 	button.close(onclick={ close }): i.fa.fa-times
 
 style.

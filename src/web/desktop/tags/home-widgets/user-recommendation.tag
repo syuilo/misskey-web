@@ -13,7 +13,8 @@ mk-user-recommendation-home-widget
 		| いません！
 	p.init(if={ init })
 		i.fa.fa-spinner.fa-pulse.fa-fw
-		| 読み込んでいます...
+		| 読み込んでいます
+		mk-ellipsis
 
 style.
 	display block
