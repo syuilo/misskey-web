@@ -26,6 +26,7 @@ style.
 	
 	> button
 		position absolute
+		z-index 2
 		top 0
 		right 0
 		padding 0
