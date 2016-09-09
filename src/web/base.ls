@@ -25,21 +25,24 @@ module.exports = (cb) ->
 				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 			body: "_i=#i"
 		.then (res) ->
-			res.json!.then (_i) ->
-				_i._web = i
-				window.I = _i
-				init = document.get-element-by-id \initializing
-				init.parent-node.remove-child init
-				if cb?
-					cb!
+			clear-init!
+			if res.status != 200
+				alert 'ユーザー認証に失敗しました。ログアウトします。'
+				location.href = CONFIG.urls.signout
+			else
+				res.json!.then (_i) ->
+					_i._web = i
+					window.I = _i
+					if cb?
+						cb!
 		.catch ~>
-			init = document.get-element-by-id \initializing
-			init.parent-node.remove-child init
+			clear-init!
 			riot.mount document.body.append-child document.create-element \mk-core-error
 	else
-		init = document.get-element-by-id \initializing
-		init.parent-node.remove-child init
+		clear-init!
 		if cb?
 			cb!
 
-
+function clear-init
+	init = document.get-element-by-id \initializing
+	init.parent-node.remove-child init

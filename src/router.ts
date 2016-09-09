@@ -71,12 +71,12 @@ export default function(app: express.Express): void {
 
 	app.get(`${signoutDomain}/`, (req, res) => {
 		if (res.locals.signin) {
-			req.session.destroy(() => {
-				res.redirect(config.url);
+			res.clearCookie('i', {
+				path: '/',
+				domain: `.${config.host}`
 			});
-		} else {
-			res.redirect(config.url);
 		}
+		res.redirect(config.url);
 	});
 
 	/**
