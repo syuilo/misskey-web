@@ -1,18 +1,20 @@
 mk-following-setuper
 	p.title 気になるユーザーをフォロー:
-	div.user(if={ users.length != 0 }, each={ _user in users })
-		a.avatar-anchor(href= config.url + '/' + { _user.username })
-			img.avatar(src={ _user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-card={ _user.username })
-		div.body
-			p.name { _user.name }
-			p.username @{ _user.username }
-		mk-follow-button(user={ _user })
+	div.users(if={ users.length > 0 })
+		div.user(if={ users.length != 0 }, each={ _user in users })
+			a.avatar-anchor(href= config.url + '/' + { _user.username })
+				img.avatar(src={ _user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-card={ _user.username })
+			div.body
+				p.name { _user.name }
+				p.username @{ _user.username }
+			mk-follow-button(user={ _user })
 	p.empty(if={ users.length == 0 })
 		| おすすめのユーザーは見つかりませんでした。
-	p.init(if={ init })
+	p.loading(if={ loading })
 		i.fa.fa-spinner.fa-pulse.fa-fw
 		| 読み込んでいます
 		mk-ellipsis
+	a.refresh(onclick={ refresh }) もっと見る
 	button.close(onclick={ close }): i.fa.fa-times
 
 style.
@@ -21,57 +23,58 @@ style.
 	padding 24px
 	background #fff
 
-	&:after
-		content ""
-		display block
-		clear both
-
 	> .title
 		margin 0 0 12px 0
 		font-size 1em
 		font-weight bold
 		color #888
 
-	> .user
-		position relative
-		padding 16px
-		width 200px
-		float left
-
+	> .users
 		&:after
 			content ""
 			display block
 			clear both
 
-		> .avatar-anchor
-			display block
+		> .user
+			position relative
+			padding 16px
+			width 200px
 			float left
-			margin 0 16px 0 0
 
-			> .avatar
+			&:after
+				content ""
 				display block
-				width 42px
-				height 42px
-				margin 0
-				border-radius 8px
-				vertical-align bottom
+				clear both
 
-		> .body
-			float left
-			width calc(100% - 64px)
+			> .avatar-anchor
+				display block
+				float left
+				margin 0 16px 0 0
 
-			> .name
-				margin 0
-				color #555
+				> .avatar
+					display block
+					width 42px
+					height 42px
+					margin 0
+					border-radius 8px
+					vertical-align bottom
+
+			> .body
+				float left
+				width calc(100% - 64px)
+
+				> .name
+					margin 0
+					color #555
+				
+				> .username
+					margin 0
+					color #ccc
 			
-			> .username
-				margin 0
-				color #ccc
-		
-		> mk-follow-button
-			position absolute
-			top 16px
-			right 16px
+			> mk-follow-button
+				position absolute
+				top 16px
+				right 16px
 
 	> .empty
 		margin 0
@@ -79,7 +82,7 @@ style.
 		text-align center
 		color #aaa
 
-	> .init
+	> .loading
 		margin 0
 		padding 16px
 		text-align center
@@ -87,6 +90,13 @@ style.
 
 		> i
 			margin-right 4px
+	
+	> .refresh
+		display block
+		margin 0 8px 0 0
+		text-align right
+		font-size 0.9em
+		color #999
 
 	> .close
 		appearance none
@@ -116,17 +126,34 @@ style.
 
 script.
 	@users = null
-	@init = true
+	@loading = true
+
+	@limit = 6users
+	@page = 0
 
 	@on \mount ~>
+		@load!
+	
+	@load = ~>
+		@loading = true
+		@users = null
+		@update!
 		api \users/recommendation do
-			limit: 6users
+			limit: @limit
+			offset: @limit * @page
 		.then (users) ~>
-			@init = false
+			@loading = false
 			@users = users
 			@update!
 		.catch (err, text-status) ->
 			console.error err
+
+	@refresh = ~>
+		if @users.length < @limit
+			@page = 0
+		else
+			@page++
+		@load!
 
 	@close = ~>
 		@unmount!
