@@ -1,6 +1,8 @@
 riot = require 'riot'
-require '../../base.ls'
-riot.mount 'mk-stream-indicator'
+load = require '../../base.ls'
+
+load ->
+	riot.mount 'mk-stream-indicator'
 
 window.add-event-listener \load follow-sidebar
 window.add-event-listener \scroll follow-sidebar

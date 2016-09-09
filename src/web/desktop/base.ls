@@ -1,4 +1,4 @@
-require '../base.ls'
+load = require '../base.ls'
 require 'velocity'
 ReconnectingWebSocket = require 'reconnecting-websocket'
 
@@ -101,35 +101,40 @@ riot.mixin \cropper do
 state = riot.observable!
 event = riot.observable!
 
-socket = new ReconnectingWebSocket CONFIG.api.url.replace \http \ws
+module.exports = (cb) ->
+	load ~>
 
-socket.onopen = ~>
-	state.trigger \connected
-	socket.send JSON.stringify do
-		i: I._web
+		socket = new ReconnectingWebSocket CONFIG.api.url.replace \http \ws
 
-socket.onclose = ~>
-	state.trigger \closed
+		socket.onopen = ~>
+			state.trigger \connected
+			socket.send JSON.stringify do
+				i: I._web
 
-socket.onmessage = (message) ~>
-	try
-		message = JSON.parse message.data
-		if message.type?
-			event.trigger message.type, message.body
-	catch
-		# ignore
+		socket.onclose = ~>
+			state.trigger \closed
 
-event.on \drive_file_created (file) ~>
-	n = new Notification 'ファイルがアップロードされました' do
-		body: file.name
-		icon: file.url + '?thumbnail&size=64'
-	set-timeout (n.close.bind n), 5000ms
+		socket.onmessage = (message) ~>
+			try
+				message = JSON.parse message.data
+				if message.type?
+					event.trigger message.type, message.body
+			catch
+				# ignore
 
-riot.mixin \stream do
-	stream: event
-	stream-state: state
+		event.on \drive_file_created (file) ~>
+			n = new Notification 'ファイルがアップロードされました' do
+				body: file.name
+				icon: file.url + '?thumbnail&size=64'
+			set-timeout (n.close.bind n), 5000ms
 
-riot.mount 'mk-ui'
+		riot.mixin \stream do
+			stream: event
+			stream-state: state
+
+		riot.mount 'mk-ui'
+		if cb?
+			cb!
 
 # ブラウザが通知をサポートしているか確認
 if \Notification in window

@@ -3,6 +3,33 @@ require 'fetch'
 
 riot = require 'riot'
 
+document.domain = CONFIG.host
+
+i = ((document.cookie.match /i=([a-zA-Z0-9]+)/) || [null, null]).1
+
+window.SIGNIN = i?
+
+module.exports = (cb) ->
+	if window.SIGNIN
+		fetch "#{CONFIG.api.url}/i" do
+			method: \POST
+			headers:
+				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+			body: "_i=#i"
+		.then (res) ->
+			res.json!.then (_i) ->
+				_i._web = i
+				window.I = _i
+				init = document.get-element-by-id \initializing
+				init.parent-node.remove-child init
+				if cb?
+					cb!
+	else
+		init = document.get-element-by-id \initializing
+		init.parent-node.remove-child init
+		if cb?
+			cb!
+
 get-post-summary = (post) ~>
 	summary = if post.text? then post.text else ''
 	if post.images?

@@ -30,7 +30,6 @@ const app = express();
 
 app.disable('x-powered-by');
 
-app.set('etag', false);
 app.set('views', __dirname);
 app.set('view engine', 'pug');
 
@@ -109,21 +108,7 @@ app.use(async (req, res, next): Promise<any> =>
 
 	const i = req.cookies['i'];
 
-	if (i === undefined) {
-		res.locals.signin = false;
-		res.locals.i = null;
-		return next();
-	}
-
-	// Fetch user data
-	try {
-		res.locals.signin = true;
-		res.locals.i = await api('i', { _i: i });
-	} catch (e) {
-		console.error(e);
-		res.status(500).send('Core Error');
-		return;
-	}
+	res.locals.signin = i !== undefined;
 
 	next();
 });

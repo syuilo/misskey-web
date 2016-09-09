@@ -1,6 +1,8 @@
-require '../../../base.ls'
+load = require '../../../base.ls'
 WavesEffect = require 'ripple.js'
 Strength = require 'strength.js'
+
+load!
 
 $ window .load ->
 	WavesEffect.attach-to-class \ripple-effect

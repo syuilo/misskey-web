@@ -9,16 +9,12 @@ html(lang='ja', dir='ltr')
 		meta(name='application-name', content='Misskey')
 		meta(name='theme-color', content= config.themeColor)
 		meta(name='referrer', content='origin')
-		link(rel='shortcut icon', href= config.url + '/favicon.ico')
 		title
 			if env !== 'production'
 				| (DEBUG)
 				= ' '
 			block title
 		script(src='https://use.fontawesome.com/22aba0df4f.js', async)
-		script!= 'document.domain="' + config.host + '"'
-		script!= 'window.SIGNIN=' + signin.toString()
-		script!= 'eval(decodeURIComponent("' + encodeURIComponent('window.I=' + JSON.stringify(i)) + '"))'
 		//-
 			script(type='application/ld+json').
 				{
@@ -35,4 +31,8 @@ html(lang='ja', dir='ltr')
 
 	body
 		noscript: div: p JavaScriptを有効にしてください
+		div#initializing: p
+			span .
+			span .
+			span .
 		block body
