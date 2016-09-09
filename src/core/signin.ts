@@ -12,7 +12,7 @@ export default async function (username: string, password: string, res: express.
 	res.cookie('i', ctx.web, {
 		path: '/',
 		domain: `.${config.host}`,
-		secure: config.https.enable,
+		secure: config.url.substr(0, 5) === 'https',
 		httpOnly: false,
 		expires: new Date(Date.now() + expires),
 		maxAge: expires
