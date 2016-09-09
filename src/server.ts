@@ -72,7 +72,9 @@ app.use(hsts({
  * Statics
  */
 app.use(favicon(`${__dirname}/resources/favicon.ico`));
-app.use('/_/resources', express.static(`${__dirname}/resources`));
+app.use('/_/resources', express.static(`${__dirname}/resources`, {
+	maxAge: 1000 * 60 * 60 * 24
+}));
 app.get('/manifest.json', (req, res) => res.sendFile(__dirname + '/resources/manifest.json'));
 app.get('/apple-touch-icon.png', (req, res) => res.sendFile(__dirname + '/resources/apple-touch-icon.png'));
 
