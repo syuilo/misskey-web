@@ -15,7 +15,7 @@ mk-following-setuper
 		| 読み込んでいます
 		mk-ellipsis
 	a.refresh(onclick={ refresh }) もっと見る
-	button.close(onclick={ close }): i.fa.fa-times
+	button.close(onclick={ close }, title='閉じる'): i.fa.fa-times
 
 style.
 	display block
