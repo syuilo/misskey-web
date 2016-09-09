@@ -8,20 +8,4 @@ block head
 	script(src='/_/resources/desktop/pages/home/script.js', async, defer)
 
 block body
-	mk-ui
-		div#home
-			div.widgets.side-left#left: div.body
-				mk-profile-home-widget
-				mk-calendar-home-widget
-				mk-rss-reader-home-widget
-				mk-photo-stream-home-widget
-			main.widgets: div.body
-				mk-timeline-home-widget
-			div.widgets.side-right#right: div.body
-				mk-broadcast-home-widget
-				mk-notifications-home-widget
-				mk-user-recommendation-home-widget
-				mk-donate-home-widget
-				mk-nav-home-widget
-				mk-tip-home-widget
-	mk-stream-indicator
+	mk-ui: mk-home

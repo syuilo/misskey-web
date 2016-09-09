@@ -60,6 +60,8 @@ require './tags/following-setuper.tag'
 require './tags/ellipsis.tag'
 require './tags/ellipsis-icon.tag'
 require './tags/ui.tag'
+require './tags/home.tag'
+require './tags/detect-slow-internet-connection-notice.tag'
 
 dialog = (title, text, buttons, can-through, on-through) ~>
 	dialog = document.body.append-child document.create-element \mk-dialog
@@ -98,11 +100,10 @@ riot.mixin \input-dialog do
 riot.mixin \cropper do
 	Cropper: require 'cropper'
 
-state = riot.observable!
-event = riot.observable!
-
 module.exports = (cb) ->
 	load ~>
+		state = riot.observable!
+		event = riot.observable!
 
 		socket = new ReconnectingWebSocket CONFIG.api.url.replace \http \ws
 
