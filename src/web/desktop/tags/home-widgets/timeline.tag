@@ -15,7 +15,7 @@ style.
 		border-bottom solid 1px #eee
 
 	> .loading
-		padding 32px
+		padding 64px 0
 
 	> .empty
 		display block
