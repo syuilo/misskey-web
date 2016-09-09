@@ -13,11 +13,9 @@ mk-broadcast-home-widget
 		a(href='https://github.com/syuilo/misskey-web', target='_blank') こちら
 
 style.
-	$bg = #fdfdfd
-
 	display block
 	padding 10px 10px 10px 50px
-	background $bg
+	background transparent
 	border-color #4078c0 !important
 	font-family 'Meiryo', 'メイリオ', sans-serif
 
