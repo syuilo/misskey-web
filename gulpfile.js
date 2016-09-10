@@ -39,6 +39,7 @@ const aliasifyConfig = {
 		"fetch": "./bower_components/fetch/fetch.js",
 		"velocity": "./bower_components/velocity/velocity.js",
 		"ripple.js": "./bower_components/ripple.js/ripple.js",
+		"misskey-text": "./bower_components/misskey-text/src/index.js",
 		"strength.js": "./bower_components/password-strength.js/strength.js",
 		"js-cookie": "./bower_components/js-cookie/src/js.cookie.js",
 		"cropper": "./bower_components/cropperjs/dist/cropper.js",

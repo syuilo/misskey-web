@@ -204,6 +204,8 @@ style.
 						color $theme-color
 
 script.
+	@mixin \text
+
 	@post = opts.post
 	@title = 'a'
 	@is-repost = @post.repost?
@@ -217,7 +219,8 @@ script.
 
 	@on \mount ~>
 		if @p.text?
-			@text.innerHTML = @parse-text @p.text
+			tokens = @analyze @p.text
+			@text.innerHTML = @compile tokens
 
 	@reply = ~>
 		if !@reply-form?
@@ -248,28 +251,3 @@ script.
 			.then ~>
 				@p.is_liked = true
 				@update!
-
-	@parse-text = (text) ~>
-		hashtags mentions url bold escape text
-			.replace /(\r\n|\r|\n)/g '<br>'
-
-	function escape(text)
-		text
-			.replace />/g '&gt;'
-			.replace /</g '&lt;'
-
-	function url(text)
-		text.replace /https?:\/\/[\w\/:%#\$&\?\(\)~\.=\+\-]+/gi (url) ~>
-			'<a href="' + url + '" title="' + url + '" target="_blank" class="url" rel="nofollow">' + url + '</a>'
-
-	function mentions(text)
-		text.replace /@([a-zA-Z0-9\-]+)/g (arg, name) ~>
-			'<a href="' + CONFIG.url + '/' + name + '" class="mention" data-user-card="' + name + '">@' + name + '</a>'
-
-	function bold(text)
-		text.replace /\*\*(.+?)\*\*/g (arg, boldee) ~>
-			'<strong>' + boldee + '</strong>'
-
-	function hashtags(text)
-		text.replace /(^|\s)#(\S+)/g (arg, _, tag) ~>
-		 _ + '<a href="' + CONFIG.url + '/search/hashtag:' + tag + '" class="hashtag">#' + tag + '</a>'

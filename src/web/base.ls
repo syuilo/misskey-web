@@ -11,6 +11,10 @@ require './common/tags/core-error.tag'
 riot.mixin \get-post-summary do
 	get-post-summary: get-post-summary
 
+riot.mixin \text do
+	analyze: require 'misskey-text'
+	compile: require './common/scripts/text-compiler.js'
+
 i = ((document.cookie.match /i=([a-zA-Z0-9]+)/) || [null, null]).1
 
 window.SIGNIN = i?

@@ -25,6 +25,7 @@
     "Swiper": "swiper#3.3.0",
     "password-strength.js": "latest",
     "ripple.js": "latest",
+    "misskey-text": "latest",
     "fetch": "",
     "velocity": "1.2.3",
     "reconnectingWebsocket": ""
