@@ -81,10 +81,10 @@ app.get('/apple-touch-icon.png', (req, res) => res.sendFile(__dirname + '/resour
 /**
  * Server status
  */
-app.use(require('express-status-monitor')({
-	title: 'Misskey Web Status',
-	path: '/__/about/status'
-}));
+//app.use(require('express-status-monitor')({
+//	title: 'Misskey Web Status',
+//	path: '/__/about/status'
+//}));
 
 /**
  * Basic parsers
