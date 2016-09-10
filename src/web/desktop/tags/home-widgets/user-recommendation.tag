@@ -87,7 +87,7 @@ style.
 			> .username
 				margin 0
 				color #ccc
-		
+
 		> mk-follow-button
 			position absolute
 			top 16px
@@ -117,7 +117,7 @@ script.
 
 	@on \mount ~>
 		@load!
-	
+
 	@load = ~>
 		@loading = true
 		@users = null

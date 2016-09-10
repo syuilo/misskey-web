@@ -59,7 +59,7 @@ script.
 		@stream.off \post @on-stream-post
 		@stream.off \follow @on-stream-follow
 		@stream.off \unfollow @on-stream-unfollow
-	
+
 	@load = ~>
 		api \posts/timeline
 		.then (posts) ~>
@@ -79,7 +79,7 @@ script.
 		if document.hidden
 			@unread-count++
 			document.title = '(' + @unread-count + ') ' + @get-post-summary post
-	
+
 	@on-stream-follow = ~>
 		@load!
 

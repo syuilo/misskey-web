@@ -27,7 +27,7 @@ style.
 
 		> i
 			margin-right 4px
-	
+
 	> button
 		position absolute
 		top 0
@@ -40,7 +40,7 @@ style.
 
 		&:hover
 			color #aaa
-		
+
 		&:active
 			color #999
 
@@ -75,7 +75,7 @@ script.
 		@fetch!
 
 		set-interval @fetch, 60000ms
-	
+
 	@fetch = ~>
 		url = CONFIG.url + '/_/api/rss-proxy/' + @url
 		fetch url, do

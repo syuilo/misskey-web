@@ -33,7 +33,7 @@ style.
 		margin 8px 0 0 92px
 		font-weight bold
 		color #555
-	
+
 	> .username
 		display block
 		margin 4px 0 8px 92px

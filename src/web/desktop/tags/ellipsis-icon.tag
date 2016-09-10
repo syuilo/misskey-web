@@ -7,7 +7,7 @@ style.
 	display block
 	width 70px
 	margin 0 auto
-  text-align center
+	text-align center
 
 	> div
 		display inline-block
@@ -19,7 +19,7 @@ style.
 
 		&:nth-child(1)
 			animation-delay -0.32s
-		
+
 		&:nth-child(2)
 			margin 0 6px
 			animation-delay -0.16s

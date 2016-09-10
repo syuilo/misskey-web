@@ -126,209 +126,203 @@ gulp.task('build:scripts', done => {
 				})
 				.transform(ls)
 				.transform(aliasify, aliasifyConfig)
-				// \nに統一
+
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
-					return source.replace(/\r\n/g, '\n');
+
+					console.log(file);
+
+					return source;
 				}))
+
+
 				// tagの{}の''を不要にする (その代わりスタイルの記法は使えなくなるけど)
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
-					let dist = '';
-					const lines = source.split('\n');
-					let flag = false;
-					lines.forEach(line => {
-						if (line === 'style.' || line === 'script.') {
-							flag = true;
-						}
-						if (!flag) {
-							if (line.replace(/\t/g, '')[0] === '|') {
-								through();
-							} else {
-								dist += line.replace(/([+=])\s?\{(.+?)\}/g, '$1"{$2}"') + '\n';
-							}
-						} else {
-							through();
-						}
 
-						function through() {
-							dist += line + '\n';
+					const tag = new Tag(source);
+					const html = tag.sections.filter(s => s.name == 'html')[0];
+
+					html.lines = html.lines.map(line => {
+						if (line.replace(/\t/g, '')[0] === '|') {
+							return line;
+						} else {
+							return line.replace(/([+=])\s?\{(.+?)\}/g, '$1"{$2}"');
 						}
 					});
-					return dist;
+
+					const styles = tag.sections.filter(s => s.name == 'style');
+
+					if (styles.length == 0) {
+						return tag.compile();
+					}
+
+					styles.forEach(style => {
+						let head = style.lines.shift();
+						head = head.replace(/([+=])\s?\{(.+?)\}/g, '$1"{$2}"');
+						style.lines.unshift(head);
+					});
+
+					return tag.compile();
 				}))
+
 				// tagの@hogeをname='hoge'にする
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
-					let dist = '';
-					const lines = source.split('\n');
-					let flag = false;
-					lines.forEach(line => {
-						if (line === 'style.' || line === 'script.') {
-							flag = true;
-						}
-						if (!flag) {
-							if (line.indexOf('@') === -1) {
-								through();
-							} else if (line.replace(/\t/g, '')[0] === '|') {
-								through();
-							} else {
-								while (line.match(/[^\s]@[a-z-]+/) !== null) {
-									const match = line.match(/@[a-z-]+/);
-									let name = match[0];
-									if (line[line.indexOf(name) + name.length] === '(') {
-										line = line.replace(name + '(', '(name=\'' + camelCase(name.substr(1)) + '\',');
-									} else {
-										line = line.replace(name, '(name=\'' + camelCase(name.substr(1)) + '\')');
-									}
-								}
-								dist += line + '\n';
-							}
+
+					const tag = new Tag(source);
+					const html = tag.sections.filter(s => s.name == 'html')[0];
+
+					html.lines = html.lines.map(line => {
+						if (line.indexOf('@') === -1) {
+							return line;
+						} else if (line.replace(/\t/g, '')[0] === '|') {
+							return line;
 						} else {
-							through();
-						}
-
-						function through() {
-							dist += line + '\n';
-						}
-
-						function camelCase(str) {
-							return str.replace(/-([^\s])/g, (match, group1) => {
-								return group1.toUpperCase();
-							});
+							while (line.match(/[^\s]@[a-z-]+/) !== null) {
+								const match = line.match(/@[a-z-]+/);
+								let name = match[0];
+								if (line[line.indexOf(name) + name.length] === '(') {
+									line = line.replace(name + '(', '(name=\'' + camelCase(name.substr(1)) + '\',');
+								} else {
+									line = line.replace(name, '(name=\'' + camelCase(name.substr(1)) + '\')');
+								}
+							}
+							return line;
 						}
 					});
-					return dist;
+
+					return tag.compile();
+
+					function camelCase(str) {
+						return str.replace(/-([^\s])/g, (match, group1) => {
+							return group1.toUpperCase();
+						});
+					}
 				}))
+
 				// tagのchain-caseをcamelCaseにする
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
-					let dist = '';
-					const lines = source.split('\n');
-					let flag = false;
-					lines.forEach(line => {
-						if (line === 'style.' || line === 'script.') {
-							flag = true;
-						}
-						if (!flag) {
-							(line.match(/\{.+?\}/g) || []).forEach(x => {
-								line = line.replace(x, camelCase(x));
-							});
-							dist += line + '\n';
-						} else {
-							through();
-						}
 
-						function through() {
-							dist += line + '\n';
-						}
+					const tag = new Tag(source);
+					const html = tag.sections.filter(s => s.name == 'html')[0];
 
-						function camelCase(str) {
-							str = str.replace(/([a-z\-]+):/g, (match, group1) => {
-								return group1.replace(/\-/g, '###') + ':';
-							});
-							str = str.replace(/-([^\s0-9])/g, (match, group1) => {
-								return group1.toUpperCase();
-							});
-							str = str.replace(/###/g, '-');
-
-							return str;
-						}
+					html.lines = html.lines.map(line => {
+						(line.match(/\{.+?\}/g) || []).forEach(x => {
+							line = line.replace(x, camelCase(x));
+						});
+						return line;
 					});
-					return dist;
+
+					return tag.compile();
+
+					function camelCase(str) {
+						str = str.replace(/([a-z\-]+):/g, (match, group1) => {
+							return group1.replace(/\-/g, '###') + ':';
+						});
+						str = str.replace(/-([^\s0-9])/g, (match, group1) => {
+							return group1.toUpperCase();
+						});
+						str = str.replace(/###/g, '-');
+
+						return str;
+					}
 				}))
+
+				// tagのstyleの属性
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+
+					const tag = new Tag(source);
+
+					const styles = tag.sections.filter(s => s.name == 'style');
+
+					if (styles.length == 0) {
+						return tag.compile();
+					}
+
+					styles.forEach(style => {
+						let head = style.lines.shift();
+						const attr = head.match(/style\((.+?)\)/);
+						if (attr) {
+							head = 'style(' + attr[1] + ',type=\'stylus\', scoped).';
+						} else {
+							head = 'style(type=\'stylus\', scoped).';
+						}
+						style.lines.unshift(head);
+					});
+
+					return tag.compile();
+				}))
+
 				// tagのstyleの定数
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
-					let dist = '';
-					const lines = source.split('\n');
-					lines.forEach(line => {
-						if (line === 'style.') {
-							through();
-							dist += '\t$theme-color = ' + config.themeColor + '\n';
-							dist += '\t$theme-color-foreground = ' + config.themeColorForeground + '\n';
-						} else {
-							through();
-						}
 
-						function through() {
-							dist += line + '\n';
-						}
+					const tag = new Tag(source);
+
+					const styles = tag.sections.filter(s => s.name == 'style');
+
+					if (styles.length == 0) {
+						return tag.compile();
+					}
+
+					styles.forEach(style => {
+						const head = style.lines.shift();
+						style.lines.unshift('$theme-color = ' + config.themeColor);
+						style.lines.unshift('$theme-color-foreground = ' + config.themeColorForeground);
+						style.lines.unshift(head);
 					});
-					return dist;
+
+					return tag.compile();
 				}))
+
 				// tagのstyleを暗黙的に:scopeにする
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
-					let dist = '';
-					const lines = source.split('\n');
-					let flag = false;
-					lines.forEach(line => {
-						let next = false;
-						if (line === 'script.') {
-							flag = false;
-						} else if (line === 'style.') {
-							through();
-							dist += '\t:scope\n';
-							flag = true;
-							next = true;
-						}
 
-						if (!next) {
-							if (flag) {
-								dist += '\t\t' + line + '\n';
-							} else {
-								through();
-							}
-						}
+					const tag = new Tag(source);
 
-						function through() {
-							dist += line + '\n';
-						}
+					const styles = tag.sections.filter(s => s.name == 'style');
+
+					if (styles.length == 0) {
+						return tag.compile();
+					}
+
+					styles.forEach(style => {
+						const head = style.lines.shift();
+						style.lines = style.lines.map(line => {
+							return '\t' + line;
+						});
+						style.lines.unshift(':scope');
+						style.lines.unshift(head);
 					});
-					return dist;
+
+					return tag.compile();
 				}))
+
 				// tagのstyleおよびscriptのインデントを不要にする
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
-					let dist = '';
-					const lines = source.split('\n');
-					let flag = false;
-					lines.forEach(line => {
-						if (line === 'style.' || line === 'script.') {
-							flag = true;
-						}
-						if (flag) {
-							dist += '\t' + line + '\n';
-						} else {
-							through();
-						}
+					const tag = new Tag(source);
 
-						function through() {
-							dist += line + '\n';
+					tag.sections = tag.sections.map(section => {
+						if (section.name != 'html') {
+							section.indent++;
 						}
+						return section;
 					});
-					return dist;
+
+					return tag.compile();
 				}))
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-					let dist = '';
-					const lines = source.split('\n');
-					let flag = false;
-					lines.forEach(line => {
-						if (line === '\tstyle.') {
-							dist += line = '\tstyle(type=\'stylus\', scoped).\n';
-						} else {
-							dist += line + '\n';
-						}
-					});
-					return dist;
-				}))
+
 				// スペースでインデントされてないとエラーが出る
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
 					return source.replace(/\t/g, '  ');
 				}))
+
 				.transform(transformify((source, file) => {
 					return source
 						.replace(/CONFIG\.theme-color/g, `'${config.themeColor}'`)
@@ -342,6 +336,7 @@ gulp.task('build:scripts', done => {
 						.replace(/CONFIG\.host/g, `'${config.host}'`)
 						;
 				}))
+
 				.transform(riotify, {
 					template: 'pug',
 					type: 'livescript',
@@ -466,3 +461,71 @@ gulp.task('clean-all', ['clean'], cb => {
 		'./typings'
 	], cb);
 });
+
+class Tag {
+	constructor(source) {
+		this.sections = [];
+
+		source = source
+			.replace(/\r\n/g, '\n')
+			.replace(/\n(\t+?)\n/g, '\n')
+			.replace(/\n+/g, '\n');
+		
+		const html = {
+			name: 'html',
+			indent: 0,
+			lines: []
+		};
+
+		let flag = false;
+		source.split('\n').forEach((line, i) => {
+			const indent = line.lastIndexOf('\t') + 1;
+			if (i != 0 && indent == 0) {
+				flag = true;
+			}
+			if (!flag) {
+				source = source.replace(/^.*?\n/, '');
+				html.lines.push(i == 0 ? line : line.substr(1));
+			}
+		});
+
+		this.sections.push(html);
+
+		while (source != '') {
+			const line = source.substr(0, source.indexOf('\n'));
+			const root = line.match(/^\t*([a-z]+)(\.|\()?/)[1];
+			const beginIndent = line.lastIndexOf('\t') + 1;
+			flag = false;
+			const section = {
+				name: root,
+				indent: beginIndent,
+				lines: []
+			};
+			source.split('\n').forEach((line, i) => {
+				const currentIndent = line.lastIndexOf('\t') + 1;
+				if (i != 0 && (currentIndent == beginIndent || currentIndent == 0)) {
+					flag = true;
+				}
+				if (!flag) {
+					source = source.replace(/^.*?\n/, '');
+					section.lines.push(i == 0 ? line.substr(beginIndent) : line.substr(beginIndent + 1));
+				}
+			});
+			this.sections.push(section);
+		};
+	}
+
+	compile() {
+		let dist = '';
+		this.sections.forEach(section => {
+			dist += section.lines.map((line, i) => {
+				if (i == 0) {
+					return '\t'.repeat(section.indent) + line;
+				} else {
+					return '\t'.repeat(section.indent + 1) + line;
+				}
+			}).join('\n') + '\n';
+		});
+		return dist;
+	}
+}

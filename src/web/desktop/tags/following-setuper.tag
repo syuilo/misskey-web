@@ -90,7 +90,7 @@ style.
 
 		> i
 			margin-right 4px
-	
+
 	> .refresh
 		display block
 		margin 0 8px 0 0
@@ -133,7 +133,7 @@ script.
 
 	@on \mount ~>
 		@load!
-	
+
 	@load = ~>
 		@loading = true
 		@users = null

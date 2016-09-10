@@ -8,7 +8,7 @@ script.
 	@on \mount ~>
 		@tick!
 		@tickid = set-interval @tick, 1000ms
-	
+
 	@on \unmount ~>
 		clear-interval @tickid
 

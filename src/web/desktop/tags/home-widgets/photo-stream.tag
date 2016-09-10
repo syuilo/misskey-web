@@ -30,7 +30,7 @@ style.
 
 		> i
 			margin-right 4px
-	
+
 	> .stream
 		display -webkit-flex
 		display -moz-flex
