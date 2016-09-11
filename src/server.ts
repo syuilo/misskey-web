@@ -15,7 +15,6 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as favicon from 'serve-favicon';
-const hsts = require('hsts');
 const subdomain = require('subdomain');
 
 // Internal modules
@@ -57,15 +56,6 @@ app.use(compression());
 app.use(cors({
 	origin: true,
 	credentials: true
-}));
-
-/**
- * HSTS
- */
-app.use(hsts({
-	maxAge: 1000 * 60 * 60 * 24 * 365,
-	includeSubDomains: true,
-	preload: true
 }));
 
 /**

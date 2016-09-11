@@ -64,7 +64,6 @@
     "express-minify": "0.2.0",
     "express-status-monitor": "^0.1.2",
     "express-useragent": "0.2.4",
-    "hsts": "1.0.0",
     "html-entities": "1.2.0",
     "inquirer": "^1.1.2",
     "js-yaml": "3.6.1",
