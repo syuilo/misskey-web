@@ -19,9 +19,9 @@ export default function (req: express.Request, res: express.Response): void {
 
 		if (/^text\//.test(contentType)) {
 			content = content.toString().replace(/http:\/\//g, `${config.url}/_/proxy/http://`);
-			res.header('Content-Type', contentType);
 		}
 
+		res.header('Content-Type', contentType);
 		res.send(content);
 	});
 }
