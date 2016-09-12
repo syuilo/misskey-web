@@ -5,7 +5,7 @@ mk-nav-home-widget
 	i ・
 	a(href='https://github.com/syuilo/misskey-web') リポジトリ
 	i ・
-	a 開発者
+	a(href='https://github.com/syuilo/misskey-web/graphs/contributors') 開発者
 	i ・
 	a デバッガ
 
