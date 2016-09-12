@@ -17,7 +17,7 @@ export default function (req: express.Request, res: express.Response): void {
 
 		const contentType = response.headers['content-type'];
 
-		if (/^text\//.test(contentType)) {
+		if (/^text\//.test(contentType) || contentType == 'application/javascript') {
 			content = content.toString().replace(/http:\/\//g, `${config.url}/_/proxy/http://`);
 		}
 
