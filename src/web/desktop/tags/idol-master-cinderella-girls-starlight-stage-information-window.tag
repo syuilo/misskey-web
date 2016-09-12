@@ -5,7 +5,7 @@ mk-idol-master-cinderella-girls-starlight-stage-information-window
 		| お知らせ
 		</yield>
 		<yield to="content">
-		iframe(src='http://game.starlight-stage.jp/information', seamless)
+		iframe(src= CONFIG.url + '/_/proxy/http://game.starlight-stage.jp/information', seamless)
 		</yield>
 
 style.
