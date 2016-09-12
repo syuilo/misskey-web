@@ -8,6 +8,9 @@ mk-header-nav: ul(if={ SIGNIN })
 	li.talks: a(href= config.talkUrl, onclick={ talk })
 		i.fa.fa-comments
 		p トーク
+	li.talks: a(onclick={ info })
+		i.fa.fa-info
+		p お知らせ
 
 style.
 	$ui-controll-background-color = #fffbfb
@@ -74,3 +77,6 @@ style.
 script.
 	@talk = ~>
 		riot.mount document.body.append-child document.create-element \mk-talk-window
+
+	@info = ~>
+		riot.mount document.body.append-child document.create-element \mk-idol-master-cinderella-girls-starlight-stage-information-window

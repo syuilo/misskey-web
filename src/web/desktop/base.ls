@@ -62,6 +62,7 @@ require './tags/ellipsis-icon.tag'
 require './tags/ui.tag'
 require './tags/home.tag'
 require './tags/detect-slow-internet-connection-notice.tag'
+require './tags/idol-master-cinderella-girls-starlight-stage-information-window.tag'
 
 dialog = (title, text, buttons, can-through, on-through) ~>
 	dialog = document.body.append-child document.create-element \mk-dialog
