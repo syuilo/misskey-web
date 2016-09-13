@@ -1,6 +1,5 @@
 import * as express from 'express';
 import * as request from 'request';
-import * as xml2json from 'xml2json';
 import config from '../config';
 
 export default function (req: express.Request, res: express.Response): void {
@@ -17,7 +16,7 @@ export default function (req: express.Request, res: express.Response): void {
 
 		const contentType = response.headers['content-type'];
 
-		if (/^text\//.test(contentType) || contentType == 'application/javascript') {
+		if (/^text\//.test(contentType) || contentType === 'application/javascript') {
 			content = content.toString().replace(/http:\/\//g, `${config.url}/_/proxy/http://`);
 		}
 

@@ -18,7 +18,6 @@ import * as favicon from 'serve-favicon';
 const subdomain = require('subdomain');
 
 // Internal modules
-import api from './core/api';
 import config from './config';
 import router from './router';
 
