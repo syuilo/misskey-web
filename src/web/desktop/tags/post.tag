@@ -207,7 +207,7 @@ script.
 	@mixin \text
 
 	@post = opts.post
-	@title = 'a'
+	@title = 'a' # TODO
 	@is-repost = @post.repost?
 	@p = if @is-repost then @post.repost else @post
 
@@ -221,6 +221,13 @@ script.
 		if @p.text?
 			tokens = @analyze @p.text
 			@text.innerHTML = @compile tokens
+
+			tokens
+				.filter (t) -> t.type == \link
+				.map (t) ~>
+					@preview = @text.append-child document.create-element \mk-url-preview
+					riot.mount @preview, do
+						url: t.content
 
 	@reply = ~>
 		if !@reply-form?

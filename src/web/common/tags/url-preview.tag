@@ -1,0 +1,89 @@
+mk-url-preview
+	a(href={ url }, target='_blank', title={ url }, if={ !loading })
+		div.thumbnail(style={ 'background-image: url(' + thumbnail + ')' })
+		article
+			header: h1 { title }
+			p { description }
+			footer
+				img.icon(src={ icon })
+				p { sitename }
+
+style.
+	display block
+	font-family sans-serif
+	font-size 1rem
+
+	> a
+		display block
+		position relative
+		border solid 1px #eee
+		border-radius 4px
+		overflow hidden
+
+		&:hover
+			text-decoration none
+			border-color #ddd
+
+			> article > header > h1
+				text-decoration underline
+
+		> .thumbnail
+			position absolute
+			width 100px
+			height 100%
+			background-position center
+			background-size cover
+
+		> article
+			position relative
+			left 100px
+			box-sizing border-box
+			width calc(100% - 100px)
+			padding 16px
+
+			> header
+				margin-bottom 8px
+
+				> h1
+					margin 0
+					font-size 1em
+					color #555
+
+			> p
+				margin 0
+				color #777
+				font-size 0.8em
+
+			> footer
+				margin-top 8px
+
+				> img
+					display inline-block
+					width 16px
+					heigth 16px
+					margin-right 4px
+					vertical-align bottom
+
+				> p
+					display inline-block
+					margin 0
+					color #666
+					font-size 0.8em
+					line-height 16px
+
+script.
+	@url = @opts.url
+	@loading = true
+
+	@on \mount ~>
+		api CONFIG.url + '/_/api/url' do
+			url: @url
+		.then (info) ~>
+			@title = info.title
+			@description = info.description
+			@thumbnail = CONFIG.url + '/_/proxy/' + info.thumbnail
+			@icon = CONFIG.url + '/_/proxy/' + info.icon
+			@sitename = info.sitename
+
+			@loading = false
+			@update!

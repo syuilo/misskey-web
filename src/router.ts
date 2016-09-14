@@ -82,7 +82,7 @@ export default function(app: express.Express): void {
 	/**
 	 * API handlers
 	 */
-	app.post('/_/api/url/analyze', require('./api/url/analyze').default);
+	app.post('/_/api/url', require('./api/url').default);
 	app.get('/_/proxy/:url(*)', require('./api/proxy').default);
 	app.get('/_/api/rss-proxy/:url(*)', require('./api/rss-proxy').default);
 

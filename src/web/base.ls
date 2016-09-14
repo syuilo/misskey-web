@@ -7,6 +7,7 @@ api = require './common/scripts/api.ls'
 get-post-summary = require './common/scripts/get-post-summary.ls'
 riot = require 'riot'
 require './common/tags/core-error.tag'
+require './common/tags/url-preview.tag'
 
 riot.mixin \get-post-summary do
 	get-post-summary: get-post-summary
