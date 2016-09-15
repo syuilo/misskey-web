@@ -10,8 +10,8 @@ module.exports = (post) ~>
 			summary += " RE: #{reply-summary}"
 	if post.repost?
 		if typeof post.reply_to == \string
-			summary = summary + " RP: ..."
+			summary += " RP: ..."
 		else
 			repost-summary = get-post-summary post.repost
-			summary = summary + " RP: #{repost-summary}"
+			summary += " RP: #{repost-summary}"
 	return summary.trim!
