@@ -222,6 +222,9 @@ script.
 			tokens = @analyze @p.text
 			@text.innerHTML = @compile tokens
 
+			@text.child-nodes.for-each (e) ~>
+				riot.mount e
+
 			tokens
 				.filter (t) -> t.type == \link
 				.map (t) ~>

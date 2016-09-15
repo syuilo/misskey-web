@@ -9,7 +9,7 @@ module.exports = function(tokens) {
 					.replace(/</g, '&lt;')
 					.replace(/(\r\n|\n|\r)/g, '<br>');
 			case 'link':
-				return '<a href="' + content + '" target="_blank">' + content + '</a>';
+				return '<mk-url href="' + content + '" target="_blank"></mk-url>';
 			case 'mention':
 				return '<a href="https://misskey.xyz/' + content + '" target="_blank">@' + content + '</a>';
 		}
