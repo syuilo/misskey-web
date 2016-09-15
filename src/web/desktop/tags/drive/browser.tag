@@ -290,7 +290,7 @@ script.
 
 	@uploader-controller = riot.observable!
 
-	# ドロップされようとされているか
+	# ドロップされようとしているか
 	@draghover = false
 
 	# 自信の所有するアイテムがドラッグをスタートさせたか
