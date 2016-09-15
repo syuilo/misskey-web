@@ -318,6 +318,7 @@ script.
 
 	@clear = ~>
 		@text.value = ''
+		@files = []
 		@update!
 
 	@ondragover = (e) ~>
