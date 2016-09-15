@@ -18,7 +18,7 @@ style.
 		display block
 		margin-top 64px
 		font-size 5em
-		color #69a087
+		color #6998a0
 	
 	> h1
 		display block
