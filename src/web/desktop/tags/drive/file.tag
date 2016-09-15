@@ -11,6 +11,7 @@ style.
 	padding 8px 0 0 0
 	width 144px
 	height 180px
+	font-family 'Meiryo UI', 'Meiryo', 'メイリオ', sans-serif
 	border-radius 4px
 
 	&, *
