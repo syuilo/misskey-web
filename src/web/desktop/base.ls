@@ -1,68 +1,26 @@
 load = require '../base.ls'
 require 'velocity'
+require 'fuck-adblock'
 ReconnectingWebSocket = require 'reconnecting-websocket'
-
 riot = require 'riot'
-require './tags/contextmenu.tag'
-require './tags/dialog.tag'
-require './tags/window.tag'
-require './tags/input-dialog.tag'
-require './tags/follow-button.tag'
-require './tags/uploader.tag'
-require './tags/drive/base-contextmenu.tag'
-require './tags/drive/file-contextmenu.tag'
-require './tags/drive/folder-contextmenu.tag'
-require './tags/drive/file.tag'
-require './tags/drive/folder.tag'
-require './tags/drive/nav-folder.tag'
-require './tags/drive/browser-window.tag'
-require './tags/drive/browser.tag'
-require './tags/select-file-from-drive-window.tag'
-require './tags/crop-window.tag'
-require './tags/settings.tag'
-require './tags/settings-window.tag'
-require './tags/post.tag'
-require './tags/analog-clock.tag'
-require './tags/go-top.tag'
-require './tags/ui-header.tag'
-require './tags/header-account.tag'
-require './tags/header-notifications.tag'
-require './tags/header-clock.tag'
-require './tags/header-nav.tag'
-require './tags/header-post-button.tag'
-require './tags/header-search.tag'
-require './tags/notifications.tag'
-require './tags/post-form-window.tag'
-require './tags/post-form.tag'
-require './tags/post.tag'
-require './tags/post-preview.tag'
-require './tags/repost-form-window.tag'
-require './tags/home-widgets/user-recommendation.tag'
-require './tags/home-widgets/timeline.tag'
-require './tags/home-widgets/calendar.tag'
-require './tags/home-widgets/donate.tag'
-require './tags/home-widgets/tip.tag'
-require './tags/home-widgets/nav.tag'
-require './tags/home-widgets/profile.tag'
-require './tags/home-widgets/notifications.tag'
-require './tags/home-widgets/rss-reader.tag'
-require './tags/home-widgets/photo-stream.tag'
-require './tags/home-widgets/broadcast.tag'
-require './tags/stream-indicator.tag'
-require './tags/timeline.tag'
-require './tags/talk/window.tag'
-require './tags/talk/room.tag'
-require './tags/talk/room-window.tag'
-require './tags/talk/message.tag'
-require './tags/talk/index.tag'
-require './tags/time.tag'
-require './tags/following-setuper.tag'
-require './tags/ellipsis.tag'
-require './tags/ellipsis-icon.tag'
-require './tags/ui.tag'
-require './tags/home.tag'
-require './tags/detect-slow-internet-connection-notice.tag'
-require './tags/idol-master-cinderella-girls-starlight-stage-information-window.tag'
+require './tags.ls'
+
+################
+
+if fuck-ad-block == undefined
+	ad-block-detected!
+else
+	fuck-ad-block.on-detected ad-block-detected
+
+function ad-block-detected
+	dialog do
+		'<i class="fa fa-exclamation-triangle"></i>広告ブロッカーを無効にしてください'
+		'<strong>Misskeyは広告を掲載していません</strong>が、広告をブロックする機能が有効だと一部の機能が利用できなかったり、不具合が発生する場合があります。'
+		[
+			text: \OK
+		]
+
+################
 
 dialog = (title, text, buttons, can-through, on-through) ~>
 	dialog = document.body.append-child document.create-element \mk-dialog
