@@ -1,12 +1,13 @@
+import * as url from 'url';
 import * as express from 'express';
 import * as request from 'request';
 import config from '../config';
 
 export default function (req: express.Request, res: express.Response): void {
-	const url: string = req.params.url;
+	const _url: string = req.params.url;
 
 	request({
-		url,
+		_url + url.parse(_url, true).query,
 		encoding: null
 	}, (err, response, content) => {
 		if (err) {
