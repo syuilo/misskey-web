@@ -1,8 +1,8 @@
 mk-timeline
 	virtual(each={ _post in posts })
 		mk-post(post={ _post })
-	footer
-		i.fa.fa-moon-o
+	footer(data-yield='footer')
+		| <yield from="footer"/>
 
 style.
 	display block
@@ -32,6 +32,11 @@ script.
 	@controller.on \set-posts (posts) ~>
 		@posts = posts
 		@update!
+
+	@controller.on \prepend-posts (posts) ~>
+		posts.for-each (post) ~>
+			@posts.push post
+			@update!
 
 	@controller.on \add-post (post) ~>
 		@posts.unshift post
