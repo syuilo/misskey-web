@@ -290,7 +290,12 @@ script.
 
 	@uploader-controller = riot.observable!
 
+	# ドロップされようとされているか
 	@draghover = false
+
+	# 自信の所有するアイテムがドラッグをスタートさせたか
+	# (自分自身の階層にドロップできないようにするためのフラグ)
+	@is-drag-source = false
 
 	@on \mount ~>
 		@stream.on \drive_file_created @on-stream-drive-file-created
@@ -377,16 +382,22 @@ script.
 
 	@ondragover = (e) ~>
 		e.stop-propagation!
-		# ドラッグされてきたものがファイルだったら
-		if e.data-transfer.effect-allowed == \all
-			e.data-transfer.drop-effect = \copy
+		# ドラッグ元が自分自身の所有するアイテムかどうか
+		if !@is-drag-source
+			# ドラッグされてきたものがファイルだったら
+			if e.data-transfer.effect-allowed == \all
+				e.data-transfer.drop-effect = \copy
+			else
+				e.data-transfer.drop-effect = \move
+			@draghover = true
 		else
-			e.data-transfer.drop-effect = \move
-		@draghover = true
+			# 自分自身にはドロップさせない
+			e.data-transfer.drop-effect = \none
 		return false
 
 	@ondragenter = (e) ~>
-		@draghover = true
+		if !@is-drag-source
+			@draghover = true
 
 	@ondragleave = (e) ~>
 		@draghover = false

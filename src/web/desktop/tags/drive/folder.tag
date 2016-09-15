@@ -72,15 +72,21 @@ script.
 
 	@ondragover = (e) ~>
 		e.stop-propagation!
-		# ドラッグされてきたものがファイルだったら
-		if e.data-transfer.effect-allowed == \all
-			e.data-transfer.drop-effect = \copy
+		# 自分自身がドラッグされていない場合
+		if !@is-dragging
+			# ドラッグされてきたものがファイルだったら
+			if e.data-transfer.effect-allowed == \all
+				e.data-transfer.drop-effect = \copy
+			else
+				e.data-transfer.drop-effect = \move
 		else
-			e.data-transfer.drop-effect = \move
+			# 自分自身にはドロップさせない
+			e.data-transfer.drop-effect = \none
 		return false
 
 	@ondragenter = ~>
-		@draghover = true
+		if !@is-dragging
+			@draghover = true
 
 	@ondragleave = ~>
 		@draghover = false
@@ -145,8 +151,13 @@ script.
 			id: @folder.id
 		@is-dragging = true
 
+		# 親ブラウザに対して、ドラッグが開始されたフラグを立てる
+		# (=あなたの子供が、ドラッグを開始しましたよ)
+		@browser.is-drag-source = true
+
 	@ondragend = (e) ~>
 		@is-dragging = false
+		@browser.is-drag-source = false
 
 	@oncontextmenu = (e) ~>
 		e.stop-immediate-propagation!

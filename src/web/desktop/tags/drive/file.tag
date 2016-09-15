@@ -124,6 +124,11 @@ script.
 			id: @file.id
 			file: @file
 		@is-dragging = true
+		
+		# 親ブラウザに対して、ドラッグが開始されたフラグを立てる
+		# (=あなたの子供が、ドラッグを開始しましたよ)
+		@browser.is-drag-source = true
 
 	@ondragend = (e) ~>
 		@is-dragging = false
+		@browser.is-drag-source = false
