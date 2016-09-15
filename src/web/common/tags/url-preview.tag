@@ -83,9 +83,18 @@ script.
 		.then (info) ~>
 			@title = info.title
 			@description = info.description
-			@thumbnail = if info.thumbnail? then CONFIG.url + '/_/proxy/' + info.thumbnail else null
-			@icon = if info.icon? then CONFIG.url + '/_/proxy/' + info.icon else null
+			@thumbnail = wrap info.thumbnail
+			@icon = wrap info.icon
 			@sitename = info.sitename
 
 			@loading = false
 			@update!
+
+	function wrap(url)
+		if !url?
+			return null
+
+		if (url.substr 0 4) == \data
+			return url
+
+		CONFIG.url + '/_/proxy/' + url
