@@ -7,7 +7,7 @@ export default function (req: express.Request, res: express.Response): void {
 	const _url: string = req.params.url;
 
 	request({
-		_url + url.parse(_url, true).query,
+		url: _url + url.parse(_url, true).query,
 		encoding: null
 	}, (err, response, content) => {
 		if (err) {
