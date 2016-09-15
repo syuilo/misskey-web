@@ -176,6 +176,9 @@ style.
 					font-size 1.1em
 					color #717171
 
+					> mk-url-preview
+						margin-top 8px
+
 				> .images
 					> img
 						display block

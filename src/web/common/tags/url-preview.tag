@@ -1,11 +1,11 @@
 mk-url-preview
 	a(href={ url }, target='_blank', title={ url }, if={ !loading })
-		div.thumbnail(style={ 'background-image: url(' + thumbnail + ')' })
+		div.thumbnail(if={ thumbnail }, style={ 'background-image: url(' + thumbnail + ')' })
 		article
 			header: h1 { title }
 			p { description }
 			footer
-				img.icon(src={ icon })
+				img.icon(if={ icon }, src={ icon })
 				p { sitename }
 
 style.
@@ -34,11 +34,13 @@ style.
 			background-position center
 			background-size cover
 
+			& + article
+				left 100px
+				width calc(100% - 100px)
+
 		> article
 			position relative
-			left 100px
 			box-sizing border-box
-			width calc(100% - 100px)
 			padding 16px
 
 			> header
@@ -81,8 +83,8 @@ script.
 		.then (info) ~>
 			@title = info.title
 			@description = info.description
-			@thumbnail = CONFIG.url + '/_/proxy/' + info.thumbnail
-			@icon = CONFIG.url + '/_/proxy/' + info.icon
+			@thumbnail = if info.thumbnail? then CONFIG.url + '/_/proxy/' + info.thumbnail else null
+			@icon = if info.icon? then CONFIG.url + '/_/proxy/' + info.icon else null
 			@sitename = info.sitename
 
 			@loading = false
