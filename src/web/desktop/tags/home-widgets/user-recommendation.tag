@@ -112,7 +112,7 @@ script.
 	@users = null
 	@loading = true
 
-	@limit = 4users
+	@limit = 3users
 	@page = 0
 
 	@on \mount ~>
