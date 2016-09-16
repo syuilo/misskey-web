@@ -1,7 +1,7 @@
 mk-core-error
 	//i: i.fa.fa-times-circle
 	img(src='/_/resources/error.jpg', alt='')
-	h1 サーバーに接続できません
+	h1: mk-ripple-string サーバーに接続できません
 	p.text
 		| インターネット回線に問題があるか、サーバーがダウンまたはメンテナンスしている可能性があります。しばらくしてから
 		a(onclick={ refresh }) 再度お試し

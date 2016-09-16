@@ -9,6 +9,7 @@ riot = require 'riot'
 require './common/tags/core-error.tag'
 require './common/tags/url.tag'
 require './common/tags/url-preview.tag'
+require './common/tags/ripple-string.tag'
 
 riot.mixin \get-post-summary do
 	get-post-summary: get-post-summary
