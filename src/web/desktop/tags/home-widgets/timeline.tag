@@ -74,7 +74,6 @@ script.
 			if e.which == 84 # t
 				@controller.trigger \focus
 
-
 	@load = ~>
 		api \posts/timeline
 		.then (posts) ~>
