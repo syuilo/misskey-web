@@ -5,12 +5,12 @@ style.
 	display inline
 
 	> span
-		animation ripple-string 4s infinite ease-in-out both
+		animation ripple-string 5s infinite ease-in-out both
 
 	@keyframes ripple-string
-		0%, 80%, 100%
+		0%, 50%, 100%
 			opacity 1
-		40%
+		25%
 			opacity 0.5
 
 script.
