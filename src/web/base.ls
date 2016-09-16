@@ -23,7 +23,7 @@ window.SIGNIN = i?
 
 window.api = api
 
-module.exports = (cb) ->
+load = (cb) ->
 	if window.SIGNIN
 		fetch "#{CONFIG.api.url}/i" do
 			method: \POST
@@ -42,12 +42,14 @@ module.exports = (cb) ->
 					if cb?
 						cb!
 		.catch ~>
-			clear-init!
-			riot.mount document.body.append-child document.create-element \mk-core-error
+			riot.mount (document.body.append-child document.create-element \mk-core-error), do
+				refresh: ~> load cb
 	else
 		clear-init!
 		if cb?
 			cb!
+
+module.exports = load
 
 function clear-init
 	init = document.get-element-by-id \initializing

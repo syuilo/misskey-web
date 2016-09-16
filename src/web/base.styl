@@ -38,12 +38,18 @@ body > #initializing
 	height 100%
 	text-align center
 	background #fff
+	cursor wait
 
 	> p
 		display block
 		margin 32px
 		font-size 4em
 		color #555
+
+		-ms-user-select none
+		-moz-user-select none
+		-webkit-user-select none
+		user-select none
 
 		> span
 			animation ellipsis 1.4s infinite ease-in-out both
