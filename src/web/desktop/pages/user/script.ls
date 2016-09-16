@@ -1,1 +1,3 @@
-require '../../base.ls'
+load = require '../../base.ls'
+
+load!

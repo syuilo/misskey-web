@@ -8,16 +8,4 @@ block head
 	script(src='/_/resources/desktop/pages/user/script.js', async, defer)
 
 block body
-	mk-ui
-		header
-			div.bg(style='background-image: url(' + user.banner_url + ')')
-			h1= user.name
-		div#home
-			div.widgets.side-left: div.body
-				mk-calendar-home-widget
-			main.widgets: div.body
-				mk-timeline-home-widget
-			div.widgets.side-right: div.body
-				mk-user-recommendation-home-widget
-				mk-donate-home-widget
-	mk-stream-indicator
+	mk-ui: mk-user-page(user= user.id)
