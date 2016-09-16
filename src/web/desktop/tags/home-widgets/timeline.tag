@@ -53,11 +53,7 @@ script.
 		@stream.on \unfollow @on-stream-unfollow
 
 		document.add-event-listener \visibilitychange @window-on-visibilitychange, false
-		document.add-event-listener \keydown (e) ~>
-			tag = e.target.tag-name.to-lower-case!
-			if tag != \input and tag != \textarea
-				if e.which == 84 # t
-					@controller.trigger \focus
+		document.add-event-listener \keydown @on-document-keydown
 
 		window.add-event-listener \scroll @on-scroll
 
@@ -68,7 +64,16 @@ script.
 		@stream.off \follow @on-stream-follow
 		@stream.off \unfollow @on-stream-unfollow
 
+		document.remove-event-listener \visibilitychange @window-on-visibilitychange
+		document.remove-event-listener \keydown @on-document-keydown
 		window.remove-event-listener \scroll @on-scroll
+
+	@on-document-keydown = (e) ~>
+		tag = e.target.tag-name.to-lower-case!
+		if tag != \input and tag != \textarea
+			if e.which == 84 # t
+				@controller.trigger \focus
+
 
 	@load = ~>
 		api \posts/timeline
