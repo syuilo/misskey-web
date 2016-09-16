@@ -68,6 +68,8 @@ script.
 		@stream.off \follow @on-stream-follow
 		@stream.off \unfollow @on-stream-unfollow
 
+		window.remove-event-listener \scroll @on-scroll
+
 	@load = ~>
 		api \posts/timeline
 		.then (posts) ~>
