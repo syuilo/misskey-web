@@ -63,8 +63,9 @@ style.
 
 		> .followed
 			margin 12px 0 0 0
-			padding 2px
+			padding 0
 			text-align center
+			line-height 24px
 			font-size 0.8em
 			color #71afc7
 			background #eefaff
