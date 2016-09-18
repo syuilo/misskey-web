@@ -9,9 +9,9 @@ Issue reports and pull requests are always welcome!
 - Limit lines to 100 columns
 
 
-### Return Early
+### Return early from a function
 
--   BAD
+- DONT
 
 ``` sourceCode
 function foo() {
@@ -21,7 +21,7 @@ function foo() {
 }
 ```
 
--   GOOD
+- DO
 
 ``` sourceCode
 function foo() {
@@ -33,8 +33,7 @@ function foo() {
 }
 ```
 
-Keeps indentation levels down and makes more readable.
-
+Keep indentation level lower and it will be readable.
 
 ## tagについて
 Riotのtagは、Jade+Stylus+LiveScriptで書きます(すべてインデントでブロックを表すタイプの言語(！))。
