@@ -107,7 +107,7 @@ app.use(async (req, res, next): Promise<any> =>
 /**
  * Routing
  */
-router(app);
+app.use(router);
 
 /**
  * Create server
