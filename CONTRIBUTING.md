@@ -9,9 +9,9 @@ Issue reports and pull requests are always welcome!
 - Limit lines to 100 columns
 
 
-### Return Early
+### Return early from a function
 
--   BAD
+- DONT
 
 ``` sourceCode
 function foo() {
@@ -21,7 +21,7 @@ function foo() {
 }
 ```
 
--   GOOD
+- DO
 
 ``` sourceCode
 function foo() {
@@ -33,8 +33,7 @@ function foo() {
 }
 ```
 
-Keeps indentation levels down and makes more readable.
-
+Keep indentation level lower and it will be readable.
 
 ## tagについて
 Riotのtagは、Jade+Stylus+LiveScriptで書きます(すべてインデントでブロックを表すタイプの言語(！))。
@@ -139,6 +138,8 @@ styleに至っては二段も**余計な**インデントを無くすことが�
 それぞれ、自分の役目を果たすだけで良いのですっ。他のタグのことなんて感知しなくてOKなんです。
 
 ## 実装にあたって
+
+Misskeyは以下の機能を提供します:
 
 ### ウィンドウ
 ``mk-window``を利用してウィンドウを表示できます。
