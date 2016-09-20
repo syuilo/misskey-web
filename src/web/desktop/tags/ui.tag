@@ -3,9 +3,9 @@ mk-ui
 
 	div.global@global
 		mk-ui-header@header(ui={ ui })
+		div#content
 
-		div.contents
-			| <yield/>
+	mk-stream-indicator
 
 style.
 	display block

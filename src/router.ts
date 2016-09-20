@@ -11,41 +11,12 @@ import api from './core/api';
 const subdomainPrefix = '__';
 
 const aboutDomain = `/${subdomainPrefix}/about`;
-const colorDomain = `/${subdomainPrefix}/color`;
+const mobileDomain = `/${subdomainPrefix}/mobile`;
 const signupDomain = `/${subdomainPrefix}/signup`;
 const signinDomain = `/${subdomainPrefix}/signin`;
 const signoutDomain = `/${subdomainPrefix}/signout`;
 
 const router = express.Router();
-
-router.get('/', (req, res) => {
-	if (res.locals.signin) {
-		render(req, res, 'home');
-	} else {
-		render(req, res, 'entrance');
-	}
-});
-
-router.get('/_/terms-of-use', (req, res) => {
-	render(req, res, 'terms-of-use');
-});
-
-router.get('/:username', async (req, res) => {
-	const user = await api('users/show', {
-		username: req.params.username
-	});
-	render(req, res, 'user', {
-		user: user
-	});
-});
-
-router.get(`${aboutDomain}/staff`, (req, res) => {
-	renderAbout(req, res, 'staff');
-});
-
-router.get(`${colorDomain}/`, (req, res) => {
-	render(req, res, 'color');
-});
 
 router.post(`${signupDomain}/`, require('./core/signup').default);
 
@@ -86,12 +57,12 @@ router.post('/_/api/url', require('./api/url').default);
 router.get('/_/proxy/:url(*)', require('./api/proxy').default);
 router.get('/_/api/rss-proxy/:url(*)', require('./api/rss-proxy').default);
 
-/**
- * Not found handler
- */
-router.use((req, res) => {
-	res.status(404);
-	render(req, res, 'not-found');
+router.get('*', (req, res) => {
+	res.render(`${__dirname}/web/desktop/view`);
+});
+
+router.get(`${mobileDomain}/*`, (req, res) => {
+	res.render(`${__dirname}/web/mobile/view`);
 });
 
 /**
@@ -106,12 +77,3 @@ router.use((err: any, req: express.Request, res: express.Response, next: any) =>
 });
 
 export default router;
-
-function render(req: express.Request, res: express.Response, path: string, data?: any): void {
-	const ua = res.locals.useragent.isMobile ? 'mobile' : 'desktop';
-	res.render(`${__dirname}/web/${ua}/pages/${path}/view`, data);
-}
-
-function renderAbout(req: express.Request, res: express.Response, path: string): void {
-	res.render(`${__dirname}/web/common/pages/about/pages/${path}`);
-}

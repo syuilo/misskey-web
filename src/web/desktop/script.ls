@@ -4,6 +4,7 @@ require 'fuck-adblock'
 ReconnectingWebSocket = require 'reconnecting-websocket'
 riot = require 'riot'
 require './tags.ls'
+route = require './router.ls'
 
 ################
 
@@ -59,42 +60,41 @@ riot.mixin \input-dialog do
 riot.mixin \cropper do
 	Cropper: require 'cropper'
 
-module.exports = (cb) ->
-	load ~>
-		state = riot.observable!
-		event = riot.observable!
+load ~>
+	state = riot.observable!
+	event = riot.observable!
 
-		socket = new ReconnectingWebSocket CONFIG.api.url.replace \http \ws
+	socket = new ReconnectingWebSocket CONFIG.api.url.replace \http \ws
 
-		socket.onopen = ~>
-			state.trigger \connected
-			socket.send JSON.stringify do
-				i: I._web
+	socket.onopen = ~>
+		state.trigger \connected
+		socket.send JSON.stringify do
+			i: I._web
 
-		socket.onclose = ~>
-			state.trigger \closed
+	socket.onclose = ~>
+		state.trigger \closed
 
-		socket.onmessage = (message) ~>
-			try
-				message = JSON.parse message.data
-				if message.type?
-					event.trigger message.type, message.body
-			catch
-				# ignore
+	socket.onmessage = (message) ~>
+		try
+			message = JSON.parse message.data
+			if message.type?
+				event.trigger message.type, message.body
+		catch
+			# ignore
 
-		event.on \drive_file_created (file) ~>
-			n = new Notification 'ファイルがアップロードされました' do
-				body: file.name
-				icon: file.url + '?thumbnail&size=64'
-			set-timeout (n.close.bind n), 5000ms
+	event.on \drive_file_created (file) ~>
+		n = new Notification 'ファイルがアップロードされました' do
+			body: file.name
+			icon: file.url + '?thumbnail&size=64'
+		set-timeout (n.close.bind n), 5000ms
 
-		riot.mixin \stream do
-			stream: event
-			stream-state: state
+	riot.mixin \stream do
+		stream: event
+		stream-state: state
 
-		riot.mount 'mk-ui'
-		if cb?
-			cb!
+	riot.mount \mk-ui
+
+	route!
 
 # ブラウザが通知をサポートしているか確認
 if \Notification in window

@@ -15,9 +15,11 @@ mk-home
 			mk-nav-home-widget
 			mk-tip-home-widget
 	mk-detect-slow-internet-connection-notice
-	mk-stream-indicator
 
 style.
+	display block
+	background #fdfdfd
+
 	> .main
 		display -webkit-flex
 		display -moz-flex

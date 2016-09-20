@@ -28,6 +28,7 @@
     "misskey-text": "latest",
     "fetch": "",
     "velocity": "1.2.3",
-    "reconnectingWebsocket": ""
+    "reconnectingWebsocket": "",
+    "page": "^1.7.1"
   }
 }

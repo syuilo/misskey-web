@@ -89,18 +89,9 @@ app.use(useragent.express());
 /**
  * Initialize requests
  */
-app.use(async (req, res, next): Promise<any> =>
-{
-	// Security headers
-	//res.header('X-Frame-Options', 'DENY');
-
-	// See http://web-tan.forum.impressrd.jp/e/2013/05/17/15269
-	res.header('Vary', 'User-Agent');
-
+app.use(async (req, res, next): Promise<any> => {
 	const i = req.cookies['i'];
-
 	res.locals.signin = i !== undefined;
-
 	next();
 });
 

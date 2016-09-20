@@ -4,6 +4,9 @@ mk-user-page
 		main: div.body@main
 
 style.
+	display block
+	background #fbfbfb
+
 	> .main
 		display -webkit-flex
 		display -moz-flex
@@ -48,7 +51,7 @@ style.
 				padding 16px 0 16px 16px
 
 script.
-	@user-id = @opts.user
+	@username = @opts.user
 	@user = null
 	@fetching = true
 
@@ -59,7 +62,7 @@ script.
 
 	@on \mount ~>
 		api \users/show do
-			id: @user-id
+			username: @username
 		.then (user) ~>
 			@user = user
 			@fetching = false
