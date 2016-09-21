@@ -26,6 +26,7 @@ const ls = require('browserify-livescript');
 const aliasify = require('aliasify');
 const riotify = require('riotify');
 const transformify = require('syuilo-transformify');
+const pug = require('gulp-pug');
 require('typescript-require')(require('./tsconfig.json'));
 
 const env = process.env.NODE_ENV;
@@ -66,6 +67,7 @@ const project = ts.createProject('tsconfig.json', {
 gulp.task('build', [
 	'build-before',
 	'build:ts',
+	'build:pug',
 	'copy:bower_components',
 	'build:scripts',
 	'build:styles',
@@ -102,6 +104,26 @@ gulp.task('build:ts', () => {
 			presets: ['es2015', 'stage-3']
 		}))
 		.pipe(gulp.dest('./built/'));
+});
+
+//////////////////////////////////////////////////
+// Pugのビルド
+gulp.task('build:pug', () => {
+	gutil.log('Pugをコンパイルします...');
+
+	const config = require('./src/config.ts').default;
+
+	return gulp.src([
+		'./src/web/**/*.pug',
+		'!./src/web/common/**/*.pug'
+	])
+		.pipe(pug({
+			locals: {
+				env,
+				config
+			}
+		}))
+		.pipe(gulp.dest('./built/web/'));
 });
 
 //////////////////////////////////////////////////

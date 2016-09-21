@@ -58,11 +58,15 @@ router.get('/_/proxy/:url(*)', require('./api/proxy').default);
 router.get('/_/api/rss-proxy/:url(*)', require('./api/rss-proxy').default);
 
 router.get('*', (req, res) => {
-	res.render(`${__dirname}/web/desktop/view`);
+	res.sendFile(`${__dirname}/web/desktop/view.html`, {
+		maxAge: 1000 * 60 * 60 * 24 * 7 // 一週間
+	});
 });
 
 router.get(`${mobileDomain}/*`, (req, res) => {
-	res.render(`${__dirname}/web/mobile/view`);
+	res.sendFile(`${__dirname}/web/mobile/view.html`, {
+		maxAge: 1000 * 60 * 60 * 24 * 7 // 一週間
+	});
 });
 
 /**
