@@ -99,7 +99,7 @@ mk-signup
 				a() 利用規約
 				| に同意する
 
-		mk-ripple-button
+		mk-ripple-button(onclick={ onsubmit })
 			| アカウント作成
 
 style.
@@ -359,3 +359,27 @@ script.
 			@password-retype-state = \match
 		else
 			@password-retype-state = \not-match
+
+	@onsubmit = ~>
+		username = @username.value
+		password = @password.value
+
+		locker = document.body.append-child document.create-element \mk-locker
+
+		api CONFIG.urls.signup, do
+			username: username
+			password: password
+			'g-recaptcha-response': grecaptcha.get-response!
+		.then ~>
+			api CONFIG.urls.signin, do
+				username: username
+				password: password
+			.then ~>
+				location.href = CONFIG.url
+		.catch ~>
+			alert '何らかの原因によりアカウントの作成に失敗しました。再度お試しください。'
+
+			grecaptcha.reset!
+			@recaptchaed = false
+
+			locker.parent-node.remove-child locker
