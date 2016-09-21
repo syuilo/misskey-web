@@ -46,7 +46,10 @@ script.
 
 	@on \mount ~>
 		@set!
-		set-interval @change, 20000ms
+		@clock = set-interval @change, 20000ms
+
+	@on \unmount ~>
+		clear-interval @clock
 
 	@set = ~>
 		@text.innerHTML = @tips[Math.floor Math.random! * @tips.length]

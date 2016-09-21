@@ -36,10 +36,14 @@ style.
 script.
 	@mixin \stream
 
-	@state = 'initializing'
+	@on \before-mount ~>
+		@state = @get-stream-state!
 
-	@stream-state.on \connected ~>
-		@state = 'connected'
+		if @state == \connected
+			@root.style.opacity = 0
+
+	@stream-state-ev.on \connected ~>
+		@state = @get-stream-state!
 		@update!
 		set-timeout ~>
 			Velocity @root, {
@@ -47,8 +51,8 @@ script.
 			} 200ms \linear
 		, 1000ms
 
-	@stream-state.on \closed ~>
-		@state = 'reconnecting'
+	@stream-state-ev.on \closed ~>
+		@state = @get-stream-state!
 		@update!
 		Velocity @root, {
 			opacity: 1

@@ -1,40 +1,14 @@
-load = require '../base.ls'
+boot = require '../base.ls'
 require 'velocity'
-require 'fuck-adblock'
 riot = require 'riot'
 require './tags.ls'
 stream = require './stream.ls'
 route = require './router.ls'
+fuck-ad-block = require './scripts/fuck-ad-block.ls'
+dialog = require './scripts/dialog.ls'
+input-dialog = require './scripts/input-dialog.ls'
 
-################
-
-if fuck-ad-block == undefined
-	ad-block-detected!
-else
-	fuck-ad-block.on-detected ad-block-detected
-
-function ad-block-detected
-	dialog do
-		'<i class="fa fa-exclamation-triangle"></i>広告ブロッカーを無効にしてください'
-		'<strong>Misskeyは広告を掲載していません</strong>が、広告をブロックする機能が有効だと一部の機能が利用できなかったり、不具合が発生する場合があります。'
-		[
-			text: \OK
-		]
-
-################
-
-dialog = (title, text, buttons, can-through, on-through) ~>
-	dialog = document.body.append-child document.create-element \mk-dialog
-	controller = riot.observable!
-	riot.mount dialog, do
-		controller: controller
-		title: title
-		text: text
-		buttons: buttons
-		can-through: can-through
-		on-through: on-through
-	controller.trigger \open
-	return controller
+fuck-ad-block!
 
 window.NotImplementedException = ~>
 	dialog do
@@ -48,19 +22,12 @@ riot.mixin \dialog do
 	dialog: dialog
 
 riot.mixin \input-dialog do
-	input-dialog: (title, placeholder, default-value, on-ok, on-cancel) ~>
-		dialog = document.body.append-child document.create-element \mk-input-dialog
-		riot.mount dialog, do
-			title: title
-			placeholder: placeholder
-			default: default-value
-			on-ok: on-ok
-			on-cancel: on-cancel
+	input-dialog: input-dialog
 
 riot.mixin \cropper do
 	Cropper: require 'cropper'
 
-load ~>
+boot ~>
 	if SIGNIN
 		stream!
 

@@ -15,7 +15,8 @@ function init
 
 	riot.mixin \stream do
 		stream: s.event
-		stream-state: s.state
+		get-stream-state: s.get-state
+		stream-state-ev: s.state-ev
 
 # Export
 #--------------------------------

@@ -66,15 +66,16 @@ style.
 			margin-right 4px
 
 script.
-
 	@url = 'http://news.yahoo.co.jp/pickup/rss.xml'
 	@items = []
 	@initializing = true
 
 	@on \mount ~>
 		@fetch!
+		@clock = set-interval @fetch, 60000ms
 
-		set-interval @fetch, 60000ms
+	@on \unmount ~>
+		clear-interval @clock
 
 	@fetch = ~>
 		url = CONFIG.url + '/_/api/rss-proxy/' + @url

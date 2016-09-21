@@ -5,18 +5,21 @@ ReconnectingWebSocket = require 'reconnecting-websocket'
 riot = require 'riot'
 
 function init
-	state = riot.observable!
+	state = \initializing
+	state-ev = riot.observable!
 	event = riot.observable!
 
 	socket = new ReconnectingWebSocket CONFIG.api.url.replace \http \ws
 
 	socket.onopen = ~>
-		state.trigger \connected
+		state := \connected
+		state-ev.trigger \connected
 		socket.send JSON.stringify do
 			i: I._web
 
 	socket.onclose = ~>
-		state.trigger \closed
+		state := \reconnecting
+		state-ev.trigger \closed
 
 	socket.onmessage = (message) ~>
 		try
@@ -26,8 +29,11 @@ function init
 		catch
 			# ignore
 
+	get-state = ~> state
+
 	{
-		state
+		state-ev
+		get-state
 		event
 	}
 
