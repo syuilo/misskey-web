@@ -38,6 +38,7 @@ const aliasifyConfig = {
 	"aliases": {
 		"fetch": "./bower_components/fetch/fetch.js",
 		"page": "./bower_components/page/page.js",
+		"NProgress": "./bower_components/nprogress/nprogress.js",
 		"velocity": "./bower_components/velocity/velocity.js",
 		"ripple.js": "./bower_components/ripple.js/ripple.js",
 		"misskey-text": "./bower_components/misskey-text/src/index.js",

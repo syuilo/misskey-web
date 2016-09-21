@@ -29,6 +29,7 @@
     "fetch": "",
     "velocity": "1.2.3",
     "reconnectingWebsocket": "",
-    "page": "^1.7.1"
+    "page": "^1.7.1",
+    "nprogress": "^0.2.0"
   }
 }

@@ -38,14 +38,8 @@ style.
 			background-clip padding-box !important
 
 			&.active
-				background $theme-color
-
 				> a
-					color $theme-color-foreground !important
-					border-bottom none !important
-
-					&:hover
-						border-bottom none !important
+					border-bottom solid 2px $theme-color
 
 			> a
 				display inline-block
