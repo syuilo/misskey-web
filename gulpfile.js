@@ -335,6 +335,7 @@ gulp.task('build:scripts', done => {
 						.replace(/CONFIG\.urls\.signup/g, `'${config.urls.signup}'`)
 						.replace(/CONFIG\.url/g, `'${config.url}'`)
 						.replace(/CONFIG\.host/g, `'${config.host}'`)
+						.replace(/CONFIG\.recaptch\.siteKey/g, `'${config.recaptcha.siteKey}'`)
 						;
 				}))
 

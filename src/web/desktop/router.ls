@@ -1,39 +1,42 @@
-page = require 'page'
-riot = require 'riot'
+# Router
+#================================
 
-function clean
-	content = document.get-element-by-id \content
-	if content.first-child? then content.remove-child content.first-child
+route = require \page
 
-function mount con
-	content = document.get-element-by-id \content
-	riot.mount content.append-child con
-
-################
 # Routing
-################
+#--------------------------------
 
-page \/ index
-page \/:user user
+route \/ index
+route \/:user user
 
-################
 # Handlers
-################
+#--------------------------------
 
 function index
-	clean!
-	mount document.create-element \mk-home
+	if SIGNIN then home! else entrance!
+
+function home
+	mount document.create-element \mk-home-page
+
+function entrance
+	mount document.create-element \mk-entrance
 
 function user ctx
-	clean!
-	un = ctx.params.user
-	user-page = document.create-element \mk-user-page
-	user-page.set-attribute \user un
-	mount user-page
+	document.create-element \mk-user-page
+		..set-attribute \user ctx.params.user
+		.. |> mount
 
-################
 # Export
-################
+#--------------------------------
 
-module.exports = ~>
-	page!
+module.exports = ~> route!
+
+# Mount
+#================================
+
+riot = require \riot
+
+function mount content
+	body = document.get-element-by-id \kyoppie
+	if body.first-child? then body.remove-child body.first-child
+	riot.mount body.append-child content

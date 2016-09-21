@@ -10,6 +10,7 @@ require './common/tags/core-error.tag'
 require './common/tags/url.tag'
 require './common/tags/url-preview.tag'
 require './common/tags/ripple-string.tag'
+require './common/tags/kawaii.tag'
 
 riot.mixin \get-post-summary do
 	get-post-summary: get-post-summary
@@ -32,7 +33,6 @@ load = (cb) ->
 				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 			body: "_i=#i"
 		.then (res) ->
-			clear-init!
 			if res.status != 200
 				alert 'ユーザー認証に失敗しました。ログアウトします。'
 				location.href = CONFIG.urls.signout
@@ -40,18 +40,22 @@ load = (cb) ->
 				res.json!.then (_i) ->
 					_i._web = i
 					window.I = _i
-					if cb?
-						cb!
-		.catch ~>
+					done!
+		.catch (e) ~>
+			console.error e
 			riot.mount (document.body.append-child document.create-element \mk-core-error), do
-				refresh: ~> load cb
+				refresh: ~> load done
 	else
-		clear-init!
-		if cb?
-			cb!
+		done!
+
+	function done
+		init = document.get-element-by-id \initializing
+		init.parent-node.remove-child init
+
+		document.create-element \div
+			..set-attribute \id \kyoppie
+			.. |> document.body.append-child
+
+		if cb? then cb!
 
 module.exports = load
-
-function clear-init
-	init = document.get-element-by-id \initializing
-	init.parent-node.remove-child init

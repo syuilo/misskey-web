@@ -1,4 +1,4 @@
-mk-user-page
+mk-user
 	div.main(if={ !fetching })
 		div.side: div.body@side
 		main: div.body@main

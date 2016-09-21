@@ -3,7 +3,8 @@ mk-ui
 
 	div.global@global
 		mk-ui-header@header(ui={ ui })
-		div#content
+		div.content
+			<yield />
 
 	mk-stream-indicator
 
