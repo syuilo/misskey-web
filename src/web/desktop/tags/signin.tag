@@ -1,8 +1,8 @@
 mk-signin
 	form(onsubmit={ onsubmit })
 		h2.title
-			img#avatar(src='', href='')
-			p アカウント
+			img@avatar(src={ user.avatar_url + '?thumbnail&size=32' }, if={ user })
+			p { user ? user.name : 'アカウント' }
 		a.help(href= config.urls.help, title='お困りですか？'): i.fa.fa-question
 		label.user-name
 			input@username(
@@ -10,7 +10,8 @@ mk-signin
 				pattern='^[a-zA-Z0-9\-]+$'
 				placeholder='ユーザー名'
 				autofocus
-				required)
+				required
+				oninput={ oninput })
 			i.fa.fa-at
 		label.password
 			input@password(
@@ -31,7 +32,7 @@ style.
 		padding 10px 32px 0 32px
 		background #fff
 		background-clip padding-box
-		border solid 1px rgba(0, 0, 0, 0.1)
+		//border solid 1px rgba(0, 0, 0, 0.1)
 		border-radius 4px
 
 		&:hover
@@ -51,12 +52,12 @@ style.
 			color #888
 			border-bottom solid 1px #eee
 
-			p
+			> p
 				display inline
 				margin 0
 				padding 0
 
-			#avatar
+			> img
 				display inline-block
 				position relative
 				top 10px
@@ -180,6 +181,15 @@ style.
 				transition all .2s ease
 
 script.
+	@user = null
+
+	@oninput = ~>
+		api \users/show do
+			username: @username.value
+		.then (user) ~>
+			@user = user
+			@update!
+
 	@onsubmit = ~>
 		api CONFIG.urls.signin, do
 			username: @username.value

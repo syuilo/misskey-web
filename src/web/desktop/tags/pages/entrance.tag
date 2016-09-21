@@ -63,7 +63,7 @@ style.
 		background-position center
 		background-size cover
 		background-clip padding-box
-		border solid 1px rgba(0, 0, 0, 0.1)
+		//border solid 1px rgba(0, 0, 0, 0.1)
 		border-radius 4px
 
 		> mk-signin

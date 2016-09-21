@@ -5,22 +5,43 @@ mk-signup
 			p.caption
 				i.fa.fa-at
 				| ユーザー名
-			input(name='username'
+			input@username(
 				type='text'
 				pattern='^[a-zA-Z0-9\-]{3,20}$'
 				placeholder='a~z、A~Z、0~9、-'
 				autocomplete='off'
-				required)
-			p.profile-page-url-preview
-			p.info(data-state='none')
-				i
-				span
+				required
+				onkeyup={ on-change-username })
+
+			p.profile-page-url-preview(if={ username.value != '' }) { CONFIG.url + '/' + username.value }
+
+			p.info(if={ username-state == 'wait' }, style='color:#999')
+				i.fa.fa-fw.fa-spinner.fa-pulse
+				| 確認しています...
+			p.info(if={ username-state == 'ok' }, style='color:#3CB7B5')
+				i.fa.fa-fw.fa-check
+				| 利用できます
+			p.info(if={ username-state == 'unavailable' }, style='color:#FF1161')
+				i.fa.fa-fw.fa-exclamation-triangle
+				| 既に利用されています
+			p.info(if={ username-state == 'error' }, style='color:#FF1161')
+				i.fa.fa-fw.fa-exclamation-triangle
+				| 通信エラー
+			p.info(if={ username-state == 'invalid-format' }, style='color:#FF1161')
+				i.fa.fa-fw.fa-exclamation-triangle
+				| a~z、A~Z、0~9、-(ハイフン)が使えます
+			p.info(if={ username-state == 'min-range' }, style='color:#FF1161')
+				i.fa.fa-fw.fa-exclamation-triangle
+				| 3文字以上でお願いします！
+			p.info(if={ username-state == 'max-range' }, style='color:#FF1161')
+				i.fa.fa-fw.fa-exclamation-triangle
+				| 20文字以内でお願いします
 
 		label.password
 			p.caption
 				i.fa.fa-lock
 				| パスワード
-			input(name='password'
+			input@password(
 				type='password'
 				placeholder='8文字以上を推奨します'
 				autocomplete='off'
@@ -35,9 +56,9 @@ mk-signup
 			p.caption
 				i.fa.fa-lock
 				| パスワード(再入力)
-			input(name='password-retype'
+			input@password-retype(
 				type='password'
-				placeholder='念のため再入力してください'
+				placeholder='確認のため再入力してください'
 				autocomplete='off'
 				required)
 			p.info(data-state='none')
@@ -65,17 +86,17 @@ mk-signup
 				| に同意する
 
 		mk-ripple-button
-			i.fa.fa-check
-			span アカウント作成
+			| アカウント作成
 
 style.
 	display block
 	box-sizing border-box
 	padding 18px 32px 0 32px
 	width 368px
+	overflow hidden
 	background #fff
 	background-clip padding-box
-	border solid 1px rgba(0, 0, 0, 0.1)
+	//border solid 1px rgba(0, 0, 0, 0.1)
 	border-radius 4px
 
 	> form
@@ -132,18 +153,6 @@ style.
 				display block
 				margin 4px 0
 				font-size 0.8em
-
-				&[data-state='none']
-					display none
-
-				&[data-state='error']
-					color #FF1161
-
-				&[data-state='processing']
-					color #999
-
-				&[data-state='ok']
-					color #3CB7B5
 
 				> i
 					margin-right 0.3em
@@ -249,6 +258,7 @@ style.
 			border-radius 3px
 
 script.
+	@username-state = null
 	@recaptchaed = false
 
 	window.on-recaptchaed = ~>
@@ -267,3 +277,34 @@ script.
 
 	@cancel = ~>
 		@opts.oncancel!
+
+	@on-change-username = ~>
+		username = @username.value
+
+		if username == ''
+			return
+
+		err = switch
+			| not username.match /^[a-zA-Z0-9\-]+$/ => \invalid-format
+			| username.length < 3chars              => \min-range
+			| username.length > 20chars             => \max-range
+			| _                                     => null
+
+		if err
+			@username-state = err
+			@update!
+		else
+			@username-state = \wait
+			@update!
+
+			api \username/available do
+				username: username
+			.then (result) ~>
+				if result.available
+					@username-state = \ok
+				else
+					@username-state = \unavailable
+				@update!
+			.catch (err) ~>
+				@username-state = \error
+				@update!
