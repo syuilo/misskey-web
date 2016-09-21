@@ -3,6 +3,8 @@ document.domain = CONFIG.host
 # ↓ iOS待ちPolyfill (SEE: http://caniuse.com/#feat=fetch)
 require 'fetch'
 
+get-password-strength = require 'strength.js'
+
 api = require './common/scripts/api.ls'
 get-post-summary = require './common/scripts/get-post-summary.ls'
 riot = require 'riot'
@@ -18,6 +20,9 @@ riot.mixin \get-post-summary do
 riot.mixin \text do
 	analyze: require 'misskey-text'
 	compile: require './common/scripts/text-compiler.js'
+
+riot.mixin \get-password-strength do
+	get-password-strength: get-password-strength
 
 i = ((document.cookie.match /i=([a-zA-Z0-9]+)/) || [null, null]).1
 

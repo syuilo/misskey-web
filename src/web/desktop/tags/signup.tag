@@ -13,7 +13,7 @@ mk-signup
 				required
 				onkeyup={ on-change-username })
 
-			p.profile-page-url-preview(if={ username.value != '' }) { CONFIG.url + '/' + username.value }
+			p.profile-page-url-preview(if={ username.value != '' && username-state != 'invalid-format' && username-state != 'min-range' && username-state != 'max-range' }) { CONFIG.url + '/' + username.value }
 
 			p.info(if={ username-state == 'wait' }, style='color:#999')
 				i.fa.fa-fw.fa-spinner.fa-pulse
@@ -45,12 +45,21 @@ mk-signup
 				type='password'
 				placeholder='8文字以上を推奨します'
 				autocomplete='off'
-				required)
-			div.meter(data-strength='')
-				div.value
-			p.info(data-state='none')
-				i
-				span
+				required
+				onkeyup={ on-change-password })
+
+			div.meter(if={ password-strength != '' }, data-strength={ password-strength })
+				div.value@password-metar
+
+			p.info(if={ password-strength == 'low' }, style='color:#FF1161')
+				i.fa.fa-fw.fa-exclamation-triangle
+				| 弱いパスワード
+			p.info(if={ password-strength == 'medium' }, style='color:#3CB7B5')
+				i.fa.fa-fw.fa-check
+				| まあまあのパスワード
+			p.info(if={ password-strength == 'heigh' }, style='color:#3CB7B5')
+				i.fa.fa-fw.fa-check
+				| 強いパスワード
 
 		label.retype-password
 			p.caption
@@ -60,10 +69,15 @@ mk-signup
 				type='password'
 				placeholder='確認のため再入力してください'
 				autocomplete='off'
-				required)
-			p.info(data-state='none')
-				i
-				span
+				required
+				onkeyup={ on-change-password-retype })
+
+			p.info(if={ password-retype-state == 'match' }, style='color:#3CB7B5')
+				i.fa.fa-fw.fa-check
+				| 確認されました
+			p.info(if={ password-retype-state == 'not-match' }, style='color:#FF1161')
+				i.fa.fa-fw.fa-exclamation-triangle
+				| 一致していません
 
 		label.recaptcha
 			p.caption
@@ -258,7 +272,11 @@ style.
 			border-radius 3px
 
 script.
+	@mixin \get-password-strength
+
 	@username-state = null
+	@password-strength = ''
+	@password-retype-state = null
 	@recaptchaed = false
 
 	window.on-recaptchaed = ~>
@@ -282,6 +300,8 @@ script.
 		username = @username.value
 
 		if username == ''
+			@username-state = null
+			@update!
 			return
 
 		err = switch
@@ -290,7 +310,7 @@ script.
 			| username.length > 20chars             => \max-range
 			| _                                     => null
 
-		if err
+		if err?
 			@username-state = err
 			@update!
 		else
@@ -308,3 +328,34 @@ script.
 			.catch (err) ~>
 				@username-state = \error
 				@update!
+
+	@on-change-password = ~>
+		password = @password.value
+
+		if password == ''
+			@password-strength = ''
+			return
+
+		strength = @get-password-strength password
+
+		if strength > 0.3
+			@password-strength = \medium
+			if strength > 0.7
+				@password-strength = \high
+		else
+			@password-strength = \low
+
+		@password-metar.style.width = (strength * 100) + \%
+
+	@on-change-password-retype = ~>
+		password = @password.value
+		retyped-password = @password-retype.value
+
+		if retyped-password == ''
+			@password-retype-state = null
+			return
+
+		if password == retyped-password
+			@password-retype-state = \match
+		else
+			@password-retype-state = \not-match
