@@ -57,7 +57,7 @@ load = (cb) ->
 		.catch (e) ~>
 			console.error e
 			riot.mount (document.body.append-child document.create-element \mk-core-error), do
-				refresh: ~> load done
+				refresh: ~> load cb
 	else
 		done!
 
