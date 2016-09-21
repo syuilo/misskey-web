@@ -6,7 +6,7 @@ mk-home
 			mk-rss-reader-home-widget
 			mk-photo-stream-home-widget
 		main.widgets: div.body
-			mk-timeline-home-widget
+			mk-timeline-home-widget(event={ tl-event })
 		div.widgets.side-right@right: div.body
 			mk-broadcast-home-widget
 			mk-notifications-home-widget
@@ -79,10 +79,17 @@ style.
 				padding 16px 16px 16px 0
 
 script.
+	@event = @opts.event
+
+	@tl-event = riot.observable!
+
 	@on \mount ~>
 		window.add-event-listener \load @follow-sidebar
 		window.add-event-listener \scroll @follow-sidebar
 		window.add-event-listener \resize @follow-sidebar
+
+	@tl-event.on \loaded ~>
+		@event.trigger \loaded
 
 	@follow-sidebar = ~>
 		window-top = window.scroll-y

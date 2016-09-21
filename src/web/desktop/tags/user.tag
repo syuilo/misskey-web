@@ -51,8 +51,7 @@ style.
 				padding 16px 0 16px 16px
 
 script.
-	@mixin \ui-progress
-
+	@event = @opts.event
 	@username = @opts.user
 	@user = null
 	@fetching = true
@@ -62,14 +61,12 @@ script.
 		window.add-event-listener \scroll @follow-sidebar
 		window.add-event-listener \resize @follow-sidebar
 
-		@Progress.start!
-
 		api \users/show do
 			username: @username
 		.then (user) ~>
 			@user = user
 			@fetching = false
-			@Progress.done!
+			@event.trigger \loaded
 
 			e = @side.append-child document.create-element \mk-user-profile
 			riot.mount e, do

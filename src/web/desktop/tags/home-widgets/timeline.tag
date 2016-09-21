@@ -45,6 +45,7 @@ script.
 	@no-following = I.following_count == 0
 	@unread-count = 0
 	@controller = riot.observable!
+	@event = @opts.event
 	@timeline = @tags[\mk-timeline]
 
 	@on \mount ~>
@@ -57,7 +58,8 @@ script.
 
 		window.add-event-listener \scroll @on-scroll
 
-		@load!
+		@load ~>
+			@event.trigger \loaded
 
 	@on \unmount ~>
 		@stream.off \post @on-stream-post
@@ -74,15 +76,17 @@ script.
 			if e.which == 84 # t
 				@controller.trigger \focus
 
-	@load = ~>
+	@load = (cb) ~>
 		api \posts/timeline
 		.then (posts) ~>
 			@is-loading = false
 			@is-empty = posts.length == 0
 			@update!
 			@controller.trigger \set-posts posts
+			if cb? then cb!
 		.catch (err) ~>
 			console.error err
+			if cb? then cb!
 
 	@more = ~>
 		if @more-loading
