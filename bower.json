@@ -20,7 +20,7 @@
     "cropperjs": "0.7.2",
     "fastclick": "1.0.6",
     "fuck-adblock": "3.2.0",
-    "riot": "2.5.0",
+    "riot": "2.6.2",
     "Sortable": "1.4.2",
     "Swiper": "swiper#3.3.0",
     "password-strength.js": "latest",
@@ -29,7 +29,7 @@
     "fetch": "",
     "velocity": "1.2.3",
     "reconnectingWebsocket": "",
-    "page": "^1.7.1",
-    "nprogress": "^0.2.0"
+    "page": "1.7.1",
+    "nprogress": "0.2.0"
   }
 }
