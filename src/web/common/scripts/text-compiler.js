@@ -11,7 +11,7 @@ module.exports = function(tokens) {
 			case 'link':
 				return '<mk-url href="' + content + '" target="_blank"></mk-url>';
 			case 'mention':
-				return '<a href="https://misskey.xyz/' + content + '" target="_blank">@' + content + '</a>';
+				return '<a href="' + CONFIG.url + '/' + content + '" target="_blank">@' + content + '</a>';
 		}
 	}).join('');
 }
