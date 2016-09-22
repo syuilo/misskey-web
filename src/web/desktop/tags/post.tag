@@ -226,7 +226,8 @@ script.
 			@text.innerHTML = @compile tokens
 
 			@text.child-nodes.for-each (e) ~>
-				riot.mount e
+				if e.tag-name == \MK-URL
+					riot.mount e
 
 			tokens
 				.filter (t) -> t.type == \link
