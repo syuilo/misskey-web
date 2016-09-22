@@ -12,5 +12,7 @@ script.
 	@on \mount ~>
 		@Progress.start!
 
+		document.title = 'Misskey'
+
 	@event.on \loaded ~>
 		@Progress.done!
