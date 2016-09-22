@@ -622,6 +622,7 @@ script.
 		folders-max = 30
 		files-max = 30
 
+		# フォルダ一覧取得
 		api 'drive/folders' do
 			folder: if @folder? then @folder.id else null
 			limit: folders-max + 1
@@ -634,6 +635,7 @@ script.
 		.catch (err, text-status) ~>
 			console.error err
 
+		# ファイル一覧取得
 		api 'drive/files' do
 			folder: if @folder? then @folder.id else null
 			limit: files-max + 1
