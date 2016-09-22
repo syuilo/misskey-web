@@ -67,6 +67,7 @@ script.
 		.then (user) ~>
 			@user = user
 			@fetching = false
+			@event.trigger \user-fetched
 
 			e = @side.append-child document.create-element \mk-user-profile
 			riot.mount e, do

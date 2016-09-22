@@ -13,5 +13,8 @@ script.
 	@on \mount ~>
 		@Progress.start!
 
+	@event.on \user-fetched ~>
+		@Progress.set 0.5
+
 	@event.on \loaded ~>
 		@Progress.done!
