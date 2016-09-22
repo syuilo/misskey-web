@@ -229,6 +229,7 @@ script.
 				if e.tag-name == \MK-URL
 					riot.mount e
 
+			# URLをプレビュー
 			tokens
 				.filter (t) -> t.type == \link
 				.map (t) ~>
