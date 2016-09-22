@@ -44,13 +44,15 @@ script.
 	@unread-count = 0
 	@controller = riot.observable!
 	@timeline = @tags[\mk-timeline]
+	@event = @opts.event
 
 	@on \mount ~>
 		document.add-event-listener \visibilitychange @window-on-visibilitychange, false
 		document.add-event-listener \keydown @on-document-keydown
 		window.add-event-listener \scroll @on-scroll
 
-		@load!
+		@load ~>
+			@event.trigger \loaded
 
 	@on \unmount ~>
 		document.remove-event-listener \visibilitychange @window-on-visibilitychange
@@ -63,7 +65,7 @@ script.
 			if e.which == 84 # t
 				@controller.trigger \focus
 
-	@load = ~>
+	@load = (cb) ~>
 		api \users/posts do
 			user: @user.id
 		.then (posts) ~>
@@ -71,8 +73,10 @@ script.
 			@is-empty = posts.length == 0
 			@update!
 			@controller.trigger \set-posts posts
+			if cb? then cb!
 		.catch (err) ~>
 			console.error err
+			if cb? then cb!
 
 	@more = ~>
 		if @more-loading

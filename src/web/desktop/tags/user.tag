@@ -55,6 +55,7 @@ script.
 	@username = @opts.user
 	@user = null
 	@fetching = true
+	@tl-event = riot.observable!
 
 	@on \mount ~>
 		window.add-event-listener \load @follow-sidebar
@@ -66,7 +67,6 @@ script.
 		.then (user) ~>
 			@user = user
 			@fetching = false
-			@event.trigger \loaded
 
 			e = @side.append-child document.create-element \mk-user-profile
 			riot.mount e, do
@@ -79,10 +79,14 @@ script.
 			e = @main.append-child document.create-element \mk-user-timeline
 			riot.mount e, do
 				user: @user
+				event: @tl-event
 
 			@update!
 		.catch (err) ~>
 			console.error err
+
+	@tl-event.on \loaded ~>
+		@event.trigger \loaded
 
 	@follow-sidebar = ~>
 		window-top = window.scroll-y
