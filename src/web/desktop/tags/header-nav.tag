@@ -39,7 +39,7 @@ style.
 
 			&.active
 				> a
-					border-bottom solid 2px $theme-color
+					border-bottom solid 3px $theme-color
 
 			> a
 				display inline-block
