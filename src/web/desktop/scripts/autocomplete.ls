@@ -73,6 +73,14 @@ class Autocomplete
 		
 		@suggestion = mounted.0
 
+	# サジェストを閉じます。
+	close: ~>
+		if !@suggestion?
+			return
+
+		@suggestion.unmount!
+		@suggestion = null
+
 	# オートコンプリートする
 	complete: (user) ~>
 		@close!
@@ -92,13 +100,5 @@ class Autocomplete
 		@textarea.focus!
 		pos = caret + value.length - 1
 		@textarea.set-selection-range pos, pos
-
-	# サジェストを閉じます。
-	close: ~>
-		if !@suggestion?
-			return
-
-		@suggestion.unmount!
-		@suggestion = null
 
 module.exports = Autocomplete
