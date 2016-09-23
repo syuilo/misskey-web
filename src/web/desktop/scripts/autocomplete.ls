@@ -21,8 +21,6 @@ module.exports = (el) ~>
 		if not username.match /^[a-zA-Z0-9-]+$/
 			return
 
-		console.log username
-
 		open \user username
 
 	function open type, q
