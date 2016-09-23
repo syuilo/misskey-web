@@ -1,9 +1,4 @@
 mk-user-profile
-	div.banner(style={ user.banner_url ? 'background-image: url(' + user.banner_url + '?thumbnail&size=256)' : '' })
-	a.avatar-anchor(href= config.url + '/' + { user.username })
-		img.avatar(src={ user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-card={ user.username })
-	a.name(href= config.url + '/' + { user.username }) { user.name }
-	p.username @{ user.username }
 	div.friend-form(if={ SIGNIN && I.id != user.id })
 		mk-big-follow-button(user={ user })
 		p.followed(if={ user.is_followed }) フォローされています
@@ -24,36 +19,9 @@ style.
 	position relative
 	background #fff
 
-	> .banner
-		height 100px
-		background-color #f5f5f5
+	> *:first-child
+		border-top none !important
 
-	> .avatar-anchor
-		display block
-		position absolute
-		top 76px
-		left 16px
-
-		> .avatar
-			display block
-			width 58px
-			height 58px
-			margin 0
-			border solid 3px #fff
-			border-radius 8px
-			vertical-align bottom
-
-	> .name
-		display block
-		margin 8px 0 0 92px
-		font-weight bold
-		color #555
-
-	> .username
-		display block
-		margin 4px 0 8px 92px
-		color #999
-	
 	> .friend-form
 		padding 16px
 		border-top solid 1px #eee
