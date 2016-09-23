@@ -66,11 +66,32 @@ class Autocomplete
 		# マウント
 		mounted = riot.mount el, do
 			textarea: @textarea
+			complete: @complete
 			close: @close
 			type: type
 			q: q
 		
 		@suggestion = mounted.0
+
+	# オートコンプリートする
+	complete: (user) ~>
+		@close!
+		value = user.username
+
+		caret = @textarea.selection-start
+		source = @textarea.value
+
+		before = source.substr 0 caret
+		trimed-before = before.substring 0 before.last-index-of \@
+		after = source.substr caret
+
+		# 結果を挿入する
+		@textarea.value = trimed-before + \@ + value + ' ' + after
+
+		# キャレットを戻す
+		@textarea.focus!
+		pos = caret + value.length - 1
+		@textarea.set-selection-range pos, pos
 
 	# サジェストを閉じます。
 	close: ~>

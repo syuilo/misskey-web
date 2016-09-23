@@ -26,18 +26,17 @@ style.
 		list-style none
 
 		> li
-			display inline-block
-			z-index 1
+			display block
 			box-sizing border-box
-			width 100%
 			padding 4px 12px
-			vertical-align top
 			white-space nowrap
 			overflow hidden
 			font-size 0.9em
 			color rgba(0, 0, 0, 0.8)
-			text-decoration none
-			transition none
+			cursor default
+
+			&, *
+				user-select none
 
 			&:hover
 			&.selected
@@ -94,7 +93,7 @@ script.
 		.then (users) ~>
 			users.for-each (user) ~>
 				user._click = ~>
-					# hoge
+					@complete user
 			@users = users
 			@loading = false
 			@update!
@@ -108,7 +107,9 @@ script.
 		key = e.which
 		switch (key)
 			| 10, 13 => # Key[ENTER]
-				#hoge
+				e.prevent-default!
+				e.stop-propagation!
+				@complete @users[@select]
 			| 27 => # Key[ESC]
 				@close!
 			| 38 => # Key[↑]
@@ -146,6 +147,9 @@ script.
 		@users[@select]._selected = true
 
 		@update!
+
+	@complete = (user) ~>
+		@opts.complete user
 
 	@close = ~>
 		@opts.close!
