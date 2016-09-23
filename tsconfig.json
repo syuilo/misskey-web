@@ -28,9 +28,9 @@
 	"files": [
 		"./node_modules/typescript/lib/lib.es6.d.ts",
 		"./typings/bundle.d.ts",
-		"./src/api/url.ts",
-		"./src/api/rss-proxy.ts",
 		"./src/api/proxy.ts",
+		"./src/api/rss-proxy.ts",
+		"./src/api/url.ts",
 		"./src/argv.ts",
 		"./src/check-dependencies.ts",
 		"./src/check-for-update.ts",

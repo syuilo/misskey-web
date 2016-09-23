@@ -1,4 +1,4 @@
-boot = require '../base.ls'
+boot = require '../boot.ls'
 require 'velocity'
 riot = require 'riot'
 require './tags.ls'
@@ -6,7 +6,6 @@ stream = require './stream.ls'
 route = require './router.ls'
 fuck-ad-block = require './scripts/fuck-ad-block.ls'
 dialog = require './scripts/dialog.ls'
-input-dialog = require './scripts/input-dialog.ls'
 
 fuck-ad-block!
 
@@ -22,7 +21,10 @@ riot.mixin \dialog do
 	dialog: dialog
 
 riot.mixin \input-dialog do
-	input-dialog: input-dialog
+	input-dialog: require './scripts/input-dialog.ls'
+
+riot.mixin \autocomplete do
+	autocomplete: require './scripts/autocomplete.ls'
 
 riot.mixin \cropper do
 	Cropper: require 'cropper'

@@ -305,13 +305,16 @@ style.
 script.
 	Sortable = require '../../../../bower_components/Sortable/Sortable.js'
 
+	@mixin \autocomplete
+
 	@wait = false
 	@uploadings = []
 	@files = []
-
 	@uploader-controller = riot.observable!
-
 	@controller = @opts.controller
+
+	@on \mount ~>
+		@autocomplete @text
 
 	@controller.on \focus ~>
 		@text.focus!
