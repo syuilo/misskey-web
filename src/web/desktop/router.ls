@@ -2,6 +2,7 @@
 #================================
 
 route = require \page
+page = null
 
 # Routing
 #--------------------------------
@@ -37,6 +38,6 @@ module.exports = ~> route!
 riot = require \riot
 
 function mount content
+	if page? then page.unmount!
 	body = document.get-element-by-id \kyoppie
-	if body.first-child? then body.remove-child body.first-child
-	riot.mount body.append-child content
+	page := riot.mount body.append-child content .0
