@@ -88,6 +88,10 @@ script.
 	@on \mount ~>
 		@textarea.add-event-listener \keydown @on-keydown
 
+		all = document.query-selector-all 'body *'
+		Array.prototype.for-each.call all, (el) ~>
+			el.add-event-listener \mousedown @mousedown
+
 		api \users/search do
 			query: @q
 		.then (users) ~>
@@ -102,6 +106,14 @@ script.
 
 	@on \unmount ~>
 		@textarea.remove-event-listener \keydown @on-keydown
+
+		all = document.query-selector-all 'body *'
+		Array.prototype.for-each.call all, (el) ~>
+			el.remove-event-listener \mousedown @mousedown
+
+	@mousedown = (e) ~>
+		if (!contains @root, e.target) and (@root != e.target)
+			@close!
 
 	@on-keydown = (e) ~>
 		key = e.which
@@ -153,3 +165,11 @@ script.
 
 	@close = ~>
 		@opts.close!
+
+	function contains(parent, child)
+		node = child.parent-node
+		while node?
+			if node == parent
+				return true
+			node = node.parent-node
+		return false
