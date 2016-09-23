@@ -1,7 +1,7 @@
 mk-autocomplete-suggestion
-	ol.users(if={ users.length > 0 })
+	ol.users@users-el(if={ users.length > 0 })
 		virtual(each={ user in users })
-			li(onclick={ user._click }, class={ selected: user._selected })
+			li(onclick={ user._click }, class={ selected: user._selected }, onkeydown={ on-keydown } tabindex='-1')
 				img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
 				span.name { user.name }
 				span.username @{ user.username }
@@ -123,10 +123,15 @@ script.
 		key = e.which
 		switch (key)
 			| 10, 13 => # Key[ENTER]
+				if @select != -1
+					e.prevent-default!
+					e.stop-propagation!
+					@complete @users[@select]
+				else
+					@close!
+			| 27 => # Key[ESC]
 				e.prevent-default!
 				e.stop-propagation!
-				@complete @users[@select]
-			| 27 => # Key[ESC]
 				@close!
 			| 38 => # Key[↑]
 				if @select != -1
@@ -139,6 +144,9 @@ script.
 				e.prevent-default!
 				e.stop-propagation!
 				@select-next!
+			| _ =>
+				@close!
+				return true
 
 	@select-next = ~>
 		@select++
@@ -161,6 +169,8 @@ script.
 			user._selected = false
 
 		@users[@select]._selected = true
+
+		@users-el.child-nodes[@select].focus!
 
 		@update!
 

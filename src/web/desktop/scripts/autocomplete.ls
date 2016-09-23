@@ -83,6 +83,8 @@ class Autocomplete
 		@suggestion.unmount!
 		@suggestion = null
 
+		@textarea.focus!
+
 	# オートコンプリートする
 	complete: (user) ~>
 		@close!
@@ -100,7 +102,7 @@ class Autocomplete
 
 		# キャレットを戻す
 		@textarea.focus!
-		pos = caret + value.length - 1
+		pos = caret + value.length
 		@textarea.set-selection-range pos, pos
 
 module.exports = Autocomplete
