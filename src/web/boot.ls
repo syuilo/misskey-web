@@ -4,11 +4,6 @@ document.domain = CONFIG.host
 require 'fetch'
 
 get-password-strength = require 'strength.js'
-NProgress = require 'NProgress'
-NProgress.configure do
-	trickle-rate: 0.05
-	trickle-speed: 500ms
-	show-spinner: false
 
 api = require './common/scripts/api.ls'
 get-post-summary = require './common/scripts/get-post-summary.ls'
@@ -30,7 +25,7 @@ riot.mixin \get-password-strength do
 	get-password-strength: get-password-strength
 
 riot.mixin \ui-progress do
-	Progress: NProgress
+	Progress: require './common/scripts/loading.ls'
 
 i = ((document.cookie.match /i=([a-zA-Z0-9]+)/) || [null, null]).1
 
