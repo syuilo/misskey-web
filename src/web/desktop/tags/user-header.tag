@@ -1,4 +1,4 @@
-mk-user-header
+mk-user-header(data-is-dark-background={ user.banner_url != null })
 	div.banner@banner(style={ user.banner_url ? 'background-image: url(' + user.banner_url + '?thumbnail&size=1024)' : '' })
 	img.avatar(src={ user.avatar_url + '?thumbnail&size=150' }, alt='avatar')
 	div.title
@@ -15,6 +15,17 @@ style.
 	display block
 	position relative
 	background #fff
+
+	&[data-is-dark-background]
+		> .banner
+			background-color #383838
+
+		> .title
+			color #fff
+			background linear-gradient(transparent, rgba(0, 0, 0, 0.7))
+
+			> .name
+				text-shadow 0 0 8px #000
 
 	> .banner
 		height 280px
@@ -40,7 +51,7 @@ style.
 		bottom $footer-height
 		left 0
 		width 100%
-		background linear-gradient(transparent, rgba(0, 0, 0, 0.7))
+		color #656565
 
 		> .name
 			display block
@@ -48,15 +59,13 @@ style.
 			line-height 40px
 			font-weight bold
 			font-size 2em
-			color #fff
 			font-family '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'メイリオ', sans-serif
-			text-shadow 0 0 8px #000
 
 		> .username
 			display block
 			margin 0 0 8px 195px
 			line-height 20px
-			color rgba(#fff, 0.8)
+			opacity 0.8
 
 	> footer
 		position relative
