@@ -24,7 +24,7 @@ riot.mixin \input-dialog do
 	input-dialog: require './scripts/input-dialog.ls'
 
 riot.mixin \autocomplete do
-	autocomplete: require './scripts/autocomplete.ls'
+	Autocomplete: require './scripts/autocomplete.ls'
 
 riot.mixin \cropper do
 	Cropper: require 'cropper'

@@ -312,9 +312,14 @@ script.
 	@files = []
 	@uploader-controller = riot.observable!
 	@controller = @opts.controller
+	@autocomplete = null
 
 	@on \mount ~>
-		@autocomplete @text
+		@autocomplete = new @Autocomplete @text
+		@autocomplete.attach!
+
+	@on \unmount ~>
+		@autocomplete.detach!
 
 	@controller.on \focus ~>
 		@text.focus!

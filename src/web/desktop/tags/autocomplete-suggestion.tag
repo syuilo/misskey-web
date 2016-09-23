@@ -81,10 +81,13 @@ style.
 
 script.
 	@q = @opts.q
+	@textarea = @opts.textarea
 	@loading = true
 	@users = []
 
 	@on \mount ~>
+		@textarea.add-event-listener \keydown @on-keydown
+
 		api \users/search do
 			query: @q
 		.then (users) ~>
@@ -96,3 +99,19 @@ script.
 			@update!
 		.catch (err) ~>
 			console.error err
+
+	@on \unmount ~>
+		@textarea.remove-event-listener \keydown @on-keydown
+
+	@on-keydown = (e) ~>
+		console.log e.which
+		key = e.which
+		switch (key)
+			| 10, 13 => # Key[ENTER]
+				#hoge
+			| 27 => # Key[ESC]
+				#hoge
+			| 38 => # Key[↑]
+				#hoge
+			| 9, 40 => # Key[TAB] or Key[↓]
+				#hoge
