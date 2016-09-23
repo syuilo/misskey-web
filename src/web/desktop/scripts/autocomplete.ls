@@ -25,6 +25,8 @@ class Autocomplete
 
 	# テキスト入力時
 	on-input: ~>
+		@close!
+
 		caret = @textarea.selection-start
 		text = @textarea.value.substr 0 caret
 

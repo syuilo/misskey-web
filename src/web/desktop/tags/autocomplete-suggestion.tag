@@ -11,9 +11,7 @@ style.
 	position absolute
 	z-index 65535
 	margin-top calc(1em + 8px)
-	max-height 190px
-	max-width 500px
-	overflow auto
+	overflow hidden
 	background #fff
 	background-clip padding-box
 	border solid 1px rgba(0, 0, 0, 0.1)
@@ -21,8 +19,13 @@ style.
 	font-family 'Meiryo', 'メイリオ', sans-serif
 
 	> .users
+		display block
+		box-sizing border-box
 		margin 0
 		padding 4px 0
+		max-height 190px
+		max-width 500px
+		overflow auto
 		list-style none
 
 		> li
