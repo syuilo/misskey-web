@@ -92,8 +92,9 @@ script.
 		Array.prototype.for-each.call all, (el) ~>
 			el.add-event-listener \mousedown @mousedown
 
-		api \users/search do
+		api \users/search_by_username do
 			query: @q
+			limit: 30users
 		.then (users) ~>
 			users.for-each (user) ~>
 				user._click = ~>
