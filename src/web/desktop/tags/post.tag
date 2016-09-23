@@ -163,6 +163,7 @@ style.
 					float right
 
 					> .time
+						font-size 0.9em
 						color #c0c0c0
 
 			> .body
