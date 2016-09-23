@@ -46,7 +46,7 @@ class Autocomplete
 		@close!
 
 		# サジェスト要素作成
-		@suggestion = document.create-element \mk-autocomplete-suggestion
+		suggestion = document.create-element \mk-autocomplete-suggestion
 
 		# ~ サジェストを表示すべき位置を計算 ~
 
@@ -57,20 +57,27 @@ class Autocomplete
 		x = rect.left + window.page-x-offset + caret-position.left
 		y = rect.top + window.page-y-offset + caret-position.top
 
-		@suggestion.style.left = x + \px
-		@suggestion.style.top = y + \px
+		suggestion.style.left = x + \px
+		suggestion.style.top = y + \px
+
+		# 要素追加
+		el = document.body.append-child suggestion
 
 		# マウント
-		riot.mount (document.body.append-child @suggestion), do
+		mounted = riot.mount el, do
 			textarea: @textarea
+			close: @close
 			type: type
 			q: q
+		
+		@suggestion = mounted.0
 
 	# サジェストを閉じます。
 	close: ~>
 		if !@suggestion?
 			return
 
-		@suggestion.parent-node.remove-child @suggestion
+		@suggestion.unmount!
+		@suggestion = null
 
 module.exports = Autocomplete

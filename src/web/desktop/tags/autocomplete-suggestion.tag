@@ -1,7 +1,7 @@
 mk-autocomplete-suggestion
 	ol.users(if={ users.length > 0 })
-		li(each={ user in users })
-			a(onclick={ user._click })
+		virtual(each={ user in users })
+			li(onclick={ user._click }, class={ selected: user._selected })
 				img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
 				span.name { user.name }
 				span.username @{ user.username }
@@ -26,64 +26,65 @@ style.
 		list-style none
 
 		> li
-			> a
-				display inline-block
-				z-index 1
-				box-sizing border-box
-				width 100%
-				padding 4px 12px
-				vertical-align top
-				white-space nowrap
-				overflow hidden
-				font-size 0.9em
-				color rgba(0, 0, 0, 0.8)
-				text-decoration none
-				transition none
+			display inline-block
+			z-index 1
+			box-sizing border-box
+			width 100%
+			padding 4px 12px
+			vertical-align top
+			white-space nowrap
+			overflow hidden
+			font-size 0.9em
+			color rgba(0, 0, 0, 0.8)
+			text-decoration none
+			transition none
 
-				&:hover
-					color #fff
-					background $theme-color
-
-					.name
-						color #fff
-
-					.username
-						color #fff
-
-				&:active
-					color #fff
-					background darken($theme-color, 10%)
-
-					.name
-						color #fff
-
-					.username
-						color #fff
-
-				.avatar
-					vertical-align middle
-					min-width 28px
-					min-height 28px
-					max-width 28px
-					max-height 28px
-					margin 0 8px 0 0
-					border-radius 100%
+			&:hover
+			&.selected
+				color #fff
+				background $theme-color
 
 				.name
-					margin 0 8px 0 0
-					/*font-weight bold*/
-					font-weight normal
-					color rgba(0, 0, 0, 0.8)
+					color #fff
 
 				.username
-					font-weight normal
-					color rgba(0, 0, 0, 0.3)
+					color #fff
+
+			&:active
+				color #fff
+				background darken($theme-color, 10%)
+
+				.name
+					color #fff
+
+				.username
+					color #fff
+
+			.avatar
+				vertical-align middle
+				min-width 28px
+				min-height 28px
+				max-width 28px
+				max-height 28px
+				margin 0 8px 0 0
+				border-radius 100%
+
+			.name
+				margin 0 8px 0 0
+				/*font-weight bold*/
+				font-weight normal
+				color rgba(0, 0, 0, 0.8)
+
+			.username
+				font-weight normal
+				color rgba(0, 0, 0, 0.3)
 
 script.
 	@q = @opts.q
 	@textarea = @opts.textarea
 	@loading = true
 	@users = []
+	@select = -1
 
 	@on \mount ~>
 		@textarea.add-event-listener \keydown @on-keydown
@@ -104,14 +105,47 @@ script.
 		@textarea.remove-event-listener \keydown @on-keydown
 
 	@on-keydown = (e) ~>
-		console.log e.which
 		key = e.which
 		switch (key)
 			| 10, 13 => # Key[ENTER]
 				#hoge
 			| 27 => # Key[ESC]
-				#hoge
+				@close!
 			| 38 => # Key[↑]
-				#hoge
+				if @select != -1
+					e.prevent-default!
+					e.stop-propagation!
+					@select-prev!
+				else
+					@close!
 			| 9, 40 => # Key[TAB] or Key[↓]
-				#hoge
+				e.prevent-default!
+				e.stop-propagation!
+				@select-next!
+
+	@select-next = ~>
+		@select++
+
+		if @select >= @users.length
+			@select = 0
+
+		@apply-select!
+
+	@select-prev = ~>
+		@select--
+
+		if @select < 0
+			@select = @users.length - 1
+
+		@apply-select!
+
+	@apply-select = ~>
+		@users.for-each (user) ~>
+			user._selected = false
+
+		@users[@select]._selected = true
+
+		@update!
+
+	@close = ~>
+		@opts.close!
