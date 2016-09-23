@@ -40,7 +40,7 @@ script.
 		alert text
 
 	@on \mount ~>
-		document.body.style.margin-top = @header.client-height + \px
+		@root.style.padding-top = @header.client-height + \px
 		document.add-event-listener \keydown (e) ~>
 			tag = e.target.tag-name.to-lower-case!
 			if tag != \input and tag != \textarea
