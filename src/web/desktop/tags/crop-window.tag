@@ -175,13 +175,14 @@ script.
 	@controller = @opts.controller
 	@image = @opts.file
 	@title = @opts.title
+	@aspect-ratio = @opts.aspect-ratio
 	@cropper = null
 	@window-controller = riot.observable!
 
 	@on \mount ~>
 		@img = @tags['mk-window'].img
 		@cropper = new @Cropper @img, do
-			aspect-ratio: 1 / 1
+			aspect-ratio: @aspect-ratio
 			highlight: no
 			view-mode: 1
 
@@ -192,3 +193,11 @@ script.
 		@cropper.get-cropped-canvas!.to-blob (blob) ~>
 			@controller.trigger \cropped blob
 			@window-controller.trigger \close
+
+	@skip = ~>
+		@controller.trigger \skiped
+		@window-controller.trigger \close
+
+	@cancel = ~>
+		@controller.trigger \canceled
+		@window-controller.trigger \close
