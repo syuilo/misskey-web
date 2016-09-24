@@ -4,6 +4,9 @@ mk-user-header(data-is-dark-background={ user.banner_url != null })
 	div.title
 		p.name(href= config.url + '/' + { user.username }) { user.name }
 		p.username @{ user.username }
+		p.location(if={ user.location })
+			i.fa.fa-map-marker
+			| { user.location }
 	footer
 		p.posts
 			a(href={ '/' + user.username }) { user.posts_count }
@@ -58,25 +61,31 @@ style.
 		box-shadow 1px 1px 3px rgba(0, 0, 0, 0.2)
 
 	> .title
+		box-sizing border-box
 		position absolute
 		bottom $footer-height
 		left 0
 		width 100%
+		padding 0 0 8px 195px
 		color #656565
+		font-family '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'メイリオ', sans-serif
 
 		> .name
 			display block
-			margin 0 0 0 190px
+			margin 0
 			line-height 40px
 			font-weight bold
 			font-size 2em
-			font-family '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'メイリオ', sans-serif
 
 		> .username
-			display block
-			margin 0 0 8px 195px
+		> .location
+			display inline-block
+			margin 0 16px 0 0
 			line-height 20px
 			opacity 0.8
+
+			> i
+				margin-right 4px
 
 	> footer
 		position relative
