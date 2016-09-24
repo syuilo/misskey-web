@@ -34,6 +34,7 @@ style.
 			z-index 2
 			color #444
 			font-size 24px
+			line-height 20px
 
 		> .mask
 			position absolute
