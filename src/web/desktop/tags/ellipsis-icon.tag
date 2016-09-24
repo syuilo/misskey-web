@@ -18,14 +18,14 @@ style.
 		animation bounce 1.4s infinite ease-in-out both
 
 		&:nth-child(1)
-			animation-delay 0.001s
+			animation-delay 0s
 
 		&:nth-child(2)
 			margin 0 6px
-			animation-delay 0.161s
+			animation-delay 0.16s
 
 		&:nth-child(3)
-			animation-delay 0.321s
+			animation-delay 0.32s
 
 	@keyframes bounce
 		0%, 80%, 100%
