@@ -210,6 +210,39 @@ style.
 style(theme='dark').
 	background #0D0D0D
 
+	> article
+
+		&:hover
+			> .main > footer > button
+				color #eee
+
+		> .main
+			> header
+				> .left
+					> .name
+						color #9e9c98
+
+					> .username
+						color #41403f
+
+				> .right
+					> .time
+						color #4e4d4b
+
+			> .body
+				> .text
+					color #9e9c98
+
+			> footer
+				> button
+					color #9e9c98
+
+					&:hover
+						color #fff
+
+					> .count
+						color #eee
+
 script.
 	@mixin \text
 

@@ -59,3 +59,9 @@ style.
 			> .right
 				float right
 				height 48px
+
+style(theme='dark').
+	box-shadow 0 1px 0 #222221
+
+	> .backdrop
+		background #0D0D0D
