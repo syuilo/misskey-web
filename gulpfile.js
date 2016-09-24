@@ -272,11 +272,10 @@ gulp.task('build:scripts', done => {
 
 					styles.forEach(style => {
 						let head = style.lines.shift();
-						const attr = head.match(/style\((.+?)\)/);
-						if (attr) {
-							head = 'style(' + attr[1] + ',type=\'stylus\', scoped).';
+						if (style.attr) {
+							style.attr = style.attr + ', type=\'stylus\', scoped';
 						} else {
-							head = 'style(type=\'stylus\', scoped).';
+							style.attr = 'type=\'stylus\', scoped';
 						}
 						style.lines.unshift(head);
 					});
@@ -318,7 +317,10 @@ gulp.task('build:scripts', done => {
 						return tag.compile();
 					}
 
-					styles.forEach(style => {
+					styles.forEach((style, i) => {
+						if (i != 0) {
+							return;
+						}
 						const head = style.lines.shift();
 						style.lines = style.lines.map(line => {
 							return '\t' + line;
@@ -329,6 +331,40 @@ gulp.task('build:scripts', done => {
 
 					return tag.compile();
 				}))
+
+				// tagのtheme styleのパース
+				.transform(transformify((source, file) => {
+					if (file.substr(-4) !== '.tag') return source;
+
+					const tag = new Tag(source);
+
+					const styles = tag.sections.filter(s => s.name == 'style');
+
+					if (styles.length == 0) {
+						return tag.compile();
+					}
+
+					styles.forEach((style, i) => {
+						if (i == 0) {
+							return;
+						} else if (style.attr.substr(0, 6) != 'theme=') {
+							return;
+						}
+						const head = style.lines.shift();
+						style.lines = style.lines.map(line => {
+							return '\t' + line;
+						});
+						style.lines.unshift(':scope');
+						style.lines = style.lines.map(line => {
+							return '\t' + line;
+						});
+						style.lines.unshift('html[data-' + style.attr.match(/theme='(.+?)'/)[0] + ']');
+						style.lines.unshift(head);
+					});
+
+					return tag.compile();
+				}))
+
 
 				// tagのstyleおよびscriptのインデントを不要にする
 				.transform(transformify((source, file) => {
@@ -527,6 +563,7 @@ class Tag {
 			flag = false;
 			const section = {
 				name: root,
+				attr: (line.match(/\((.+?)\)/) || [null, null])[1],
 				indent: beginIndent,
 				lines: []
 			};
@@ -536,6 +573,12 @@ class Tag {
 					flag = true;
 				}
 				if (!flag) {
+					if (i == 0 && line[line.length - 1] == '.') {
+						line = line.substr(0, line.length - 1);
+					}
+					if (i == 0 && line.indexOf('(') != -1) {
+						line = line.substr(0, line.indexOf('('));
+					}
 					source = source.replace(/^.*?\n/, '');
 					section.lines.push(i == 0 ? line.substr(beginIndent) : line.substr(beginIndent + 1));
 				}
@@ -546,10 +589,12 @@ class Tag {
 
 	compile() {
 		let dist = '';
-		this.sections.forEach(section => {
+		this.sections.forEach((section, j) => {
 			dist += section.lines.map((line, i) => {
 				if (i == 0) {
-					return '\t'.repeat(section.indent) + line;
+					const attr = section.attr != null ? '(' + section.attr + ')' : '';
+					const tail = j != 0 ? '.' : '';
+					return '\t'.repeat(section.indent) + line + attr + tail;
 				} else {
 					return '\t'.repeat(section.indent + 1) + line;
 				}
