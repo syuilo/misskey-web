@@ -246,7 +246,7 @@ gulp.task('build:scripts', done => {
 						str = str.replace(/([a-z\-]+):/g, (match, group1) => {
 							return group1.replace(/\-/g, '###') + ':';
 						});
-						str = str.replace(/'([a-z\-]+)'/g, (match, group1) => {
+						str = str.replace(/'(.+?)'/g, (match, group1) => {
 							return "'" + group1.replace(/\-/g, '###') + "'";
 						});
 						str = str.replace(/-([^\s0-9])/g, (match, group1) => {
