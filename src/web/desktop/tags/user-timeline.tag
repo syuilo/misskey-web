@@ -79,7 +79,7 @@ script.
 			if cb? then cb!
 
 	@more = ~>
-		if @more-loading
+		if @more-loading or @is-loading or @timeline.posts.length == 0
 			return
 		@more-loading = true
 		@update!
