@@ -207,6 +207,9 @@ style.
 					&.liked
 						color $theme-color
 
+style(theme='dark').
+	background #0D0D0D
+
 script.
 	@mixin \text
 
