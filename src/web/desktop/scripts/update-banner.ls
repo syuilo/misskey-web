@@ -39,6 +39,12 @@ module.exports = (cb) ~>
 
 	@uplaod = (data, folder) ~>
 
+		progress = document.body.append-child document.create-element \mk-progress-dialog
+		progress-controller = riot.observable!
+		riot.mount progress, do
+			title: '新しいバナーをアップロードしています'
+			controller: progress-controller
+
 		if folder?
 			data.append \folder folder.id
 
@@ -46,15 +52,12 @@ module.exports = (cb) ~>
 		xhr.open \POST CONFIG.api.url + '/drive/files/create' true
 		xhr.onload = (e) ~>
 			file = JSON.parse e.target.response
+			progress-controller.trigger \close
 			@set file
 
-		#xhr.upload.onprogress = (e) ~>
-		#	if e.length-computable
-		#		if ctx.progress == undefined
-		#			ctx.progress = {}
-		#		ctx.progress.max = e.total
-		#		ctx.progress.value = e.loaded
-		#		@update!
+		xhr.upload.onprogress = (e) ~>
+			if e.length-computable
+				progress-controller.trigger \update e.loaded, e.total
 
 		xhr.send data
 
