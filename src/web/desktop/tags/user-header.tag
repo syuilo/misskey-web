@@ -5,9 +5,20 @@ mk-user-header(data-is-dark-background={ user.banner_url != null })
 		p.name(href= config.url + '/' + { user.username }) { user.name }
 		p.username @{ user.username }
 	footer
-		p
-			b { user.posts_count }
+		p.posts
+			a(href={ '/' + user.username }) { user.posts_count }
 			| 投稿
+		span.separator ・
+		p.likes
+			a(href={ '/' + user.username + '/likes' }) { user.likes_count }
+			b いいね
+			| しました
+		span.separator ・
+		p.liked
+			a(href={ '/' + user.username + '/most-liked' }) { user.liked_count }
+			b いいね
+			| されました
+		button(onclick={ NotImplementedException }): i.fa.fa-ellipsis-h
 
 style.
 	$footer-height = 58px
@@ -79,6 +90,37 @@ style.
 			margin 0
 			line-height $footer-height
 			color #555
+
+			> a
+				font-weight bold
+
+			> b
+				font-weight normal
+				font-style oblique
+
+		> .separator
+			display inline-block
+			margin 16px
+			color rgba(0, 0, 0, 0.2)
+			user-select none
+
+		> button
+			display block
+			position absolute
+			top 0
+			right 0
+			margin 8px
+			padding 0
+			width $footer-height - 16px
+			line-height $footer-height - 16px - 2px
+			font-size 1.2em
+			color #777
+			border solid 1px #eee
+			border-radius 4px
+
+			&:hover
+				color #555
+				border solid 1px #ddd
 
 script.
 	@user = @opts.user
