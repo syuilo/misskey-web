@@ -9,6 +9,7 @@ page = null
 
 route \/ index
 route \/:user user
+route \* not-found
 
 # Handlers
 #--------------------------------
@@ -26,6 +27,9 @@ function user ctx
 	document.create-element \mk-user-page
 		..set-attribute \user ctx.params.user
 		.. |> mount
+
+function not-found
+	mount document.create-element \mk-not-found
 
 # Export
 #--------------------------------
