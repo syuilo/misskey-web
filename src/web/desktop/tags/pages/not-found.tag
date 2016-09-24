@@ -38,9 +38,10 @@ style.
 
 		> .mask
 			position absolute
-			top 260px
-			left 216px
-			width 128px
-			height 20px
+			top 262px
+			left 217px
+			width 126px
+			height 18px
 			transform rotate(-12deg)
 			background #D6D5DA
+			border-radius 2px 6px 7px 6px
