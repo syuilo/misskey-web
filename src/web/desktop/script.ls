@@ -23,6 +23,12 @@ riot.mixin \dialog do
 riot.mixin \input-dialog do
 	input-dialog: require './scripts/input-dialog.ls'
 
+riot.mixin \update-avatar do
+	update-avatar: require './scripts/update-avatar.ls'
+
+riot.mixin \update-banner do
+	update-banner: require './scripts/update-banner.ls'
+
 riot.mixin \autocomplete do
 	Autocomplete: require './scripts/autocomplete.ls'
 

@@ -1,5 +1,5 @@
 mk-user-header(data-is-dark-background={ user.banner_url != null })
-	div.banner@banner(style={ user.banner_url ? 'background-image: url(' + user.banner_url + '?thumbnail&size=1024)' : '' })
+	div.banner@banner(style={ user.banner_url ? 'background-image: url(' + user.banner_url + '?thumbnail&size=1024)' : '' }, onclick={ on-update-banner })
 	img.avatar(src={ user.avatar_url + '?thumbnail&size=150' }, alt='avatar')
 	div.title
 		p.name(href= config.url + '/' + { user.username }) { user.name }
@@ -132,6 +132,8 @@ style.
 				border solid 1px #ddd
 
 script.
+	@mixin \update-banner
+
 	@user = @opts.user
 
 	@on \mount ~>
@@ -154,3 +156,11 @@ script.
 		blur = top / 32
 		if blur <= 10
 			@banner.style.filter = 'blur(' + blur + 'px)'
+
+	@on-update-banner = ~>
+		if not SIGNIN or I.id != @user.id
+			return
+
+		@update-banner (i) ~>
+			@user.banner_url = i.banner_url
+			@update!
