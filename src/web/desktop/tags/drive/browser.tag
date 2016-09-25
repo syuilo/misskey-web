@@ -168,9 +168,9 @@ style.
 			display none
 			box-sizing border-box
 			position absolute
+			z-index 128
 			top 0
 			left 0
-			z-index 1
 			border solid 1px $theme-color
 			background rgba($theme-color, 0.5)
 			pointer-events none

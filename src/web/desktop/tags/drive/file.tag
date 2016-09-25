@@ -1,4 +1,10 @@
 mk-drive-browser-file(data-is-selected={ file._selected }, data-is-contextmenu-showing={ is-contextmenu-showing }, onclick={ onclick }, oncontextmenu={ oncontextmenu }, draggable='true', ondragstart={ ondragstart }, ondragend={ ondragend }, title={ title })
+	div.label(if={ I.avatar == file.id })
+		img(src='/_/resources/label.svg')
+		p アバター
+	div.label(if={ I.banner == file.id })
+		img(src='/_/resources/label.svg')
+		p バナー
 	div.thumbnail: img(src={ file.url + '?thumbnail&size=128' }, alt='')
 	p.name
 		span { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }
@@ -20,8 +26,18 @@ style.
 	&:hover
 		background rgba(0, 0, 0, 0.05)
 
+		> .label
+			&:before
+			&:after
+				background #0b65a5
+
 	&:active
 		background rgba(0, 0, 0, 0.1)
+
+		> .label
+			&:before
+			&:after
+				background #0b588c
 
 	&[data-is-selected]
 		background $theme-color
@@ -31,6 +47,11 @@ style.
 
 		&:active
 			background darken($theme-color, 10%)
+
+		> .label
+			&:before
+			&:after
+				display none
 
 		> .name
 			color $theme-color-foreground
@@ -46,6 +67,52 @@ style.
 			left -4px
 			border 2px dashed rgba($theme-color, 0.3)
 			border-radius 4px
+
+	> .label
+		position absolute
+		top 0
+		left 0
+		pointer-events none
+
+		&:before
+			content ""
+			display block
+			position absolute
+			z-index 1
+			top 0
+			left 57px
+			width 28px
+			height 8px
+			background #0c7ac9
+
+		&:after
+			content ""
+			display block
+			position absolute
+			z-index 1
+			top 57px
+			left 0
+			width 8px
+			height 28px
+			background #0c7ac9
+
+		> img
+			position absolute
+			z-index 2
+			top 0
+			left 0
+
+		> p
+			position absolute
+			z-index 3
+			top 19px
+			left -28px
+			width 120px
+			margin 0
+			text-align center
+			line-height 28px
+			color #fff
+			transform rotate(-45deg)
 
 	> .thumbnail
 		position relative
