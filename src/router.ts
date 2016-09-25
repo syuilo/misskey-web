@@ -6,11 +6,9 @@ import * as express from 'express';
 
 import signin from './core/signin';
 import config from './config';
-import api from './core/api';
 
 const subdomainPrefix = '__';
 
-const aboutDomain = `/${subdomainPrefix}/about`;
 const mobileDomain = `/${subdomainPrefix}/mobile`;
 const signupDomain = `/${subdomainPrefix}/signup`;
 const signinDomain = `/${subdomainPrefix}/signin`;
