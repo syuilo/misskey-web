@@ -75,6 +75,11 @@ export default async function(): Promise<void> {
 			type: 'input',
 			name: 'core_url',
 			message: 'Core URL:'
+		},
+		{
+			type: 'input',
+			name: 'proxy_url',
+			message: 'Proxy URL:'
 		}
 	]);
 
@@ -97,6 +102,9 @@ export default async function(): Promise<void> {
 			host: as.core_host,
 			port: parseInt(as.core_port, 10),
 			www: as.core_url
+		},
+		proxy: {
+			url: as.proxy_url
 		}
 	};
 

@@ -54,7 +54,6 @@ router.get(`${signoutDomain}/`, (req, res) => {
  * API handlers
  */
 router.post('/_/api/url', require('./api/url').default);
-router.get('/_/proxy/:url(*)', require('./api/proxy').default);
 router.get('/_/api/rss-proxy/:url(*)', require('./api/rss-proxy').default);
 
 router.get('*', (req, res) => {

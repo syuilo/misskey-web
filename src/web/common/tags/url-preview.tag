@@ -97,4 +97,4 @@ script.
 		if (url.substr 0 4) == \data
 			return url
 
-		CONFIG.url + '/_/proxy/' + url
+		CONFIG.proxy.url + '/' + url

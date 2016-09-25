@@ -18,4 +18,7 @@ export interface IConfig {
 		port: number;
 		www: string;
 	};
+	proxy: {
+		url: string;
+	};
 }

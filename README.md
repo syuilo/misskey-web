@@ -45,6 +45,9 @@ core:
   port: 616
   www: "https://api.misskey.xyz"
 
+proxy:
+  url: "https://proxy.himasaku.net"
+
 # SEE: https://www.google.com/recaptcha/intro/index.html
 recaptcha:
   siteKey: hima
