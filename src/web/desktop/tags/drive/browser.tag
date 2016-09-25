@@ -662,8 +662,8 @@ script.
 
 	function contains(parent, child)
 		node = child.parent-node
-		while (node != null)
-			if (node == parent)
+		while node?
+			if node == parent
 				return true
 			node = node.parent-node
 		return false
