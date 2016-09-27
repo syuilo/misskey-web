@@ -89,7 +89,7 @@ app.use(useragent.express());
 /**
  * Initialize requests
  */
-app.use(async (req, res, next): Promise<any> => {
+app.use((req, res, next) => {
 	res.header('X-Frame-Options', 'DENY');
 	const i = req.cookies['i'];
 	res.locals.signin = i !== undefined;
