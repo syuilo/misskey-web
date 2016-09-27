@@ -204,7 +204,7 @@ gulp.task('build:scripts', done => {
 						} else if (line.replace(/\t/g, '')[0] === '|') {
 							return line;
 						} else {
-							while (line.match(/[^\s]@[a-z-]+/) !== null) {
+							while (line.match(/[^\s']@[a-z-]+/) !== null) {
 								const match = line.match(/@[a-z-]+/);
 								let name = match[0];
 								if (line[line.indexOf(name) + name.length] === '(') {
