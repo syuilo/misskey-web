@@ -5,7 +5,7 @@ mk-user-recommendation-home-widget
 	button(onclick={ refresh }, title='他を見る'): i.fa.fa-refresh
 	div.user(if={ users.length != 0 }, each={ _user in users })
 		a.avatar-anchor(href= config.url + '/' + { _user.username })
-			img.avatar(src={ _user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-card={ _user.username })
+			img.avatar(src={ _user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-preview={ _user.id })
 		div.body
 			p.name { _user.name }
 			p.username @{ _user.username }
@@ -109,6 +109,8 @@ style.
 			margin-right 4px
 
 script.
+	@mixin \user-preview
+
 	@users = null
 	@loading = true
 

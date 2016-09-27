@@ -3,9 +3,9 @@ mk-following-setuper
 	div.users(if={ users.length > 0 })
 		div.user(if={ users.length != 0 }, each={ _user in users })
 			a.avatar-anchor(href= config.url + '/' + { _user.username })
-				img.avatar(src={ _user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-card={ _user.username })
+				img.avatar(src={ _user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-preview={ _user.id })
 			div.body
-				p.name { _user.name }
+				a.name(href={ CONFIG.url + '/' + _user.username }, target='_blank', data-user-preview={ _user.id }) { _user.name }
 				p.username @{ _user.username }
 			mk-follow-button(user={ _user })
 	p.empty(if={ users.length == 0 })
@@ -125,6 +125,8 @@ style.
 			padding 14px
 
 script.
+	@mixin \user-preview
+
 	@users = null
 	@loading = true
 

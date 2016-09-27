@@ -4,7 +4,7 @@ mk-post-preview(title={ title })
 
 	article
 		a.avatar-anchor(href= config.url + '/' + { post.user.username })
-			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-card={ post.user.username })
+			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ post.user.id })
 		div.main
 			header
 				div.left
@@ -20,6 +20,8 @@ mk-post-preview(title={ title })
 					| { post.text }
 
 script.
+	@mixin \user-preview
+
 	@title = 'a'
 	@post = @opts.post
 

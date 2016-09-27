@@ -4,7 +4,7 @@ mk-notifications
 			div.notification(class={ notification.type })
 				mk-time(time={ notification.created_at })
 				div.main(if={ notification.type == 'like' })
-					a.avatar-anchor
+					a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id })
 						img.avatar(src={ notification.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
 					div.text
 						p
@@ -12,7 +12,7 @@ mk-notifications
 							a(href= config.url + '/' + { notification.user.username }) { notification.user.name }
 						a.post-preview { get-post-summary(notification.post) }
 				div.main(if={ notification.type == 'repost' })
-					a.avatar-anchor
+					a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id })
 						img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
 					div.text
 						p
@@ -20,7 +20,7 @@ mk-notifications
 							a(href= config.url + '/' + { notification.post.user.username }) { notification.post.user.name }
 						a.post-preview { get-post-summary(notification.post.repost) }
 				div.main(if={ notification.type == 'follow' })
-					a.avatar-anchor
+					a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id })
 						img.avatar(src={ notification.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
 					div.text
 						p
@@ -135,6 +135,8 @@ style.
 			margin-right 4px
 
 script.
+	@mixin \user-preview
+
 	@mixin \stream
 	@mixin \get-post-summary
 

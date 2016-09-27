@@ -5,18 +5,18 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 
 	div.repost(if={ is-repost })
 		p
-			a.avatar-anchor(href= config.url + '/' + { post.user.username }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar', data-user-card={ post.user.username })
+			a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user.id }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar')
 			i.fa.fa-retweet
-			a.name(href= config.url + '/' + { post.user.username }) { post.user.name }
+			a.name(href={ CONFIG.url + '/' + post.user.username }) { post.user.name }
 			| がRepost
 
 	article
-		a.avatar-anchor(href= config.url + '/' + { p.user.username })
-			img.avatar(src={ p.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ '@' + p.user.username })
+		a.avatar-anchor(href={ CONFIG.url + '/' + p.user.username })
+			img.avatar(src={ p.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ p.user.id })
 		div.main
 			header
 				div.left
-					a.name(href= config.url + '/' + { p.user.username })
+					a.name(href={ CONFIG.url + '/' + p.user.username }, data-user-preview={ p.user.id })
 						| { p.user.name }
 					span.username
 						| @{ p.user.username }

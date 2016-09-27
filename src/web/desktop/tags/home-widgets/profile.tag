@@ -1,7 +1,7 @@
 mk-profile-home-widget
 	div.banner(style={ I.banner_url ? 'background-image: url(' + I.banner_url + '?thumbnail&size=256)' : '' })
 	a.avatar-anchor(href= config.url + '/' + { I.username })
-		img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-card={ I.username })
+		img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ I.id })
 	a.name(href= config.url + '/' + { I.username }) { I.name }
 	p.username @{ I.username }
 
@@ -38,3 +38,6 @@ style.
 		display block
 		margin 4px 0 8px 92px
 		color #999
+
+script.
+	@mixin \user-preview
