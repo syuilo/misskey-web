@@ -66,10 +66,10 @@ script.
 	@initializing = true
 
 	@user = null
-	@userp = @opts.user
+	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
 
 	@on \mount ~>
-		@userp.then (user) ~>
+		@user-promise.then (user) ~>
 			@user = user
 			@update!
 			api \users/posts do

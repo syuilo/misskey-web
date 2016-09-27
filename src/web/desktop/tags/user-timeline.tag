@@ -38,7 +38,7 @@ script.
 	@mixin \get-post-summary
 
 	@user = null
-	@userp = @opts.user
+	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
 	@is-loading = true
 	@is-empty = false
 	@more-loading = false
@@ -52,7 +52,7 @@ script.
 		document.add-event-listener \keydown @on-document-keydown
 		window.add-event-listener \scroll @on-scroll
 
-		@userp.then (user) ~>
+		@user-promise.then (user) ~>
 			@user = user
 			@update!
 

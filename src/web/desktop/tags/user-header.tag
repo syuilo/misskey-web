@@ -135,14 +135,14 @@ script.
 	@mixin \update-banner
 
 	@user = null
-	@userp = @opts.user
+	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
 
 	@on \mount ~>
 		window.add-event-listener \load @scroll
 		window.add-event-listener \scroll @scroll
 		window.add-event-listener \resize @scroll
 
-		@userp.then (user) ~>
+		@user-promise.then (user) ~>
 			@user = user
 			@update!
 
