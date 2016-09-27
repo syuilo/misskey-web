@@ -9,6 +9,7 @@ mk-user-preview
 style.
 	display block
 	position absolute
+	z-index 2048
 	width 250px
 	background #fff
 	background-clip content-box
