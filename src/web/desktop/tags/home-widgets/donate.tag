@@ -7,7 +7,7 @@ mk-donate-home-widget
 			| Misskeyの運営にはドメイン、サーバー等のコストが掛かります。
 			| Misskeyは広告を掲載したりしないため、 収入を皆様からの寄付に頼っています。
 			| もしご興味があれば、
-			a(href='/syuilo') @syuilo
+			a(href='/syuilo', data-user-preview='@syuilo') @syuilo
 			| までご連絡ください。ご協力ありがとうございます。
 
 style.
@@ -33,3 +33,6 @@ style.
 			margin 0
 			font-size 0.8em
 			color #999
+
+script.
+	@mixin \user-preview

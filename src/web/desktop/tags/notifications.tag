@@ -9,7 +9,7 @@ mk-notifications
 					div.text
 						p
 							i.fa.fa-thumbs-o-up
-							a(href= config.url + '/' + { notification.user.username }) { notification.user.name }
+							a(href= config.url + '/' + { notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
 						a.post-preview { get-post-summary(notification.post) }
 				div.main(if={ notification.type == 'repost' })
 					a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id })
@@ -17,7 +17,7 @@ mk-notifications
 					div.text
 						p
 							i.fa.fa-retweet
-							a(href= config.url + '/' + { notification.post.user.username }) { notification.post.user.name }
+							a(href= config.url + '/' + { notification.post.user.username }, data-user-preview={ notification.user.id }) { notification.post.user.name }
 						a.post-preview { get-post-summary(notification.post.repost) }
 				div.main(if={ notification.type == 'follow' })
 					a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id })
@@ -25,7 +25,7 @@ mk-notifications
 					div.text
 						p
 							i.fa.fa-user-plus
-							a(href= config.url + '/' + { notification.user.username }) { notification.user.name }
+							a(href= config.url + '/' + { notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
 	p.empty(if={ notifications.length == 0 && !loading })
 		| ありません！
 	p.loading(if={ loading })
