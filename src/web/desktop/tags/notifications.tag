@@ -47,11 +47,6 @@ style.
 			&:last-child
 				border-bottom none
 
-			&:after
-				content ""
-				display block
-				clear both
-
 			> mk-time
 				display inline
 				position absolute
@@ -63,10 +58,17 @@ style.
 
 			> .main
 				word-wrap break-word
-		
+
+			&:after
+				content ""
+				display block
+				clear both
+
 			.avatar-anchor
+				display block
+				float left
+
 				img
-					float left
 					min-width 36px
 					min-height 36px
 					max-width 36px
