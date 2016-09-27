@@ -33,6 +33,8 @@ function attach el
 		, 500ms
 
 	@on \unmount ~>
+		clear-timeout show-timer
+		clear-timeout hide-timer
 		close!
 
 	function show
