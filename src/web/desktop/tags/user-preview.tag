@@ -5,12 +5,23 @@ mk-user-preview
 		p.name { user.name }
 		p.username @{ user.username }
 	div.bio { user.bio }
+	div.status
+		div
+			p 投稿
+			a { user.posts_count }
+		div
+			p フォロー
+			a { user.following_count }
+		div
+			p フォロワー
+			a { user.followers_count }
 
 style.
 	display block
 	position absolute
 	z-index 2048
 	width 250px
+	font-family 'Meiryo', 'メイリオ', sans-serif
 	background #fff
 	background-clip content-box
 	border solid 1px rgba(0, 0, 0, 0.1)
@@ -26,7 +37,7 @@ style.
 	> .avatar
 		display block
 		position absolute
-		top 54px
+		top 62px
 		left 14px
 
 		> img
@@ -40,24 +51,46 @@ style.
 	> .title
 		display block
 		padding 8px 0 8px 86px
-		color #656565
 
 		> .name
 			display block
 			margin 0
 			font-weight bold
 			line-height 16px
+			color #656565
 
 		> .username
 			display block
 			margin 0
 			line-height 16px
-			opacity 0.8
+			font-size 0.8em
+			color #999
 
 	> .bio
 		padding 0 16px
 		font-size 0.7em
 		color #555
+
+	> .status
+		padding 8px 16px
+
+		> div
+			display inline-block
+			width 33%
+
+			> p
+				margin 0
+				font-size 0.7em
+				color #aaa
+
+			> a
+				font-size 1em
+				color $theme-color
+
+	> mk-follow-button
+		position absolute
+		top 92px
+		right 8px
 
 script.
 	@q = @opts.user
@@ -70,3 +103,8 @@ script.
 		.then (user) ~>
 			@user = user
 			@update!
+
+			if SIGNIN and user.id != I.id
+				e = @root.append-child document.create-element \mk-follow-button
+				riot.mount e, do
+					user: @user
