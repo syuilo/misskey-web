@@ -7,7 +7,7 @@ riot.mixin \user-preview do
 	init: ->
 		@on \updated ~>
 			elems = @root.query-selector-all '[data-user-preview]:not([data-user-preview-attached])'
-			elems.for-each attach
+			elems.for-each attach.bind @
 
 function attach el
 	el.set-attribute \data-user-preview-attached true
@@ -31,6 +31,9 @@ function attach el
 		hide-timer := set-timeout ~>
 			close!
 		, 500ms
+
+	@on \unmount ~>
+		close!
 
 	function show
 		preview = document.create-element \mk-user-preview
