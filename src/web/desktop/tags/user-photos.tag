@@ -65,17 +65,21 @@ script.
 	@images = []
 	@initializing = true
 
-	@user = @opts.user
+	@user = null
+	@userp = @opts.user
 
 	@on \mount ~>
-		api \users/posts do
-			user: @user.id
-			with_images: true
-			limit: 9posts
-		.then (posts) ~>
-			@initializing = false
-			posts.for-each (post) ~>
-				post.images.for-each (image) ~>
-					if @images.length < 9
-						@images.push image
+		@userp.then (user) ~>
+			@user = user
 			@update!
+			api \users/posts do
+				user: @user.id
+				with_images: true
+				limit: 9posts
+			.then (posts) ~>
+				@initializing = false
+				posts.for-each (post) ~>
+					post.images.for-each (image) ~>
+						if @images.length < 9
+							@images.push image
+				@update!

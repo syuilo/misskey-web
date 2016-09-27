@@ -1,9 +1,13 @@
 mk-user
 	div.user(if={ !fetching })
-		header@header
+		header
+			mk-user-header(user={ user-promise })
 		div.body
-			div.side: div.body@side
-			main: div.body@main
+			div.side: div.body
+				mk-user-profile(user={ user-promise })
+				mk-user-photos(user={ user-promise })
+			main: div.body
+				mk-user-timeline(user={ user-promise }, event={ tl-event })
 
 style.
 	display block
@@ -68,39 +72,17 @@ style.
 script.
 	@event = @opts.event
 	@username = @opts.user
-	@user = null
 	@fetching = true
 	@tl-event = riot.observable!
 
-	@on \mount ~>
-
+	@user-promise = new Promise (resolve, reject) ~>
 		api \users/show do
 			username: @username
 		.then (user) ~>
-			@user = user
 			@fetching = false
-			@event.trigger \user-fetched
-
-			e = @header.append-child document.create-element \mk-user-header
-			riot.mount e, do
-				user: @user
-
-			e = @side.append-child document.create-element \mk-user-profile
-			riot.mount e, do
-				user: @user
-
-			e = @side.append-child document.create-element \mk-user-photos
-			riot.mount e, do
-				user: @user
-
-			e = @main.append-child document.create-element \mk-user-timeline
-			riot.mount e, do
-				user: @user
-				event: @tl-event
-
 			@update!
-		.catch (err) ~>
-			console.error err
+			@event.trigger \user-fetched
+			resolve user
 
 	@tl-event.on \loaded ~>
 		@event.trigger \loaded

@@ -37,7 +37,8 @@ style.
 script.
 	@mixin \get-post-summary
 
-	@user = @opts.user
+	@user = null
+	@userp = @opts.user
 	@is-loading = true
 	@is-empty = false
 	@more-loading = false
@@ -51,8 +52,12 @@ script.
 		document.add-event-listener \keydown @on-document-keydown
 		window.add-event-listener \scroll @on-scroll
 
-		@load ~>
-			@event.trigger \loaded
+		@userp.then (user) ~>
+			@user = user
+			@update!
+
+			@load ~>
+				@event.trigger \loaded
 
 	@on \unmount ~>
 		document.remove-event-listener \visibilitychange @window-on-visibilitychange

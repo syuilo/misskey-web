@@ -134,12 +134,17 @@ style.
 script.
 	@mixin \update-banner
 
-	@user = @opts.user
+	@user = null
+	@userp = @opts.user
 
 	@on \mount ~>
 		window.add-event-listener \load @scroll
 		window.add-event-listener \scroll @scroll
 		window.add-event-listener \resize @scroll
+
+		@userp.then (user) ~>
+			@user = user
+			@update!
 
 	@on \unmount ~>
 		window.remove-event-listener \load @scroll

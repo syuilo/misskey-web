@@ -96,22 +96,17 @@ style.
 script.
 	@mixin \stream
 
-	@user = @opts.user
+	@user = null
+	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
 	@init = false
 	@wait = false
 
 	@on \mount ~>
-		@stream.on \follow @on-stream-follow
-		@stream.on \unfollow @on-stream-unfollow
-
-		if !@user.is_following?
-			@init = true
-			api \users/show do
-				user: @user.id
-			.then (user) ~>
-				@user = user
-				@init = false
-				@update!
+		@user-promise.then (user) ~>
+			@user = user
+			@update!
+			@stream.on \follow @on-stream-follow
+			@stream.on \unfollow @on-stream-unfollow
 
 	@on \unmount ~>
 		@stream.off \follow @on-stream-follow

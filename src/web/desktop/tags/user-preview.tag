@@ -15,6 +15,7 @@ mk-user-preview
 		div
 			p フォロワー
 			a { user.followers_count }
+	mk-follow-button(if={ SIGNIN && user.id != I.id }, user={ user-promise })
 
 style.
 	display block
@@ -95,19 +96,17 @@ style.
 script.
 	@q = @opts.user
 	@user = null
-
-	@on \mount ~>
+	@user-promise = new Promise (resolve, reject) ~>
 		api \users/show do
 			id: if @q.0 == \@ then undefined else @q
 			username: if @q.0 == \@ then @q.substr 1 else undefined
 		.then (user) ~>
+			resolve user
+
+	@on \mount ~>
+		@user-promise.then (user) ~>
 			@user = user
 			@update!
-
-			if SIGNIN and user.id != I.id
-				e = @root.append-child document.create-element \mk-follow-button
-				riot.mount e, do
-					user: @user
 
 		Velocity @root, {
 			opacity: 0

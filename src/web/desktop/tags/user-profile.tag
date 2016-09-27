@@ -1,6 +1,6 @@
 mk-user-profile
 	div.friend-form(if={ SIGNIN && I.id != user.id })
-		mk-big-follow-button(user={ user })
+		mk-big-follow-button(user={ user-promise })
 		p.followed(if={ user.is_followed }) フォローされています
 	div.bio(if={ user.bio != '' }) { user.bio }
 	div.friends
@@ -57,4 +57,10 @@ style.
 				margin-right 8px
 
 script.
-	@user = @opts.user
+	@user = null
+	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
+
+	@on \mount ~>
+		@user-promise.then (user) ~>
+			@user = user
+			@update!
