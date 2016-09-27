@@ -63,5 +63,5 @@ function attach el
 
 	function close
 		if tag?
-			tag.unmount!
+			tag.close!
 			tag := null

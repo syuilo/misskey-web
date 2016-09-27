@@ -108,3 +108,25 @@ script.
 				e = @root.append-child document.create-element \mk-follow-button
 				riot.mount e, do
 					user: @user
+
+		Velocity @root, {
+			opacity: 0
+			'margin-top': \-8px
+		} 0ms
+		Velocity @root, {
+			opacity: 1
+			'margin-top': 0
+		} {
+			duration: 200ms
+			easing: \ease-out
+		}
+
+	@close = ~>
+		Velocity @root, {
+			opacity: 0
+			'margin-top': \-8px
+		} {
+			duration: 200ms
+			easing: \ease-out
+			complete: ~> @unmount!
+		}
