@@ -36,6 +36,9 @@ function attach el
 		close!
 
 	function show
+		if tag?
+			return
+
 		preview = document.create-element \mk-user-preview
 
 		rect = el.get-bounding-client-rect!
