@@ -6,6 +6,7 @@ stream = require './stream.ls'
 route = require './router.ls'
 fuck-ad-block = require './scripts/fuck-ad-block.ls'
 dialog = require './scripts/dialog.ls'
+require './scripts/user-preview.ls'
 
 fuck-ad-block!
 
