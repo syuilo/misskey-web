@@ -39,7 +39,7 @@ style.
 		display block
 		position absolute
 		top 62px
-		left 14px
+		left 13px
 
 		> img
 			display block
@@ -51,7 +51,7 @@ style.
 
 	> .title
 		display block
-		padding 8px 0 8px 86px
+		padding 8px 0 8px 85px
 
 		> .name
 			display block
