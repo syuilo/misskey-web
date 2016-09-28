@@ -12,6 +12,8 @@ style.
 	> .banner
 		height 100px
 		background-color #f5f5f5
+		background-size cover
+		background-position center
 
 	> .avatar-anchor
 		display block
