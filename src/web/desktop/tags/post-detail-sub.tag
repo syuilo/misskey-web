@@ -21,7 +21,7 @@ style.
 	display block
 	position relative
 	margin 0
-	padding 20px 36px
+	padding 20px 32px
 	font-family 'Meiryo', 'メイリオ', sans-serif
 	background #fdfdfd
 	background-clip padding-box
@@ -50,7 +50,7 @@ style.
 
 	> .main
 		float left
-		width calc(100% - 74px)
+		width calc(100% - 60px)
 
 		> header
 			margin-bottom 4px
