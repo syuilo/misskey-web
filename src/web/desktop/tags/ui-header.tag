@@ -27,6 +27,17 @@ style.
 		//background-color rgba(255, 255, 255, 0.75)
 		background #fff
 
+		&:after
+			content ""
+			display block
+			width 100%
+			height 48px
+			background-image url(/_/resources/logo.svg)
+			background-size 64px
+			background-position center
+			background-repeat no-repeat
+			filter opacity(20%) grayscale(100%) 
+
 	> .main
 		position relative
 		z-index 1024
@@ -35,12 +46,7 @@ style.
 		color $ui-controll-foreground-color
 		background-clip content-box
 		font-size 0.9rem
-
 		user-select none
-		-moz-user-select none
-		-webkit-user-select none
-		-ms-user-select none
-		cursor default
 
 		> .container
 			width 100%
