@@ -31,6 +31,9 @@ window.SIGNIN = i?
 
 window.api = api
 
+if NodeList.prototype.forEach === undefined
+	NodeList.prototype.forEach = Array.prototype.forEach
+
 load = (cb) ->
 	if window.SIGNIN
 		fetch "#{CONFIG.api.url}/i" do
