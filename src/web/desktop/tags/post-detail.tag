@@ -43,15 +43,15 @@ mk-post-detail(title={ title }, class={ repost: is-repost })
 					p Repost
 				ol.users
 					li.user(each={ reposts })
-						a.avatar-anchor(href={ CONFIG.url + '/' + user.username }, title={ user.name })
+						a.avatar-anchor(href={ CONFIG.url + '/' + user.username }, title={ user.name }, data-user-preview={ user.id })
 							img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
 			div.likes(if={ likes.length > 0 })
 				header
 					a { p.likes_count }
-					p Like
+					p いいね
 				ol.users
 					li.user(each={ likes })
-						a.avatar-anchor(href={ CONFIG.url + '/' + username }, title={ name })
+						a.avatar-anchor(href={ CONFIG.url + '/' + username }, title={ name }, data-user-preview={ id })
 							img.avatar(src={ avatar_url + '?thumbnail&size=32' }, alt='')
 
 	div.replies
