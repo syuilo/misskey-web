@@ -1,7 +1,7 @@
 mk-post-detail(title={ title }, class={ repost: is-repost })
 
 	div.reply-to(if={ p.reply_to })
-		mk-post-preview(post={ p.reply_to })
+		mk-post-detail-sub(post={ p.reply_to })
 
 	div.repost(if={ is-repost })
 		p
@@ -36,15 +36,7 @@ mk-post-detail(title={ title }, class={ repost: is-repost })
 				i.fa.fa-thumbs-o-up
 				p.count(if={ p.likes_count > 0 }) { p.likes_count }
 			button(onclick={ NotImplementedException }): i.fa.fa-ellipsis-h
-		div.likes-and-reposts
-			div.likes(if={ likes.length > 0 })
-				header
-					a { p.likes_count }
-					p Like
-				ol.users
-					li.user(each={ likes })
-						a.avatar-anchor(href={ CONFIG.url + '/' + username }, title={ name })
-							img.avatar(src={ avatar_url + '?thumbnail&size=32' }, alt='')
+		div.reposts-and-likes
 			div.reposts(if={ reposts.length > 0 })
 				header
 					a { p.repost_count }
@@ -53,6 +45,18 @@ mk-post-detail(title={ title }, class={ repost: is-repost })
 					li.user(each={ reposts })
 						a.avatar-anchor(href={ CONFIG.url + '/' + user.username }, title={ user.name })
 							img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
+			div.likes(if={ likes.length > 0 })
+				header
+					a { p.likes_count }
+					p Like
+				ol.users
+					li.user(each={ likes })
+						a.avatar-anchor(href={ CONFIG.url + '/' + username }, title={ name })
+							img.avatar(src={ avatar_url + '?thumbnail&size=32' }, alt='')
+
+	div.replies
+		virtual(each={ post in replies })
+			mk-post-detail-sub(post={ post })
 
 style.
 	display block
@@ -60,6 +64,7 @@ style.
 	margin 0
 	padding 0
 	width 640px
+	overflow hidden
 	font-family 'Meiryo', 'メイリオ', sans-serif
 	background #fff
 	background-clip padding-box
@@ -96,11 +101,7 @@ style.
 			padding-top 8px
 
 	> .reply-to
-		padding 0 16px
-		background rgba(0, 0, 0, 0.0125)
-
-		> mk-post-preview
-			background transparent
+		border-bottom 1px solid #eef0f2
 
 	> article
 		position relative
@@ -201,7 +202,7 @@ style.
 				&.liked
 					color $theme-color
 
-		> .likes-and-reposts
+		> .reposts-and-likes
 			display flex
 			justify-content center
 			padding 0
@@ -210,8 +211,8 @@ style.
 			&:empty
 				display none
 
-			> .likes
 			> .reposts
+			> .likes
 				display flex
 				flex 1 1
 				padding 0
@@ -259,11 +260,12 @@ style.
 								height 24px
 								border-radius 4px
 
-			> .likes
-				margin-right 8px
+			> .reposts + .likes
+				margin-left 16px
 
-			> .reposts
-				margin-left 8px
+	> .replies
+		> *
+			border-top 1px solid #eef0f2
 
 script.
 	@mixin \text
@@ -314,12 +316,20 @@ script.
 			@likes = likes
 			@update!
 
-		# Get posts
+		# Get reposts
 		api \posts/reposts do
 			id: @p.id
 			limit: 8
 		.then (reposts) ~>
 			@reposts = reposts
+			@update!
+
+		# Get replies
+		api \posts/replies do
+			id: @p.id
+			limit: 8
+		.then (replies) ~>
+			@replies = replies
 			@update!
 
 		@update!
