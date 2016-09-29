@@ -13,7 +13,7 @@ mk-post-preview(title={ title })
 					span.username
 						| @{ post.user.username }
 				div.right
-					a.time
+					a.time(href={ CONFIG.url + '/' + post.user.username + '/' + post.id })
 						mk-time(time={ post.created_at })
 			div.body
 				div.text

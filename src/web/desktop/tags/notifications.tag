@@ -10,7 +10,7 @@ mk-notifications
 						p
 							i.fa.fa-thumbs-o-up
 							a(href= config.url + '/' + { notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
-						a.post-preview { get-post-summary(notification.post) }
+						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 				div.main(if={ notification.type == 'repost' })
 					a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id })
 						img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
@@ -18,7 +18,7 @@ mk-notifications
 						p
 							i.fa.fa-retweet
 							a(href= config.url + '/' + { notification.post.user.username }, data-user-preview={ notification.user.id }) { notification.post.user.name }
-						a.post-preview { get-post-summary(notification.post.repost) }
+						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post.repost) }
 				div.main(if={ notification.type == 'follow' })
 					a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id })
 						img.avatar(src={ notification.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')

@@ -1,6 +1,9 @@
 mk-post-detail(title={ title }, class={ repost: is-repost })
 
-	div(if={ !fetching })
+	div.fetching(if={ fetching })
+		mk-ellipsis-icon
+
+	div.main(if={ !fetching })
 
 		div.reply-to(if={ p.reply_to })
 			mk-post-detail-sub(post={ p.reply_to })
@@ -73,7 +76,10 @@ style.
 	border solid 1px rgba(0, 0, 0, 0.1)
 	border-radius 8px
 
-	> div
+	> .fetching
+		padding 64px 0
+
+	> .main
 
 		> .repost
 			color #9dbb00
