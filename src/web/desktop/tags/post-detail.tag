@@ -5,6 +5,14 @@ mk-post-detail(title={ title }, class={ repost: is-repost })
 
 	div.main(if={ !fetching })
 
+		button.read-more(if={ p.reply_to.reply_to && context == null }, title='会話をもっと読み込む', onclick={ load-context }, disabled={ loading-context })
+			i.fa.fa-ellipsis-v(if={ !loading-context })
+			i.fa.fa-spinner.fa-pulse(if={ loading-context })
+
+		div.context
+			virtual(each={ post in context })
+				mk-post-detail-sub(post={ post })
+
 		div.reply-to(if={ p.reply_to })
 			mk-post-detail-sub(post={ p.reply_to })
 
@@ -81,6 +89,39 @@ style.
 
 	> .main
 
+		> .read-more
+			-webkit-appearance none
+			-moz-appearance none
+			appearance none
+			display block
+			box-sizing border-box
+			margin 0
+			padding 10px 0
+			width 100%
+			font-size 1em
+			text-align center
+			color #999
+			cursor pointer
+			background #fafafa
+			outline none
+			border none
+			border-bottom solid 1px #eef0f2
+			border-radius 6px 6px 0 0
+			box-shadow none
+
+			&:hover
+				background #f6f6f6
+
+			&:active
+				background #f0f0f0
+
+			&:disabled
+				color #ccc
+
+		> .context
+			> *
+				border-bottom 1px solid #eef0f2
+
 		> .repost
 			color #9dbb00
 			background linear-gradient(to bottom, #edfde2 0%, #fff 100%)
@@ -128,6 +169,8 @@ style.
 
 			> .avatar-anchor
 				display block
+				width 60px
+				height 60px
 
 				> .avatar
 					display block
@@ -282,6 +325,8 @@ script.
 	@mixin \user-preview
 
 	@fetching = true
+	@loading-context = false
+	@content = null
 	@post = null
 	@post-promise = new Promise (resolve, reject) ~>
 		api \posts/show do
@@ -374,3 +419,14 @@ script.
 			.then ~>
 				@p.is_liked = true
 				@update!
+
+	@load-context = ~>
+		@loading-context = true
+
+		# Get context
+		api \posts/context do
+			id: @p.reply_to.id
+		.then (context) ~>
+			@context = context.reverse!
+			@loading-context = false
+			@update!
