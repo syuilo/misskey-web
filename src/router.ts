@@ -52,7 +52,7 @@ router.get(`${signoutDomain}/`, (req, res) => {
  * API handlers
  */
 router.post('/_/api/url', require('./api/url').default);
-router.get('/_/api/rss-proxy/:url(*)', require('./api/rss-proxy').default);
+router.post('/_/api/rss-proxy', require('./api/rss-proxy').default);
 
 router.get('*', (req, res) => {
 	res.sendFile(`${__dirname}/web/desktop/view.html`, {

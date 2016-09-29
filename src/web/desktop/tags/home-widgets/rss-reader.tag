@@ -78,14 +78,12 @@ script.
 		clear-interval @clock
 
 	@fetch = ~>
-		url = CONFIG.url + '/_/api/rss-proxy/' + @url
-		fetch url, do
-			mode: \cors
+		api CONFIG.url + '/_/api/rss-proxy' do
+			url: @url
 		.then (feed) ~>
-			feed.json!.then (feed) ~>
-				@items = feed.rss.channel.item
-				@initializing = false
-				@update!
+			@items = feed.rss.channel.item
+			@initializing = false
+			@update!
 		.catch (err) ->
 			console.error err
 

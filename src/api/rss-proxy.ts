@@ -3,7 +3,7 @@ import * as request from 'request';
 import * as xml2json from 'xml2json';
 
 export default function (req: express.Request, res: express.Response): void {
-	const url: string = req.params.url;
+	const url: string = req.body.url;
 
 	request(url, (err, response, xml) => {
 		if (err) {
