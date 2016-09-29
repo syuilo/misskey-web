@@ -3,8 +3,13 @@ document.domain = CONFIG.host
 # ↓ iOS待ちPolyfill (SEE: http://caniuse.com/#feat=fetch)
 require 'fetch'
 
-api = require './common/scripts/api.ls'
+# ↓ Firefox, Edge待ちPolyfill
+if NodeList.prototype.forEach === undefined
+	NodeList.prototype.forEach = Array.prototype.forEach
+
+window.api = require './common/scripts/api.ls'
 window.is-promise = require './common/scripts/is-promise.ls'
+
 riot = require 'riot'
 require './common/tags/core-error.tag'
 require './common/tags/url.tag'
@@ -28,11 +33,6 @@ riot.mixin \ui-progress do
 i = ((document.cookie.match /i=([a-zA-Z0-9]+)/) || [null, null]).1
 
 window.SIGNIN = i?
-
-window.api = api
-
-if NodeList.prototype.forEach === undefined
-	NodeList.prototype.forEach = Array.prototype.forEach
 
 load = (cb) ->
 	if window.SIGNIN
