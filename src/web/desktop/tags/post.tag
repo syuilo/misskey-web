@@ -21,7 +21,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 					span.username
 						| @{ p.user.username }
 				div.right
-					a.time
+					a.time(href={ url })
 						mk-time(time={ p.created_at })
 			div.body
 				div.text@text
@@ -248,9 +248,10 @@ script.
 	@mixin \user-preview
 
 	@post = opts.post
-	@title = 'a' # TODO
 	@is-repost = @post.repost?
 	@p = if @is-repost then @post.repost else @post
+	@title = 'a' # TODO
+	@url = CONFIG.url + '/' + @p.user.username + '/' + @p.id
 
 	@reply-form = null
 	@reply-form-controller = riot.observable!

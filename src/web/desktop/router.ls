@@ -9,6 +9,7 @@ page = null
 
 route \/ index
 route \/:user user
+route \/:user/:post post
 route \* not-found
 
 # Handlers
@@ -26,6 +27,11 @@ function entrance
 function user ctx
 	document.create-element \mk-user-page
 		..set-attribute \user ctx.params.user
+		.. |> mount
+
+function post ctx
+	document.create-element \mk-post-page
+		..set-attribute \post ctx.params.post
 		.. |> mount
 
 function not-found
