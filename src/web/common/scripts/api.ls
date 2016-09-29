@@ -1,4 +1,5 @@
 riot = require 'riot'
+cache = require './cache.ls'
 
 core = riot.observable!
 
@@ -46,5 +47,35 @@ module.exports = (endpoint, data) ->
 					reject err.error
 		.then (data) ->
 			resolve data
+
+			switch endpoint
+				| \i/notifications =>
+					data.for-each (notification) ~>
+						if typeof notification.user == \object
+							cache.set \user notification.user
+				| \users/show =>
+					cache.set \user data
+				| \users/recommendation =>
+					data.for-each (user) ~>
+						cache.set \user user
+				| \posts/show =>
+					cache.set \user data.user
+					if typeof data.reply_to == \object
+						cache.set \user data.reply_to.user
+				| \posts/timeline, \users/posts =>
+					data.for-each (post) ~>
+						cache.set \user post.user
+						if typeof post.reply_to == \object
+							cache.set \user post.reply_to.user
+				| \posts/replies =>
+					data.for-each (post) ~>
+						cache.set \user post.user
+				| \posts/reposts =>
+					data.for-each (post) ~>
+						cache.set \user post.user
+				| \posts/likes =>
+					data.for-each (user) ~>
+						cache.set \user user
+
 		.catch (e) ->
 			reject e

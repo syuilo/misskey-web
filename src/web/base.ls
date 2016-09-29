@@ -17,6 +17,9 @@ require './common/tags/url-preview.tag'
 require './common/tags/ripple-string.tag'
 require './common/tags/kawaii.tag'
 
+riot.mixin \cache do
+	cache: require './common/scripts/cache.ls'
+
 riot.mixin \get-post-summary do
 	get-post-summary: require './common/scripts/get-post-summary.ls'
 

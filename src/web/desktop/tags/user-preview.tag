@@ -94,14 +94,18 @@ style.
 		right 8px
 
 script.
-	@q = @opts.user
+	@u = @opts.user
 	@user = null
-	@user-promise = new Promise (resolve, reject) ~>
-		api \users/show do
-			id: if @q.0 == \@ then undefined else @q
-			username: if @q.0 == \@ then @q.substr 1 else undefined
-		.then (user) ~>
-			resolve user
+	@user-promise =
+		if typeof @u == \string
+			new Promise (resolve, reject) ~>
+				api \users/show do
+					id: if @u.0 == \@ then undefined else @u
+					username: if @u.0 == \@ then @u.substr 1 else undefined
+				.then (user) ~>
+					resolve user
+		else
+			Promise.resolve @u
 
 	@on \mount ~>
 		@user-promise.then (user) ~>

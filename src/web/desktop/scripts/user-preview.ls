@@ -2,6 +2,7 @@
 #================================
 
 riot = require 'riot'
+cache = require '../../common/scripts/cache.ls'
 
 riot.mixin \user-preview do
 	init: ->
@@ -59,8 +60,10 @@ function attach el
 				close!
 			, 500ms
 
+		cached-user = cache.get \user user
+
 		tag := riot.mount (document.body.append-child preview), do
-			user: user
+			user: if cached-user? then cached-user else user
 		.0
 
 	function close
