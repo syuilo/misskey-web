@@ -481,19 +481,19 @@ script.
 		@new-window folder
 
 	@controller.on \create-folder ~>
-		@input-dialog do
+		name <~ @input-dialog do
 			'フォルダー作成'
 			'フォルダー名'
 			null
-			(name) ~>
-				api 'drive/folders/create' do
-					name: name
-					folder: if @folder? then @folder.id else undefined
-				.then (folder) ~>
-					@add-folder folder, true
-					@update!
-				.catch (err) ~>
-					console.error err
+
+		api 'drive/folders/create' do
+			name: name
+			folder: if @folder? then @folder.id else undefined
+		.then (folder) ~>
+			@add-folder folder, true
+			@update!
+		.catch (err) ~>
+			console.error err
 
 	@change-file-input = ~>
 		files = @file-input.files
@@ -533,28 +533,29 @@ script.
 
 		if target-folder == null
 			@go-root!
-		else
-			@loading = true
+			return
+
+		@loading = true
+		@update!
+
+		api 'drive/folders/show' do
+			folder: target-folder
+		.then (folder) ~>
+			@folder = folder
+			@hierarchy-folders = []
+
+			x = (f) ~>
+				@hierarchy-folders.unshift f
+				if f.folder?
+					x f.folder
+
+			if folder.folder?
+				x folder.folder
+
 			@update!
-
-			api 'drive/folders/show' do
-				folder: target-folder
-			.then (folder) ~>
-				@folder = folder
-				@hierarchy-folders = []
-
-				x = (f) ~>
-					@hierarchy-folders.unshift f
-					if f.folder?
-						x f.folder
-
-				if folder.folder?
-					x folder.folder
-
-				@update!
-				@load!
-			.catch (err, text-status) ->
-				console.error err
+			@load!
+		.catch (err, text-status) ->
+			console.error err
 
 	@add-folder = (folder, unshift = false) ~>
 		current = if @folder? then @folder.id else null
