@@ -3,7 +3,6 @@ mk-post-page
 
 style.
 	display block
-	background #fbfbfb
 
 	main
 		padding 16px
