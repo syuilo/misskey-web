@@ -1,62 +1,64 @@
 mk-post-detail(title={ title }, class={ repost: is-repost })
 
-	div.reply-to(if={ p.reply_to })
-		mk-post-detail-sub(post={ p.reply_to })
+	div(if={ !fetching })
 
-	div.repost(if={ is-repost })
-		p
-			a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user.id }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar')
-			i.fa.fa-retweet
-			a.name(href={ CONFIG.url + '/' + post.user.username }) { post.user.name }
-			| がRepost
+		div.reply-to(if={ p.reply_to })
+			mk-post-detail-sub(post={ p.reply_to })
 
-	article
-		a.avatar-anchor(href={ CONFIG.url + '/' + p.user.username })
-			img.avatar(src={ p.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ p.user.id })
-		header
-			a.name(href={ CONFIG.url + '/' + p.user.username }, data-user-preview={ p.user.id })
-				| { p.user.name }
-			span.username
-				| @{ p.user.username }
-			a.time(href={ url })
-				mk-time(time={ p.created_at })
-		div.body
-			div.text@text
-			div.images(if={ p.images })
-				virtual(each={ file in p.images })
-					img(src={ file.url + '?thumbnail&size=512' }, alt={ file.name }, title={ file.name })
-		footer
-			button(onclick={ reply }, title='返信')
-				i.fa.fa-reply
-				p.count(if={ p.replies_count > 0 }) { p.replies_count }
-			button(onclick={ repost }, title='Repost')
+		div.repost(if={ is-repost })
+			p
+				a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user.id }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar')
 				i.fa.fa-retweet
-				p.count(if={ p.repost_count > 0 }) { p.repost_count }
-			button(class={ liked: p.is_liked }, onclick={ like }, title='善哉')
-				i.fa.fa-thumbs-o-up
-				p.count(if={ p.likes_count > 0 }) { p.likes_count }
-			button(onclick={ NotImplementedException }): i.fa.fa-ellipsis-h
-		div.reposts-and-likes
-			div.reposts(if={ reposts.length > 0 })
-				header
-					a { p.repost_count }
-					p Repost
-				ol.users
-					li.user(each={ reposts })
-						a.avatar-anchor(href={ CONFIG.url + '/' + user.username }, title={ user.name }, data-user-preview={ user.id })
-							img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
-			div.likes(if={ likes.length > 0 })
-				header
-					a { p.likes_count }
-					p いいね
-				ol.users
-					li.user(each={ likes })
-						a.avatar-anchor(href={ CONFIG.url + '/' + username }, title={ name }, data-user-preview={ id })
-							img.avatar(src={ avatar_url + '?thumbnail&size=32' }, alt='')
+				a.name(href={ CONFIG.url + '/' + post.user.username }) { post.user.name }
+				| がRepost
 
-	div.replies
-		virtual(each={ post in replies })
-			mk-post-detail-sub(post={ post })
+		article
+			a.avatar-anchor(href={ CONFIG.url + '/' + p.user.username })
+				img.avatar(src={ p.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ p.user.id })
+			header
+				a.name(href={ CONFIG.url + '/' + p.user.username }, data-user-preview={ p.user.id })
+					| { p.user.name }
+				span.username
+					| @{ p.user.username }
+				a.time(href={ url })
+					mk-time(time={ p.created_at })
+			div.body
+				div.text@text
+				div.images(if={ p.images })
+					virtual(each={ file in p.images })
+						img(src={ file.url + '?thumbnail&size=512' }, alt={ file.name }, title={ file.name })
+			footer
+				button(onclick={ reply }, title='返信')
+					i.fa.fa-reply
+					p.count(if={ p.replies_count > 0 }) { p.replies_count }
+				button(onclick={ repost }, title='Repost')
+					i.fa.fa-retweet
+					p.count(if={ p.repost_count > 0 }) { p.repost_count }
+				button(class={ liked: p.is_liked }, onclick={ like }, title='善哉')
+					i.fa.fa-thumbs-o-up
+					p.count(if={ p.likes_count > 0 }) { p.likes_count }
+				button(onclick={ NotImplementedException }): i.fa.fa-ellipsis-h
+			div.reposts-and-likes
+				div.reposts(if={ reposts.length > 0 })
+					header
+						a { p.repost_count }
+						p Repost
+					ol.users
+						li.user(each={ reposts })
+							a.avatar-anchor(href={ CONFIG.url + '/' + user.username }, title={ user.name }, data-user-preview={ user })
+								img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
+				div.likes(if={ likes.length > 0 })
+					header
+						a { p.likes_count }
+						p いいね
+					ol.users
+						li.user(each={ likes })
+							a.avatar-anchor(href={ CONFIG.url + '/' + username }, title={ name }, data-user-preview={ id })
+								img.avatar(src={ avatar_url + '?thumbnail&size=32' }, alt='')
+
+		div.replies
+			virtual(each={ post in replies })
+				mk-post-detail-sub(post={ post })
 
 style.
 	display block
@@ -71,206 +73,209 @@ style.
 	border solid 1px rgba(0, 0, 0, 0.1)
 	border-radius 8px
 
-	> .repost
-		color #9dbb00
-		background linear-gradient(to bottom, #edfde2 0%, #fff 100%)
+	> div
 
-		> p
-			margin 0
-			padding 16px 32px
+		> .repost
+			color #9dbb00
+			background linear-gradient(to bottom, #edfde2 0%, #fff 100%)
 
-			.avatar-anchor
-				display inline-block
+			> p
+				margin 0
+				padding 16px 32px
 
-				.avatar
-					vertical-align bottom
-					min-width 28px
-					min-height 28px
-					max-width 28px
-					max-height 28px
-					margin 0 8px 0 0
-					border-radius 6px
+				.avatar-anchor
+					display inline-block
 
-			i
-				margin-right 4px
+					.avatar
+						vertical-align bottom
+						min-width 28px
+						min-height 28px
+						max-width 28px
+						max-height 28px
+						margin 0 8px 0 0
+						border-radius 6px
 
-			.name
-				font-weight bold
+				i
+					margin-right 4px
 
-		& + article
-			padding-top 8px
+				.name
+					font-weight bold
 
-	> .reply-to
-		border-bottom 1px solid #eef0f2
+			& + article
+				padding-top 8px
 
-	> article
-		position relative
-		padding 28px 32px 18px 32px
+		> .reply-to
+			border-bottom 1px solid #eef0f2
 
-		&:after
-			content ""
-			display block
-			clear both
+		> article
+			position relative
+			padding 28px 32px 18px 32px
 
-		&:hover
-			> .main > footer > button
-				color #888
-
-		> .avatar-anchor
-			display block
-
-			> .avatar
+			&:after
+				content ""
 				display block
-				width 60px
-				height 60px
-				margin 0
-				border-radius 8px
-				vertical-align bottom
+				clear both
 
-		> header
-			position absolute
-			top 28px
-			left 108px
-			width calc(100% - 108px)
+			&:hover
+				> .main > footer > button
+					color #888
 
-			> .name
-				display inline-block
-				margin 0
-				color #777
-				font-size 1.2em
-				font-weight 700
-				text-align left
-				text-decoration none
-
-				&:hover
-					text-decoration underline
-
-			> .username
+			> .avatar-anchor
 				display block
-				text-align left
-				margin 0
-				color #ccc
 
-			> .time
-				position absolute
-				top 0
-				right 30px
-				font-size 1em
-				color #c0c0c0
-
-		> .body
-			padding 8px 0
-
-			> .text
-				cursor default
-				display block
-				margin 0
-				padding 0
-				word-wrap break-word
-				font-size 1.5em
-				color #717171
-
-				> mk-url-preview
-					margin-top 8px
-
-			> .images
-				> img
+				> .avatar
 					display block
-					max-width 100%
-
-		> footer
-			font-size 1.2em
-
-			> button
-				margin 0 28px 0 0
-				padding 8px
-				background transparent
-				border none
-				box-shadow none
-				font-size 1em
-				color #ddd
-				cursor pointer
-
-				&:hover
-					color #666
-
-				> .count
-					display inline
-					margin 0 0 0 8px
-					color #999
-				
-				&.liked
-					color $theme-color
-
-		> .reposts-and-likes
-			display flex
-			justify-content center
-			padding 0
-			margin 16px 0
-
-			&:empty
-				display none
-
-			> .reposts
-			> .likes
-				display flex
-				flex 1 1
-				padding 0
-				border-top solid 1px #F2EFEE
-
-				> header
-					flex 1 1 80px
-					box-sizing border-box
-					max-width 80px
-					padding 8px 5px 0px 10px
-
-					> a
-						display block
-						font-size 1.5em
-						line-height 1.4em
-
-					> p
-						display block
-						margin 0
-						font-size 0.7em
-						line-height 1em
-						font-weight normal
-						color #a0a2a5
-
-				> .users
-					display block
-					flex 1 1
+					width 60px
+					height 60px
 					margin 0
-					padding 10px 10px 10px 5px
-					list-style none
+					border-radius 8px
+					vertical-align bottom
 
-					> .user
+			> header
+				position absolute
+				top 28px
+				left 108px
+				width calc(100% - 108px)
+
+				> .name
+					display inline-block
+					margin 0
+					color #777
+					font-size 1.2em
+					font-weight 700
+					text-align left
+					text-decoration none
+
+					&:hover
+						text-decoration underline
+
+				> .username
+					display block
+					text-align left
+					margin 0
+					color #ccc
+
+				> .time
+					position absolute
+					top 0
+					right 32px
+					font-size 1em
+					color #c0c0c0
+
+			> .body
+				padding 8px 0
+
+				> .text
+					cursor default
+					display block
+					margin 0
+					padding 0
+					word-wrap break-word
+					font-size 1.5em
+					color #717171
+
+					> mk-url-preview
+						margin-top 8px
+
+				> .images
+					> img
 						display block
-						position relative
-						float left
-						margin 4px
-						padding 0
+						max-width 100%
 
-						> .avatar-anchor
-							display:block
+			> footer
+				font-size 1.2em
 
-							> .avatar
-								vertical-align bottom
-								width 24px
-								height 24px
-								border-radius 4px
+				> button
+					margin 0 28px 0 0
+					padding 8px
+					background transparent
+					border none
+					box-shadow none
+					font-size 1em
+					color #ddd
+					cursor pointer
 
-			> .reposts + .likes
-				margin-left 16px
+					&:hover
+						color #666
 
-	> .replies
-		> *
-			border-top 1px solid #eef0f2
+					> .count
+						display inline
+						margin 0 0 0 8px
+						color #999
+					
+					&.liked
+						color $theme-color
+
+			> .reposts-and-likes
+				display flex
+				justify-content center
+				padding 0
+				margin 16px 0
+
+				&:empty
+					display none
+
+				> .reposts
+				> .likes
+					display flex
+					flex 1 1
+					padding 0
+					border-top solid 1px #F2EFEE
+
+					> header
+						flex 1 1 80px
+						box-sizing border-box
+						max-width 80px
+						padding 8px 5px 0px 10px
+
+						> a
+							display block
+							font-size 1.5em
+							line-height 1.4em
+
+						> p
+							display block
+							margin 0
+							font-size 0.7em
+							line-height 1em
+							font-weight normal
+							color #a0a2a5
+
+					> .users
+						display block
+						flex 1 1
+						margin 0
+						padding 10px 10px 10px 5px
+						list-style none
+
+						> .user
+							display block
+							position relative
+							float left
+							margin 4px
+							padding 0
+
+							> .avatar-anchor
+								display:block
+
+								> .avatar
+									vertical-align bottom
+									width 24px
+									height 24px
+									border-radius 4px
+
+				> .reposts + .likes
+					margin-left 16px
+
+		> .replies
+			> *
+				border-top 1px solid #eef0f2
 
 script.
 	@mixin \text
 	@mixin \user-preview
 
+	@fetching = true
 	@post = null
 	@post-promise = new Promise (resolve, reject) ~>
 		api \posts/show do
