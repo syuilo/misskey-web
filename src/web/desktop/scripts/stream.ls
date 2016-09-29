@@ -1,7 +1,7 @@
 # Stream
 #================================
 
-stream = require '../stream.ls'
+stream = require '../../common/scripts/stream.ls'
 riot = require 'riot'
 
 function init
