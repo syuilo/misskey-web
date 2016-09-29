@@ -118,14 +118,16 @@ mk-locker
 
 		transform rotate(3deg) translate(0px, -4px)
 
-	.spinner
-		display block
-		position fixed
-		z-index 65537
-		top 15px
-		right 15px
+#wait
+	display block
+	position fixed
+	z-index 65537
+	top 15px
+	right 15px
 
-	.spinner-icon
+	&:before
+		content ""
+		display block
 		width 18px
 		height 18px
 		box-sizing border-box
@@ -135,9 +137,9 @@ mk-locker
 		border-left-color $theme-color
 		border-radius 50%
 
-		animation nprogress-spinner 400ms linear infinite
+		animation progress-spinner 400ms linear infinite
 
-	@keyframes nprogress-spinner
+	@keyframes progress-spinner
 		0%
 			transform rotate(0deg)
 		100%

@@ -1,6 +1,7 @@
 NProgress = require 'NProgress'
 NProgress.configure do
 	trickle-speed: 500ms
+	show-spinner: false
 
 root = document.get-elements-by-tag-name \html .0
 
