@@ -49,6 +49,8 @@ module.exports = (endpoint, data) ->
 			resolve data
 
 			switch endpoint
+				| \i =>
+					cache.set \user data
 				| \i/notifications =>
 					data.for-each (notification) ~>
 						if typeof notification.user == \object
