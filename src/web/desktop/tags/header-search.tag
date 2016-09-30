@@ -4,8 +4,7 @@ mk-header-search
 		div.result
 
 style.
-	$ui-controll-background-color = #fffbfb
-	$ui-controll-foreground-color = #ABA49E
+	$ui-controll-foreground-color = #9eaba8
 
 	> form
 		display block

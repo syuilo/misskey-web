@@ -31,8 +31,7 @@ mk-header-account
 				i.fa.fa-angle-right
 
 style.
-	$ui-controll-background-color = #fffbfb
-	$ui-controll-foreground-color = #ABA49E
+	$ui-controll-foreground-color = #9eaba8
 
 	display block
 	float left

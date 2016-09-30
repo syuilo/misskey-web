@@ -5,8 +5,7 @@ mk-header-notifications
 		mk-notifications
 
 style.
-	$ui-controll-background-color = #fffbfb
-	$ui-controll-foreground-color = #ABA49E
+	$ui-controll-foreground-color = #9eaba8
 
 	display block
 	float left
