@@ -13,8 +13,9 @@ script.
 	@on \mount ~>
 		@Progress.start!
 
-	@event.on \user-fetched ~>
+	@event.on \user-fetched (user) ~>
 		@Progress.set 0.5
+		document.title = user.name + ' | Misskey'
 
 	@event.on \loaded ~>
 		@Progress.done!

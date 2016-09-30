@@ -81,7 +81,7 @@ script.
 		.then (user) ~>
 			@fetching = false
 			@update!
-			@event.trigger \user-fetched
+			@event.trigger \user-fetched user
 			resolve user
 
 	@tl-event.on \loaded ~>
