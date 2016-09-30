@@ -18,7 +18,6 @@ mk-home
 
 style.
 	display block
-	background #fdfdfd
 
 	> .main
 		display -webkit-flex
@@ -77,9 +76,6 @@ style.
 
 			> .body
 				padding 16px 16px 16px 0
-
-style(theme='dark').
-	background #100f0f
 
 script.
 	@event = @opts.event
