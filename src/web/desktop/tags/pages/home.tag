@@ -6,13 +6,30 @@ style.
 
 script.
 	@mixin \ui-progress
+	@mixin \stream
+	@mixin \get-post-summary
 
 	@event = riot.observable!
+	@unread-count = 0
 
 	@on \mount ~>
 		@Progress.start!
+		@stream.on \post @on-stream-post
+		document.add-event-listener \visibilitychange @window-on-visibilitychange, false
 
-		document.title = 'Misskey'
+	@on \unmount ~>
+		@stream.off \post @on-stream-post
+		document.remove-event-listener \visibilitychange @window-on-visibilitychange
 
 	@event.on \loaded ~>
 		@Progress.done!
+
+	@on-stream-post = (post) ~>
+		if document.hidden
+			@unread-count++
+			document.title = '(' + @unread-count + ') ' + @get-post-summary post
+
+	@window-on-visibilitychange = ~>
+		if !document.hidden
+			@unread-count = 0
+			document.title = 'Misskey'

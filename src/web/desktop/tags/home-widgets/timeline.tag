@@ -37,13 +37,11 @@ style.
 
 script.
 	@mixin \stream
-	@mixin \get-post-summary
 
 	@is-loading = true
 	@is-empty = false
 	@more-loading = false
 	@no-following = I.following_count == 0
-	@unread-count = 0
 	@controller = riot.observable!
 	@event = @opts.event
 	@timeline = @tags[\mk-timeline]
@@ -53,7 +51,6 @@ script.
 		@stream.on \follow @on-stream-follow
 		@stream.on \unfollow @on-stream-unfollow
 
-		document.add-event-listener \visibilitychange @window-on-visibilitychange, false
 		document.add-event-listener \keydown @on-document-keydown
 
 		window.add-event-listener \scroll @on-scroll
@@ -66,7 +63,6 @@ script.
 		@stream.off \follow @on-stream-follow
 		@stream.off \unfollow @on-stream-unfollow
 
-		document.remove-event-listener \visibilitychange @window-on-visibilitychange
 		document.remove-event-listener \keydown @on-document-keydown
 		window.remove-event-listener \scroll @on-scroll
 
@@ -107,20 +103,11 @@ script.
 		@update!
 		@controller.trigger \add-post post
 
-		if document.hidden
-			@unread-count++
-			document.title = '(' + @unread-count + ') ' + @get-post-summary post
-
 	@on-stream-follow = ~>
 		@load!
 
 	@on-stream-unfollow = ~>
 		@load!
-
-	@window-on-visibilitychange = ~>
-		if !document.hidden
-			@unread-count = 0
-			document.title = 'Misskey'
 
 	@on-scroll = ~>
 		current = window.scroll-y + window.inner-height
