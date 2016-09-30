@@ -56,7 +56,7 @@ mk-post-detail(title={ title }, class={ repost: is-repost })
 						p Repost
 					ol.users
 						li.user(each={ reposts })
-							a.avatar-anchor(href={ CONFIG.url + '/' + user.username }, title={ user.name }, data-user-preview={ user })
+							a.avatar-anchor(href={ CONFIG.url + '/' + user.username }, title={ user.name }, data-user-preview={ user.id })
 								img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
 				div.likes(if={ likes.length > 0 })
 					header
