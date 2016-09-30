@@ -13,6 +13,7 @@ script.
 	@unread-count = 0
 
 	@on \mount ~>
+		document.title = 'Misskey'
 		@Progress.start!
 		@stream.on \post @on-stream-post
 		document.add-event-listener \visibilitychange @window-on-visibilitychange, false
