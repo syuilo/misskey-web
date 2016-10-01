@@ -218,3 +218,11 @@ script.
 				cache: @user.data.cache
 		.then ~>
 			window.I = @user
+
+	@update-debug = ~>
+		@user.data.debug = !@user.data.debug
+		api \i/appdata/set do
+			data: JSON.stringify do
+				debug: @user.data.debug
+		.then ~>
+			window.I = @user
