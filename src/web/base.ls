@@ -10,6 +10,7 @@ if NodeList.prototype.forEach === undefined
 window.api-stack = 0
 window.api = require './common/scripts/api.ls'
 window.is-promise = require './common/scripts/is-promise.ls'
+window.log = require './common/scripts/log.ls'
 
 riot = require 'riot'
 require './common/tags/core-error.tag'
