@@ -11,9 +11,9 @@ module.exports = function(tokens) {
 			case 'link':
 				return '<mk-url href="' + content + '" target="_blank"></mk-url>';
 			case 'mention':
-				return '<a href="' + CONFIG.url + '/' + content + '" target="_blank" data-user-preview="@' + content + '">@' + content + '</a>';
+				return '<a href="' + CONFIG.url + '/' + content + '" target="_blank" data-user-preview="' + content + '">' + content + '</a>';
 			case 'hashtag': // TODO
-				return '<a>#' + content + '</a>';
+				return '<a>' + content + '</a>';
 		}
 	}).join('');
 }
