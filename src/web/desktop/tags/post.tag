@@ -1,7 +1,7 @@
 mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 
 	div.reply-to(if={ p.reply_to })
-		mk-post-preview(post={ p.reply_to })
+		mk-post-sub(post={ p.reply_to })
 
 	div.repost(if={ is-repost })
 		p
@@ -24,10 +24,11 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 					a.time(href={ url })
 						mk-time(time={ p.created_at })
 			div.body
-				div.text@text
+				div.text@text(class={ quote: p.repost != null })
 				div.images(if={ p.images })
 					virtual(each={ file in p.images })
 						img(src={ file.url + '?thumbnail&size=512' }, alt={ file.name }, title={ file.name })
+				mk-post-preview.repost(if={ p.repost }, post={ p.repost })
 			footer
 				button(onclick={ reply }, title='返信')
 					i.fa.fa-reply
@@ -180,10 +181,19 @@ style.
 					> mk-url-preview
 						margin-top 8px
 
+					&.quote
+						&:after
+							content "RP:"
+							margin-left 4px
+							color #8da7af
+
 				> .images
 					> img
 						display block
 						max-width 100%
+				
+				> .repost
+					margin 12px 0
 
 			> footer
 				> button
@@ -248,7 +258,7 @@ script.
 	@mixin \user-preview
 
 	@post = opts.post
-	@is-repost = @post.repost?
+	@is-repost = @post.repost? and !@post.text?
 	@p = if @is-repost then @post.repost else @post
 	@title = 'a' # TODO
 	@url = CONFIG.url + '/' + @p.user.username + '/' + @p.id

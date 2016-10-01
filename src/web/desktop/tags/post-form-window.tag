@@ -33,6 +33,11 @@ style.
 				&:after
 					content ')'
 
+		[data-yield='content']
+			> .ref
+				> mk-post-preview
+					margin 16px 22px
+
 script.
 	@is-open = false
 	@wait = false

@@ -1,18 +1,20 @@
-mk-post-preview(title={ title })
+mk-post-sub(title={ title })
 	div.reply-to(if={ post.reply_to })
 		button 会話を見る
 
 	article
-		a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username })
+		a.avatar-anchor(href= config.url + '/' + { post.user.username })
 			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ post.user.id })
 		div.main
 			header
-				a.name(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user.id })
-					| { post.user.name }
-				span.username
-					| @{ post.user.username }
-				a.time(href={ CONFIG.url + '/' + post.user.username + '/' + post.id })
-					mk-time(time={ post.created_at })
+				div.left
+					a.name(href= config.url + '/' + { post.user.username })
+						| { post.user.name }
+					span.username
+						| @{ post.user.username }
+				div.right
+					a.time(href={ CONFIG.url + '/' + post.user.username + '/' + post.id })
+						mk-time(time={ post.created_at })
 			div.body
 				div.text
 					| { post.text }
@@ -30,11 +32,10 @@ style.
 	padding 0
 	font-family 'Meiryo', 'メイリオ', 'sans-serif'
 	font-size 0.9em
-	background #fff
-	background-clip padding-box
 
 	> article
 		position relative
+		padding 16px
 
 		&:after
 			content ""
@@ -66,27 +67,32 @@ style.
 				margin-bottom 4px
 				white-space nowrap
 
-				> .name
-					display inline
-					margin 0
-					padding 0
-					color #736060
-					font-size 1em
-					font-weight 700
-					text-align left
-					text-decoration none
+				> .left
+					> .name
+						display inline
+						margin 0
+						padding 0
+						color #607073
+						font-size 1em
+						font-weight 700
+						text-align left
+						text-decoration none
 
-					&:hover
-						text-decoration underline
+						&:hover
+							text-decoration underline
 
-				> .username
-					text-align left
-					margin 0 0 0 8px
-					color #e2d1c1
+					> .username
+						text-align left
+						margin 0 0 0 8px
+						color #d1d8da
 
-				> .time
-					margin-left 8px
-					color #b7a793
+				> .right
+					position absolute
+					top 16px
+					right 16px
+
+					> .time
+						color #b2b8bb
 
 			> .body
 
