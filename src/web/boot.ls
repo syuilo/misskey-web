@@ -3,6 +3,8 @@
 #================================
 
 riot = require 'riot'
+api = require './common/scripts/api.ls'
+generate-default-userdata = require './common/scripts/generate-default-userdata.ls'
 
 i = window._I
 
@@ -20,11 +22,16 @@ boot = (cb) ~>
 		if res.status != 200
 			alert 'ユーザー認証に失敗しました。ログアウトします。'
 			location.href = CONFIG.urls.signout
+			return
+
+		_i <~ res.json!.then
+		_i._web = i
+		window.I = _i
+
+		if I.data?
+			done!
 		else
-			res.json!.then (_i) ~>
-				_i._web = i
-				window.I = _i
-				done!
+			init!
 	.catch (e) ~>
 		console.error e
 		info = document.create-element \mk-core-error
@@ -41,5 +48,14 @@ boot = (cb) ~>
 			.. |> document.body.append-child
 
 		if cb? then cb!
+
+	function init
+		data = generate-default-userdata!
+
+		api \i/appdata/set do
+			value: JSON.stringify data
+		.then ~>
+			I.data = data
+			done!
 
 module.exports = boot

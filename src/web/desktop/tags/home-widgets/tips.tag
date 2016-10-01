@@ -1,4 +1,4 @@
-mk-tip-home-widget
+mk-tips-home-widget
 	p@tip
 		i.fa.fa-lightbulb-o
 		span@text

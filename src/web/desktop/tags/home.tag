@@ -1,19 +1,9 @@
 mk-home
 	div.main
-		div.widgets.side-left@left: div.body
-			mk-profile-home-widget
-			mk-calendar-home-widget
-			mk-rss-reader-home-widget
-			mk-photo-stream-home-widget
+		div.widgets.side-left@left: div.body@left-body
 		main.widgets: div.body
 			mk-timeline-home-widget(event={ tl-event })
-		div.widgets.side-right@right: div.body
-			mk-broadcast-home-widget
-			mk-notifications-home-widget
-			mk-user-recommendation-home-widget
-			mk-donate-home-widget
-			mk-nav-home-widget
-			mk-tip-home-widget
+		div.widgets.side-right@right: div.body@right-body
 	mk-detect-slow-internet-connection-notice
 
 style.
@@ -80,12 +70,31 @@ style.
 script.
 	@event = @opts.event
 
+	@home = []
 	@tl-event = riot.observable!
 
 	@on \mount ~>
 		window.add-event-listener \load @follow-sidebar
 		window.add-event-listener \scroll @follow-sidebar
 		window.add-event-listener \resize @follow-sidebar
+
+		I.data.home.for-each (widget) ~>
+			el = document.create-element \mk- + widget.name + \-home-widget
+			switch widget.place
+				| \left => @left-body.append-child el
+				| \right => @right-body.append-child el
+			@home.push (riot.mount el, do
+				id: widget.id
+				data: widget.data
+			.0)
+
+	@on \unmount ~>
+		window.remove-event-listener \load @follow-sidebar
+		window.remove-event-listener \scroll @follow-sidebar
+		window.remove-event-listener \resize @follow-sidebar
+
+		@home.for-each (widget) ~>
+			widget.unmount!
 
 	@tl-event.on \loaded ~>
 		@event.trigger \loaded
