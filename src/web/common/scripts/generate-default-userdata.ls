@@ -21,6 +21,7 @@ module.exports = ~>
 
 	data =
 		cache: true
+		debug: false
 		home: home-data
 
 	return data
