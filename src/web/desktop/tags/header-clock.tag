@@ -48,7 +48,7 @@ style.
 			cursor: default
 
 		&:hover
-			background #949289
+			background #899492
 
 			& + .content
 				visibility visible
@@ -83,4 +83,4 @@ style.
 		margin 0
 		padding 0
 		width 256px
-		background #949289
+		background #899492
