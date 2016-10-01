@@ -9,7 +9,6 @@ import * as https from 'https';
 
 // express modules
 import * as express from 'express';
-import * as useragent from 'express-useragent';
 import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
@@ -80,11 +79,6 @@ app.get('/apple-touch-icon.png', (req, res) => res.sendFile(__dirname + '/resour
  */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-/**
- * Parse user-agent
- */
-app.use(useragent.express());
 
 /**
  * Initialize requests
