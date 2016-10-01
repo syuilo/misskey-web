@@ -53,7 +53,7 @@ boot = (cb) ~>
 		data = generate-default-userdata!
 
 		api \i/appdata/set do
-			value: JSON.stringify data
+			data: JSON.stringify data
 		.then ~>
 			I.data = data
 			done!

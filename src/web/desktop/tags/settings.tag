@@ -45,14 +45,13 @@ mk-settings
 		section.web(show={ page == 'web' })
 			h1 その他
 			label.checkbox
-				input(type='checkbox')
+				input(type='checkbox', checked={ user.data.cache }, onclick={ update-cache })
 				p 読み込みを高速化する
-				p API通信時に新鮮なユーザー情報をキャッシュすることでフェッチのオーバーヘッドを無くします。
+				p API通信時に新鮮なユーザー情報をキャッシュすることでフェッチのオーバーヘッドを無くします。(実験的)
 			label.checkbox
-				input(type='checkbox')
+				input(type='checkbox', checked={ user.data.debug }, onclick={ update-debug })
 				p 開発者モード
 				p デバッグ等の開発者モードを有効にします。
-
 
 style.
 	display block
@@ -211,3 +210,11 @@ script.
 			alert \ok
 		.catch (err) ~>
 			console.error err
+
+	@update-cache = ~>
+		@user.data.cache = !@user.data.cache
+		api \i/appdata/set do
+			data: JSON.stringify do
+				cache: @user.data.cache
+		.then ~>
+			window.I = @user
