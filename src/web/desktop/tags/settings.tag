@@ -42,6 +42,18 @@ mk-settings
 				textarea@account-bio { user.bio }
 			button.style-primary(onclick={ update-account }) 保存
 
+		section.web(show={ page == 'web' })
+			h1 その他
+			label.checkbox
+				input(type='checkbox')
+				p 読み込みを高速化する
+				p API通信時に新鮮なユーザー情報をキャッシュすることでフェッチのオーバーヘッドを無くします。
+			label.checkbox
+				input(type='checkbox')
+				p 開発者モード
+				p デバッグ等の開発者モードを有効にします。
+
+
 style.
 	display block
 
@@ -90,8 +102,8 @@ style.
 		> section
 			padding 32px
 
-			& + section
-				margin-top 16px
+			//	& + section
+			//		margin-top 16px
 
 			h1
 				display block
@@ -103,6 +115,7 @@ style.
 
 			label
 				display block
+				position relative
 				margin 16px 0
 
 				&:after
@@ -114,6 +127,24 @@ style.
 					margin 0 0 8px 0
 					font-weight bold
 					color #666
+
+				&.checkbox
+					> input
+						position absolute
+						top 0
+						left 0
+
+						&:checked + p
+							color $theme-color
+
+					> p
+						width calc(100% - 32px)
+						margin 0 0 0 32px
+						font-weight bold
+
+						&:last-child
+							font-weight normal
+							color #999
 
 			&.account
 				> .id
@@ -150,6 +181,9 @@ script.
 
 	@page-account = ~>
 		@page = \account
+
+	@page-web = ~>
+		@page = \web
 
 	@page-apps = ~>
 		@page = \apps
