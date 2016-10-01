@@ -26,30 +26,30 @@ mk-settings
 			h1 アカウント
 			div.id
 				p ユーザーID:
-				code { user.id }
+				code { I.id }
 			label.avatar
 				p アバター
-				img.avatar(src={ user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+				img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 				button.style-normal(onclick={ avatar }) 画像を選択
 			label
 				p 名前
-				input@account-name(type='text', value={ user.name })
+				input@account-name(type='text', value={ I.name })
 			label
 				p 場所
-				input@account-location(type='text', value={ user.location })
+				input@account-location(type='text', value={ I.location })
 			label
 				p 自己紹介
-				textarea@account-bio { user.bio }
+				textarea@account-bio { I.bio }
 			button.style-primary(onclick={ update-account }) 保存
 
 		section.web(show={ page == 'web' })
 			h1 その他
 			label.checkbox
-				input(type='checkbox', checked={ user.data.cache }, onclick={ update-cache })
+				input(type='checkbox', checked={ I.data.cache }, onclick={ update-cache })
 				p 読み込みを高速化する
 				p API通信時に新鮮なユーザー情報をキャッシュすることでフェッチのオーバーヘッドを無くします。(実験的)
 			label.checkbox
-				input(type='checkbox', checked={ user.data.debug }, onclick={ update-debug })
+				input(type='checkbox', checked={ I.data.debug }, onclick={ update-debug })
 				p 開発者モード
 				p デバッグ等の開発者モードを有効にします。
 
@@ -172,10 +172,10 @@ style.
 						margin-left 8px
 
 script.
+	@mixin \i
 	@mixin \dialog
 	@mixin \update-avatar
 
-	@user = window.I
 	@page = \account
 
 	@page-account = ~>
@@ -198,31 +198,31 @@ script.
 
 	@avatar = ~>
 		@update-avatar (i) ~>
-			@user.avatar_url = i.avatar_url
-			@update!
+			@update-i i
 
 	@update-account = ~>
-		api 'i/update' do
+		api \i/update do
 			name: @account-name.value
 			location: @account-location.value
 			bio: @account-bio.value
 		.then (i) ~>
+			@update-i i
 			alert \ok
 		.catch (err) ~>
 			console.error err
 
 	@update-cache = ~>
-		@user.data.cache = !@user.data.cache
+		@I.data.cache = !@I.data.cache
 		api \i/appdata/set do
 			data: JSON.stringify do
-				cache: @user.data.cache
+				cache: @I.data.cache
 		.then ~>
-			window.I = @user
+			@update-i!
 
 	@update-debug = ~>
-		@user.data.debug = !@user.data.debug
+		@I.data.debug = !@I.data.debug
 		api \i/appdata/set do
 			data: JSON.stringify do
-				debug: @user.data.debug
+				debug: @I.data.debug
 		.then ~>
-			window.I = @user
+			@update-i!

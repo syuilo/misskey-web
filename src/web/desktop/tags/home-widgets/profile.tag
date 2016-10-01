@@ -42,4 +42,5 @@ style.
 		color #999
 
 script.
+	@mixin \i
 	@mixin \user-preview

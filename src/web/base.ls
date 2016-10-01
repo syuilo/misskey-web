@@ -18,6 +18,8 @@ require './common/tags/url-preview.tag'
 require './common/tags/ripple-string.tag'
 require './common/tags/kawaii.tag'
 
+require './common/scripts/i.ls'
+
 riot.mixin \cache do
 	cache: require './common/scripts/cache.ls'
 

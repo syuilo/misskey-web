@@ -173,6 +173,8 @@ style.
 						color $theme-color-foreground
 
 script.
+	@mixin \i
+
 	@is-open = false
 
 	@toggle = ~>
