@@ -70,7 +70,7 @@ style.
 					display inline
 					margin 0
 					padding 0
-					color #736060
+					color #607073
 					font-size 1em
 					font-weight 700
 					text-align left
@@ -82,11 +82,13 @@ style.
 				> .username
 					text-align left
 					margin 0 0 0 8px
-					color #e2d1c1
+					color #d1d8da
 
 				> .time
-					margin-left 8px
-					color #b7a793
+					position absolute
+					top 0
+					right 0
+					color #b2b8bb
 
 			> .body
 

@@ -185,15 +185,19 @@ style.
 						&:after
 							content "RP:"
 							margin-left 4px
-							color #8da7af
+							font-style oblique
+							color #a0bf46
 
 				> .images
 					> img
 						display block
 						max-width 100%
-				
+
 				> .repost
-					margin 12px 0
+					margin 8px 0
+					padding 16px
+					border dashed 1px #c0dac6
+					border-radius 8px
 
 			> footer
 				> button
