@@ -15,6 +15,7 @@ style.
 		> img
 			display block
 			max-height 256px
+			max-width 100%
 			margin 0
 
 		&:hover
