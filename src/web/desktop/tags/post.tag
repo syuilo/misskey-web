@@ -9,6 +9,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 			i.fa.fa-retweet
 			a.name(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user.id }) { post.user.name }
 			| がRepost
+		mk-time(time={ post.created_at })
 
 	article
 		a.avatar-anchor(href={ CONFIG.url + '/' + p.user.username })
@@ -67,22 +68,22 @@ style.
 			border-radius 4px
 
 	> .repost
+		position relative
 		color #9dbb00
 		background linear-gradient(to bottom, #edfde2 0%, #fff 100%)
 
 		> p
 			margin 0
 			padding 16px 32px
+			line-height 28px
 
 			.avatar-anchor
 				display inline-block
 
 				.avatar
 					vertical-align bottom
-					min-width 28px
-					min-height 28px
-					max-width 28px
-					max-height 28px
+					width 28px
+					height 28px
 					margin 0 8px 0 0
 					border-radius 6px
 
@@ -91,6 +92,13 @@ style.
 
 			.name
 				font-weight bold
+
+		> mk-time
+			position absolute
+			top 16px
+			right 32px
+			font-size 0.9em
+			line-height 28px
 
 		& + article
 			padding-top 8px
