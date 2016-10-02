@@ -1,6 +1,6 @@
 mk-repost-form
 	mk-post-preview(post={ opts.post })
-	div(if={ quote })
+	div.form(if={ quote })
 		textarea@text(disabled={ wait }, placeholder='この投稿を引用...')
 	a.quote(if={ !quote }, onclick={ onquote }) 引用する...
 	footer
@@ -12,40 +12,41 @@ style.
 	> mk-post-preview
 		margin 16px 22px
 
-	[name='text']
-		display block
-		box-sizing border-box
-		padding 12px
-		margin 0
-		width 100%
-		max-width 100%
-		min-width 100%
-		min-height calc(1em + 12px + 12px)
-		font-size 1em
-		color #333
-		background #fff
-		background-clip padding-box
-		outline none
-		border solid 1px rgba($theme-color, 0.1)
-		border-radius 4px
-		box-shadow none
-		transition border-color .3s ease
-		font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
+	> .form
+		[name='text']
+			display block
+			box-sizing border-box
+			padding 12px
+			margin 0
+			width 100%
+			max-width 100%
+			min-width 100%
+			min-height calc(1em + 12px + 12px)
+			font-size 1em
+			color #333
+			background #fff
+			background-clip padding-box
+			outline none
+			border solid 1px rgba($theme-color, 0.1)
+			border-radius 4px
+			box-shadow none
+			transition border-color .3s ease
+			font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
 
-		&:hover
-			border-color rgba($theme-color, 0.2)
-			transition border-color .1s ease
+			&:hover
+				border-color rgba($theme-color, 0.2)
+				transition border-color .1s ease
 
-		&:focus
-			color $theme-color
-			border-color rgba($theme-color, 0.5)
-			transition border-color 0s ease
+			&:focus
+				color $theme-color
+				border-color rgba($theme-color, 0.5)
+				transition border-color 0s ease
 
-		&:disabled
-			opacity 0.5
+			&:disabled
+				opacity 0.5
 
-		&::-webkit-input-placeholder
-			color rgba($theme-color, 0.3)
+			&::-webkit-input-placeholder
+				color rgba($theme-color, 0.3)
 
 	> .quote
 		position absolute
