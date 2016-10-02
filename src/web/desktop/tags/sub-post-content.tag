@@ -3,6 +3,10 @@ mk-sub-post-content
 		a.reply(if={ post.reply_to }): i.fa.fa-reply
 		span@text
 		a.quote(if={ post.repost != null }) RP: ...
+	details(if={ post.images })
+		summary ({ post.images.length }枚の画像)
+		virtual(each={ file in post.images })
+			img(src={ file.url + '?thumbnail&size=512' }, alt={ file.name }, title={ file.name })
 
 style.
 	display block
