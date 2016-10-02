@@ -12,9 +12,7 @@ export default (endpoint: string, params: any = {}, user: any = null, withFile: 
 		: undefined;
 
 	const options: request.Options = {
-		url: config.core.host
-			? `http://${config.core.host}:${config.core.port}/${endpoint}`
-			: `${config.core.www}/${endpoint}`,
+		url: `${config.core.url}/${endpoint}`,
 		method: 'POST'
 	};
 
