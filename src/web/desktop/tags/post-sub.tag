@@ -16,8 +16,7 @@ mk-post-sub(title={ title })
 					a.time(href={ CONFIG.url + '/' + post.user.username + '/' + post.id })
 						mk-time(time={ post.created_at })
 			div.body
-				div.text
-					| { post.text }
+				mk-sub-post-content.text(post={ post })
 
 script.
 	@mixin \user-preview
@@ -98,9 +97,7 @@ style.
 
 				> .text
 					cursor default
-					display block
 					margin 0
 					padding 0
-					word-wrap break-word
 					font-size 1.1em
 					color #717171

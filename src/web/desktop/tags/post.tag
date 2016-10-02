@@ -24,7 +24,10 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 					a.time(href={ url })
 						mk-time(time={ p.created_at })
 			div.body
-				div.text@text(class={ quote: p.repost != null })
+				div.text
+					a.reply(if={ p.reply_to }): i.fa.fa-reply
+					soan@text
+					a.quote(if={ p.repost != null }) RP:
 				div.images(if={ p.images })
 					virtual(each={ file in p.images })
 						img(src={ file.url + '?thumbnail&size=512' }, alt={ file.name }, title={ file.name })
@@ -178,15 +181,17 @@ style.
 					font-size 1.1em
 					color #717171
 
-					> mk-url-preview
+					mk-url-preview
 						margin-top 8px
 
-					&.quote
-						&:after
-							content "RP:"
-							margin-left 4px
-							font-style oblique
-							color #a0bf46
+					> .reply
+						margin-right 4px
+						color #717171
+
+					> .quote
+						margin-left 4px
+						font-style oblique
+						color #a0bf46
 
 				> .images
 					> img
@@ -261,7 +266,7 @@ script.
 	@mixin \text
 	@mixin \user-preview
 
-	@post = opts.post
+	@post = @opts.post
 	@is-repost = @post.repost? and !@post.text?
 	@p = if @is-repost then @post.repost else @post
 	@title = 'a' # TODO
