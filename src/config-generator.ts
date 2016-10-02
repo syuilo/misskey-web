@@ -62,17 +62,6 @@ export default async function(): Promise<void> {
 		},
 		{
 			type: 'input',
-			name: 'core_host',
-			message: 'Core\'s host:',
-			default: 'localhost'
-		},
-		{
-			type: 'input',
-			name: 'core_port',
-			message: 'Core\'s port:'
-		},
-		{
-			type: 'input',
 			name: 'core_url',
 			message: 'Core URL:'
 		},
@@ -99,9 +88,7 @@ export default async function(): Promise<void> {
 		},
 		core: {
 			apikey: as.api_key,
-			host: as.core_host,
-			port: parseInt(as.core_port, 10),
-			www: as.core_url
+			url: as.core_url
 		},
 		proxy: {
 			url: as.proxy_url

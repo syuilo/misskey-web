@@ -14,9 +14,7 @@ export interface IConfig {
 	};
 	core: {
 		apikey: string;
-		host: string;
-		port: number;
-		www: string;
+		url: string;
 	};
 	proxy: {
 		url: string;

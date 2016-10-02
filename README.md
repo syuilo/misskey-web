@@ -41,9 +41,7 @@ https:
 
 core:
   apikey: hoge
-  host: "192.168.179.2"
-  port: 616
-  www: "https://api.misskey.xyz"
+  url: "https://api.misskey.xyz"
 
 proxy:
   url: "https://proxy.himasaku.net"
