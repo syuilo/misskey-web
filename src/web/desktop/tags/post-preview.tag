@@ -1,7 +1,4 @@
 mk-post-preview(title={ title })
-	div.reply-to(if={ post.reply_to })
-		button 会話を見る
-
 	article
 		a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username })
 			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ post.user.id })
