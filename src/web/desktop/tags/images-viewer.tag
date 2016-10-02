@@ -36,7 +36,7 @@ script.
 			@image = @images.0
 
 	@mousemove = (e) ~>
-		rect = @img.get-bounding-client-rect!
+		rect = @view.get-bounding-client-rect!
 		mouse-x = e.client-x - rect.left
 		mouse-y = e.client-y - rect.top
 		xp = mouse-x / @view.offset-width * 100
