@@ -7,7 +7,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 		p
 			a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user.id }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar')
 			i.fa.fa-retweet
-			a.name(href={ CONFIG.url + '/' + post.user.username }) { post.user.name }
+			a.name(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user.id }) { post.user.name }
 			| がRepost
 
 	article
