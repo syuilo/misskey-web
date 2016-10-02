@@ -31,7 +31,9 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 					a.quote(if={ p.repost != null }) RP:
 				div.images(if={ p.images })
 					mk-images-viewer(images={ p.images })
-				mk-post-preview.repost(if={ p.repost }, post={ p.repost })
+				div.repost(if={ p.repost })
+					i.fa.fa-quote-right.fa-flip-horizontal
+					mk-post-preview.repost(post={ p.repost })
 			footer
 				button(onclick={ reply }, title='返信')
 					i.fa.fa-reply
@@ -206,10 +208,22 @@ style.
 						max-width 100%
 
 				> .repost
+					position relative
 					margin 8px 0
-					padding 16px
-					border dashed 1px #c0dac6
-					border-radius 8px
+
+					> i:first-child
+						position absolute
+						top -8px
+						left -8px
+						z-index 1
+						color #c0dac6
+						font-size 28px
+						background #fff
+
+					> mk-post-preview
+						padding 16px
+						border dashed 1px #c0dac6
+						border-radius 8px
 
 			> footer
 				> button
