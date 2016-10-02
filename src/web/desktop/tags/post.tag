@@ -29,8 +29,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 					soan@text
 					a.quote(if={ p.repost != null }) RP:
 				div.images(if={ p.images })
-					virtual(each={ file in p.images })
-						img(src={ file.url + '?thumbnail&size=512' }, alt={ file.name }, title={ file.name })
+					mk-images-viewer(images={ p.images })
 				mk-post-preview.repost(if={ p.repost }, post={ p.repost })
 			footer
 				button(onclick={ reply }, title='返信')

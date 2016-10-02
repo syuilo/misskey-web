@@ -5,8 +5,7 @@ mk-sub-post-content
 		a.quote(if={ post.repost != null }) RP: ...
 	details(if={ post.images })
 		summary ({ post.images.length }枚の画像)
-		virtual(each={ file in post.images })
-			img(src={ file.url + '?thumbnail&size=512' }, alt={ file.name }, title={ file.name })
+		mk-images-viewer(images={ post.images })
 
 style.
 	display block
