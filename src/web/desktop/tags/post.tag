@@ -184,7 +184,7 @@ style.
 						margin-top 8px
 
 					> .reply
-						margin-right 6px
+						margin-right 8px
 						color #717171
 
 					> .quote
