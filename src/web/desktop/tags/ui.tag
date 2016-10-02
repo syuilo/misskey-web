@@ -43,8 +43,14 @@ script.
 	@ui.on \notification (text) ~>
 		alert text
 
-	@on \mount ~>
+	@ui.on \set-root-layout ~>
+		@set-root-layout!
+
+	@set-root-layout = ~>
 		@root.style.padding-top = @header.client-height + \px
+
+	@on \mount ~>
+		@set-root-layout!
 		document.add-event-listener \keydown (e) ~>
 			tag = e.target.tag-name.to-lower-case!
 			if tag != \input and tag != \textarea
