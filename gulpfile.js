@@ -41,6 +41,7 @@ const aliasifyConfig = {
 		"page": "./bower_components/page/page.js",
 		"NProgress": "./bower_components/nprogress/nprogress.js",
 		"velocity": "./bower_components/velocity/velocity.js",
+		"chartist": "./bower_components/chartist/dist/chartist.js",
 		"textarea-caret-position": "./node_modules/textarea-caret/index.js",
 		"misskey-text": "./bower_components/misskey-text/dist/index.js",
 		"strength.js": "./bower_components/password-strength.js/strength.js",

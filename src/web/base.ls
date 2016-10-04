@@ -12,6 +12,8 @@ window.api = require './common/scripts/api.ls'
 window.is-promise = require './common/scripts/is-promise.ls'
 window.log = require './common/scripts/log.ls'
 
+window.Chartist = require 'chartist'
+
 riot = require 'riot'
 require './common/tags/core-error.tag'
 require './common/tags/url.tag'

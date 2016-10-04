@@ -8,19 +8,9 @@ mk-user-header(data-is-dark-background={ user.banner_url != null })
 			i.fa.fa-map-marker
 			| { user.location }
 	footer
-		p.posts
-			a(href={ '/' + user.username }) { user.posts_count }
-			| 投稿
-		span.separator ・
-		p.likes
-			a(href={ '/' + user.username + '/likes' }) { user.likes_count }
-			b いいね
-			| しました
-		span.separator ・
-		p.liked
-			a(href={ '/' + user.username + '/most-liked' }) { user.liked_count }
-			b いいね
-			| されました
+		a(href={ '/' + user.username }) 投稿
+		a(href={ '/' + user.username + '/media' }) メディア
+		a(href={ '/' + user.username + '/graphs' }) グラフ
 		button(onclick={ NotImplementedException }): i.fa.fa-ellipsis-h
 
 style.
@@ -94,24 +84,12 @@ style.
 		padding-left 195px
 		background #fff
 
-		> p
+		> a
 			display inline-block
 			margin 0
+			width 100px
 			line-height $footer-height
 			color #555
-
-			> a
-				font-weight bold
-
-			> b
-				font-weight normal
-				font-style oblique
-
-		> .separator
-			display inline-block
-			margin 16px
-			color rgba(0, 0, 0, 0.2)
-			user-select none
 
 		> button
 			display block

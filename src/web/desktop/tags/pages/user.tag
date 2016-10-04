@@ -1,5 +1,5 @@
 mk-user-page
-	mk-ui: mk-user(user={ user }, event={ event })
+	mk-ui: mk-user(user={ parent.user }, event={ parent.event }, page={ parent.opts.page })
 
 style.
 	display block

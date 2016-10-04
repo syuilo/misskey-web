@@ -8,7 +8,8 @@ page = null
 #--------------------------------
 
 route \/ index
-route \/:user user
+route \/:user user.bind null \home
+route \/:user/graphs user.bind null \graphs
 route \/:user/:post post
 route \* not-found
 
@@ -24,9 +25,10 @@ function home
 function entrance
 	mount document.create-element \mk-entrance
 
-function user ctx
+function user page, ctx
 	document.create-element \mk-user-page
 		..set-attribute \user ctx.params.user
+		..set-attribute \page page
 		.. |> mount
 
 function post ctx
