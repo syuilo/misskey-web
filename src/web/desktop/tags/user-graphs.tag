@@ -48,6 +48,7 @@ script.
 
 			api \users/posts/aggregate do
 				user: @user.id
+				limit: 30days
 			.then (data) ~>
 				console.log data
 
