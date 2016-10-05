@@ -72,7 +72,7 @@ script.
 										#min-unit: \day
 										#round: \day
 										display-formats:
-											day: 'MM月 D日'
+											day: 'M月 D日'
 								}
 							]
 							y-axes: [
