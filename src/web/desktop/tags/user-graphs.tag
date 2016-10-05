@@ -37,12 +37,10 @@ script.
 				user: @user.id
 				limit: 30days
 			.then (data) ~>
-				data = data.reverse!
-
 				new Chart @chart, do
 					type: \line
 					data:
-						labels: data.map (x) ~> new Date x.date.year + '/' + x.date.month + '/' + x.date.day
+						labels: data.map (x) ~> new Date x.date
 						datasets:[
 							{
 								label: \投稿
