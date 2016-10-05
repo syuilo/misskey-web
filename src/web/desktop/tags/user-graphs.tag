@@ -1,7 +1,7 @@
 mk-user-graphs
 	section
 		h1 直近30日間の投稿アクティビティ
-		div.ct-chart.ct-double-octave@chart
+		canvas@chart(width='750', height='250')
 
 style.
 	display block
@@ -13,28 +13,15 @@ style.
 		border-radius 4px
 
 		> h1
-			margin 0 0 16px 0
+			margin 0 0 8px 0
 			padding 0 16px
 			line-height 40px
 			font-size 1em
 			color #666
 			border-bottom solid 1px #eee
 
-		> div
-			.ct-series-a > .ct-line
-				stroke $theme-color
-
-			.ct-series-a > .ct-area
-				fill $theme-color
-
-			.ct-series-b > .ct-line
-				stroke #a99c9a
-
-			.ct-series-c > .ct-line
-				stroke #a2d61e
-
-			.ct-series-d > .ct-line
-				stroke #1ed6ba
+		> canvas
+			margin 0 auto 16px auto
 
 script.
 	@user-promise = @opts.user
@@ -50,38 +37,46 @@ script.
 				user: @user.id
 				limit: 30days
 			.then (data) ~>
-				console.log data
-
 				data = data.reverse!
 
-				new Chartist.Line @chart, do
-					labels: data.map (x) ~> x.day
-					series: [
-						{
-							name: \total
-							data: data.map (x) ~> x.posts + x.reposts + x.replies
-						},
-						{
-							name: \post
-							data: data.map (x) ~> x.posts
-						},
-						{
-							name: \repost
-							data: data.map (x) ~> x.reposts
-						},
-						{
-							name: \reply
-							data: data.map (x) ~> x.replies
-						}
-					]
-				, do
-					series:
-						total:
-							show-area: true
-							show-point: false
-						post:
-							show-point: false
-						repost:
-							show-point: false
-						reply:
-							show-point: false
+				new Chart @chart, do
+					type: \bar
+					data:
+						labels: data.map (x) ~> new Date x.date.year + '/' + x.date.month + '/' + x.date.day
+						datasets:[
+							{
+								label: \投稿
+								data: data.map (x) ~> x.posts
+								background-color: \#555
+							},
+							{
+								label: \Repost
+								data: data.map (x) ~> x.reposts
+								background-color: \#a2d61e
+							},
+							{
+								label: \返信
+								data: data.map (x) ~> x.replies
+								background-color: \#F7796C
+							}
+						]
+					options:
+						responsive: false
+						scales:
+							x-axes: [
+								{
+									stacked: true
+									type: \time
+									time:
+										unit: \day
+										#min-unit: \day
+										#round: \day
+										display-formats:
+											day: 'MM月 D日'
+								}
+							]
+							y-axes: [
+								{
+									stacked: true
+								}
+							]
