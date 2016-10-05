@@ -1,6 +1,6 @@
 mk-user-graphs
 	section
-		h1 直近30日間の投稿アクティビティ
+		h1 投稿履歴
 		canvas@chart(width='750', height='250')
 
 style.
