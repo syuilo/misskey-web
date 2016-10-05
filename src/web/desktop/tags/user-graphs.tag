@@ -40,7 +40,7 @@ script.
 				data = data.reverse!
 
 				new Chart @chart, do
-					type: \bar
+					type: \line
 					data:
 						labels: data.map (x) ~> new Date x.date.year + '/' + x.date.month + '/' + x.date.day
 						datasets:[
