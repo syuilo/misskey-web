@@ -48,16 +48,19 @@ script.
 								label: \投稿
 								data: data.map (x) ~> x.posts
 								background-color: \#555
+								point-radius: 0
 							},
 							{
 								label: \Repost
 								data: data.map (x) ~> x.reposts
 								background-color: \#a2d61e
+								point-radius: 0
 							},
 							{
 								label: \返信
 								data: data.map (x) ~> x.replies
 								background-color: \#F7796C
+								point-radius: 0
 							}
 						]
 					options:
