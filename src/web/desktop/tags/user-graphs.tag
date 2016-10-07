@@ -1,7 +1,7 @@
 mk-user-graphs
 	section
 		h1 投稿
-		canvas@chart(width='750', height='250')
+		mk-user-posts-graph(user={ opts.user })
 
 	//
 		section
@@ -29,7 +29,7 @@ style.
 			color #666
 			border-bottom solid 1px #eee
 
-		> canvas
+		> *:not(h1)
 			margin 0 auto 16px auto
 
 script.
@@ -38,55 +38,3 @@ script.
 
 	@on \mount ~>
 		@event.trigger \loaded
-
-		@user-promise.then (user) ~>
-			@user = user
-
-			api \aggregation/users/posts do
-				user: @user.id
-				limit: 30days
-			.then (data) ~>
-				data = data.reverse!
-				new Chart @chart, do
-					type: \line
-					data:
-						labels: data.map (x, i) ~> if i % 3 == 1 then x.date.day + '日' else ''
-						datasets:[
-							{
-								label: \投稿
-								data: data.map (x) ~> x.posts
-								line-tension: 0
-								point-radius: 0
-								background-color: \#555
-								border-color: \transparent
-							},
-							{
-								label: \Repost
-								data: data.map (x) ~> x.reposts
-								line-tension: 0
-								point-radius: 0
-								background-color: \#a2d61e
-								border-color: \transparent
-							},
-							{
-								label: \返信
-								data: data.map (x) ~> x.replies
-								line-tension: 0
-								point-radius: 0
-								background-color: \#F7796C
-								border-color: \transparent
-							}
-						]
-					options:
-						responsive: false
-						scales:
-							x-axes: [
-								{
-									stacked: true
-								}
-							]
-							y-axes: [
-								{
-									stacked: true
-								}
-							]
