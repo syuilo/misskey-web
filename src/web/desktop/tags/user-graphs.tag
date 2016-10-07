@@ -1,7 +1,16 @@
 mk-user-graphs
 	section
-		h1 投稿履歴
+		h1 投稿
 		canvas@chart(width='750', height='250')
+
+	//
+		section
+			h1 いいね
+			canvas@chart(width='750', height='250')
+
+		section
+			h1 フォロー/フォロワー
+			canvas@chart(width='750', height='250')
 
 style.
 	display block
@@ -33,29 +42,39 @@ script.
 		@user-promise.then (user) ~>
 			@user = user
 
-			api \users/posts/aggregate do
+			api \aggregation/users/posts do
 				user: @user.id
 				limit: 30days
 			.then (data) ~>
+				data = data.reverse!
 				new Chart @chart, do
-					type: \bar
+					type: \line
 					data:
-						labels: data.map (x) ~> new Date x.date
+						labels: data.map (x, i) ~> if i % 3 == 1 then x.date.day + '日' else ''
 						datasets:[
 							{
 								label: \投稿
 								data: data.map (x) ~> x.posts
+								line-tension: 0
+								point-radius: 0
 								background-color: \#555
+								border-color: \transparent
 							},
 							{
 								label: \Repost
 								data: data.map (x) ~> x.reposts
+								line-tension: 0
+								point-radius: 0
 								background-color: \#a2d61e
+								border-color: \transparent
 							},
 							{
 								label: \返信
 								data: data.map (x) ~> x.replies
+								line-tension: 0
+								point-radius: 0
 								background-color: \#F7796C
+								border-color: \transparent
 							}
 						]
 					options:
@@ -64,13 +83,6 @@ script.
 							x-axes: [
 								{
 									stacked: true
-									type: \time
-									time:
-										unit: \day
-										#min-unit: \day
-										#round: \day
-										display-formats:
-											day: 'M月 D日'
 								}
 							]
 							y-axes: [
