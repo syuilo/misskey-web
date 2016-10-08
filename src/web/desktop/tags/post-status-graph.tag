@@ -4,6 +4,9 @@ mk-post-status-graph
 style.
 	display block
 
+	> canvas
+		margin 0 auto
+
 script.
 	@post = null
 	@post-promise = if is-promise @opts.post then @opts.post else Promise.resolve @opts.post

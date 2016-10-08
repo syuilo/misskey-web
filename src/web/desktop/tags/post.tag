@@ -48,11 +48,11 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 				button(onclick={ toggle-detail }, title='詳細')
 					i.fa.fa-caret-down(if={ !is-detail-opened })
 					i.fa.fa-caret-up(if={ is-detail-opened })
-		div.detail(if={ is-detail-opened })
-			// Riot3.0.0未満では、 if が評価されずに必ずカスタムタグが(内部的に)レンダリングされてしまうバグがあるので、
-			// その対策としてのハック SEE: https://github.com/riot/riot/issues/1020#issuecomment-156388012
-			//mk-post-likes-graph(width='462', height='130', post={ p })
-			mk-post-status-graph(width='462', height='130', post={ parent.p }, each={ is-detail-opened ? [1] : [] })
+	div.detail(if={ is-detail-opened })
+		// Riot3.0.0未満では、 if が評価されずに必ずカスタムタグが(内部的に)レンダリングされてしまうバグがあるので、
+		// その対策としてのハック SEE: https://github.com/riot/riot/issues/1020#issuecomment-156388012
+		//mk-post-likes-graph(width='462', height='130', post={ p })
+		mk-post-status-graph(width='462', height='130', post={ parent.p }, each={ is-detail-opened ? [1] : [] })
 
 style.
 	display block
@@ -259,6 +259,10 @@ style.
 						position absolute
 						right 32px
 						margin 0
+
+	> .detail
+		padding-top 4px
+		background rgba(0, 0, 0, 0.0125)
 
 style(theme='dark').
 	background #0D0D0D
