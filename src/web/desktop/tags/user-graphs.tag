@@ -3,13 +3,13 @@ mk-user-graphs
 		h1 投稿
 		mk-user-posts-graph(user={ opts.user })
 
+	section
+		h1 フォロー/フォロワー
+		mk-user-friends-graph(user={ opts.user })
+
 	//
 		section
 			h1 いいね
-			canvas@chart(width='750', height='250')
-
-		section
-			h1 フォロー/フォロワー
 			canvas@chart(width='750', height='250')
 
 style.
