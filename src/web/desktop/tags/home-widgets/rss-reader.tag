@@ -46,6 +46,7 @@ style.
 
 	> .feed
 		padding 12px 16px
+		font-size 0.9em
 
 		> a
 			display block
