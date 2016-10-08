@@ -15,7 +15,7 @@ script.
 		@user = user
 		@update!
 
-		api \aggregation/users/likes do
+		api \aggregation/users/like do
 			user: @user.id
 			limit: 30days
 		.then (likes) ~>
