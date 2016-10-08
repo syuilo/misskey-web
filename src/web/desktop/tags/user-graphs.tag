@@ -7,10 +7,9 @@ mk-user-graphs
 		h1 フォロー/フォロワー
 		mk-user-friends-graph(user={ opts.user })
 
-	//
-		section
-			h1 いいね
-			canvas@chart(width='750', height='250')
+	section
+		h1 いいね
+		mk-user-likes-graph(user={ opts.user })
 
 style.
 	display block
