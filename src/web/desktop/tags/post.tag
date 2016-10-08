@@ -45,6 +45,14 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 					i.fa.fa-thumbs-o-up
 					p.count(if={ p.likes_count > 0 }) { p.likes_count }
 				button(onclick={ NotImplementedException }): i.fa.fa-ellipsis-h
+				button(onclick={ toggle-detail }, title='詳細')
+					i.fa.fa-caret-down(if={ !is-detail-opened })
+					i.fa.fa-caret-up(if={ is-detail-opened })
+		div.detail(if={ is-detail-opened })
+			// Riot3.0.0未満では、 if が評価されずに必ずカスタムタグが(内部的に)レンダリングされてしまうバグがあるので、
+			// その対策としてのハック SEE: https://github.com/riot/riot/issues/1020#issuecomment-156388012
+			//mk-post-likes-graph(width='462', height='130', post={ p })
+			mk-post-likes-graph(width='462', height='130', post={ parent.p }, each={ is-detail-opened ? [1] : [] })
 
 style.
 	display block
@@ -243,9 +251,14 @@ style.
 						display inline
 						margin 0 0 0 8px
 						color #999
-					
+
 					&.liked
 						color $theme-color
+
+					&:last-child
+						position absolute
+						right 32px
+						margin 0
 
 style(theme='dark').
 	background #0D0D0D
@@ -292,6 +305,7 @@ script.
 	@p = if @is-repost then @post.repost else @post
 	@title = 'a' # TODO
 	@url = CONFIG.url + '/' + @p.user.username + '/' + @p.id
+	@is-detail-opened = false
 
 	@reply-form = null
 	@reply-form-controller = riot.observable!
@@ -345,3 +359,7 @@ script.
 			.then ~>
 				@p.is_liked = true
 				@update!
+
+	@toggle-detail = ~>
+		@is-detail-opened = !@is-detail-opened
+		@update!
