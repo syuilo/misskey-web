@@ -52,7 +52,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
 			// Riot3.0.0未満では、 if が評価されずに必ずカスタムタグが(内部的に)レンダリングされてしまうバグがあるので、
 			// その対策としてのハック SEE: https://github.com/riot/riot/issues/1020#issuecomment-156388012
 			//mk-post-likes-graph(width='462', height='130', post={ p })
-			mk-post-likes-graph(width='462', height='130', post={ parent.p }, each={ is-detail-opened ? [1] : [] })
+			mk-post-status-graph(width='462', height='130', post={ parent.p }, each={ is-detail-opened ? [1] : [] })
 
 style.
 	display block
