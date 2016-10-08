@@ -25,7 +25,7 @@ script.
 				type: \bar
 				data:
 					labels: likes.map (x, i) ~> if i % 3 == 2 then x.date.day + '日' else ''
-					datasets:[
+					datasets: [
 						{
 							label: \いいねした数
 							data: likes.map (x) ~> x.count

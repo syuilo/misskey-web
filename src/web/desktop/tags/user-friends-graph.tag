@@ -31,7 +31,7 @@ script.
 					type: \line
 					data:
 						labels: following.map (x, i) ~> if i % 3 == 2 then x.date.day + '日' else ''
-						datasets:[
+						datasets: [
 							{
 								label: \フォロー
 								data: following.map (x) ~> x.count

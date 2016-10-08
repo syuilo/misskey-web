@@ -24,7 +24,7 @@ script.
 				type: \line
 				data:
 					labels: data.map (x, i) ~> if i % 3 == 2 then x.date.day + '日' else ''
-					datasets:[
+					datasets: [
 						{
 							label: \投稿
 							data: data.map (x) ~> x.posts
