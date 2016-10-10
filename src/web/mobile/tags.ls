@@ -1,3 +1,7 @@
 require './tags/ui.tag'
 require './tags/stream-indicator.tag'
 require './tags/page/home.tag'
+require './tags/home.tag'
+require './tags/home-timeline.tag'
+require './tags/timeline.tag'
+require './tags/timeline-post.tag'

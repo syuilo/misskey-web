@@ -1,5 +1,4 @@
 boot = require '../base.ls'
-require 'velocity'
 riot = require 'riot'
 require './tags.ls'
 stream = require './scripts/stream.ls'

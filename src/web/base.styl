@@ -10,9 +10,14 @@ $theme-color-foreground = #fff
 *
 	tap-highlight-color rgba($theme-color, 0.7)
 
-html
+html, body
+	margin 0
+	padding 0
+	scroll-behavior smooth
+	text-size-adjust 100%
 	font-family sans-serif
 
+html
 	&.progress
 		&, *
 			cursor progress !important

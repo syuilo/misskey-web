@@ -13,11 +13,11 @@ style.
 
 script.
 
-	@ui.on \notification (text) ~>
-		alert text
+	#@ui.on \notification (text) ~>
+	#	alert text
 
-	@ui.on \set-root-layout ~>
-		@set-root-layout!
+	#@ui.on \set-root-layout ~>
+	#	@set-root-layout!
 
 	@set-root-layout = ~>
 		@root.style.padding-top = @header.client-height + \px
