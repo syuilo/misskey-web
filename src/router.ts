@@ -54,14 +54,14 @@ router.get(`${signoutDomain}/`, (req, res) => {
 router.post('/_/api/url', require('./api/url').default);
 router.post('/_/api/rss-proxy', require('./api/rss-proxy').default);
 
-router.get('*', (req, res) => {
-	res.sendFile(`${__dirname}/web/desktop/view.html`, {
+router.get(`${mobileDomain}/*`, (req, res) => {
+	res.sendFile(`${__dirname}/web/mobile/view.html`, {
 		maxAge: 1000 * 60 * 60 * 24 * 7 // 一週間
 	});
 });
 
-router.get(`${mobileDomain}/*`, (req, res) => {
-	res.sendFile(`${__dirname}/web/mobile/view.html`, {
+router.get('*', (req, res) => {
+	res.sendFile(`${__dirname}/web/desktop/view.html`, {
 		maxAge: 1000 * 60 * 60 * 24 * 7 // 一週間
 	});
 });
