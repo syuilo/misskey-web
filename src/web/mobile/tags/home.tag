@@ -4,6 +4,10 @@ mk-home
 style.
 	display block
 
+	> mk-home-timeline
+		max-width 500px
+		margin 0 auto
+
 script.
 	@event = @opts.event
 
