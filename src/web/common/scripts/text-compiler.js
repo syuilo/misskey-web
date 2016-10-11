@@ -3,20 +3,18 @@ module.exports = function(tokens, canBreak) {
 		canBreak = true;
 	}
 	return tokens.map(function(token) {
-		var type = token.type;
-		var content = token.content;
-		switch (type) {
+		switch (token.type) {
 			case 'text':
-				return content
+				return token.content
 					.replace(/>/g, '&gt;')
 					.replace(/</g, '&lt;')
 					.replace(/(\r\n|\n|\r)/g, canBreak ? '<br>' : ' ');
 			case 'link':
-				return '<mk-url href="' + content + '" target="_blank"></mk-url>';
+				return '<mk-url href="' + token.content + '" target="_blank"></mk-url>';
 			case 'mention':
-				return '<a href="' + CONFIG.url + '/' + content + '" target="_blank" data-user-preview="' + content + '">' + content + '</a>';
+				return '<a href="' + CONFIG.url + '/' + token.username + '" target="_blank" data-user-preview="' + token.content + '">' + token.content + '</a>';
 			case 'hashtag': // TODO
-				return '<a>' + content + '</a>';
+				return '<a>' + token.content + '</a>';
 		}
 	}).join('');
 }
