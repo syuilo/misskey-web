@@ -16,6 +16,12 @@ import * as cors from 'cors';
 import * as favicon from 'serve-favicon';
 const subdomain = require('subdomain');
 
+import manifest from './utils/manifest';
+import appleTouchIcon from './utils/apple-touch-icon';
+
+// Utility module
+import * as ms from 'ms';
+
 // Internal modules
 import config from './config';
 import router from './router';
@@ -52,11 +58,11 @@ app.use(cors({
  * Statics
  */
 app.use(favicon(`${__dirname}/resources/favicon.ico`));
+app.use(manifest);
+app.use(appleTouchIcon);
 app.use('/_/resources', express.static(`${__dirname}/resources`, {
-	maxAge: 1000 * 60 * 60 * 24 * 7 // 一週間
+	maxAge: ms('7 days')
 }));
-app.get('/manifest.json', (req, res) => res.sendFile(__dirname + '/resources/manifest.json'));
-app.get('/apple-touch-icon.png', (req, res) => res.sendFile(__dirname + '/resources/apple-touch-icon.png'));
 
 /**
  * Server status

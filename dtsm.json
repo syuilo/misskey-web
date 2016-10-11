@@ -66,6 +66,9 @@
     },
     "x2js/xml2json.d.ts": {
       "ref": "084e55916674ff7128722bf72150aa55acea08d9"
+    },
+    "ms/ms.d.ts": {
+      "ref": "0329b1b8a678b3f80e806c2faf547565c8320ebd"
     }
   }
 }

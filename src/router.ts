@@ -3,6 +3,7 @@
  */
 
 import * as express from 'express';
+import * as ms from 'ms';
 
 import signin from './core/signin';
 import config from './config';
@@ -56,13 +57,13 @@ router.post('/_/api/rss-proxy', require('./api/rss-proxy').default);
 
 router.get(`${mobileDomain}/*`, (req, res) => {
 	res.sendFile(`${__dirname}/web/mobile/view.html`, {
-		maxAge: 1000 * 60 * 60 * 24 * 7 // 一週間
+		maxAge: ms('7 days')
 	});
 });
 
 router.get('*', (req, res) => {
 	res.sendFile(`${__dirname}/web/desktop/view.html`, {
-		maxAge: 1000 * 60 * 60 * 24 * 7 // 一週間
+		maxAge: ms('7 days')
 	});
 });
 
