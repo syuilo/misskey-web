@@ -36,14 +36,6 @@ app.locals.compileDebug = false;
 app.locals.cache = true;
 
 /**
- * Subdomain
- */
-app.use(subdomain({
-	base: config.host,
-	prefix: '__'
-}));
-
-/**
  * Compressions
  */
 app.use(compression());
@@ -89,6 +81,14 @@ app.use((req, res, next) => {
 	res.locals.signin = i !== undefined;
 	next();
 });
+
+/**
+ * Subdomain
+ */
+app.use(subdomain({
+	base: config.host,
+	prefix: '__'
+}));
 
 /**
  * Routing
