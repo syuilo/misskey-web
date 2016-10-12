@@ -51,8 +51,12 @@ style.
 	margin 0
 	padding 0
 	font-family sans-serif
+	font-size 14px
 	background #fff
 	background-clip padding-box
+
+	@media (min-width 500px)
+		font-size 16px
 
 	&:focus
 		z-index 1
@@ -120,10 +124,6 @@ style.
 			display block
 			clear both
 
-		&:hover
-			> .main > footer > button
-				color #888
-
 		> .avatar-anchor
 			display block
 			float left
@@ -131,15 +131,23 @@ style.
 
 			> .avatar
 				display block
-				width 58px
-				height 58px
+				width 48px
+				height 48px
 				margin 0
-				border-radius 8px
+				border-radius 6px
 				vertical-align bottom
+
+				@media (min-width 500px)
+					width 58px
+					height 58px
+					border-radius 8px
 
 		> .main
 			float left
-			width calc(100% - 74px)
+			width calc(100% - 64px)
+
+			@media (min-width 500px)
+				width calc(100% - 74px)
 
 			> header
 				margin-bottom 4px
