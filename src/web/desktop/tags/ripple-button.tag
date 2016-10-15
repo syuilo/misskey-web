@@ -8,7 +8,7 @@ style.
 	position relative
 	box-sizing border-box
 	margin 0
-	padding 18px 18px 18px 36px
+	padding 18px
 	line-height 1em
 	font-size 1em
 	color #fff

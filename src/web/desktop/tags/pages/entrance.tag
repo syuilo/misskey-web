@@ -1,94 +1,96 @@
 mk-entrance
-	header
-		h1@title { title-text }
-		mk-kawaii@sub-title
 	main@main
-		mk-signin@signin-form
-		mk-signup@signup-form(oncancel={ signin })
-		mk-ripple-button@signup-button(onclick={ signup }) 新規登録
+		div.title
+			div m
+			div i
+			div s
+			div s
+			div k
+			div e
+			div y
+			div
+			div: i ・
+			div: i ・
+			div
+			div
+			div: i ・
+			div
+			div
+			div
+
+		div.form
+			mk-signin
+			p or
+			mk-ripple-button.signup(onclick={ signup }) 新規登録
 
 style.
 	display block
-	padding-bottom 32px
+	height 100%
+	background #fdfdfd
+	box-shadow 0 0 0 114514px #eee
+	border-top solid 64px #fff
 
 	*:not(i)
 		font-family '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif !important
 
-	> header
-		display block
-		position relative
-		box-sizing border-box
-		padding 64px 32px 64px 32px
-		margin 0
-		text-align center
-
-		&:before
-			content ""
-			position absolute
-			top 0
-			left 0
-			z-index 0
-			display block
-			width 100%
-			height 214px
-			background linear-gradient(to bottom, rgba(238,238,238,1) 0%,rgba(238,238,238,0) 100%)
-
-		h1
-			display block
-			position relative
-			z-index 1
-			margin 0
-			padding 0
-			font-size 2em
-			font-weight normal
-			color rgba(0, 0, 0, 0.5)
-
-		mk-kawaii
-			display block
-			position relative
-			z-index 1
-			margin 0
-			padding 8px 0 0 0
-			color rgba(0, 0, 0, 0.4)
-
 	> main
 		display block
 		position relative
-		box-sizing border-box
-		width 380px
+		width 624px
 		margin 0 auto
-		padding 32px
-		background-image url('/_/resources/desktop/bg.blured.jpg')
-		background-attachment fixed
-		background-position center
-		background-size cover
-		background-clip padding-box
-		//border solid 1px rgba(0, 0, 0, 0.1)
-		border-radius 4px
+		padding 128px 0 32px 0
 
-		> mk-signin
-			position relative
+		> .title
+			$tile = 52px
 
-		> mk-signup
-			display none
+			width $tile * 4
+			font-size ($tile / 3)
+			color #555
+
+			&:after
+				content ''
+				display block
+				clear both
+
+			> div
+				float left
+				width $tile
+				height $tile
+				line-height $tile
+				text-align center
+
+				&:hover
+					background #fff
+
+				&:first-child
+					color $theme-color-foreground
+					background $theme-color !important
+
+				&:nth-child(5)
+					color #fff
+					background #444
+
+				> i
+					font-style normal
+					opacity 0.5
+
+		> .form
 			position absolute
-			top 32px
-			left 100%
-			opacity 0
+			top 128px
+			right 0
+			width 300px
+			background #eee
+			border solid 8px #eee
+			border-radius 6px
 
-		> mk-ripple-button
-			margin-top 24px
+			> p
+				display block
+				margin 8px 0
+				text-align center
+				line-height 32px
+				color #888
 
 script.
-	@title-text = \Misskey
-
-	@on \mount ~>
-		html = (document.get-elements-by-tag-name \html).0
-		html.style.background = '#eee'
-		html.style.background-image = 'url("/_/resources/desktop/bg.jpg")'
-		html.style.background-attachment = \fixed
-		html.style.background-position = \center
-		html.style.background-size = \cover
 
 	@signup = ~>
 		@signup-button.style.pointer-events = \none

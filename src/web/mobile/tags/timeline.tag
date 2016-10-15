@@ -47,10 +47,6 @@ style.
 		border-bottom-left-radius 4px
 		border-bottom-right-radius 4px
 
-style(theme='dark').
-	> mk-post
-		border-bottom-color #222221
-
 script.
 	@posts = []
 	@controller = @opts.controller
