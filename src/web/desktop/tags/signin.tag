@@ -29,10 +29,10 @@ style.
 		position relative
 		z-index 2
 		box-sizing border-box
-		padding 10px 32px 0 32px
+		padding 10px 28px 0 28px
 		background #fff
 		background-clip padding-box
-		//border solid 1px rgba(0, 0, 0, 0.1)
+		border solid 1px rgba(0, 0, 0, 0.1)
 		border-radius 4px
 
 		&:hover
@@ -49,8 +49,8 @@ style.
 			text-transform uppercase
 			font-size 1em
 			font-weight bold
-			color #888
-			border-bottom solid 1px #eee
+			color rgba(0, 0, 0, 0.5)
+			border-bottom solid 1px rgba(0, 0, 0, 0.1)
 
 			> p
 				display inline
@@ -115,7 +115,7 @@ style.
 				height 1em
 				color #898786
 
-			input[type=text],
+			input[type=text]
 			input[type=password]
 				appearance none
 				user-select text
@@ -127,30 +127,19 @@ style.
 				width 100%
 				line-height 44px
 				font-size 1em
-				color #333 !important
-				background #fff !important
+				color rgba(0, 0, 0, 0.7)
+				background rgba(255, 255, 255, 0.5)
 				outline none
-				border solid 1px rgba(0, 0, 0, 0.1)
+				border solid 1px #eee
 				border-radius 4px
-				box-shadow 0 0 0 114514px #fff inset
-				transition all .3s ease
-				font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif !important
+				box-shadow none
+				font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
 
 				&:hover
-					border-color rgba(0, 0, 0, 0.2)
-					transition all .1s ease
+					background rgba(255, 255, 255, 0.7)
 
 				&:focus
-					color $theme-color !important
-					border-color $theme-color
-					box-shadow 0 0 0 1024px #fff inset, 0 0 0 4px rgba($theme-color, 10%)
-					transition all 0s ease
-
-				&:disabled
-					opacity 0.5
-
-				&:hover + i
-					color #797776
+					background #fff
 
 		[type=submit]
 			appearance none
@@ -160,7 +149,7 @@ style.
 			margin -6px 0 0 0
 			width 100%
 			font-size 1.2em
-			color #555
+			color rgba(0, 0, 0, 0.5)
 			outline none
 			border none
 			border-radius 0

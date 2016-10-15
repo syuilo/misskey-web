@@ -1,5 +1,5 @@
 mk-entrance
-	main@main
+	main
 		div.title
 			div m
 			div i
@@ -9,42 +9,46 @@ mk-entrance
 			div e
 			div y
 			div
-			div: i ・
-			div: i ・
-			div
-			div
-			div: i ・
-			div
-			div
-			div
+			//
+				div: i ・
+				div: i ・
+				div
+				div
+				div: i ・
+				div
+				div
+				div
 
 		div.form
 			mk-signin
-			p or
 			mk-ripple-button.signup(onclick={ signup }) 新規登録
+
+	footer
+		p (c) syuilo 2014-2016
 
 style.
 	display block
 	height 100%
-	background #fdfdfd
-	box-shadow 0 0 0 114514px #eee
-	border-top solid 64px #fff
-
-	*:not(i)
-		font-family '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif !important
+	font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
 
 	> main
 		display block
 		position relative
-		width 624px
-		margin 0 auto
-		padding 128px 0 32px 0
+		top 5%
+
+		&:after
+			content ''
+			display block
+			clear both
 
 		> .title
-			$tile = 52px
+			$tile = 48px
 
 			width $tile * 4
+			margin 0 auto
+			padding $tile
 			font-size ($tile / 3)
+			font-weight bold
 			color #555
 
 			&:after
@@ -72,23 +76,24 @@ style.
 
 				> i
 					font-style normal
-					opacity 0.5
+					opacity 0.3
 
 		> .form
-			position absolute
-			top 128px
-			right 0
-			width 300px
-			background #eee
-			border solid 8px #eee
-			border-radius 6px
+			width 290px
+			margin 0 auto
 
-			> p
-				display block
-				margin 8px 0
-				text-align center
-				line-height 32px
-				color #888
+			> *:last-child
+				margin-top 16px
+
+	> footer
+		position relative
+		top 15%
+
+		> p
+			margin 0
+			text-align center
+			line-height 64px
+			color rgba(#000, 0.5)
 
 script.
 
