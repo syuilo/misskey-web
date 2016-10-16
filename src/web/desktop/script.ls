@@ -35,6 +35,9 @@ riot.mixin \autocomplete do
 riot.mixin \cropper do
 	Cropper: require 'cropper'
 
+riot.mixin \sortable do
+	Sortable: require 'Sortable'
+
 boot ~>
 	if SIGNIN
 		stream!

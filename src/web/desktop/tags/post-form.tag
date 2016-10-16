@@ -303,9 +303,9 @@ style.
 		pointer-events none
 
 script.
-	Sortable = require '../../../../bower_components/Sortable/Sortable.js'
 
 	@mixin \autocomplete
+	@mixin \sortable
 
 	@wait = false
 	@uploadings = []
@@ -426,7 +426,7 @@ script.
 		@controller.trigger \change-files @files
 		@update!
 
-		Sortable.create @attaches, do
+		@Sortable.create @attaches, do
 			draggable: \.file
 			animation: 150ms
 

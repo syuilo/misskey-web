@@ -1,6 +1,6 @@
 mk-entrance
 	main
-		div.title
+		div.title@title
 			div m
 			div i
 			div s
@@ -93,6 +93,11 @@ style.
 			color rgba(#000, 0.5)
 
 script.
+	@mixin \sortable
+
+	@on \mount ~>
+		@Sortable @title, do
+			animation: 150ms
 
 	@signup = ~>
 		@signup-button.style.pointer-events = \none
