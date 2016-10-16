@@ -1,6 +1,6 @@
 mk-signin
 	form(onsubmit={ onsubmit })
-		h2.title
+		h1
 			img@avatar(src={ user.avatar_url + '?thumbnail&size=32' }, if={ user })
 			p { user ? user.name : 'アカウント' }
 		a.help(href= config.urls.help, title='お困りですか？'): i.fa.fa-question
@@ -40,7 +40,7 @@ style.
 			> .help
 				opacity 1
 
-		h2
+		> h1
 			display block
 			margin 0
 			padding 0
@@ -129,7 +129,7 @@ style.
 				line-height 44px
 				font-size 1em
 				color rgba(0, 0, 0, 0.7)
-				background rgba(255, 255, 255, 0.5)
+				background #fff
 				outline none
 				border solid 1px #eee
 				border-radius 4px
@@ -138,9 +138,17 @@ style.
 
 				&:hover
 					background rgba(255, 255, 255, 0.7)
+					border-color #ddd
+
+					& + i
+						color #797776
 
 				&:focus
 					background #fff
+					border-color #ccc
+
+					& + i
+						color #797776
 
 		[type=submit]
 			appearance none
