@@ -1,23 +1,23 @@
 mk-entrance
 	main
-		div.title@title
-			div m
-			div i
-			div s
-			div s
-			div k
-			div e
-			div y
-			div: i ・
+		ul@title
+			li m
+			li i
+			li s
+			li s
+			li k
+			li e
+			li y
+			li: i ・
 			//
-				div: i ・
-				div: i ・
-				div
-				div
-				div: i ・
-				div
-				div
-				div
+				li: i ・
+				li: i ・
+				li
+				li
+				li: i ・
+				li
+				li
+				li
 
 		div.form
 			mk-signin
@@ -40,7 +40,7 @@ style.
 			display block
 			clear both
 
-		> .title
+		> ul
 			$tile = 48px
 
 			width $tile * 4
@@ -49,18 +49,22 @@ style.
 			font-size ($tile / 3)
 			font-weight bold
 			color #555
+			list-style none
 
 			&:after
 				content ''
 				display block
 				clear both
 
-			> div
+			> li
+				display block
 				float left
 				width $tile
 				height $tile
 				line-height $tile
 				text-align center
+				user-select none
+				cursor default
 
 				&:hover
 					background #fff
@@ -96,7 +100,7 @@ script.
 	@mixin \sortable
 
 	@on \mount ~>
-		@Sortable @title, do
+		new @Sortable @title, do
 			animation: 150ms
 
 	@signup = ~>
