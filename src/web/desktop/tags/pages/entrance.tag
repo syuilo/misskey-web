@@ -8,7 +8,7 @@ mk-entrance
 			div k
 			div e
 			div y
-			div
+			div: i ・
 			//
 				div: i ・
 				div: i ・
@@ -34,7 +34,6 @@ style.
 	> main
 		display block
 		position relative
-		top 5%
 
 		&:after
 			content ''
@@ -86,13 +85,11 @@ style.
 				margin-top 16px
 
 	> footer
-		position relative
-		top 15%
-
 		> p
 			margin 0
 			text-align center
 			line-height 64px
+			font-size 10px
 			color rgba(#000, 0.5)
 
 script.
