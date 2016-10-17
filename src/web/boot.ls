@@ -40,7 +40,7 @@ boot = (cb) ~>
 			refresh: ~> boot cb
 
 	function done
-		init = document.get-element-by-id \initializing
+		init = document.get-element-by-id \init
 		init.parent-node.remove-child init
 
 		document.create-element \div
