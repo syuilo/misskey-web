@@ -30,11 +30,6 @@ style.
 		z-index 2
 		box-sizing border-box
 		padding 10px 28px 0 28px
-		background #fff
-		background-clip padding-box
-		border solid 1px rgba(0, 0, 0, 0.1)
-		border-radius 4px
-		box-shadow 0 0 8px rgba(0, 0, 0, 0.1)
 
 		&:hover
 			> .help

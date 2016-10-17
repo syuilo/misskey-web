@@ -1,6 +1,5 @@
 mk-signup
 	form(onsubmit={ onsubmit }, autocomplete='off')
-		button.cancel(type='button', onclick={ cancel }, title='キャンセル'): i.fa.fa-times
 		label.username
 			p.caption
 				i.fa.fa-at
@@ -106,48 +105,12 @@ style.
 	display block
 	box-sizing border-box
 	padding 18px 32px 0 32px
-	width 368px
+	min-width 368px
 	overflow hidden
-	background #fff
-	background-clip padding-box
-	//border solid 1px rgba(0, 0, 0, 0.1)
-	border-radius 4px
 
 	> form
 		*:not(i)
 			font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif !important
-
-		&:hover
-			> .cancel
-				opacity 1
-
-		> .cancel
-			appearance none
-			cursor pointer
-			display block
-			position absolute
-			top 0
-			right 0
-			z-index 1
-			margin 0
-			padding 0
-			font-size 1.2em
-			color #999
-			border none
-			outline none
-			box-shadow none
-			background transparent
-			opacity 0
-			transition opacity 0.1s ease
-
-			&:hover
-				color #555
-
-			&:active
-				color #222
-
-			> i
-				padding 14px
 
 		label
 			display block
@@ -292,9 +255,6 @@ script.
 		script = document.create-element \script
 			..set-attribute \src \https://www.google.com/recaptcha/api.js
 		head.append-child script
-
-	@cancel = ~>
-		@opts.oncancel!
 
 	@on-change-username = ~>
 		username = @username.value
