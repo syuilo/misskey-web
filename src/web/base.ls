@@ -4,7 +4,7 @@ document.domain = CONFIG.host
 require 'fetch'
 
 # ↓ Firefox, Edge待ちPolyfill
-if NodeList.prototype.forEach === undefined
+if NodeList.prototype.forEach == undefined
 	NodeList.prototype.forEach = Array.prototype.forEach
 
 window.api-stack = 0
