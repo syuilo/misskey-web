@@ -32,6 +32,9 @@ riot.mixin \update-banner do
 riot.mixin \autocomplete do
 	Autocomplete: require './scripts/autocomplete.ls'
 
+riot.mixin \follow-scroll do
+	Follower: require './scripts/follow-scroll.ls'
+
 riot.mixin \cropper do
 	Cropper: require 'cropper'
 
