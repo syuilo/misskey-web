@@ -2,14 +2,15 @@
 # Boot loader
 #================================
 
-riot = require 'riot'
+riot = require \riot
+
 api = require './common/scripts/api.ls'
 generate-default-userdata = require './common/scripts/generate-default-userdata.ls'
 
-i = window._I
+boot = (_i, cb) ~>
+	me = null
 
-boot = (cb) ~>
-	if not window.SIGNIN
+	if not _i?
 		return done!
 
 	# ユーザー情報フェッチ
@@ -17,18 +18,18 @@ boot = (cb) ~>
 		method: \POST
 		headers:
 			'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-		body: "_i=#i"
+		body: "_i=#_i"
 	.then (res) ~>
 		if res.status != 200
 			alert 'ユーザー認証に失敗しました。ログアウトします。'
 			location.href = CONFIG.urls.signout
 			return
 
-		_i <~ res.json!.then
-		_i._web = i
-		window.I = _i
+		i <~ res.json!.then
+		me := i
+		me._web = _i
 
-		if I.data?
+		if me.data?
 			done!
 		else
 			init!
@@ -47,15 +48,15 @@ boot = (cb) ~>
 			..set-attribute \id \kyoppie
 			.. |> document.body.append-child
 
-		if cb? then cb!
+		if cb? then cb me
 
 	function init
 		data = generate-default-userdata!
 
-		api \i/appdata/set do
+		api _i, \i/appdata/set do
 			data: JSON.stringify data
 		.then ~>
-			I.data = data
+			me.data = data
 			done!
 
 module.exports = boot

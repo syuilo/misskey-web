@@ -174,17 +174,19 @@ style.
 				transition all .2s ease
 
 script.
+	@mixin \api
+
 	@user = null
 
 	@oninput = ~>
-		api \users/show do
+		@api \users/show do
 			username: @username.value
 		.then (user) ~>
 			@user = user
 			@update!
 
 	@onsubmit = ~>
-		api CONFIG.urls.signin, do
+		@api CONFIG.urls.signin, do
 			username: @username.value
 			password: @password.value
 		.then ->

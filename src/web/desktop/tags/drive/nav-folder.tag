@@ -7,6 +7,8 @@ style.
 		background #eee
 
 script.
+	@mixin \api
+
 	@folder = @opts.folder
 	@browser = @parent
 
@@ -63,7 +65,7 @@ script.
 		if obj.type == \file
 			file = obj.id
 			@browser.remove-file file
-			api 'drive/files/update' do
+			@api \drive/files/update do
 				file: file
 				folder: if @folder? then @folder.id else null
 			.then ~>
@@ -78,7 +80,7 @@ script.
 			if @folder? and folder == @folder.id
 				return false
 			@browser.remove-folder folder
-			api 'drive/folders/update' do
+			@api \drive/folders/update do
 				folder: folder
 				parent: if @folder? then @folder.id else null
 			.then ~>

@@ -1,47 +1,40 @@
+# BASE SCRIPT
+#================================
+
 document.domain = CONFIG.host
 
 # ↓ iOS待ちPolyfill (SEE: http://caniuse.com/#feat=fetch)
-require 'fetch'
+require \fetch
 
 # ↓ Firefox, Edge待ちPolyfill
-if NodeList.prototype.forEach == undefined
-	NodeList.prototype.forEach = Array.prototype.forEach
+if NodeList.prototype.for-each == undefined
+	NodeList.prototype.for-each = Array.prototype.for-each
 
-window.api-stack = 0
-window.api = require './common/scripts/api.ls'
-window.is-promise = require './common/scripts/is-promise.ls'
-window.log = require './common/scripts/log.ls'
+# Load dependencies
+#--------------------------------
 
-require 'velocity'
-require 'chart.js'
+require \velocity
+require \chart.js
 
-riot = require 'riot'
-require './common/tags/core-error.tag'
-require './common/tags/url.tag'
-require './common/tags/url-preview.tag'
-require './common/tags/ripple-string.tag'
-require './common/tags/time.tag'
-require './common/tags/kawaii.tag'
+# Define common tags
+#--------------------------------
 
-require './common/scripts/i.ls'
+require './common/tags.ls'
 
-riot.mixin \cache do
-	cache: require './common/scripts/cache.ls'
+# Load boot loader
+#--------------------------------
 
-riot.mixin \get-post-summary do
-	get-post-summary: require './common/scripts/get-post-summary.ls'
+boot = require './boot.ls'
 
-riot.mixin \text do
-	analyze: require 'misskey-text'
-	compile: require './common/scripts/text-compiler.js'
+# Get token from cookie
+i = ((document.cookie.match /i=(\w+)/) || [null null]).1
 
-riot.mixin \get-password-strength do
-	get-password-strength: require 'strength.js'
+module.exports = (cb) ~>
+	# load me
+	me <~ boot i
 
-riot.mixin \ui-progress do
-	Progress: require './common/scripts/loading.ls'
+	# activate mixins
+	mixins = require './mixins.ls'
+	mixins me
 
-window._I = ((document.cookie.match /i=([a-zA-Z0-9]+)/) || [null, null]).1
-window.SIGNIN = window._I?
-
-module.exports = require './boot.ls'
+	cb me

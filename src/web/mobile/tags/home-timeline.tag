@@ -32,6 +32,7 @@ style.
 			color #ccc
 
 script.
+	@mixin \api
 	@mixin \stream
 
 	@is-loading = true
@@ -61,7 +62,7 @@ script.
 				@controller.trigger \focus
 
 	@load = (cb) ~>
-		api \posts/timeline
+		@api \posts/timeline
 		.then (posts) ~>
 			@is-loading = false
 			@is-empty = posts.length == 0
@@ -77,7 +78,7 @@ script.
 			return
 		@more-loading = true
 		@update!
-		api \posts/timeline do
+		@api \posts/timeline do
 			max: @timeline.posts[@timeline.posts.length - 1].id
 		.then (posts) ~>
 			@more-loading = false

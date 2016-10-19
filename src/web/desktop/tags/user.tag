@@ -30,6 +30,8 @@ style.
 			padding 0 16px
 
 script.
+	@mixin \api
+
 	@event = @opts.event
 	@username = @opts.user
 	@page = if @opts.page? then @opts.page else \home
@@ -37,7 +39,7 @@ script.
 	@content-event = riot.observable!
 
 	@user-promise = new Promise (resolve, reject) ~>
-		api \users/show do
+		@api \users/show do
 			username: @username
 		.then (user) ~>
 			@fetching = false

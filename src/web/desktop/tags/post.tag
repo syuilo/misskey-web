@@ -301,6 +301,7 @@ style(theme='dark').
 						color #eee
 
 script.
+	@mixin \api
 	@mixin \text
 	@mixin \user-preview
 
@@ -352,13 +353,13 @@ script.
 	
 	@like = ~>
 		if @p.is_liked
-			api \posts/likes/delete do
+			@api \posts/likes/delete do
 				post: @p.id
 			.then ~>
 				@p.is_liked = false
 				@update!
 		else
-			api \posts/likes/create do
+			@api \posts/likes/create do
 				post: @p.id
 			.then ~>
 				@p.is_liked = true

@@ -1,0 +1,6 @@
+require './tags/core-error.tag'
+require './tags/url.tag'
+require './tags/url-preview.tag'
+require './tags/ripple-string.tag'
+require './tags/time.tag'
+require './tags/kawaii.tag'

@@ -110,10 +110,12 @@ style.
 				border solid 1px #ddd
 
 script.
+	@mixin \i
+	@mixin \is-promise
 	@mixin \update-banner
 
 	@user = null
-	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
+	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
 
 	@on \mount ~>
 		window.add-event-listener \load @scroll
@@ -141,7 +143,7 @@ script.
 			@banner.style.filter = 'blur(' + blur + 'px)'
 
 	@on-update-banner = ~>
-		if not SIGNIN or I.id != @user.id
+		if not @SIGNIN or @I.id != @user.id
 			return
 
 		@update-banner (i) ~>

@@ -1,15 +1,15 @@
-riot = require 'riot'
-cache = require './extract-entities.ls'
+riot = require \riot
 
 spinner = null
+api-stack = 0
 
 core = riot.observable!
 
 riot.mixin \core do
 	core: core
 
-module.exports = (endpoint, data) ->
-	window.api-stack++
+module.exports = (i, endpoint, data) ->
+	api-stack++
 
 	body = []
 
@@ -18,8 +18,8 @@ module.exports = (endpoint, data) ->
 			v = encodeURIComponent v
 			body.push "#k=#v"
 
-	if window.SIGNIN
-		body.push "_i=#{window.I._web}"
+	if i?
+		body.push "_i=#i"
 
 	web = (endpoint.index-of '://') > -1
 
@@ -35,7 +35,7 @@ module.exports = (endpoint, data) ->
 	else
 		ep = "#{CONFIG.api.url}/#{endpoint}"
 
-	if window.api-stack == 1
+	if api-stack == 1
 		spinner := document.create-element \div
 			..set-attribute \id \wait
 		document.body.append-child spinner
@@ -46,9 +46,9 @@ module.exports = (endpoint, data) ->
 		, 5000ms
 		fetch ep, opts
 		.then (res) ->
-			window.api-stack--
+			api-stack--
 			clear-timeout timer
-			if window.api-stack == 0
+			if api-stack == 0
 				spinner.parent-node.remove-child spinner
 
 			if res.status == 200
@@ -60,8 +60,5 @@ module.exports = (endpoint, data) ->
 					reject err.error
 		.then (data) ->
 			resolve data
-
-			cache data
-
 		.catch (e) ->
 			reject e

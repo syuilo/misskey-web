@@ -8,6 +8,8 @@ style.
 		margin 0 auto
 
 script.
+	@mixin \api
+
 	@post = null
 	@post-promise = if is-promise @opts.post then @opts.post else Promise.resolve @opts.post
 
@@ -16,19 +18,19 @@ script.
 		@post = post
 		@update!
 
-		api \aggregation/posts/like do
+		@api \aggregation/posts/like do
 			post: @post.id
 			limit: 30days
 		.then (likes) ~>
 			likes = likes.reverse!
 
-			api \aggregation/posts/repost do
+			@api \aggregation/posts/repost do
 				post: @post.id
 				limit: 30days
 			.then (repost) ~>
 				repost = repost.reverse!
 
-				api \aggregation/posts/reply do
+				@api \aggregation/posts/reply do
 					post: @post.id
 					limit: 30days
 				.then (replies) ~>

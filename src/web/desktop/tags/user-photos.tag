@@ -62,17 +62,21 @@ style.
 			margin-right 4px
 
 script.
+	@mixin \api
+	@mixin \is-promise
+
 	@images = []
 	@initializing = true
 
 	@user = null
-	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
+	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
 
 	@on \mount ~>
 		@user-promise.then (user) ~>
 			@user = user
 			@update!
-			api \users/posts do
+
+			@api \users/posts do
 				user: @user.id
 				with_images: true
 				limit: 9posts

@@ -173,6 +173,7 @@ style.
 
 script.
 	@mixin \i
+	@mixin \api
 	@mixin \dialog
 	@mixin \update-avatar
 
@@ -201,7 +202,7 @@ script.
 			@update-i i
 
 	@update-account = ~>
-		api \i/update do
+		@api \i/update do
 			name: @account-name.value
 			location: @account-location.value
 			bio: @account-bio.value
@@ -213,7 +214,7 @@ script.
 
 	@update-cache = ~>
 		@I.data.cache = !@I.data.cache
-		api \i/appdata/set do
+		@api \i/appdata/set do
 			data: JSON.stringify do
 				cache: @I.data.cache
 		.then ~>
@@ -221,7 +222,7 @@ script.
 
 	@update-debug = ~>
 		@I.data.debug = !@I.data.debug
-		api \i/appdata/set do
+		@api \i/appdata/set do
 			data: JSON.stringify do
 				debug: @I.data.debug
 		.then ~>

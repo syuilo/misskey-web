@@ -4,45 +4,47 @@
 route = require \page
 page = null
 
-# Routing
-#--------------------------------
+module.exports = (me) ~> 
 
-route \/ index
-route \/:user user.bind null \home
-route \/:user/graphs user.bind null \graphs
-route \/:user/:post post
-route \* not-found
+	# Routing
+	#--------------------------------
 
-# Handlers
-#--------------------------------
+	route \/ index
+	route \/:user user.bind null \home
+	route \/:user/graphs user.bind null \graphs
+	route \/:user/:post post
+	route \* not-found
 
-function index
-	if SIGNIN then home! else entrance!
+	# Handlers
+	#--------------------------------
 
-function home
-	mount document.create-element \mk-home-page
+	function index
+		if me? then home! else entrance!
 
-function entrance
-	mount document.create-element \mk-entrance
+	function home
+		mount document.create-element \mk-home-page
 
-function user page, ctx
-	document.create-element \mk-user-page
-		..set-attribute \user ctx.params.user
-		..set-attribute \page page
-		.. |> mount
+	function entrance
+		mount document.create-element \mk-entrance
 
-function post ctx
-	document.create-element \mk-post-page
-		..set-attribute \post ctx.params.post
-		.. |> mount
+	function user page, ctx
+		document.create-element \mk-user-page
+			..set-attribute \user ctx.params.user
+			..set-attribute \page page
+			.. |> mount
 
-function not-found
-	mount document.create-element \mk-not-found
+	function post ctx
+		document.create-element \mk-post-page
+			..set-attribute \post ctx.params.post
+			.. |> mount
 
-# Export
-#--------------------------------
+	function not-found
+		mount document.create-element \mk-not-found
 
-module.exports = ~> route!
+	# Exec
+	#--------------------------------
+
+	route!
 
 # Mount
 #================================

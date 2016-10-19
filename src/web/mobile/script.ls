@@ -4,8 +4,8 @@ require './tags.ls'
 stream = require './scripts/stream.ls'
 route = require './router.ls'
 
-boot ~>
-	if SIGNIN
-		stream!
+boot (me) ~>
+	if me?
+		stream me
 
-	route!
+	route me

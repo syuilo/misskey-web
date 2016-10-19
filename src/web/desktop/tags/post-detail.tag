@@ -321,6 +321,7 @@ style.
 				border-top 1px solid #eef0f2
 
 script.
+	@mixin \api
 	@mixin \text
 	@mixin \user-preview
 
@@ -329,7 +330,7 @@ script.
 	@content = null
 	@post = null
 	@post-promise = new Promise (resolve, reject) ~>
-		api \posts/show do
+		@api \posts/show do
 			id: @opts.post
 		.then (post) ~>
 			@fetching = false
@@ -365,7 +366,7 @@ script.
 						url: t.content
 
 		# Get likes
-		api \posts/likes do
+		@api \posts/likes do
 			id: @p.id
 			limit: 8
 		.then (likes) ~>
@@ -373,7 +374,7 @@ script.
 			@update!
 
 		# Get reposts
-		api \posts/reposts do
+		@api \posts/reposts do
 			id: @p.id
 			limit: 8
 		.then (reposts) ~>
@@ -381,7 +382,7 @@ script.
 			@update!
 
 		# Get replies
-		api \posts/replies do
+		@api \posts/replies do
 			id: @p.id
 			limit: 8
 		.then (replies) ~>
@@ -408,13 +409,13 @@ script.
 	
 	@like = ~>
 		if @p.is_liked
-			api \posts/likes/delete do
+			@api \posts/likes/delete do
 				post: @p.id
 			.then ~>
 				@p.is_liked = false
 				@update!
 		else
-			api \posts/likes/create do
+			@api \posts/likes/create do
 				post: @p.id
 			.then ~>
 				@p.is_liked = true
@@ -424,7 +425,7 @@ script.
 		@loading-context = true
 
 		# Get context
-		api \posts/context do
+		@api \posts/context do
 			id: @p.reply_to.id
 		.then (context) ~>
 			@context = context.reverse!

@@ -53,6 +53,7 @@ style.
 			text-align left
 
 script.
+	@mixin \api
 	@mixin \dialog
 
 	@folder = @opts.folder
@@ -113,7 +114,7 @@ script.
 		if obj.type == \file
 			file = obj.id
 			@browser.remove-file file
-			api 'drive/files/update' do
+			@api \drive/files/update do
 				file: file
 				folder: @folder.id
 			.then ~>
@@ -128,7 +129,7 @@ script.
 			if folder == @folder.id
 				return false
 			@browser.remove-folder folder
-			api 'drive/folders/update' do
+			@api \drive/folders/update do
 				folder: folder
 				parent: @folder.id
 			.then ~>

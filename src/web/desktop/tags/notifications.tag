@@ -141,6 +141,7 @@ style.
 			margin-right 4px
 
 script.
+	@mixin \api
 	@mixin \user-preview
 
 	@mixin \stream
@@ -150,7 +151,7 @@ script.
 	@loading = true
 
 	@on \mount ~>
-		api \i/notifications
+		@api \i/notifications
 		.then (notifications) ~>
 			@notifications = notifications
 			@loading = false

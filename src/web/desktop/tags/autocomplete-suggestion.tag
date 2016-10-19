@@ -82,6 +82,8 @@ style.
 				color rgba(0, 0, 0, 0.3)
 
 script.
+	@mixin \api
+
 	@q = @opts.q
 	@textarea = @opts.textarea
 	@loading = true
@@ -95,7 +97,7 @@ script.
 		Array.prototype.for-each.call all, (el) ~>
 			el.add-event-listener \mousedown @mousedown
 
-		api \users/search_by_username do
+		@api \users/search_by_username do
 			query: @q
 			limit: 30users
 		.then (users) ~>

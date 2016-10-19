@@ -235,6 +235,7 @@ style.
 			border-radius 3px
 
 script.
+	@mixin \api
 	@mixin \get-password-strength
 
 	@username-state = null
@@ -277,7 +278,7 @@ script.
 			@username-state = \wait
 			@update!
 
-			api \username/available do
+			@api \username/available do
 				username: username
 			.then (result) ~>
 				if result.available
@@ -326,12 +327,12 @@ script.
 
 		locker = document.body.append-child document.create-element \mk-locker
 
-		api CONFIG.urls.signup, do
+		@api CONFIG.urls.signup, do
 			username: username
 			password: password
 			'g-recaptcha-response': grecaptcha.get-response!
 		.then ~>
-			api CONFIG.urls.signin, do
+			@api CONFIG.urls.signin, do
 				username: username
 				password: password
 			.then ~>

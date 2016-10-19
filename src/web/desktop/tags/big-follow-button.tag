@@ -94,10 +94,12 @@ style.
 			opacity 0.7
 
 script.
+	@mixin \api
+	@mixin \is-promise
 	@mixin \stream
 
 	@user = null
-	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
+	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
 	@init = false
 	@wait = false
 
@@ -125,7 +127,7 @@ script.
 	@onclick = ~>
 		@wait = true
 		if @user.is_following
-			api \following/delete do
+			@api \following/delete do
 				user: @user.id
 			.then ~>
 				@user.is_following = false
@@ -135,7 +137,7 @@ script.
 				@wait = false
 				@update!
 		else
-			api \following/create do
+			@api \following/create do
 				user: @user.id
 			.then ~>
 				@user.is_following = true

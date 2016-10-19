@@ -57,8 +57,10 @@ style.
 				margin-right 8px
 
 script.
+	@mixin \is-promise
+
 	@user = null
-	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
+	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
 
 	@on \mount ~>
 		@user-promise.then (user) ~>

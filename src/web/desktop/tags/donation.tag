@@ -45,6 +45,7 @@ style.
 			margin-bottom 16px
 
 script.
+	@mixin \api
 	@mixin \i
 	@mixin \ui
 
@@ -53,7 +54,7 @@ script.
 		e.stop-propagation!
 		
 		@I.data.no_donation = true
-		api \i/appdata/set do
+		@api \i/appdata/set do
 			data: JSON.stringify do
 				no_donation: @I.data.no_donation
 		.then ~>

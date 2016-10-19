@@ -435,6 +435,7 @@ style.
 			display none
 
 script.
+	@mixin \api
 	@mixin \stream
 
 	@user = @opts.user
@@ -446,7 +447,7 @@ script.
 	@on \mount ~>
 		@stream.on \talk_message @on-stream-talk-message
 
-		api \talk/messages do
+		@api \talk/messages do
 			user: if @user? then @user.id else undefined
 			group: if @group? then @group.id else undefined
 		.then (messages) ~>
@@ -462,7 +463,7 @@ script.
 
 	@say = ~>
 		@saying = true
-		api \talk/messages/create do
+		@api \talk/messages/create do
 			user: if @user? then @user.id else undefined
 			group: if @group? then @group.id else undefined
 			text: @text.value

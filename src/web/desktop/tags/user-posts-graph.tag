@@ -7,15 +7,18 @@ style.
 	height 250px
 
 script.
+	@mixin \api
+	@mixin \is-promise
+
 	@user = null
-	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
+	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
 
 	@on \mount ~>
 		user <~ @user-promise.then
 		@user = user
 		@update!
 
-		api \aggregation/users/post do
+		@api \aggregation/users/post do
 			user: @user.id
 			limit: 30days
 		.then (data) ~>

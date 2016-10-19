@@ -121,6 +121,8 @@ style.
 				border-color $theme-color
 
 script.
+	@mixin \api
+
 	@event = @opts.event
 	@wait = false
 	@quote = false
@@ -130,7 +132,7 @@ script.
 
 	@ok = ~>
 		@wait = true
-		api 'posts/create' do
+		@api \posts/create do
 			repost: @opts.post.id
 			text: if @quote then @text.value else undefined
 		.then (data) ~>

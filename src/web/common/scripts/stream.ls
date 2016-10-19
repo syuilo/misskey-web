@@ -4,7 +4,7 @@
 ReconnectingWebSocket = require 'reconnecting-websocket'
 riot = require 'riot'
 
-function init
+function init me
 	state = \initializing
 	state-ev = riot.observable!
 	event = riot.observable!
@@ -15,7 +15,7 @@ function init
 		state := \connected
 		state-ev.trigger \connected
 		socket.send JSON.stringify do
-			i: I._web
+			i: me._web
 
 	socket.onclose = ~>
 		state := \reconnecting
@@ -40,4 +40,4 @@ function init
 # Export
 #--------------------------------
 
-module.exports = ~> init!
+module.exports = init

@@ -36,12 +36,14 @@ style.
 			color #ccc
 
 script.
+	@mixin \i
+	@mixin \api
 	@mixin \stream
 
 	@is-loading = true
 	@is-empty = false
 	@more-loading = false
-	@no-following = I.following_count == 0
+	@no-following = @I.following_count == 0
 	@controller = riot.observable!
 	@event = @opts.event
 	@timeline = @tags[\mk-timeline]
@@ -73,7 +75,7 @@ script.
 				@controller.trigger \focus
 
 	@load = (cb) ~>
-		api \posts/timeline
+		@api \posts/timeline
 		.then (posts) ~>
 			@is-loading = false
 			@is-empty = posts.length == 0
@@ -89,7 +91,7 @@ script.
 			return
 		@more-loading = true
 		@update!
-		api \posts/timeline do
+		@api \posts/timeline do
 			max: @timeline.posts[@timeline.posts.length - 1].id
 		.then (posts) ~>
 			@more-loading = false

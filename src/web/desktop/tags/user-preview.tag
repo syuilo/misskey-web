@@ -94,12 +94,14 @@ style.
 		right 8px
 
 script.
+	@mixin \api
+
 	@u = @opts.user
 	@user = null
 	@user-promise =
 		if typeof @u == \string
 			new Promise (resolve, reject) ~>
-				api \users/show do
+				@api \users/show do
 					id: if @u.0 == \@ then undefined else @u
 					username: if @u.0 == \@ then @u.substr 1 else undefined
 				.then (user) ~>

@@ -53,13 +53,14 @@ style.
 			padding 16px 16px 16px 0
 
 script.
+	@mixin \i
 	@event = @opts.event
 
 	@home = []
 	@tl-event = riot.observable!
 
 	@on \mount ~>
-		I.data.home.for-each (widget) ~>
+		@I.data.home.for-each (widget) ~>
 			el = document.create-element \mk- + widget.name + \-home-widget
 			switch widget.place
 				| \left => @left.append-child el

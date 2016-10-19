@@ -303,7 +303,7 @@ style.
 		pointer-events none
 
 script.
-
+	@mixin \api
 	@mixin \autocomplete
 	@mixin \sortable
 
@@ -437,7 +437,7 @@ script.
 			then @files.map (f) -> f.id
 			else undefined
 
-		api 'posts/create' do
+		@api \posts/create do
 			text: @text.value
 			images: files
 			reply_to: if @opts.reply? then @opts.reply.id else undefined

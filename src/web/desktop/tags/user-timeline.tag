@@ -35,10 +35,12 @@ style.
 			color #ccc
 
 script.
+	@mixin \api
+	@mixin \is-promise
 	@mixin \get-post-summary
 
 	@user = null
-	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
+	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
 	@is-loading = true
 	@is-empty = false
 	@more-loading = false
@@ -71,7 +73,7 @@ script.
 				@controller.trigger \focus
 
 	@load = (cb) ~>
-		api \users/posts do
+		@api \users/posts do
 			user: @user.id
 		.then (posts) ~>
 			@is-loading = false
@@ -88,7 +90,7 @@ script.
 			return
 		@more-loading = true
 		@update!
-		api \users/posts do
+		@api \users/posts do
 			user: @user.id
 			max: @timeline.posts[@timeline.posts.length - 1].id
 		.then (posts) ~>

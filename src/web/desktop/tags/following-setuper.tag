@@ -125,6 +125,7 @@ style.
 			padding 14px
 
 script.
+	@mixin \api
 	@mixin \user-preview
 
 	@users = null
@@ -140,7 +141,8 @@ script.
 		@loading = true
 		@users = null
 		@update!
-		api \users/recommendation do
+
+		@api \users/recommendation do
 			limit: @limit
 			offset: @limit * @page
 		.then (users) ~>

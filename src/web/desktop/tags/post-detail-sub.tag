@@ -109,6 +109,7 @@ style.
 					max-width 100%
 
 script.
+	@mixin \api
 	@mixin \text
 	@mixin \user-preview
 
@@ -148,13 +149,13 @@ script.
 	
 	@like = ~>
 		if @post.is_liked
-			api \posts/likes/delete do
+			@api \posts/likes/delete do
 				post: @post.id
 			.then ~>
 				@post.is_liked = false
 				@update!
 		else
-			api \posts/likes/create do
+			@api \posts/likes/create do
 				post: @post.id
 			.then ~>
 				@post.is_liked = true

@@ -7,21 +7,24 @@ style.
 	height 250px
 
 script.
+	@mixin \api
+	@mixin \is-promise
+
 	@user = null
-	@user-promise = if is-promise @opts.user then @opts.user else Promise.resolve @opts.user
+	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
 
 	@on \mount ~>
 		user <~ @user-promise.then
 		@user = user
 		@update!
 
-		api \aggregation/users/followers do
+		@api \aggregation/users/followers do
 			user: @user.id
 			limit: 30days
 		.then (followers) ~>
 			followers = followers.reverse!
 
-			api \aggregation/users/following do
+			@api \aggregation/users/following do
 				user: @user.id
 				limit: 30days
 			.then (following) ~>

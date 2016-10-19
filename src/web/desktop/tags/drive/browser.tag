@@ -270,6 +270,7 @@ style.
 		display none
 
 script.
+	@mixin \api
 	@mixin \dialog
 	@mixin \input-dialog
 	@mixin \stream
@@ -426,7 +427,7 @@ script.
 			if (@files.some (f) ~> f.id == file)
 				return false
 			@remove-file file
-			api 'drive/files/update' do
+			@api \drive/files/update do
 				file: file
 				folder: if @folder? then @folder.id else \null
 			.then ~>
@@ -443,7 +444,7 @@ script.
 			if (@folders.some (f) ~> f.id == folder)
 				return false
 			@remove-folder folder
-			api 'drive/folders/update' do
+			@api \drive/folders/update do
 				folder: folder
 				parent: if @folder? then @folder.id else \null
 			.then ~>
@@ -486,7 +487,7 @@ script.
 			'フォルダー名'
 			null
 
-		api 'drive/folders/create' do
+		@api \drive/folders/create do
 			name: name
 			folder: if @folder? then @folder.id else undefined
 		.then (folder) ~>
@@ -538,7 +539,7 @@ script.
 		@loading = true
 		@update!
 
-		api 'drive/folders/show' do
+		@api \drive/folders/show do
 			folder: target-folder
 		.then (folder) ~>
 			@folder = folder
@@ -624,7 +625,7 @@ script.
 		files-max = 30
 
 		# フォルダ一覧取得
-		api 'drive/folders' do
+		@api \drive/folders do
 			folder: if @folder? then @folder.id else null
 			limit: folders-max + 1
 		.then (folders) ~>
@@ -637,7 +638,7 @@ script.
 			console.error err
 
 		# ファイル一覧取得
-		api 'drive/files' do
+		@api \drive/files do
 			folder: if @folder? then @folder.id else null
 			limit: files-max + 1
 		.then (files) ~>

@@ -391,11 +391,13 @@ style.
 						font-size 0.7em
 
 script.
+	@mixin \api
+
 	@event = @opts.event
 	@search-result = []
 
 	@on \mount ~>
-		api \talk/history
+		@api \talk/history
 		.then (history) ~>
 			@is-loading = false
 			history.for-each (message) ~>
@@ -418,7 +420,7 @@ script.
 		if q == ''
 			@search-result = []
 		else
-			api \users/search do
+			@api \users/search do
 				query: q
 			.then (users) ~>
 				users.for-each (user) ~>

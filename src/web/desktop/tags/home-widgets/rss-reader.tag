@@ -67,6 +67,8 @@ style.
 			margin-right 4px
 
 script.
+	@mixin \api
+
 	@url = 'http://news.yahoo.co.jp/pickup/rss.xml'
 	@items = []
 	@initializing = true
@@ -79,7 +81,7 @@ script.
 		clear-interval @clock
 
 	@fetch = ~>
-		api CONFIG.url + '/_/api/rss-proxy' do
+		@api CONFIG.url + '/_/api/rss-proxy' do
 			url: @url
 		.then (feed) ~>
 			@items = feed.rss.channel.item

@@ -41,11 +41,11 @@ riot.mixin \cropper do
 riot.mixin \sortable do
 	Sortable: require 'Sortable'
 
-boot ~>
-	if SIGNIN
-		stream!
+boot (me) ~>
+	if me?
+		stream me
 
-	route!
+	route me
 
 # ブラウザが通知をサポートしているか確認
 if \Notification in window

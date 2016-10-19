@@ -156,6 +156,8 @@ style.
 					to   {background-position: -64px 32px;}
 
 script.
+	@mixin \i
+
 	@uploads = []
 
 	@controller = @opts.controller
@@ -179,7 +181,7 @@ script.
 		reader.read-as-data-URL file
 
 		data = new FormData!
-		data.append \_i I._web
+		data.append \_i @I._web
 		data.append \file file
 
 		if folder?

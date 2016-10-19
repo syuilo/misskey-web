@@ -74,11 +74,13 @@ style.
 					line-height 16px
 
 script.
+	@mixin \api
+
 	@url = @opts.url
 	@loading = true
 
 	@on \mount ~>
-		api CONFIG.url + '/_/api/url' do
+		@api CONFIG.url + '/_/api/url' do
 			url: @url
 		.then (info) ~>
 			@title = info.title

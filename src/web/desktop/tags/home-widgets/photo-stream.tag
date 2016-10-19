@@ -62,6 +62,7 @@ style.
 			margin-right 4px
 
 script.
+	@mixin \api
 	@mixin \stream
 
 	@images = []
@@ -70,7 +71,7 @@ script.
 	@on \mount ~>
 		@stream.on \drive_file_created @on-stream-drive-file-created
 
-		api \drive/stream do
+		@api \drive/stream do
 			type: 'image/*'
 			limit: 9images
 		.then (images) ~>
