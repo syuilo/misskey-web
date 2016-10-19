@@ -19,24 +19,8 @@ const router = express.Router();
 
 router.post(`${signupDomain}/`, require('./core/signup').default);
 
-router.get(`${signupDomain}/`, (req, res) => {
-	if (res.locals.signin) {
-		res.redirect(config.url);
-	} else {
-		render(req, res, 'signup');
-	}
-});
-
 router.post(`${signinDomain}/`, (req, res) => {
 	signin(req.body.username, req.body.password, res);
-});
-
-router.get(`${signinDomain}/`, (req, res) => {
-	if (res.locals.signin) {
-		res.redirect(config.url);
-	} else {
-		render(req, res, 'signin');
-	}
 });
 
 router.get(`${signoutDomain}/`, (req, res) => {
