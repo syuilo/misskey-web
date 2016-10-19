@@ -26,6 +26,7 @@ require './common/tags.ls'
 #--------------------------------
 
 fetchme = require './fetchme.ls'
+mixins = require './mixins.ls'
 
 # Get token from cookie
 i = ((document.cookie.match /i=(\w+)/) || [null null]).1
@@ -35,7 +36,6 @@ module.exports = (cb) ~>
 	me <~ fetchme i
 
 	# activate mixins
-	mixins = require './mixins.ls'
 	mixins me
 
 	cb me
