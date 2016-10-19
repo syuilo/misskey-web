@@ -4,7 +4,7 @@ mk-core-error
 	h1: mk-ripple-string サーバーに接続できません
 	p.text
 		| インターネット回線に問題があるか、サーバーがダウンまたはメンテナンスしている可能性があります。しばらくしてから
-		a(onclick={ refresh }) 再度お試し
+		a(onclick={ retry }) 再度お試し
 		| ください。
 	p.thanks いつもMisskeyをご利用いただきありがとうございます。
 
@@ -59,6 +59,6 @@ style.
 		border-top solid 1px #eee
 
 script.
-	@refresh = ~>
+	@retry = ~>
 		@unmount!
-		@opts.refresh!
+		@opts.retry!

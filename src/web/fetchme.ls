@@ -29,6 +29,7 @@ fetchme = (_i, cb) ~>
 		me := i
 		me._web = _i
 
+		# initialize it if user data is empty
 		if me.data?
 			done!
 		else
@@ -38,7 +39,7 @@ fetchme = (_i, cb) ~>
 		info = document.create-element \mk-core-error
 			|> document.body.append-child
 		riot.mount info, do
-			refresh: ~> fetchme _i, cb
+			retry: ~> fetchme _i, cb
 
 	function done
 		if cb? then cb me
