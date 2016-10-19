@@ -1,8 +1,6 @@
 # DESKTOP CLIENT SCRIPT
 #================================
 
-riot = require \riot
-
 # Define common tags
 #--------------------------------
 
