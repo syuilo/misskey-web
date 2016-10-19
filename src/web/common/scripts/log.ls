@@ -1,3 +1,3 @@
-module.exports = (msg) ~>
-	if SIGNIN && I.data.debug
+module.exports = (me, msg) ~>
+	if me? && me.data.debug
 		console.log msg
