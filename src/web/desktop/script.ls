@@ -1,7 +1,7 @@
 # DESKTOP CLIENT SCRIPT
 #================================
 
-# Define common tags
+# Define tags
 #--------------------------------
 
 require './tags.ls'
