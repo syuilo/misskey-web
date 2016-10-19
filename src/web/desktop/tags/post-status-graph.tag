@@ -9,9 +9,10 @@ style.
 
 script.
 	@mixin \api
+	@mixin \is-promise
 
 	@post = null
-	@post-promise = if is-promise @opts.post then @opts.post else Promise.resolve @opts.post
+	@post-promise = if @is-promise @opts.post then @opts.post else Promise.resolve @opts.post
 
 	@on \mount ~>
 		post <~ @post-promise.then
