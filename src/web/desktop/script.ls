@@ -25,11 +25,11 @@ if \Notification in window
 #--------------------------------
 
 boot = require '../base.ls'
+mixins = require './mixins.ls'
 route = require './router.ls'
 
 boot (me) ~>
 	# activate mixins
-	mixins = require './mixins.ls'
 	mixins me
 
 	# routing
