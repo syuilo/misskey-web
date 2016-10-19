@@ -324,6 +324,7 @@ script.
 	@mixin \api
 	@mixin \text
 	@mixin \user-preview
+	@mixin \NotImplementedException
 
 	@fetching = true
 	@loading-context = false

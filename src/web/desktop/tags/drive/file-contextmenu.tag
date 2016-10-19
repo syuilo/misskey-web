@@ -23,6 +23,8 @@ mk-drive-browser-file-contextmenu
 				| ファイルをアップロード
 
 script.
+	@mixin \NotImplementedException
+
 	@controller = @opts.controller
 	@browser-controller = @opts.browser-controller
 	@ctx-controller = riot.observable!
@@ -36,7 +38,7 @@ script.
 		@unmount!
 	
 	@copy-url = ~>
-		NotImplementedException!
+		@NotImplementedException!
 
 	@download = ~>
 		#@browser-controller.trigger \download @file

@@ -113,6 +113,7 @@ script.
 	@mixin \i
 	@mixin \is-promise
 	@mixin \update-banner
+	@mixin \NotImplementedException
 
 	@user = null
 	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user

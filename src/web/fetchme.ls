@@ -1,5 +1,5 @@
 #================================
-# Boot loader
+# Fetch me
 #================================
 
 riot = require \riot
@@ -7,7 +7,7 @@ riot = require \riot
 api = require './common/scripts/api.ls'
 generate-default-userdata = require './common/scripts/generate-default-userdata.ls'
 
-boot = (_i, cb) ~>
+fetchme = (_i, cb) ~>
 	me = null
 
 	if not _i?
@@ -38,7 +38,7 @@ boot = (_i, cb) ~>
 		info = document.create-element \mk-core-error
 			|> document.body.append-child
 		riot.mount info, do
-			refresh: ~> boot cb
+			refresh: ~> fetchme _i, cb
 
 	function done
 		init = document.get-element-by-id \init
@@ -59,4 +59,4 @@ boot = (_i, cb) ~>
 			me.data = data
 			done!
 
-module.exports = boot
+module.exports = fetchme

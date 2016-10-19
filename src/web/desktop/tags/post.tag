@@ -304,6 +304,7 @@ script.
 	@mixin \api
 	@mixin \text
 	@mixin \user-preview
+	@mixin \NotImplementedException
 
 	@post = @opts.post
 	@is-repost = @post.repost? and !@post.text?

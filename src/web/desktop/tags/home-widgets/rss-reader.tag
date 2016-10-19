@@ -68,6 +68,7 @@ style.
 
 script.
 	@mixin \api
+	@mixin \NotImplementedException
 
 	@url = 'http://news.yahoo.co.jp/pickup/rss.xml'
 	@items = []
@@ -91,4 +92,4 @@ script.
 			console.error err
 
 	@settings = ~>
-		NotImplementedException!
+		@NotImplementedException!
