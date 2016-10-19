@@ -67,15 +67,4 @@ router.get('*', (req, res) => {
 	});
 });
 
-/**
- * Error handler
- */
-router.use((err: any, req: express.Request, res: express.Response, next: any) => {
-	console.error(err);
-	//render(req, res, 'error', err);
-	res.render(`${__dirname}/web/error`, {
-		error: err
-	});
-});
-
 export default router;
