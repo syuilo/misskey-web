@@ -426,7 +426,7 @@ script.
 		@controller.trigger \change-files @files
 		@update!
 
-		@Sortable.create @attaches, do
+		new @Sortable @attaches, do
 			draggable: \.file
 			animation: 150ms
 
