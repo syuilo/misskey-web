@@ -38,4 +38,13 @@ module.exports = (cb) ~>
 	# activate mixins
 	mixins me
 
+	# destroy loading screen
+	init = document.get-element-by-id \init
+	init.parent-node.remove-child init
+
+	# set main element
+	document.create-element \div
+		..set-attribute \id \app
+		.. |> document.body.append-child
+
 	cb me

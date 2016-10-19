@@ -41,13 +41,6 @@ fetchme = (_i, cb) ~>
 			refresh: ~> fetchme _i, cb
 
 	function done
-		init = document.get-element-by-id \init
-		init.parent-node.remove-child init
-
-		document.create-element \div
-			..set-attribute \id \kyoppie
-			.. |> document.body.append-child
-
 		if cb? then cb me
 
 	function init

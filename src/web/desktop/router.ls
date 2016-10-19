@@ -53,5 +53,5 @@ riot = require \riot
 
 function mount content
 	if page? then page.unmount!
-	body = document.get-element-by-id \kyoppie
+	body = document.get-element-by-id \app
 	page := riot.mount body.append-child content .0
