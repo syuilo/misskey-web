@@ -31,7 +31,7 @@ mixins = require './mixins.ls'
 # Get token from cookie
 i = ((document.cookie.match /i=(\w+)/) || [null null]).1
 
-module.exports = (cb) ~>
+module.exports = (callback) ~>
 	# fetch me
 	me <~ fetchme i
 
@@ -47,4 +47,4 @@ module.exports = (cb) ~>
 		..set-attribute \id \app
 		.. |> document.body.append-child
 
-	cb me
+	callback me
