@@ -4,7 +4,7 @@
 riot = require 'riot'
 dialog = require './dialog.ls'
 
-module.exports = (cb) ~>
+module.exports = (I, cb) ~>
 	browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
 	browser-controller = riot.observable!
 	riot.mount browser, do

@@ -147,6 +147,6 @@ script.
 		if not @SIGNIN or @I.id != @user.id
 			return
 
-		@update-banner (i) ~>
+		@update-banner @I, (i) ~>
 			@user.banner_url = i.banner_url
 			@update!

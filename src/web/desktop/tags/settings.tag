@@ -198,7 +198,7 @@ script.
 		@page = \password
 
 	@avatar = ~>
-		@update-avatar (i) ~>
+		@update-avatar @I, (i) ~>
 			@update-i i
 
 	@update-account = ~>
