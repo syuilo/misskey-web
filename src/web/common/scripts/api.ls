@@ -11,6 +11,8 @@ riot.mixin \core do
 module.exports = (i, endpoint, data) ->
 	api-stack++
 
+	if typeof i == \object then i = i._web
+
 	body = []
 
 	for k, v of data

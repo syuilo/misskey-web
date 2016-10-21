@@ -3,6 +3,7 @@
 
 riot = require 'riot'
 dialog = require './dialog.ls'
+api = require '../../common/scripts/api.ls'
 
 module.exports = (I, cb) ~>
 	browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
@@ -24,11 +25,11 @@ module.exports = (I, cb) ~>
 			data = new FormData!
 			data.append \_i I._web
 			data.append \file blob, file.name + '.cropped.png'
-			api 'drive/folders/find' do
+			api I, \drive/folders/find do
 				name: 'バナー'
 			.then (banner-folder) ~>
 				if banner-folder.length == 0
-					api 'drive/folders/create' do
+					api I, \drive/folders/create do
 						name: 'バナー'
 					.then (banner-folder) ~>
 						@uplaod data, banner-folder
@@ -49,7 +50,7 @@ module.exports = (I, cb) ~>
 			data.append \folder folder.id
 
 		xhr = new XMLHttpRequest!
-		xhr.open \POST CONFIG.api.url + '/drive/files/create' true
+		xhr.open \POST CONFIG.api.url + \/drive/files/create true
 		xhr.onload = (e) ~>
 			file = JSON.parse e.target.response
 			progress-controller.trigger \close
@@ -62,7 +63,7 @@ module.exports = (I, cb) ~>
 		xhr.send data
 
 	@set = (file) ~>
-		api 'i/update' do
+		api I, \i/update do
 			banner: file.id
 		.then (i) ~>
 			dialog do
