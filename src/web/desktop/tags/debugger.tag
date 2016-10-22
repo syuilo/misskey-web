@@ -5,15 +5,19 @@ mk-debugger
 		| Debugger
 		</yield>
 		<yield to="content">
-		section
+		section.progress-dialog
 			h1 progress-dialog
-			button(onclick={ parent.progress-dialog }) i.fa.fa-play
+			button.style-normal(onclick={ parent.progress-dialog }): i.fa.fa-play
+			button.style-normal(onclick={ parent.progress-dialog-destroy }): i.fa.fa-stop
+			label
+				p TITLE
+				input@progress-title(value='Title')
 			label
 				p VAL
-				input(type='number', oninput={ parent.progress-change }, value=0)
+				input@progress-value(type='number', oninput={ parent.progress-change }, value=0)
 			label
 				p MAX
-				input(type='number', oninput={ parent.progress-change }, value=100)
+				input@progress-max(type='number', oninput={ parent.progress-change }, value=100)
 		</yield>
 
 style.
@@ -46,6 +50,11 @@ style.
 						display inline
 						margin 0
 
+			> .progress-dialog
+				button
+					display inline-block
+					margin 8px
+
 script.
 	@mixin \open-window
 
@@ -54,13 +63,29 @@ script.
 	@on \mount ~>
 		@window-controller.trigger \open
 
+		@progress-title = @tags['mk-window'].progress-title
+		@progress-value = @tags['mk-window'].progress-value
+		@progress-max = @tags['mk-window'].progress-max
+
 	@window-controller.on \closed ~>
 		@unmount!
 
 	################################
 
+	@progress-controller = riot.observable!
+
 	@progress-dialog = ~>
-		@progress-controller = riot.observable!
 		@open-window \mk-progress-dialog do
-			title: 'Title'
+			title: @progress-title.value
+			value: @progress-value.value
+			max: @progress-max.value
 			controller: @progress-controller
+
+	@progress-change = ~>
+		@progress-controller.trigger do
+			\update
+			@progress-value.value
+			@progress-max.value
+
+	@progress-dialog-destroy = ~>
+		@progress-controller.trigger \close
