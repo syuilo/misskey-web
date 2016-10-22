@@ -1,5 +1,5 @@
 mk-repost-form-window
-	mk-window(controller={ window-controller }, is-modal={ true })
+	mk-window(controller={ window-controller }, is-modal={ true }, colored={ true })
 		<yield to="header">
 		i.fa.fa-retweet
 		| この投稿をRepostしますか？

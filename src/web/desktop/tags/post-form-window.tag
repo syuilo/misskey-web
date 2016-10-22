@@ -1,6 +1,6 @@
 mk-post-form-window
 
-	mk-window(controller={ window-controller }, is-modal={ true })
+	mk-window(controller={ window-controller }, is-modal={ true }, colored={ true })
 
 		<yield to="header">
 		span(if={ !parent.opts.reply }) 新規投稿

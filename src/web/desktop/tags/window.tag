@@ -1,4 +1,4 @@
-mk-window(data-flexible={ opts.height == null }, ondragover={ ondragover })
+mk-window(data-flexible={ opts.height == null }, data-colored={ opts.colored }, ondragover={ ondragover })
 	div.bg@bg(show={ is-modal }, onclick={ bg-click })
 	div.main@main
 		header@header(onmousedown={ on-header-mousedown })
@@ -43,8 +43,7 @@ style.
 			cursor move
 			background #fff
 			background-clip padding-box
-			//border-bottom solid 1px rgba($theme-color, 0.1)
-			box-shadow 0 1px 0 rgba($theme-color, 0.1)
+			box-shadow 0 1px 0 rgba(#000, 0.1)
 
 			&, *
 				-ms-user-select none
@@ -60,7 +59,7 @@ style.
 				font-size 1em
 				line-height 40px
 				font-weight normal
-				color #d0b4ac
+				color #666
 
 			> .close
 				-webkit-appearance none
@@ -75,17 +74,17 @@ style.
 				margin 0
 				padding 0
 				font-size 1.2em
-				color rgba($theme-color, 0.4)
+				color rgba(#000, 0.4)
 				border none
 				outline none
 				box-shadow none
 				background transparent
 
 				&:hover
-					color rgba($theme-color, 0.6)
+					color rgba(#000, 0.6)
 
 				&:active
-					color darken($theme-color, 30%)
+					color darken(#000, 30%)
 
 				> i
 					padding 0
@@ -99,6 +98,25 @@ style.
 	&:not([flexible])
 		> .main > .body
 			height calc(100% - 40px)
+
+	&[data-colored]
+
+		> .main
+
+			> header
+				box-shadow 0 1px 0 rgba($theme-color, 0.1)
+
+				> h1
+					color #d0b4ac
+
+				> .close
+					color rgba($theme-color, 0.4)
+
+					&:hover
+						color rgba($theme-color, 0.6)
+
+					&:active
+						color darken($theme-color, 30%)
 
 script.
 	@is-open = false
