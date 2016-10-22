@@ -8,7 +8,7 @@ mk-progress-dialog
 		div.body
 			p.percentage(if={ parent.value }) { Math.floor((parent.value / parent.max) * 100) }
 			progress(if={ parent.value && parent.value != parent.max }, value={ parent.value }, max={ parent.max })
-			div.progress.waiting(if={ parent.value == parent.max })
+			div.progress.waiting(if={ parent.value >= parent.max })
 		</yield>
 
 style.
