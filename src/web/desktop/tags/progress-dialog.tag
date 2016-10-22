@@ -6,8 +6,11 @@ mk-progress-dialog
 		</yield>
 		<yield to="content">
 		div.body
-			p.percentage(if={ parent.value }) { Math.floor((parent.value / parent.max) * 100) }
-			progress(if={ parent.value && parent.value != parent.max }, value={ parent.value }, max={ parent.max })
+			p.init(if={ isNaN(parent.value) })
+				| 待機中
+				mk-ellipsis
+			p.percentage(if={ !isNaN(parent.value) }) { Math.floor((parent.value / parent.max) * 100) }
+			progress(if={ !isNaN(parent.value) && parent.value < parent.max }, value={ isNaN(parent.value) ? 0 : parent.value }, max={ parent.max })
 			div.progress.waiting(if={ parent.value >= parent.max })
 		</yield>
 
@@ -16,15 +19,22 @@ style.
 
 	> mk-window
 		[data-yield='content']
+			font-family 'Meiryo', 'メイリオ', sans-serif
+
 			> .body
 				padding 18px 24px 24px 24px
+
+				> .init
+					display block
+					margin 0
+					text-align center
+					color rgba(#000, 0.7)
 
 				> .percentage
 					display block
 					margin 0 0 4px 0
 					text-align center
 					line-height 16px
-					font-family 'Meiryo', 'メイリオ', sans-serif
 					color rgba($theme-color, 0.7)
 
 					&:after
@@ -71,8 +81,8 @@ style.
 script.
 	@title = @opts.title
 	@controller = @opts.controller
-	@value = @opts.value
-	@max = @opts.max
+	@value = parse-int @opts.value, 10
+	@max = parse-int @opts.max, 10
 	@window-controller = riot.observable!
 
 	@on \mount ~>
@@ -82,8 +92,8 @@ script.
 		@unmount!
 
 	@controller.on \update (value, max) ~>
-		@value = value
-		@max = max
+		@value = parse-int value, 10
+		@max = parse-int max, 10
 		@update!
 
 	@controller.on \close ~>
