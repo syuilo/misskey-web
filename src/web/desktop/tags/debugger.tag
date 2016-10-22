@@ -10,13 +10,13 @@ mk-debugger
 			button.style-normal(onclick={ parent.progress-dialog }): i.fa.fa-play
 			button.style-normal(onclick={ parent.progress-dialog-destroy }): i.fa.fa-stop
 			label
-				p TITLE
+				p TITLE:
 				input@progress-title(value='Title')
 			label
-				p VAL
+				p VAL:
 				input@progress-value(type='number', oninput={ parent.progress-change }, value=0)
 			label
-				p MAX
+				p MAX:
 				input@progress-max(type='number', oninput={ parent.progress-change }, value=100)
 		</yield>
 
