@@ -1,4 +1,4 @@
-mk-window(class={ flexible: opts.height == null }, ondragover={ ondragover })
+mk-window(data-flexible={ opts.height == null }, ondragover={ ondragover })
 	div.bg@bg(show={ is-modal }, onclick={ bg-click })
 	div.main@main
 		header@header(onmousedown={ on-header-mousedown })
@@ -96,7 +96,7 @@ style.
 			position relative
 			height 100%
 
-	&:not(.flexible)
+	&:not([flexible])
 		> .main > .body
 			height calc(100% - 40px)
 
