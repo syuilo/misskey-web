@@ -7,7 +7,7 @@ mk-nav-home-widget
 	i ・
 	a 開発者
 	i ・
-	a デバッガ
+	a(onclick={ debug }) デバッガ
 
 style.
 	display block
@@ -22,3 +22,9 @@ style.
 
 	i
 		color #ccc
+
+script.
+	@mixin \open-window
+
+	@debug = ~>
+		@open-window \mk-debugger

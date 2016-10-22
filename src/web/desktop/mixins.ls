@@ -6,6 +6,8 @@ module.exports = (me) ~>
 
 	require './scripts/user-preview.ls'
 
+	require './scripts/open-window.ls'
+
 	dialog = require './scripts/dialog.ls'
 
 	riot.mixin \dialog do
