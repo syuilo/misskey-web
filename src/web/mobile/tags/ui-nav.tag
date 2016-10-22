@@ -160,3 +160,6 @@ style.
 
 		a
 			color #fff
+
+script.
+	@mixin \i
