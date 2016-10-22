@@ -13,6 +13,7 @@ mk-ui-header
 				mk-header-clock
 
 style.
+	display block
 	position fixed
 	top 0
 	z-index 1024

@@ -1,4 +1,6 @@
 require './tags/ui.tag'
+require './tags/ui-header.tag'
+require './tags/ui-nav.tag'
 require './tags/stream-indicator.tag'
 require './tags/page/home.tag'
 require './tags/home.tag'
