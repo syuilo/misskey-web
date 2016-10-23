@@ -56,6 +56,23 @@ mk-settings
 style.
 	display block
 
+	input:not([type])
+	input[type='text']
+	input[type='password']
+	input[type='email']
+	textarea
+		padding 8px
+		font-size 16px
+		color #555
+		border solid 1px #dadada
+		border-radius 4px
+
+		&:hover
+			border-color #aeaeae
+
+		&:focus
+			border-color #aeaeae
+
 	> .nav
 		position absolute
 		top 0
@@ -64,17 +81,13 @@ style.
 		height 100%
 		box-sizing border-box
 		padding 16px 0 0 0
-		background lighten($theme-color, 95%)
-		border-right solid 1px lighten($theme-color, 85%)
+		border-right solid 1px #ddd
 
 		> p
 			display block
-			padding 10px
-			margin 0 0 -1px 0
-			color lighten($theme-color, 30%)
-			background rgba(#fff, 0.5)
-			border-top solid 1px lighten($theme-color, 85%)
-			border-bottom solid 1px lighten($theme-color, 85%)
+			padding 10px 16px
+			margin 0
+			color #666
 			cursor pointer
 
 			-ms-user-select none
@@ -82,15 +95,17 @@ style.
 			-webkit-user-select none
 			user-select none
 
+			transition margin-left 0.2s ease
+
 			> i
 				margin-right 4px
 
+			&:hover
+				color #555
+
 			&.active
-				color $theme-color
-				background #fff
-				border-top solid 1px lighten($theme-color, 85%)
-				border-bottom solid 1px lighten($theme-color, 85%)
-				box-shadow 1px 0 #fff
+				margin-left 8px
+				color $theme-color !important
 
 	> .pages
 		position absolute
@@ -125,7 +140,7 @@ style.
 				> p
 					margin 0 0 8px 0
 					font-weight bold
-					color #666
+					color #999
 
 				&.checkbox
 					> input
