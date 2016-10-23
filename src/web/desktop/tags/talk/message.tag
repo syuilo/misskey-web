@@ -13,7 +13,7 @@ mk-talk-message(data-is-me={ message._is_me })
 			div.content(if={ message.is_deleted })
 				p.is-deleted このメッセージは削除されました
 		footer
-			time { message.created_at }
+			mk-time(time={ message.created_at })
 			i.fa.fa-pencil.is-edited(if={ message.is_edited })
 
 style.

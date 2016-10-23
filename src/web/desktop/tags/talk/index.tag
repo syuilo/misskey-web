@@ -19,7 +19,7 @@ mk-talk
 					header
 						span.name { _is_me ? recipient.name : user.name }
 						span.username { '@' + (_is_me ? recipient.username : user.username ) }
-						time { created_at }
+						mk-time(time={ created_at })
 					div.body
 						p.text
 							span.me(if={ _is_me }) あなた:
@@ -227,7 +227,7 @@ style.
 						font-weight bold
 						transition all 0.1s ease
 
-					> time
+					> mk-time
 						position absolute
 						top 16px
 						right 16px

@@ -459,7 +459,6 @@ script.
 
 	@on \unmount ~>
 		@stream.off \talk_message @on-stream-talk-message
-		alert \unmount
 
 	@say = ~>
 		@saying = true
