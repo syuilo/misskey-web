@@ -256,6 +256,7 @@ style.
 script.
 	@mixin \api
 	@mixin \text
+	@mixin \get-post-summary
 
 	@post = @opts.post
 	@is-repost = @post.repost? and !@post.text?
@@ -286,12 +287,12 @@ script.
 						url: t.content
 
 	@reply = ~>
-		if !@reply-form?
-			@reply-form = document.body.append-child document.create-element \mk-post-form-window
-			riot.mount @reply-form, do
-				controller: @reply-form-controller
-				reply: @p
-		@reply-form-controller.trigger \open
+		summary = @get-post-summary @p
+		text = window.prompt '「' + summary + '」への返信'
+		if text? and text != ''
+			@api \posts/create do
+				reply_to: @p.id
+				text: text
 
 	@repost = ~>
 		if !@repost-form?
