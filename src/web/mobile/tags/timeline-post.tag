@@ -79,7 +79,7 @@ style.
 
 		> p
 			margin 0
-			padding 16px 32px
+			padding 16px
 			line-height 28px
 
 			.avatar-anchor
@@ -101,7 +101,7 @@ style.
 		> mk-time
 			position absolute
 			top 16px
-			right 32px
+			right 16px
 			font-size 0.9em
 			line-height 28px
 
