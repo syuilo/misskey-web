@@ -13,6 +13,8 @@ module.exports = (i, endpoint, data) ->
 
 	if typeof i == \object then i = i._web
 
+	web = (endpoint.index-of '://') > -1
+
 	body = []
 
 	for k, v of data
@@ -20,10 +22,8 @@ module.exports = (i, endpoint, data) ->
 			v = encodeURIComponent v
 			body.push "#k=#v"
 
-	if i?
+	if i? and not web
 		body.push "_i=#i"
-
-	web = (endpoint.index-of '://') > -1
 
 	opts =
 		method: \POST
