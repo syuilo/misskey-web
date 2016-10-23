@@ -43,9 +43,9 @@ style.
 			padding 8px
 
 script.
-	@mixin \core
+	@mixin \net
 
-	@core.on \detected-slow-network ~>
+	@net.on \detected-slow-network ~>
 		Velocity @root, {
 			opacity: 1
 		} 200ms \linear
