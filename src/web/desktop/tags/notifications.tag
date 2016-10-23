@@ -1,6 +1,6 @@
 mk-notifications
 	div.notifications(if={ notifications.length != 0 })
-		virtual(each={ notification in notifications })
+		virtual(each={ notification, i in notifications })
 			div.notification(class={ notification.type })
 				mk-time(time={ notification.created_at })
 
@@ -29,6 +29,14 @@ mk-notifications
 						p
 							i.fa.fa-user-plus
 							a(href= config.url + '/' + { notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
+
+			p.date(if={ i != notifications.length - 1 && notification._date != notifications[i + 1]._date })
+				span
+					i.fa.fa-angle-up
+					| { notification._datetext }
+				span
+					i.fa.fa-angle-down
+					| { notifications[i + 1]._datetext }
 
 	p.empty(if={ notifications.length == 0 && !loading })
 		| ありません！
@@ -125,6 +133,22 @@ style.
 				.post-preview
 					color rgba(0, 0, 0, 0.7)
 
+		> .date
+			display block
+			margin 0
+			line-height 32px
+			text-align center
+			font-size 0.8em
+			color #aaa
+			background #fdfdfd
+			border-bottom solid 1px rgba(0, 0, 0, 0.05)
+
+			span
+				margin 0 16px
+
+			i
+				margin-right 8px
+
 	> .empty
 		margin 0
 		padding 16px
@@ -166,3 +190,10 @@ script.
 	@on-notification = (notification) ~>
 		@notifications.unshift notification
 		@update!
+
+	@on \update ~>
+		@notifications.for-each (notification) ~>
+			date = (new Date notification.created_at).get-date!
+			month = (new Date notification.created_at).get-month! + 1
+			notification._date = date
+			notification._datetext = month + '月 ' + date + '日'
