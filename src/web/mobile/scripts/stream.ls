@@ -2,7 +2,7 @@
 #================================
 
 stream = require '../../common/scripts/stream.ls'
-riot = require 'riot'
+riot = require \riot
 
 function init me
 	s = stream me

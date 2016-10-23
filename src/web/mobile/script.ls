@@ -1,12 +1,26 @@
-boot = require '../base.ls'
-riot = require 'riot'
+# MOBILE CLIENT SCRIPT
+#================================
+
+# Define tags
+#--------------------------------
+
 require './tags.ls'
-stream = require './scripts/stream.ls'
+
+# Dependency
+#--------------------------------
+
 require './scripts/sp-slidemenu.js'
+
+# Boot
+#--------------------------------
+
+boot = require '../base.ls'
+mixins = require './mixins.ls'
 route = require './router.ls'
 
 boot (me) ~>
-	if me?
-		stream me
+	# activate mixins
+	mixins me
 
+	# routing
 	route me

@@ -3,10 +3,10 @@ riot = require \riot
 spinner = null
 api-stack = 0
 
-core = riot.observable!
+net = riot.observable!
 
-riot.mixin \core do
-	core: core
+riot.mixin \net do
+	net: net
 
 module.exports = (i, endpoint, data) ->
 	api-stack++
@@ -44,7 +44,7 @@ module.exports = (i, endpoint, data) ->
 
 	new Promise (resolve, reject) ->
 		timer = set-timeout ->
-			core.trigger \detected-slow-network
+			net.trigger \detected-slow-network
 		, 5000ms
 		fetch ep, opts
 		.then (res) ->

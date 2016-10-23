@@ -4,6 +4,7 @@ mk-ui-header
 		div.content
 			button.nav#hamburger: i.fa.fa-bars
 			h1 Misskey
+			button.post(onclick={ post }): i.fa.fa-paper-plane-o
 
 style.
 	$height = 42px
@@ -13,7 +14,7 @@ style.
 	top 0
 	z-index 1024
 	width 100%
-	box-shadow 0 1px 0 rgba(0, 0, 0, 0.075)
+	box-shadow 0 1px 0 rgba(#000, 0.075)
 
 	> .main
 		position relative
@@ -27,7 +28,7 @@ style.
 			height $height
 			-webkit-backdrop-filter blur(12px)
 			backdrop-filter blur(12px)
-			background-color rgba(255, 255, 255, 0.75)
+			background-color rgba(#fff, 0.75)
 
 		> .content
 			position relative
@@ -64,6 +65,21 @@ style.
 				> i
 					transition all 0.2s ease
 
+			> .post
+				display block
+				position absolute
+				top 0
+				right 0
+				width $height
+				font-size 1.4em
+				line-height $height
+				border-left solid 1px rgba(#000, 0.1)
+
 script.
+	@mixin \core
+
 	@on \mount ~>
 		@opts.ready!
+
+	@post = ~>
+		@core.trigger \post
