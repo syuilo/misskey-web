@@ -248,5 +248,7 @@ style.
 				opacity 0.5
 
 script.
+	@mixin \i
+
 	@message = @opts.message
-	@message._is_me = @message.user.id == I.id
+	@message._is_me = @message.user.id == @I.id

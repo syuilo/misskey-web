@@ -14,8 +14,8 @@ mk-talk
 	div.main
 		div.history(if={ history.length > 0 })
 			virtual(each={ history })
-				a(data-is-me={ _is_me }, onclick={ _click })
-					img.avatar(src={ (_is_me ? recipient.avatar_url : user.avatar_url) + '?thumbnail&size=32' }, alt='')
+				a.user(data-is-me={ _is_me }, onclick={ _click })
+					img.avatar(src={ (_is_me ? recipient.avatar_url : user.avatar_url) + '?thumbnail&size=64' }, alt='')
 					header
 						span.name { _is_me ? recipient.name : user.name }
 						span.username { '@' + (_is_me ? recipient.username : user.username ) }
@@ -235,13 +235,9 @@ style.
 						color rgba(0, 0, 0, 0.5)
 						font-size small
 
-		&.user
-			> a
-				> article
-
+				&.user
 					> header
-
-						> .screen-name
+						> .username
 							text-align left
 							margin 0 0 0 8px
 							color rgba(0, 0, 0, 0.5)
@@ -273,12 +269,8 @@ style.
 							max-width 100%
 							max-height 512px
 
-		&.group
-			> a
-				> article
-
+				&.group
 					> header
-
 						> .members-count
 							text-align left
 							margin 0 0 0 8px
@@ -391,6 +383,7 @@ style.
 						font-size 0.7em
 
 script.
+	@mixin \i
 	@mixin \api
 
 	@event = @opts.event
@@ -401,7 +394,7 @@ script.
 		.then (history) ~>
 			@is-loading = false
 			history.for-each (message) ~>
-				message._is_me = message.user? and message.user.id == I.id
+				message._is_me = message.user? and message.user.id == @I.id
 				message._click = ~>
 					if message.recipient?
 						if message._is_me
