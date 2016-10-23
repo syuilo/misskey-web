@@ -7,7 +7,7 @@ mk-ui-header
 			button.post(onclick={ post }): i.fa.fa-paper-plane-o
 
 style.
-	$height = 42px
+	$height = 46px
 
 	display block
 	position fixed
