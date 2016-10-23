@@ -1,7 +1,7 @@
 mk-timeline-post(class={ repost: is-repost })
 
 	div.reply-to(if={ p.reply_to })
-		mk-post-sub(post={ p.reply_to })
+		mk-timeline-post-sub(post={ p.reply_to })
 
 	div.repost(if={ is-repost })
 		p
@@ -109,7 +109,6 @@ style.
 			padding-top 8px
 
 	> .reply-to
-		padding 0 16px
 		background rgba(0, 0, 0, 0.0125)
 
 		> mk-post-preview
