@@ -13,14 +13,12 @@ mk-timeline
 
 style.
 	display block
+	background #fff
+	background-clip content-box
 
 	> mk-timeline-post
 		border-bottom solid 1px #eaeaea
 
-		&:first-child
-			border-top-left-radius 4px
-			border-top-right-radius 4px
-		
 		&:last-of-type
 			border-bottom none
 
@@ -46,6 +44,11 @@ style.
 		border-top solid 1px #eaeaea
 		border-bottom-left-radius 4px
 		border-bottom-right-radius 4px
+
+	@media (min-width 500px)
+		border solid 1px rgba(#000, 0.1)
+		border-radius 6px
+		overflow hidden
 
 script.
 	@posts = []

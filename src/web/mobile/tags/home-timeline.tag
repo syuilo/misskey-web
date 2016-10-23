@@ -12,7 +12,6 @@ mk-home-timeline
 
 style.
 	display block
-	background #fff
 
 	> .loading
 		padding 64px 0
