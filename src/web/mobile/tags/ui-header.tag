@@ -3,7 +3,7 @@ mk-ui-header
 		div.backdrop
 		div.content
 			button.nav#hamburger: i.fa.fa-bars
-			h1 Misskey
+			h1@title Misskey
 			button.post(onclick={ post }): i.fa.fa-paper-plane-o
 
 style.
@@ -49,7 +49,7 @@ style.
 				overflow hidden
 				text-overflow ellipsis
 
-				i
+				> i
 					margin-right 8px
 
 			> .nav
@@ -77,9 +77,13 @@ style.
 
 script.
 	@mixin \core
+	@mixin \ui
 
 	@on \mount ~>
 		@opts.ready!
 
 	@post = ~>
 		@core.trigger \post
+
+	@ui.on \title (title) ~>
+		@title.innerHTML = title

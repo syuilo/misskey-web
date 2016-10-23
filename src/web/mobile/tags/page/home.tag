@@ -5,6 +5,7 @@ style.
 	display block
 
 script.
+	@mixin \ui
 	@mixin \ui-progress
 	@mixin \stream
 	@mixin \get-post-summary
@@ -14,7 +15,10 @@ script.
 
 	@on \mount ~>
 		document.title = 'Misskey'
+		@ui.trigger \title '<i class="fa fa-home"></i>ホーム'
+
 		@Progress.start!
+
 		@stream.on \post @on-stream-post
 		document.add-event-listener \visibilitychange @window-on-visibilitychange, false
 
