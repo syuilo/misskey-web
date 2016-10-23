@@ -80,9 +80,9 @@ script.
 	@loading = true
 
 	@on \mount ~>
-		@api CONFIG.url + '/_/api/url' do
-			url: @url
-		.then (info) ~>
+		fetch CONFIG.url + '/_/api/url?url=' + @url
+		.then (res) ~>
+			info <~ res.json!.then
 			@title = info.title
 			@description = info.description
 			@thumbnail = wrap info.thumbnail

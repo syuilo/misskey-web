@@ -36,7 +36,7 @@ router.get(`${signoutDomain}/`, (req, res) => {
 /**
  * API handlers
  */
-router.post('/_/api/url', require('./api/url').default);
+router.get('/_/api/url', require('./api/url').default);
 router.post('/_/api/rss-proxy', require('./api/rss-proxy').default);
 
 router.get(`${mobileDomain}/*`, (req, res) => {
