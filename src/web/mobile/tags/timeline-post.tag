@@ -35,13 +35,13 @@ mk-timeline-post(class={ repost: is-repost })
 					i.fa.fa-quote-right.fa-flip-horizontal
 					mk-post-preview.repost(post={ p.repost })
 			footer
-				button(onclick={ reply }, title='返信')
+				button(onclick={ reply })
 					i.fa.fa-reply
 					p.count(if={ p.replies_count > 0 }) { p.replies_count }
 				button(onclick={ repost }, title='Repost')
 					i.fa.fa-retweet
 					p.count(if={ p.repost_count > 0 }) { p.repost_count }
-				button(class={ liked: p.is_liked }, onclick={ like }, title='善哉')
+				button(class={ liked: p.is_liked }, onclick={ like })
 					i.fa.fa-thumbs-o-up
 					p.count(if={ p.likes_count > 0 }) { p.likes_count }
 
@@ -261,6 +261,7 @@ script.
 	@post = @opts.post
 	@is-repost = @post.repost? and !@post.text?
 	@p = if @is-repost then @post.repost else @post
+	@summary = @get-post-summary @p
 	@url = CONFIG.url + '/' + @p.user.username + '/' + @p.id
 
 	@reply-form = null
@@ -287,20 +288,18 @@ script.
 						url: t.content
 
 	@reply = ~>
-		summary = @get-post-summary @p
-		text = window.prompt '「' + summary + '」への返信'
+		text = window.prompt '「' + @summary + '」への返信'
 		if text? and text != ''
 			@api \posts/create do
 				reply_to: @p.id
 				text: text
 
 	@repost = ~>
-		if !@repost-form?
-			@repost-form = document.body.append-child document.create-element \mk-repost-form-window
-			riot.mount @repost-form, do
-				controller: @repost-form-controller
-				post: @p
-		@repost-form-controller.trigger \open
+		text = window.prompt '「' + @summary + '」をRepost'
+		if text?
+			@api \posts/create do
+				repost: @p.id
+				text: if text == '' then undefined else text
 	
 	@like = ~>
 		if @p.is_liked
