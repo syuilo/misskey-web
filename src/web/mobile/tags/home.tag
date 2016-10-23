@@ -3,7 +3,6 @@ mk-home
 
 style.
 	display block
-	background #f9f9f9
 
 	> mk-home-timeline
 		max-width 500px
