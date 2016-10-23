@@ -10,6 +10,7 @@ module.exports = (me) ~>
 	#--------------------------------
 
 	route \/ index
+	route \/i/drive drive
 	route \/:user user.bind null \home
 	route \/:user/graphs user.bind null \graphs
 	route \/:user/:post post
@@ -37,6 +38,9 @@ module.exports = (me) ~>
 		document.create-element \mk-post-page
 			..set-attribute \post ctx.params.post
 			.. |> mount
+
+	function drive
+		mount document.create-element \mk-drive-page
 
 	function not-found
 		mount document.create-element \mk-not-found
