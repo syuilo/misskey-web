@@ -142,9 +142,8 @@ style.
 
 script.
 	@mixin \api
-	@mixin \user-preview
-
 	@mixin \stream
+	@mixin \user-preview
 	@mixin \get-post-summary
 
 	@notifications = []
