@@ -29,7 +29,7 @@ script.
 	@images = @opts.images
 
 	@on \mount ~>
-		# ↓の @post? はRiotのバグのため付与しています
+		# ↓の @images? はRiotのバグのため付与しています
 		# このバグ(https://github.com/riot/riot/issues/1020)が修正され次第消してください
 		# Riot3.0.0では修正されるみたい
 		if @images?
