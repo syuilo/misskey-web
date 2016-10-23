@@ -29,7 +29,6 @@ script.
 			@init-view-position!
 
 	@init-view-position = ~>
-		console.log @
 		top = @header.offset-height
 		@main.style.padding-top = top + \px
 		@nav.style.margin-top = top + \px
