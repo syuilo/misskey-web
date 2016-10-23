@@ -1,7 +1,7 @@
 mk-ui
 	div.global@global
 		mk-ui-header@header(ready={ ready })
-		mk-ui-nav@nav
+		mk-ui-nav@nav(ready={ ready })
 
 		div.content@main
 			<yield />
@@ -33,4 +33,4 @@ script.
 		top = @header.offset-height
 		@main.style.padding-top = top + \px
 		@nav.style.margin-top = top + \px
-		#$ '#misskey-nav > .slidemenu-body > .slidemenu-content' .css \padding-bottom top + \px
+		@nav.query-selector '.body > .content' .style.padding-bottom = top + \px

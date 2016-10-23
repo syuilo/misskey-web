@@ -163,3 +163,6 @@ style.
 
 script.
 	@mixin \i
+
+	@on \mount ~>
+		@opts.ready!
