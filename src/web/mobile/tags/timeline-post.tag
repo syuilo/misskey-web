@@ -5,7 +5,7 @@ mk-timeline-post(class={ repost: is-repost })
 
 	div.repost(if={ is-repost })
 		p
-			a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar')
+			a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 			i.fa.fa-retweet
 			a.name(href={ CONFIG.url + '/' + post.user.username }) { post.user.name }
 			| がRepost
@@ -79,8 +79,11 @@ style.
 
 		> p
 			margin 0
-			padding 16px
+			padding 8px 16px
 			line-height 28px
+
+			@media (min-width 500px)
+				padding 16px
 
 			.avatar-anchor
 				display inline-block
@@ -100,10 +103,13 @@ style.
 
 		> mk-time
 			position absolute
-			top 16px
+			top 8px
 			right 16px
 			font-size 0.9em
 			line-height 28px
+
+			@media (min-width 500px)
+				top 16px
 
 		& + article
 			padding-top 8px
