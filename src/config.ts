@@ -30,28 +30,28 @@ const scheme = conf.url.substr(0, conf.url.indexOf('://'));
 const hosts = conf.hosts = {
 	i: `i.${host}`,
 	about: `about.${host}`,
+	mobile: `mobile.${host}`,
 	signup: `signup.${host}`,
 	signin: `signin.${host}`,
 	signout: `signout.${host}`,
 	share: `share.${host}`,
 	search: `search.${host}`,
 	talk: `talk.${host}`,
-	help: `help.${host}`,
-	color: `color.${host}`
+	help: `help.${host}`
 };
 
 // Define URLs
 conf.urls = {
 	i: `${scheme}://${hosts.i}`,
 	about: `${scheme}://${hosts.about}`,
+	mobile: `${scheme}://${hosts.mobile}`,
 	signup: `${scheme}://${hosts.signup}`,
 	signin: `${scheme}://${hosts.signin}`,
 	signout: `${scheme}://${hosts.signout}`,
 	share: `${scheme}://${hosts.share}`,
 	search: `${scheme}://${hosts.search}`,
 	talk: `${scheme}://${hosts.talk}`,
-	help: `${scheme}://${hosts.help}`,
-	color: `${scheme}://${hosts.color}`
+	help: `${scheme}://${hosts.help}`
 };
 
 export default conf;
