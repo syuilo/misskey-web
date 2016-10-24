@@ -36,9 +36,3 @@ module.exports = (me) ~>
 
 	riot.mixin \follow-scroll do
 		Follower: require './scripts/follow-scroll.ls'
-
-	riot.mixin \cropper do
-		Cropper: require \cropper
-
-	riot.mixin \sortable do
-		Sortable: require \Sortable

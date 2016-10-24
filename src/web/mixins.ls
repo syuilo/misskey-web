@@ -7,6 +7,12 @@ module.exports = (me) ~>
 
 	i = if me? then me._web else null
 
+	riot.mixin \cropper do
+		Cropper: require \cropper
+
+	riot.mixin \sortable do
+		Sortable: require \Sortable
+
 	riot.mixin \is-promise do
 		is-promise: require './common/scripts/is-promise.ls'
 
