@@ -9,12 +9,12 @@ mk-drive
 		span(if={ folder != null }): i.fa.fa-angle-right
 		p(if={ folder != null }) { folder.name }
 	div.main(class={ loading: loading })
-		div.folders@folders-container(if={ folders.length > 0 })
+		div.folders(if={ folders.length > 0 })
 			virtual(each={ folder in folders })
 				mk-drive-folder(folder={ folder })
 			p(if={ more-folders })
 				| もっと読み込む
-		div.files@files-container(if={ files.length > 0 })
+		div.files(if={ files.length > 0 })
 			virtual(each={ file in files })
 				mk-drive-file(file={ file })
 			p(if={ more-files })
@@ -70,6 +70,53 @@ style.
 		> .files
 			> mk-drive-file
 				border-bottom solid 1px #eee
+
+		> .loading
+			.spinner
+				margin 100px auto
+				width 40px
+				height 40px
+				position relative
+				text-align center
+
+				-webkit-animation sk-rotate 2.0s infinite linear
+				animation sk-rotate 2.0s infinite linear
+
+			.dot1, .dot2
+				width 60%
+				height 60%
+				display inline-block
+				position absolute
+				top 0
+				background-color rgba(0, 0, 0, 0.3)
+				border-radius 100%
+
+				-webkit-animation sk-bounce 2.0s infinite ease-in-out
+				animation sk-bounce 2.0s infinite ease-in-out
+
+			.dot2
+				top auto
+				bottom 0
+				-webkit-animation-delay -1.0s
+				animation-delay -1.0s
+
+			@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
+			@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
+
+			@-webkit-keyframes sk-bounce {
+				0%, 100% { -webkit-transform: scale(0.0) }
+				50% { -webkit-transform: scale(1.0) }
+			}
+
+			@keyframes sk-bounce {
+				0%, 100% {
+					transform: scale(0.0);
+					-webkit-transform: scale(0.0);
+				} 50% {
+					transform: scale(1.0);
+					-webkit-transform: scale(1.0);
+				}
+			}
 
 script.
 	@mixin \api
