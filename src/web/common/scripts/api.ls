@@ -11,7 +11,7 @@ riot.mixin \net do
 module.exports = (i, endpoint, data) ->
 	api-stack++
 
-	if typeof i == \object then i = i._web
+	if i? and typeof i == \object then i = i._web
 
 	web = (endpoint.index-of '://') > -1
 
