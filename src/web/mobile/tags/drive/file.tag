@@ -1,4 +1,4 @@
-mk-drive-file(onclick={ onclick })
+mk-drive-file(onclick={ onclick }, data-is-selected={ is-selected })
 	div.container
 		div.thumbnail(style={ 'background-image: url(' + file.url + '?thumbnail&size=128)' })
 		div.body
@@ -106,10 +106,20 @@ style.
 					> i
 						margin-right 2px
 
+	&[data-is-selected]
+		background $theme-color
+
+		&, *
+			color #fff !important
+
 script.
 	@mixin \bytes-to-size
 
 	@browser = @parent
+	@is-selected = @browser.selected-files.some (f) ~> f.id == opts.file.id
+
+	@browser.event.on \change-selected (selects) ~>
+		@is-selected = selects.some (f) ~> f.id == opts.file.id
 
 	@onclick = ~>
 		@browser.choose-file @opts.file

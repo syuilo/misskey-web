@@ -128,6 +128,7 @@ script.
 	@files = []
 	@folders = []
 	@hierarchy-folders = []
+	@selected-files = []
 
 	# 現在の階層(フォルダ)
 	# * null でルートを表す
@@ -136,6 +137,8 @@ script.
 	@file = null
 
 	@event = @opts.event
+
+	@is-select-mode = @opts.select? and @opts.select
 	# Note: Riot3.0.0にしたら xmultiple を multiple に変更 (2.xでは、真理値属性と判定され__がプレフィックスされてしまう)
 	@multiple = if @opts.xmultiple? then @opts.xmultiple else false
 
@@ -326,6 +329,15 @@ script.
 				@event.trigger \load-mid
 
 	@choose-file = (file) ~>
-		@file = file
-		@update!
-		@event.trigger \open-file @file
+		if @is-select-mode
+			exist = @selected-files.some (f) ~> f.id == file.id
+			if exist
+				@selected-files = (@selected-files.filter (f) ~> f.id != file.id)
+			else
+				@selected-files.push file
+			@update!
+			@event.trigger \change-selected @selected-files
+		else
+			@file = file
+			@update!
+			@event.trigger \open-file @file

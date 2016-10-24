@@ -6,8 +6,8 @@ mk-post-form
 				div.img(style='background-image: url({ url + "?thumbnail&size=64" })', title={ name })
 			li.add(if={ files.length < 4 }, title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-plus
 	mk-uploader(controller={ uploader-controller })
-	button@upload(title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-upload
-	button@drive(title='ドライブからファイルを添付', onclick={ select-file-from-drive }): i.fa.fa-cloud
+	button@upload(onclick={ select-file }): i.fa.fa-upload
+	button@drive(onclick={ select-file-from-drive }): i.fa.fa-cloud
 	button@submit(class={ wait: wait }, disabled={ wait || (text.value.length == 0 && files.length == 0) }, onclick={ post })
 		| { wait ? '投稿中' : opts.reply ? '返信' : '投稿' }
 		mk-ellipsis(if={ wait })
@@ -147,6 +147,56 @@ style.
 				transition border-color 0s ease
 
 
+	[name='upload']
+	[name='drive']
+		-webkit-appearance none
+		-moz-appearance none
+		appearance none
+		display inline-block
+		position relative
+		cursor pointer
+		box-sizing border-box
+		padding 0
+		margin 8px 4px 0 0
+		width 40px
+		height 40px
+		font-size 1em
+		color rgba($theme-color, 0.5)
+		background transparent
+		outline none
+		border solid 1px transparent
+		border-radius 4px
+		box-shadow none
+
+		&:hover
+			background transparent
+			border-color rgba($theme-color, 0.3)
+
+		&:active
+			color rgba($theme-color, 0.6)
+			background linear-gradient(to bottom, lighten($theme-color, 80%) 0%, lighten($theme-color, 90%) 100%)
+			border-color rgba($theme-color, 0.5)
+			box-shadow 0 2px 4px rgba(0, 0, 0, 0.15) inset
+
+		&:focus
+			&:after
+				content ""
+				pointer-events none
+				position absolute
+				top -5px
+				right -5px
+				bottom -5px
+				left -5px
+				border 2px solid rgba($theme-color, 0.3)
+				border-radius 8px
+
+	[name='submit']
+		display block
+		padding 8px 0
+		width 100%
+		font-size 1.5em
+		color $theme-color
+
 script.
 	@mixin \api
 	@mixin \sortable
@@ -180,14 +230,11 @@ script.
 		@file.click!
 
 	@select-file-from-drive = ~>
-		browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
-		browser-controller = riot.observable!
+		browser = document.body.append-child document.create-element \mk-drive-selector
 		riot.mount browser, do
 			multiple: true
-			controller: browser-controller
-		browser-controller.trigger \open
-		browser-controller.one \selected (files) ~>
-			files.for-each @add-file
+			callback: (files) ~>
+				files.for-each @add-file
 
 	@change-file = ~>
 		files = @file.files

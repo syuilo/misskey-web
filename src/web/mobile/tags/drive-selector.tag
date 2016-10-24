@@ -1,10 +1,13 @@
-mk-post-form-dialog
+mk-drive-selector
 	div.bg
-	div.form
+	div.body
 		header
-			h1 新規投稿
 			button.close(onclick={ close }): i.fa.fa-times
-		mk-post-form(controller={ controller })
+			h1
+				| ファイルを選択
+				span.count(if={ files.length > 0 }) ({ files.length })
+			button.ok(onclick={ ok }): i.fa.fa-check
+		mk-drive(select={ true }, xmultiple={ opts.multiple }, controller={ controller }, event={ event })
 
 style.
 	display block
@@ -18,8 +21,8 @@ style.
 		height 100%
 		background rgba(#000, 0.5)
 
-	> .form
-		position absolute
+	> .body
+		position fixed
 		z-index 2048
 		top 16px
 		left 0
@@ -28,6 +31,7 @@ style.
 		box-sizing border-box
 		width calc(100% - 32px)
 		max-width 500px
+		height calc(100% - 32px)
 		overflow hidden
 		background #fff
 		border-radius 8px
@@ -44,6 +48,10 @@ style.
 				font-size 1em
 				font-weight normal
 
+				> .count
+					margin-left 4px
+					opacity 0.5
+
 			> .close
 				position absolute
 				top 0
@@ -51,11 +59,30 @@ style.
 				line-height 42px
 				width 42px
 
+			> .ok
+				position absolute
+				top 0
+				right 0
+				line-height 42px
+				width 42px
+
+		> mk-drive
+			height calc(100% - 42px)
+			overflow scroll
+
 script.
+	@cb = opts.callback
+	@event = riot.observable!
 	@controller = riot.observable!
+	@files = []
+
+	@event.on \change-selected (files) ~>
+		@files = files
+		@update!
 
 	@close = ~>
 		@unmount!
 
-	@controller.on \post ~>
+	@ok = ~>
+		@cb @files
 		@unmount!
