@@ -391,6 +391,7 @@ gulp.task('build:scripts', done => {
 						.replace(/CONFIG\.themeColor/g, `'${config.themeColor}'`)
 						.replace(/CONFIG\.api\.url/g, `'${config.core.url}'`)
 						.replace(/CONFIG\.proxy\.url/g, `'${config.proxy.url}'`)
+						.replace(/CONFIG\.urls\.mobile/g, `'${config.urls.mobile}'`)
 						.replace(/CONFIG\.urls\.about/g, `'${config.urls.about}'`)
 						.replace(/CONFIG\.urls\.signin/g, `'${config.urls.signin}'`)
 						.replace(/CONFIG\.urls\.signout/g, `'${config.urls.signout}'`)

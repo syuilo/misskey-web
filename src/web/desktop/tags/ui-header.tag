@@ -1,4 +1,5 @@
 mk-ui-header
+	a.mobile(if={ is-mobile }, href={ CONFIG.urls.mobile }) モバイル版はこちら
 	mk-donation(if={ SIGNIN && !I.data.no_donation })
 	div.main
 		div.backdrop
@@ -7,9 +8,9 @@ mk-ui-header
 				mk-header-nav
 			div.right
 				mk-header-search
-				mk-header-account(if={SIGNIN})
-				mk-header-notifications(if={SIGNIN})
-				mk-header-post-button(if={SIGNIN}, ui={opts.ui})
+				mk-header-account(if={ SIGNIN })
+				mk-header-notifications(if={ SIGNIN })
+				mk-header-post-button(if={ SIGNIN }, ui={ opts.ui })
 				mk-header-clock
 
 style.
@@ -19,6 +20,14 @@ style.
 	z-index 1024
 	width 100%
 	box-shadow 0 1px 0 rgba(0, 0, 0, 0.075)
+
+	> .mobile
+		display block
+		padding 32px
+		text-align center
+		font-size 96px
+		color #fff
+		background orange
 
 	> .main
 		position relative
@@ -79,3 +88,11 @@ style(theme='dark').
 
 		> .backdrop
 			background #0D0D0D
+
+script.
+	ua = navigator.user-agent.to-lower-case!
+	@is-mobile =
+		(ua.index-of \mobile)  > -1 or
+		(ua.index-of \iphone)  > -1 or
+		(ua.index-of \ipad)    > -1 or
+		(ua.index-of \android) > -1
