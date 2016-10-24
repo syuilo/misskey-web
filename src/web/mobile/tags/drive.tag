@@ -8,7 +8,7 @@ mk-drive
 			p(onclick={ _move }) { folder.name }
 		span(if={ folder != null }): i.fa.fa-angle-right
 		p(if={ folder != null }) { folder.name }
-	div.main@main(class={ loading: loading })
+	div.main(class={ loading: loading })
 		div.folders@folders-container(if={ folders.length > 0 })
 			virtual(each={ folder in folders })
 				mk-drive-folder(folder={ folder })
@@ -60,6 +60,9 @@ style.
 			opacity 0.5
 
 	> .main
+		&.loading
+			opacity 0.5
+
 		> .folders
 			> mk-drive-folder
 				border-bottom solid 1px #eee
@@ -80,7 +83,7 @@ script.
 	# * null でルートを表す
 	@folder = null
 
-	@controller = @opts.controller
+	@event = @opts.event
 	# Note: Riot3.0.0にしたら xmultiple を multiple に変更 (2.xでは、真理値属性と判定され__がプレフィックスされてしまう)
 	@multiple = if @opts.xmultiple? then @opts.xmultiple else false
 
@@ -219,6 +222,8 @@ script.
 		@loading = true
 		@update!
 
+		@event.trigger \begin-load
+
 		load-folders = null
 		load-files = null
 
@@ -260,5 +265,8 @@ script.
 					@add-file file
 				@loading = false
 				@update!
+
+				@event.trigger \loaded
 			else
 				flag := true
+				@event.trigger \load-mid

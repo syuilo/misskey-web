@@ -15,7 +15,11 @@ script.
 		@ui.trigger \title '<i class="fa fa-cloud"></i>ドライブ'
 		@ui.trigger \bg '#fff'
 
+	@event.on \begin-load ~>
 		@Progress.start!
+
+	@event.on \loaded-mid ~>
+		@Progress.set 0.5
 
 	@event.on \loaded ~>
 		@Progress.done!
