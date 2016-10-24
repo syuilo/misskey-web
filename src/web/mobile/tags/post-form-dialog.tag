@@ -22,7 +22,7 @@ style.
 		background rgba(#000, 0.5)
 
 	> .form
-		position absolute
+		position fixed
 		z-index 2048
 		top 16px
 		left 0
@@ -31,6 +31,7 @@ style.
 		box-sizing border-box
 		width calc(100% - 32px)
 		max-width 500px
+		max-height calc(100% - 32px)
 		overflow hidden
 		background #fff
 		border-radius 8px
@@ -61,12 +62,22 @@ style.
 				line-height 42px
 				width 42px
 
+		> mk-post-form
+			height calc(100% - 42px)
+			overflow scroll
+
 script.
 	@mixin \window
 
 	@controller = riot.observable!
 	@event = riot.observable!
 	@posting = false
+
+	@on \mount ~>
+		document.body.style.overflow = \hidden
+
+	@on \unmount ~>
+		document.body.style.overflow = \auto
 
 	@post = ~>
 		@controller.trigger \post
