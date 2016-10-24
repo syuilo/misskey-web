@@ -21,11 +21,14 @@ script.
 	@on \mount ~>
 		@ready!
 
+	@on \unmount ~>
+		@slide.slide-close!
+
 	@ready = ~>
 		@ready-count++
 
 		if @ready-count == 2
-			SpSlidemenu @main, @nav, \#hamburger {direction: \left}
+			@slide = SpSlidemenu @main, @nav, \#hamburger {direction: \left}
 			@init-view-position!
 
 	@init-view-position = ~>
