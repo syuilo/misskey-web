@@ -13,9 +13,7 @@ mk-drive-file(onclick={ onclick })
 					mk-file-type-icon(file={ file })
 					| { file.type }
 				p.separator
-				//
-					p.data-size
-						= bytesToSize(file.dataSize)
+				p.data-size { bytes-to-size(file.datasize) }
 				p.separator
 				p.created-at
 					i.fa.fa-clock-o
@@ -109,6 +107,8 @@ style.
 						margin-right 2px
 
 script.
+	@mixin \bytes-to-size
+
 	@browser = @parent
 
 	@onclick = ~>

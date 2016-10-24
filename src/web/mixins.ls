@@ -28,3 +28,6 @@ module.exports = (me) ~>
 
 	riot.mixin \api do
 		api: (require './common/scripts/api.ls').bind null i
+
+	riot.mixin \bytes-to-size do
+		bytes-to-size: require './common/scripts/bytes-to-size.js'
