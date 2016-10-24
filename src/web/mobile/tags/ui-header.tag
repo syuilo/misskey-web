@@ -50,6 +50,7 @@ style.
 				text-overflow ellipsis
 
 				> i
+				> .icon
 					margin-right 8px
 
 			> .nav

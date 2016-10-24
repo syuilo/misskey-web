@@ -1,4 +1,4 @@
-mk-drive-file
+mk-drive-file(onclick={ onclick })
 	div.container
 		div.thumbnail(style={ 'background-image: url(' + file.url + '?thumbnail&size=128)' })
 		div.body
@@ -107,3 +107,9 @@ style.
 
 					> i
 						margin-right 2px
+
+script.
+	@browser = @parent
+
+	@onclick = ~>
+		@browser.choose-file @opts.file

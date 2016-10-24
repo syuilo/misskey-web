@@ -8,7 +8,7 @@ mk-drive
 			p(onclick={ _move }) { folder.name }
 		span(if={ folder != null }): i.fa.fa-angle-right
 		p(if={ folder != null }) { folder.name }
-	div.main(class={ loading: loading })
+	div.browser(if={ file == null }, class={ loading: loading })
 		div.folders(if={ folders.length > 0 })
 			virtual(each={ folder in folders })
 				mk-drive-folder(folder={ folder })
@@ -29,6 +29,7 @@ mk-drive
 				<div class="dot1"></div>
 				<div class="dot2"></div>
 			</div>
+	mk-drive-file-viewer(if={ file != null }, file={ file })
 
 style.
 
@@ -59,7 +60,7 @@ style.
 			margin 0 8px
 			opacity 0.5
 
-	> .main
+	> .browser
 		&.loading
 			opacity 0.5
 
@@ -129,6 +130,8 @@ script.
 	# 現在の階層(フォルダ)
 	# * null でルートを表す
 	@folder = null
+
+	@file = null
 
 	@event = @opts.event
 	# Note: Riot3.0.0にしたら xmultiple を multiple に変更 (2.xでは、真理値属性と判定され__がプレフィックスされてしまう)
@@ -319,3 +322,8 @@ script.
 			else
 				flag := true
 				@event.trigger \load-mid
+
+	@choose-file = (file) ~>
+		@file = file
+		@update!
+		@event.trigger \open-file @file
