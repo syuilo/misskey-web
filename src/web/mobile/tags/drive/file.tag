@@ -9,8 +9,8 @@ mk-drive-file
 						each tag in file.tags
 							li.tag(style={background: tag.color, color: contrast(tag.color)})= tag.name
 			footer
-				p.mime-type
-					// +file-icon(file)
+				p.type
+					mk-file-type-icon(file={ file })
 					| { file.type }
 				p.separator
 				//
@@ -84,13 +84,13 @@ style.
 					padding 0 4px
 					color #CDCDCD
 
-				> .mime-type
+				> .type
 					display inline
 					margin 0
 					padding 0
 					color #9D9D9D
 
-					> i
+					> mk-file-type-icon
 						margin-right 4px
 
 				> .data-size
