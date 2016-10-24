@@ -219,8 +219,8 @@ script.
 		load-folders = null
 		load-files = null
 
-		folders-max = 30
-		files-max = 30
+		folders-max = 20
+		files-max = 20
 
 		# フォルダ一覧取得
 		@api \drive/folders do
