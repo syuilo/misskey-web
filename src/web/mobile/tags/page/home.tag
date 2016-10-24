@@ -3,7 +3,6 @@ mk-home-page
 
 style.
 	display block
-	background #f9f9f9
 
 script.
 	@mixin \ui

@@ -32,6 +32,8 @@ mk-drive
 	mk-drive-file-viewer(if={ file != null }, file={ file })
 
 style.
+	display block
+	background #fff
 
 	> nav
 		display block
