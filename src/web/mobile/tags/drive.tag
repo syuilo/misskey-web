@@ -1,22 +1,22 @@
 mk-drive
 	nav
-		p
+		p(onclick={ go-root })
 			i.fa.fa-cloud
 			| ドライブ
 		virtual(each={ folder in hierarchy-folders })
 			span: i.fa.fa-angle-right
-			p { folder.name }
+			p(onclick={ _move }) { folder.name }
 		span(if={ folder != null }): i.fa.fa-angle-right
 		p(if={ folder != null }) { folder.name }
 	div.main@main(class={ loading: loading })
 		div.folders@folders-container(if={ folders.length > 0 })
 			virtual(each={ folder in folders })
-				mk-drive-folder.folder(folder={ folder })
+				mk-drive-folder(folder={ folder })
 			p(if={ more-folders })
 				| もっと読み込む
 		div.files@files-container(if={ files.length > 0 })
 			virtual(each={ file in files })
-				mk-drive-file.file(file={ file })
+				mk-drive-file(file={ file })
 			p(if={ more-files })
 				| もっと読み込む
 		div.empty(if={ files.length == 0 && folders.length == 0 && !loading })
@@ -61,11 +61,11 @@ style.
 
 	> .main
 		> .folders
-			> .folder
+			> mk-drive-folder
 				border-bottom solid 1px #eee
 
 		> .files
-			> .file
+			> mk-drive-file
 				border-bottom solid 1px #eee
 
 script.
@@ -125,6 +125,9 @@ script.
 
 	@get-selection = ~>
 		@files.filter (file) -> file._selected
+
+	@_move = (ev) ~>
+		@move ev.item.folder
 
 	@move = (target-folder) ~>
 		if target-folder? and typeof target-folder == \object

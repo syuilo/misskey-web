@@ -1,4 +1,4 @@
-mk-drive-folder
+mk-drive-folder(onclick={ onclick })
 	div.container
 		p.name
 			i.fa.fa-folder
@@ -7,6 +7,7 @@ mk-drive-folder
 
 style.
 	display block
+	color #777
 
 	> .container
 		position relative
@@ -31,3 +32,9 @@ style.
 			margin auto 0 auto 0
 			width 1em
 			height 1em
+
+script.
+	@browser = @parent
+
+	@onclick = ~>
+		@browser.move @opts.folder
