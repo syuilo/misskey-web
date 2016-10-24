@@ -2,7 +2,8 @@ riot = require \riot
 
 module.exports = (me) ~>
 
-	(require './scripts/stream.ls') me
+	if me?
+		(require './scripts/stream.ls') me
 
 	require './scripts/user-preview.ls'
 
