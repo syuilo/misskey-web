@@ -155,8 +155,10 @@ style.
 				width calc(100% - 74px)
 
 			> header
-				margin-bottom 4px
 				white-space nowrap
+
+				@media (min-width 500px)
+					margin-bottom 2px
 
 				&:after
 					content ""
