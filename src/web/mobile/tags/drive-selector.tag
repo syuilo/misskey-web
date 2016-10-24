@@ -1,6 +1,6 @@
 mk-drive-selector
-	div.bg
-	div.body
+	div.bg@bg
+	div.body@body
 		header
 			button.close(onclick={ close }): i.fa.fa-times
 			h1
@@ -14,7 +14,7 @@ style.
 
 	> .bg
 		position fixed
-		z-index 2047
+		z-index 2048
 		top 0
 		left 0
 		width 100%
@@ -71,6 +71,8 @@ style.
 			overflow scroll
 
 script.
+	@mixin \window
+
 	@cb = opts.callback
 	@event = riot.observable!
 	@controller = riot.observable!
@@ -80,9 +82,6 @@ script.
 		@files = files
 		@update!
 
-	@close = ~>
-		@unmount!
-
 	@ok = ~>
 		@cb @files
-		@unmount!
+		@close!

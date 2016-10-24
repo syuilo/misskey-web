@@ -4,7 +4,7 @@ mk-ui-header
 		div.content
 			button.nav#hamburger: i.fa.fa-bars
 			h1@title Misskey
-			button.post(onclick={ post }): i.fa.fa-paper-plane-o
+			button.post(onclick={ post }): i.fa.fa-pencil
 
 style.
 	$height = 48px

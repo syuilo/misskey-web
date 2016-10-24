@@ -8,9 +8,6 @@ mk-post-form
 	mk-uploader(controller={ uploader-controller })
 	button@upload(onclick={ select-file }): i.fa.fa-upload
 	button@drive(onclick={ select-file-from-drive }): i.fa.fa-cloud
-	button@submit(class={ wait: wait }, disabled={ wait || (text.value.length == 0 && files.length == 0) }, onclick={ post })
-		| { wait ? '投稿中' : opts.reply ? '返信' : '投稿' }
-		mk-ellipsis(if={ wait })
 	input@file(type='file', accept='image/*', multiple, tabindex='-1', onchange={ change-file })
 
 style.
@@ -146,7 +143,6 @@ style.
 				border-color rgba($theme-color, 0.5)
 				transition border-color 0s ease
 
-
 	[name='upload']
 	[name='drive']
 		-webkit-appearance none
@@ -190,13 +186,6 @@ style.
 				border 2px solid rgba($theme-color, 0.3)
 				border-radius 8px
 
-	[name='submit']
-		display block
-		padding 8px 0
-		width 100%
-		font-size 1.5em
-		color $theme-color
-
 script.
 	@mixin \api
 	@mixin \sortable
@@ -206,6 +195,7 @@ script.
 	@files = []
 	@uploader-controller = riot.observable!
 	@controller = @opts.controller
+	@event = @opts.event
 
 	@on \mount ~>
 		@text.focus!
@@ -249,24 +239,28 @@ script.
 		@add-file file
 
 	@uploader-controller.on \change-uploads (uploads) ~>
-		@controller.trigger \change-uploading-files uploads
+		@event.trigger \change-uploading-files uploads
 
 	@add-file = (file) ~>
 		file._remove = ~>
 			@files = @files.filter (x) -> x.id != file.id
-			@controller.trigger \change-files @files
+			@event.trigger \change-files @files
 			@update!
 
 		@files.push file
-		@controller.trigger \change-files @files
+		@event.trigger \change-files @files
 		@update!
 
 		new @Sortable @attaches, do
 			draggable: \.file
 			animation: 150ms
 
-	@post = (e) ~>
+	@controller.on \post ~>
+		@post!
+
+	@post = ~>
 		@wait = true
+		@event.trigger \before-post
 
 		files = if @files? and @files.length > 0
 			then @files.map (f) -> f.id
@@ -277,12 +271,12 @@ script.
 			images: files
 			reply_to: if @opts.reply? then @opts.reply.id else undefined
 		.then (data) ~>
-			@controller.trigger \post
-			@unmount!
+			@event.trigger \post
 			#@opts.ui.trigger \notification '投稿しました。'
 		.catch (err) ~>
 			console.error err
 			#@opts.ui.trigger \notification 'Error!'
 		.then ~>
 			@wait = false
+			@event.trigger \after-post
 			@update!

@@ -1,17 +1,20 @@
 mk-post-form-dialog
-	div.bg
-	div.form
+	div.bg@bg
+	div.form@body
 		header
-			h1 新規投稿
 			button.close(onclick={ close }): i.fa.fa-times
-		mk-post-form(controller={ controller })
+			h1 新規投稿
+			button.post(onclick={ post }, disabled={ posting })
+				i.fa.fa-paper-plane-o(if={ !postiong })
+				i.fa.fa-spinner.fa-pulse(if={ postiong })
+		mk-post-form(event={ event }, controller={ controller })
 
 style.
 	display block
 
 	> .bg
 		position fixed
-		z-index 2047
+		z-index 2048
 		top 0
 		left 0
 		width 100%
@@ -51,11 +54,30 @@ style.
 				line-height 42px
 				width 42px
 
+			> .post
+				position absolute
+				top 0
+				right 0
+				line-height 42px
+				width 42px
+
 script.
+	@mixin \window
+
 	@controller = riot.observable!
+	@event = riot.observable!
+	@posting = false
 
-	@close = ~>
-		@unmount!
+	@post = ~>
+		@controller.trigger \post
 
-	@controller.on \post ~>
-		@unmount!
+	@event.on \before-post ~>
+		@posting = true
+		@update!
+
+	@event.on \after-post ~>
+		@posting = false
+		@update!
+
+	@event.on \post ~>
+		@close!

@@ -8,3 +8,5 @@ module.exports = (me) ~>
 
 	require './scripts/ui.ls'
 
+	require './scripts/window.ls'
+
