@@ -205,6 +205,7 @@ script.
 				x folder.folder
 
 			@update!
+			@event.trigger \move @folder
 			@load!
 		.catch (err, text-status) ->
 			console.error err
@@ -259,6 +260,7 @@ script.
 			@folder = null
 			@hierarchy-folders = []
 			@update!
+			@event.trigger \move-root
 			@load!
 
 	@load = ~>

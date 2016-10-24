@@ -23,3 +23,10 @@ script.
 
 	@event.on \loaded ~>
 		@Progress.done!
+
+	@event.on \move-root ~>
+		@ui.trigger \title '<i class="fa fa-cloud"></i>ドライブ'
+
+	@event.on \move (folder) ~>
+		# TODO: escape html characters in folder.name
+		@ui.trigger \title '<i class="fa fa-folder-open"></i>' + folder.name
