@@ -1,7 +1,7 @@
 riot = require \riot
 
 duration = 500ms
-easing = [0 0.5 0 1]
+easing = [0 0.7 0 1]
 
 riot.mixin \window do
 	init: ->
