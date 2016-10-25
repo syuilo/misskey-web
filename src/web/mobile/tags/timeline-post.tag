@@ -302,11 +302,10 @@ script.
 						url: t.content
 
 	@reply = ~>
-		text = window.prompt '「' + @summary + '」への返信'
-		if text? and text != ''
-			@api \posts/create do
-				reply_to: @p.id
-				text: text
+		form = document.body.append-child document.create-element \mk-post-form-dialog
+		riot.mount form, do
+			reply: @p
+			controller: null
 
 	@repost = ~>
 		text = window.prompt '「' + @summary + '」をRepost'

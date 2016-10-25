@@ -13,7 +13,7 @@ mk-post-form
 style.
 	display block
 	padding 16px
-	background #fff
+	background lighten($theme-color, 95%)
 
 	> .attaches
 		position relative

@@ -3,11 +3,13 @@ mk-post-form-dialog
 	div.form@body
 		header
 			button.close(onclick={ close }): i.fa.fa-times
-			h1 新規投稿
+			h1 { reply ? '返信' : '新規投稿' }
 			button.post(onclick={ post }, disabled={ posting })
 				i.fa.fa-paper-plane-o(if={ !postiong })
 				i.fa.fa-spinner.fa-pulse(if={ postiong })
-		mk-post-form(event={ event }, controller={ controller })
+		div.form
+			mk-post-preview(if={ reply }, post={ reply })
+			mk-post-form(event={ event }, controller={ controller }, reply={ reply })
 
 style.
 	display block
@@ -38,7 +40,6 @@ style.
 		box-shadow 0 0 16px rgba(#000, 0.3)
 
 		> header
-			border-bottom solid 1px #eee
 
 			> h1
 				margin 0
@@ -62,15 +63,19 @@ style.
 				line-height 42px
 				width 42px
 
-		> mk-post-form
+		> .form
 			height calc(100% - 42px)
 			overflow scroll
+
+			> mk-post-preview
+				padding 16px
 
 script.
 	@mixin \window
 
 	@controller = riot.observable!
 	@event = riot.observable!
+	@reply = @opts.reply
 	@posting = false
 
 	@on \mount ~>
