@@ -22,6 +22,13 @@ mk-drive-file(onclick={ onclick }, data-is-selected={ is-selected })
 style.
 	display block
 
+	&, *
+		-webkit-user-select none
+		user-select none
+
+	*
+		pointer-events none
+
 	> .container
 		position relative
 		box-sizing border-box

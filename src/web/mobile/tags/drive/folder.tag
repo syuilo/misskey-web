@@ -9,6 +9,13 @@ style.
 	display block
 	color #777
 
+	&, *
+		-webkit-user-select none
+		user-select none
+
+	*
+		pointer-events none
+
 	> .container
 		position relative
 		box-sizing border-box
