@@ -18,7 +18,7 @@ style.
 
 	> .main
 		position relative
-		color #777
+		color rgba(#000, 0.6)
 
 		> .backdrop
 			position absolute
