@@ -42,7 +42,6 @@ module.exports = (me) ~>
 			.. |> mount
 
 	function drive ctx
-		console.log ctx.params.folder
 		p = document.create-element \mk-drive-page
 		if ctx.params.folder then p.set-attribute \folder ctx.params.folder
 		if ctx.params.file then p.set-attribute \file ctx.params.file
