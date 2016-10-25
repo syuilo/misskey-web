@@ -74,6 +74,15 @@ style.
 			> mk-drive-file
 				border-bottom solid 1px #eee
 
+		> .empty
+			padding 16px
+			text-align center
+			color #999
+			pointer-events none
+
+			> p
+				margin 0
+
 		> .loading
 			.spinner
 				margin 100px auto
