@@ -1,6 +1,6 @@
 mk-window(data-flexible={ opts.height == null }, data-colored={ opts.colored }, ondragover={ ondragover })
 	div.bg@bg(show={ is-modal }, onclick={ bg-click })
-	div.main@main
+	div.main@main(onmousedown={ on-body-mousedown })
 		header@header(onmousedown={ on-header-mousedown })
 			h1(data-yield='header')
 				| <yield from="header"/>
@@ -173,6 +173,8 @@ script.
 		@is-open = true
 		@controller.trigger \opening
 
+		@top!
+
 		if @is-modal
 			@bg.style.pointer-events = \auto
 			Velocity @bg, \finish true
@@ -230,6 +232,21 @@ script.
 			@controller.trigger \closed
 		, 300ms
 
+	# 最前面へ移動します
+	@top = ~>
+		z = 0
+
+		ws = document.query-selector-all \mk-window
+		ws.for-each (w) !~>
+			if w == @root then return
+			m = w.query-selector ':scope > .main'
+			mz = Number(document.default-view.get-computed-style m, null .z-index)
+			if mz > z then z := mz
+
+		if z > 0
+			@main.style.z-index = z + 1
+			if @is-modal then @bg.style.z-index = z + 1
+
 	@repel-move = (e) ~>
 		e.stop-propagation!
 		return true
@@ -237,6 +254,10 @@ script.
 	@bg-click = ~>
 		if @can-close
 			@close!
+
+	@on-body-mousedown = (e) ~>
+		@top!
+		true
 
 	@on-header-mousedown = (e) ~>
 		position = @main.get-bounding-client-rect!
