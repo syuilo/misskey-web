@@ -51,9 +51,12 @@ style.
 	margin 0
 	padding 0
 	font-family sans-serif
-	font-size 14px
+	font-size 12px
 	background #fff
 	background-clip padding-box
+
+	@media (min-width 350px)
+		font-size 14px
 
 	@media (min-width 500px)
 		font-size 16px

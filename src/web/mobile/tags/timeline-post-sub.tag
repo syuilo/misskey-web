@@ -41,19 +41,29 @@ style.
 		> .avatar-anchor
 			display block
 			float left
-			margin 0 16px 0 0
+			margin 0 10px 0 0
+
+			@media (min-width 500px)
+				margin-right 16px
 
 			> .avatar
 				display block
-				width 52px
-				height 52px
+				width 44px
+				height 44px
 				margin 0
 				border-radius 8px
 				vertical-align bottom
 
+				@media (min-width 500px)
+					width 52px
+					height 52px
+
 		> .main
 			float left
-			width calc(100% - 68px)
+			width calc(100% - 54px)
+
+			@media (min-width 500px)
+				width calc(100% - 68px)
 
 			> header
 				margin-bottom 4px

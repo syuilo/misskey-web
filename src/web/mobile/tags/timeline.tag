@@ -27,6 +27,7 @@ style.
 		margin 0
 		line-height 32px
 		text-align center
+		font-size 0.9em
 		color #aaa
 		background #fdfdfd
 		border-bottom solid 1px #eaeaea
