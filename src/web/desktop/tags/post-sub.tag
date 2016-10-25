@@ -45,7 +45,7 @@ style.
 		> .avatar-anchor
 			display block
 			float left
-			margin 0 16px 0 0
+			margin 0 14px 0 0
 
 			> .avatar
 				display block
@@ -57,7 +57,7 @@ style.
 
 		> .main
 			float left
-			width calc(100% - 68px)
+			width calc(100% - 66px)
 
 			> header
 				margin-bottom 4px
