@@ -132,7 +132,10 @@ style.
 		> .avatar-anchor
 			display block
 			float left
-			margin 0 16px 0 0
+			margin 0 10px 0 0
+
+			@media (min-width 500px)
+				margin-right 16px
 
 			> .avatar
 				display block
@@ -149,7 +152,7 @@ style.
 
 		> .main
 			float left
-			width calc(100% - 64px)
+			width calc(100% - 58px)
 
 			@media (min-width 500px)
 				width calc(100% - 74px)
