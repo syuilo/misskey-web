@@ -11,6 +11,8 @@ module.exports = (me) ~>
 
 	route \/ index
 	route \/i/drive drive
+	route \/i/drive/folder/:folder drive
+	route \/i/drive/file/:file drive
 	route \/:user user.bind null \home
 	route \/:user/graphs user.bind null \graphs
 	route \/:user/:post post
@@ -39,8 +41,12 @@ module.exports = (me) ~>
 			..set-attribute \post ctx.params.post
 			.. |> mount
 
-	function drive
-		mount document.create-element \mk-drive-page
+	function drive ctx
+		console.log ctx.params.folder
+		p = document.create-element \mk-drive-page
+		if ctx.params.folder then p.set-attribute \folder ctx.params.folder
+		if ctx.params.file then p.set-attribute \file ctx.params.file
+		mount p
 
 	function not-found
 		mount document.create-element \mk-not-found

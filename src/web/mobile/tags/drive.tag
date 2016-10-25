@@ -149,7 +149,7 @@ script.
 		@stream.on \drive_folder_updated @on-stream-drive-folder-updated
 
 		if @opts.folder?
-			@move @opts.folder
+			@cd @opts.folder
 		else
 			@load!
 
@@ -188,6 +188,9 @@ script.
 		@move ev.item.folder
 
 	@move = (target-folder) ~>
+		@cd target-folder, true
+
+	@cd = (target-folder, is-move) ~>
 		if target-folder? and typeof target-folder == \object
 			target-folder = target-folder.id
 
@@ -213,7 +216,8 @@ script.
 				x folder.folder
 
 			@update!
-			@event.trigger \move @folder
+			if is-move then @event.trigger \move @folder
+			@event.trigger \cd @folder
 			@load!
 		.catch (err, text-status) ->
 			console.error err
