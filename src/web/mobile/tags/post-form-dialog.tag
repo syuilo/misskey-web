@@ -78,12 +78,6 @@ script.
 	@reply = @opts.reply
 	@posting = false
 
-	@on \mount ~>
-		document.body.style.overflow = \hidden
-
-	@on \unmount ~>
-		document.body.style.overflow = \auto
-
 	@post = ~>
 		@controller.trigger \post
 
