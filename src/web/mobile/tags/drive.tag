@@ -190,9 +190,6 @@ script.
 		else
 			@add-folder folder, true
 
-	@get-selection = ~>
-		@files.filter (file) -> file._selected
-
 	@_move = (ev) ~>
 		@move ev.item.folder
 
