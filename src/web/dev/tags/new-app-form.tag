@@ -1,4 +1,4 @@
-mk-new-app
+mk-new-app-form
 	form(onsubmit={ onsubmit }, autocomplete='off')
 		label.nid
 			p.caption
