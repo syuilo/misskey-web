@@ -4,7 +4,7 @@
 require 'fuck-adblock'
 dialog = require './dialog.ls'
 
-module.exports = ~> 
+module.exports = ~>
 	if fuck-ad-block == undefined
 		ad-block-detected!
 	else

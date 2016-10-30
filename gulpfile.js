@@ -535,7 +535,7 @@ class Tag {
 			.replace(/\r\n/g, '\n')
 			.replace(/\n(\t+?)\n/g, '\n')
 			.replace(/\n+/g, '\n');
-		
+
 		const html = {
 			name: 'html',
 			indent: 0,
