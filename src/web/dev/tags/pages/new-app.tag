@@ -34,7 +34,7 @@ style.
 				line-height 32px
 				font-size 32px
 				font-weight normal
-				color #999
+				color #aaa
 
 			> p
 				margin 0

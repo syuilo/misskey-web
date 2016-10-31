@@ -1,6 +1,6 @@
 mk-new-app-form
 	form(onsubmit={ onsubmit }, autocomplete='off')
-		label.name
+		section.name: label
 			p.caption
 				| アプリケーション名
 			input@name(
@@ -9,7 +9,7 @@ mk-new-app-form
 				autocomplete='off'
 				required)
 
-		label.nid
+		section.nid: label
 			p.caption
 				| Named ID
 			input@nid(
@@ -42,13 +42,45 @@ mk-new-app-form
 				i.fa.fa-fw.fa-exclamation-triangle
 				| 20文字以内でお願いします
 
-		label.description
+		section.description: label
 			p.caption
 				| アプリの概要
 			textarea@description(
 				placeholder='ex) Misskey iOSクライアント。'
 				autocomplete='off'
 				required)
+
+		section.permission
+			p.caption
+				| 権限
+			div
+				label
+					input(type='checkbox')
+					p アカウントの情報を見る。
+				label
+					input(type='checkbox')
+					p アカウントの情報を操作する。
+				label
+					input(type='checkbox')
+					p 投稿する。
+				label
+					input(type='checkbox')
+					p いいねしたりいいね解除する。
+				label
+					input(type='checkbox')
+					p フォローしたりフォロー解除する。
+				label
+					input(type='checkbox')
+					p ドライブを見る。
+				label
+					input(type='checkbox')
+					p ドライブを操作する。
+				label
+					input(type='checkbox')
+					p 通知を見る。
+				label
+					input(type='checkbox')
+					p 通知を操作する。
 
 		button(onclick={ onsubmit })
 			| アプリ作成
@@ -62,12 +94,12 @@ style.
 		*:not(i)
 			font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif !important
 
-		label
+		section
 			display block
 			position relative
 			margin 16px 0
 
-			> .caption
+			.caption
 				margin 0 0 4px 0
 				color #828888
 				font-size 0.95em
@@ -76,13 +108,36 @@ style.
 					margin-right 0.25em
 					color #96adac
 
-			> .info
+			.info
 				display block
 				margin 4px 0
 				font-size 0.8em
 
 				> i
 					margin-right 0.3em
+
+		section.permission
+			div
+				padding 8px 0
+				max-height 160px
+				overflow auto
+				border solid 1px #555
+				border-radius 4px
+
+			label
+				display block
+				padding 0 12px
+				line-height 32px
+
+				[type='checkbox']
+					margin-right 4px
+
+				[type='checkbox']:checked + p
+					color #eee
+
+				> p
+					display inline
+					color #aaa
 
 		[type=text]
 		textarea
