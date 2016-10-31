@@ -10,7 +10,7 @@ module.exports = (me) ~>
 	#--------------------------------
 
 	route \/ index
-	route \/app apps
+	route \/apps apps
 	route \/app/new new-app
 	route \/:user user.bind null \home
 	route \/:user/graphs user.bind null \graphs

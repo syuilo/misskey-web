@@ -1,5 +1,5 @@
 mk-index
-	a(href='/app') アプリ
+	a(href='/apps') アプリ
 
 style.
 	display block

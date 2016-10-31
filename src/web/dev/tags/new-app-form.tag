@@ -248,7 +248,7 @@ script.
 			description: description
 			permission: permission.join \,
 		.then ~>
-			location.href = CONFIG.url
+			location.href = '/apps'
 		.catch ~>
 			alert 'アプリの作成に失敗しました。再度お試しください。'
 
