@@ -81,6 +81,9 @@ mk-new-app-form
 				label
 					input(type='checkbox')
 					p 通知を操作する。
+			p
+				i.fa.fa-exclamation-triangle
+				| アプリ作成後も変更できますが、新たな権限を付与する場合、その時点で関連付けられているユーザーキーはすべて無効になります。
 
 		button(onclick={ onsubmit })
 			| アプリ作成
@@ -101,7 +104,7 @@ style.
 
 			.caption
 				margin 0 0 4px 0
-				color #828888
+				color #969696
 				font-size 0.95em
 
 				> i
@@ -121,23 +124,41 @@ style.
 				padding 8px 0
 				max-height 160px
 				overflow auto
-				border solid 1px #555
+				background #fff
+				border solid 1px #cecece
 				border-radius 4px
 
 			label
 				display block
 				padding 0 12px
 				line-height 32px
+				cursor pointer
+
+				&:hover
+					> p
+						color #999
+
+					[type='checkbox']:checked + p
+						color #000
 
 				[type='checkbox']
 					margin-right 4px
 
 				[type='checkbox']:checked + p
-					color #eee
+					color #111
 
 				> p
 					display inline
 					color #aaa
+					user-select none
+
+			> p:last-child
+				margin 6px
+				font-size 0.8em
+				color #999
+
+				> i
+					margin-right 4px
 
 		[type=text]
 		textarea
@@ -150,14 +171,14 @@ style.
 			margin 0
 			width 100%
 			font-size 1em
-			color #eee
-			background transparent
+			color #333
+			background #fff
 			outline none
-			border solid 1px #555
+			border solid 1px #cecece
 			border-radius 4px
 
 			&:hover
-				border-color #666
+				border-color #bbb
 
 			&:focus
 				border-color $theme-color
@@ -169,7 +190,7 @@ style.
 			margin 20px 0 32px 0
 			width 100%
 			font-size 1em
-			color #fff
+			color #111
 			border-radius 3px
 
 script.
@@ -211,14 +232,16 @@ script.
 				@update!
 
 	@onsubmit = ~>
+		name = @name.value
 		nid = @nid.value
-		password = @password.value
+		description = @description.value
 
 		locker = document.body.append-child document.create-element \mk-locker
 
 		@api \app/create do
+			name: name
 			name_id: nid
-			password: password
+			description: description
 		.then ~>
 			location.href = CONFIG.url
 		.catch ~>
