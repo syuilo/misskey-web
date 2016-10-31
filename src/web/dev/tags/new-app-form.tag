@@ -1,13 +1,21 @@
 mk-new-app-form
 	form(onsubmit={ onsubmit }, autocomplete='off')
+		label.name
+			p.caption
+				| アプリケーション名
+			input@name(
+				type='text'
+				placeholder='ex) Misskey for iOS'
+				autocomplete='off'
+				required)
+
 		label.nid
 			p.caption
-				i.fa.fa-at
-				| Name ID
+				| Named ID
 			input@nid(
 				type='text'
 				pattern='^[a-zA-Z0-9\-]{3,20}$'
-				placeholder='a~z、A~Z、0~9、-'
+				placeholder='ex) misskey-for-ios'
 				autocomplete='off'
 				required
 				onkeyup={ on-change-nid })
@@ -34,14 +42,20 @@ mk-new-app-form
 				i.fa.fa-fw.fa-exclamation-triangle
 				| 20文字以内でお願いします
 
+		label.description
+			p.caption
+				| アプリの概要
+			textarea@description(
+				placeholder='ex) Misskey iOSクライアント。'
+				autocomplete='off'
+				required)
+
 		button(onclick={ onsubmit })
 			| アプリ作成
 
 style.
 	display block
 	box-sizing border-box
-	padding 18px 32px 0 32px
-	min-width 368px
 	overflow hidden
 
 	> form
@@ -71,34 +85,27 @@ style.
 					margin-right 0.3em
 
 		[type=text]
+		textarea
 			appearance none
 			user-select text
 			display inline-block
 			cursor auto
 			box-sizing border-box
-			padding 0 12px
+			padding 8px 12px
 			margin 0
 			width 100%
-			line-height 44px
 			font-size 1em
-			color #333 !important
-			background #fff !important
+			color #eee
+			background transparent
 			outline none
-			border solid 1px rgba(0, 0, 0, 0.1)
+			border solid 1px #555
 			border-radius 4px
-			box-shadow 0 0 0 114514px #fff inset
-			transition all .3s ease
-			font-family 'Meiryo', 'メイリオ', 'Meiryo UI', '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', sans-serif
 
 			&:hover
-				border-color rgba(0, 0, 0, 0.2)
-				transition all .1s ease
+				border-color #666
 
 			&:focus
-				color $theme-color !important
 				border-color $theme-color
-				box-shadow 0 0 0 1024px #fff inset, 0 0 0 4px rgba($theme-color, 10%)
-				transition all 0s ease
 
 			&:disabled
 				opacity 0.5

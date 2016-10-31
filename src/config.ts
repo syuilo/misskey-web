@@ -30,6 +30,7 @@ const scheme = conf.url.substr(0, conf.url.indexOf('://'));
 const hosts = conf.hosts = {
 	i: `i.${host}`,
 	about: `about.${host}`,
+	dev: `dev.${host}`,
 	mobile: `mobile.${host}`,
 	signup: `signup.${host}`,
 	signin: `signin.${host}`,
@@ -44,6 +45,7 @@ const hosts = conf.hosts = {
 conf.urls = {
 	i: `${scheme}://${hosts.i}`,
 	about: `${scheme}://${hosts.about}`,
+	dev: `${scheme}://${hosts.dev}`,
 	mobile: `${scheme}://${hosts.mobile}`,
 	signup: `${scheme}://${hosts.signup}`,
 	signin: `${scheme}://${hosts.signin}`,

@@ -10,6 +10,8 @@ module.exports = (me) ~>
 	#--------------------------------
 
 	route \/ index
+	route \/app apps
+	route \/app/new new-app
 	route \/:user user.bind null \home
 	route \/:user/graphs user.bind null \graphs
 	route \/:user/:post post
@@ -20,6 +22,12 @@ module.exports = (me) ~>
 
 	function index
 		mount document.create-element \mk-index
+
+	function apps
+		mount document.create-element \mk-apps-page
+
+	function new-app
+		mount document.create-element \mk-new-app-page
 
 	function user page, ctx
 		document.create-element \mk-user-page
