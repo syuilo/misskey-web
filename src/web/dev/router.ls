@@ -12,9 +12,7 @@ module.exports = (me) ~>
 	route \/ index
 	route \/apps apps
 	route \/app/new new-app
-	route \/:user user.bind null \home
-	route \/:user/graphs user.bind null \graphs
-	route \/:user/:post post
+	route \/app/:app app
 	route \* not-found
 
 	# Handlers
@@ -29,15 +27,9 @@ module.exports = (me) ~>
 	function new-app
 		mount document.create-element \mk-new-app-page
 
-	function user page, ctx
-		document.create-element \mk-user-page
-			..set-attribute \user ctx.params.user
-			..set-attribute \page page
-			.. |> mount
-
-	function post ctx
-		document.create-element \mk-post-page
-			..set-attribute \post ctx.params.post
+	function app ctx
+		document.create-element \mk-app-page
+			..set-attribute \app ctx.params.app
 			.. |> mount
 
 	function not-found

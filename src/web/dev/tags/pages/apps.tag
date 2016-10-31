@@ -4,7 +4,8 @@ mk-apps-page
 	p(if={ apps.length == 0 }) アプリなし
 	ul.apps
 		li(each={ app in apps })
-			p.name { app.name }
+			a(href={ '/app/' + app.id })
+				p.name { app.name }
 
 style.
 	display block
