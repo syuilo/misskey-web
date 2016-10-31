@@ -53,33 +53,33 @@ mk-new-app-form
 		section.permission
 			p.caption
 				| 権限
-			div
+			div@permission
 				label
-					input(type='checkbox')
+					input(type='checkbox', value='account-read')
 					p アカウントの情報を見る。
 				label
-					input(type='checkbox')
+					input(type='checkbox', value='account-write')
 					p アカウントの情報を操作する。
 				label
-					input(type='checkbox')
+					input(type='checkbox', value='post-write')
 					p 投稿する。
 				label
-					input(type='checkbox')
+					input(type='checkbox', value='like-write')
 					p いいねしたりいいね解除する。
 				label
-					input(type='checkbox')
+					input(type='checkbox', value='following-write')
 					p フォローしたりフォロー解除する。
 				label
-					input(type='checkbox')
+					input(type='checkbox', value='drive-read')
 					p ドライブを見る。
 				label
-					input(type='checkbox')
+					input(type='checkbox', value='drive-write')
 					p ドライブを操作する。
 				label
-					input(type='checkbox')
+					input(type='checkbox', value='notification-read')
 					p 通知を見る。
 				label
-					input(type='checkbox')
+					input(type='checkbox', value='notification-write')
 					p 通知を操作する。
 			p
 				i.fa.fa-exclamation-triangle
@@ -235,6 +235,10 @@ script.
 		name = @name.value
 		nid = @nid.value
 		description = @description.value
+		permission = []
+
+		@permission.query-selector-all \input .for-each (el) ~>
+			if el.checked then permission.push el.value
 
 		locker = document.body.append-child document.create-element \mk-locker
 
@@ -242,6 +246,7 @@ script.
 			name: name
 			name_id: nid
 			description: description
+			permission: permission.join \,
 		.then ~>
 			location.href = CONFIG.url
 		.catch ~>
