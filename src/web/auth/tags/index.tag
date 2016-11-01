@@ -9,7 +9,10 @@ mk-index
 			p このアプリがあなたのアカウントにアクセスすることはありません。
 		div.accepted(if={ state == 'accepted' })
 			h1 アプリケーションの連携を許可しました。
-			p アプリケーションに戻って、やっていってください。
+			p(if={ session.app.callback_url })
+				| アプリケーションに戻っています
+				mk-ellipsis
+			p(if={ !session.app.callback_url }) アプリケーションに戻って、やっていってください。
 		div.error(if={ state == 'fetch-session-error' })
 			p セッションが存在しません。
 
@@ -69,6 +72,11 @@ script.
 			@fetching = false
 			@update!
 
+	@on \mount ~>
+		@session-promise.then (session) ~>
+			@session = session
+			@update!
+
 	@event.on \denied ~>
 		@state = \denied
 		@update!
@@ -76,3 +84,6 @@ script.
 	@event.on \accepted ~>
 		@state = \accepted
 		@update!
+
+		if @session.app.callback_url?
+			location.href = @session.app.callback_url + '?token=' + @session.token
