@@ -31,7 +31,7 @@ mk-form
 
 	div.action
 		button(onclick={ cancel }) キャンセル
-		button(onclick={ authorize }) アクセスを許可
+		button(onclick={ accept }) アクセスを許可
 
 style.
 	display block
@@ -98,11 +98,22 @@ style.
 script.
 	@mixin \api
 
-	@token = window.location.href.split \/ .pop!
+	@event = @opts.event
 
 	@on \mount ~>
-		@api \auth/session/show do
-			token: @token
-		.then (session) ~>
-			@app = session.app
+		@opts.session.then (session) ~>
+			@session = session
+			@app = @session.app
 			@update!
+
+	@cancel = ~>
+		@api \auth/deny do
+			token: @session.token
+		.then ~>
+			@event.trigger \denied
+
+	@accept = ~>
+		@api \auth/accept do
+			token: @session.token
+		.then ~>
+			@event.trigger \accepted
