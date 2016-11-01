@@ -482,6 +482,7 @@ gulp.task('build-copy', [
 		gulp.src('./src/web/desktop/resources/**/*').pipe(gulp.dest('./built/resources/desktop/')),
 		gulp.src('./src/web/mobile/resources/**/*').pipe(gulp.dest('./built/resources/mobile/')),
 		gulp.src('./src/web/dev/resources/**/*').pipe(gulp.dest('./built/resources/dev/')),
+		gulp.src('./src/web/auth/resources/**/*').pipe(gulp.dest('./built/resources/auth/')),
 		gulp.src('./src/resources/favicon.ico').pipe(gulp.dest('./built/resources/')),
 		gulp.src([
 			'./src/web/**/*',

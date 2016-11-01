@@ -14,6 +14,7 @@ const mobileDomain = `/${subdomainPrefix}/mobile`;
 const signupDomain = `/${subdomainPrefix}/signup`;
 const signinDomain = `/${subdomainPrefix}/signin`;
 const signoutDomain = `/${subdomainPrefix}/signout`;
+const authDomain = `/${subdomainPrefix}/auth`;
 const devDomain = `/${subdomainPrefix}/dev`;
 
 const router = express.Router();
@@ -42,6 +43,12 @@ router.post('/_/api/rss-proxy', require('./api/rss-proxy').default);
 
 router.get(`${mobileDomain}/*`, (req, res) => {
 	res.sendFile(`${__dirname}/web/mobile/view.html`, {
+		maxAge: ms('7 days')
+	});
+});
+
+router.get(`${authDomain}/*`, (req, res) => {
+	res.sendFile(`${__dirname}/web/auth/view.html`, {
 		maxAge: ms('7 days')
 	});
 });
