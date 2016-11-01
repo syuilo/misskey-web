@@ -2,6 +2,9 @@ mk-app-page
 	main
 		header
 			h1 { app.name }
+		div.body
+			p App Secret
+			input(value={ app.secret }, readonly)
 
 style.
 	display block
