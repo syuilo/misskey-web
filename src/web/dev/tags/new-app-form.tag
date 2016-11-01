@@ -53,7 +53,7 @@ mk-new-app-form
 		section.callback: label
 			p.caption
 				| コールバックURL (オプション)
-			input@cb
+			input@cb(
 				type='url'
 				placeholder='ex) https://your.app.example.com/callback.php'
 				autocomplete='off')
