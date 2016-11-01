@@ -145,6 +145,8 @@ style.
 			opacity 0.5
 
 script.
+	@mixin \i
+
 	@file = @opts.file
 	@browser = @parent
 
@@ -191,7 +193,7 @@ script.
 			id: @file.id
 			file: @file
 		@is-dragging = true
-		
+
 		# 親ブラウザに対して、ドラッグが開始されたフラグを立てる
 		# (=あなたの子供が、ドラッグを開始しましたよ)
 		@browser.is-drag-source = true
