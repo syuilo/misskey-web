@@ -28,11 +28,17 @@ style.
 			color #555
 
 		> div
+			padding 64px
+
 			> h1
-				margin 0
+				margin 0 0 8px 0
 				padding 0
 				font-size 20px
 				font-weight normal
+
+			> p
+				margin 0
+				color #555
 
 			&.denied > h1
 				color #e65050
