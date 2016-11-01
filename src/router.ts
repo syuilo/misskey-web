@@ -47,6 +47,10 @@ router.get(`${mobileDomain}/*`, (req, res) => {
 	});
 });
 
+router.get(`${authDomain}/`, (req, res) => {
+	res.redirect(config.url);
+});
+
 router.get(`${authDomain}/*`, (req, res) => {
 	res.sendFile(`${__dirname}/web/auth/view.html`, {
 		maxAge: ms('7 days')

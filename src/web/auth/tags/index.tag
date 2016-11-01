@@ -10,6 +10,8 @@ mk-index
 		div.accepted(if={ state == 'accepted' })
 			h1 アプリケーションの連携を許可しました。
 			p アプリケーションに戻って、やっていってください。
+		div.error(if={ state == 'fetch-session-error' })
+			p セッションが存在しません。
 
 style.
 	display block
@@ -60,9 +62,12 @@ script.
 		@api \auth/session/show do
 			token: @token
 		.then (session) ~>
+			resolve session
+		.catch (error) ~>
+			@state = \fetch-session-error
+		.then ~>
 			@fetching = false
 			@update!
-			resolve session
 
 	@event.on \denied ~>
 		@state = \denied

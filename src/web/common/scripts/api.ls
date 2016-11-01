@@ -46,6 +46,7 @@ module.exports = (i, endpoint, data) ->
 		timer = set-timeout ->
 			net.trigger \detected-slow-network
 		, 5000ms
+
 		fetch ep, opts
 		.then (res) ->
 			api-stack--
@@ -54,13 +55,10 @@ module.exports = (i, endpoint, data) ->
 				spinner.parent-node.remove-child spinner
 
 			if res.status == 200
-				res.json!
+				res.json!.then resolve
 			else if res.status == 204
 				resolve!
 			else
 				res.json!.then (err) ->
 					reject err.error
-		.then (data) ->
-			resolve data
-		.catch (e) ->
-			reject e
+		.catch reject
