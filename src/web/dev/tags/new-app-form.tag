@@ -112,7 +112,7 @@ style.
 
 			.caption
 				margin 0 0 4px 0
-				color #969696
+				color #616161
 				font-size 0.95em
 
 				> i
