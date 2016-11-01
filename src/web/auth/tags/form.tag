@@ -116,4 +116,7 @@ script.
 		@api \auth/accept do
 			token: @session.token
 		.then ~>
-			@event.trigger \accepted
+			if @app.callback_url?
+				location.href = @app.callback_url
+			else
+				@event.trigger \accepted
