@@ -85,5 +85,5 @@ script.
 		@state = \accepted
 		@update!
 
-		if @session.app.callback_url?
+		if @session.app.callback_url
 			location.href = @session.app.callback_url + '?token=' + @session.token
