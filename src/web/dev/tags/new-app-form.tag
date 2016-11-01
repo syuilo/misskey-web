@@ -50,6 +50,14 @@ mk-new-app-form
 				autocomplete='off'
 				required)
 
+		section.callback: label
+			p.caption
+				| コールバックURL (オプション)
+			input@cb
+				type='url'
+				placeholder='ex) https://your.app.example.com/callback.php'
+				autocomplete='off')
+
 		section.permission
 			p.caption
 				| 権限
@@ -161,6 +169,7 @@ style.
 					margin-right 4px
 
 		[type=text]
+		[type=url]
 		textarea
 			appearance none
 			user-select text
@@ -235,6 +244,7 @@ script.
 		name = @name.value
 		nid = @nid.value
 		description = @description.value
+		cb = @cb.value
 		permission = []
 
 		@permission.query-selector-all \input .for-each (el) ~>
@@ -246,6 +256,7 @@ script.
 			name: name
 			name_id: nid
 			description: description
+			callback_url: cb
 			permission: permission.join \,
 		.then ~>
 			location.href = '/apps'
