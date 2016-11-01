@@ -327,6 +327,7 @@ script.
 	@clear = ~>
 		@text.value = ''
 		@files = []
+		@controller.trigger \change-files
 		@update!
 
 	@ondragover = (e) ~>
