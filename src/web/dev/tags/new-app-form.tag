@@ -14,7 +14,7 @@ mk-new-app-form
 				| Named ID
 			input@nid(
 				type='text'
-				pattern='^[a-zA-Z0-9\-]{3,20}$'
+				pattern='^[a-zA-Z0-9\-]{3,30}$'
 				placeholder='ex) misskey-for-ios'
 				autocomplete='off'
 				required
@@ -40,7 +40,7 @@ mk-new-app-form
 				| 3文字以上でお願いします！
 			p.info(if={ nid-state == 'max-range' }, style='color:#FF1161')
 				i.fa.fa-fw.fa-exclamation-triangle
-				| 20文字以内でお願いします
+				| 30文字以内でお願いします
 
 		section.description: label
 			p.caption
@@ -218,7 +218,7 @@ script.
 		err = switch
 			| not nid.match /^[a-zA-Z0-9\-]+$/ => \invalid-format
 			| nid.length < 3chars              => \min-range
-			| nid.length > 20chars             => \max-range
+			| nid.length > 30chars             => \max-range
 			| _                                     => null
 
 		if err?
