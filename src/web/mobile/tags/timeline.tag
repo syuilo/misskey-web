@@ -15,6 +15,7 @@ style.
 	display block
 	background #fff
 	background-clip content-box
+	overflow hidden
 
 	> mk-timeline-post
 		border-bottom solid 1px #eaeaea
@@ -49,7 +50,6 @@ style.
 	@media (min-width 500px)
 		border solid 1px rgba(#000, 0.1)
 		border-radius 6px
-		overflow hidden
 
 script.
 	@posts = []
