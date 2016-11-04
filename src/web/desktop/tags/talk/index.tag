@@ -182,6 +182,7 @@ style.
 				display block
 				position relative
 				padding 20px 30px
+				text-decoration none
 				background #fff
 				border-bottom solid 1px #eee
 
