@@ -20,7 +20,7 @@ style.
 		&:first-child
 			border-top-left-radius 4px
 			border-top-right-radius 4px
-		
+
 		&:last-of-type
 			border-bottom none
 
@@ -67,13 +67,13 @@ script.
 	@controller.on \add-post (post) ~>
 		@posts.unshift post
 		@update!
-	
+
 	@controller.on \clear ~>
 		@posts = []
 		@update!
 
 	@controller.on \focus ~>
-		@tags['mk-post'].0.root.focus!
+		@root.children.0.focus!
 
 	@on \update ~>
 		@posts.for-each (post) ~>
