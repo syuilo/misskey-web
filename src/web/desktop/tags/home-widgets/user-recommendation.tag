@@ -46,7 +46,7 @@ style.
 
 		&:hover
 			color #aaa
-		
+
 		&:active
 			color #999
 
@@ -83,7 +83,7 @@ style.
 			> .name
 				margin 0
 				color #555
-			
+
 			> .username
 				margin 0
 				color #ccc
@@ -119,12 +119,19 @@ script.
 	@page = 0
 
 	@on \mount ~>
-		@load!
+		@fetch!
+		@clock = set-interval ~>
+			if @users.length < @limit
+				@fetch true
+		, 60000ms
 
-	@load = ~>
+	@on \unmount ~>
+		clear-interval @clock
+
+	@fetch = (quiet = false) ~>
 		@loading = true
 		@users = null
-		@update!
+		if not quiet then @update!
 		@api \users/recommendation do
 			limit: @limit
 			offset: @limit * @page
@@ -140,4 +147,4 @@ script.
 			@page = 0
 		else
 			@page++
-		@load!
+		@fetch!
