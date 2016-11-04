@@ -1,4 +1,4 @@
-mk-post(tabindex='-1', title={ title }, class={ repost: is-repost })
+mk-post(tabindex='-1', title={ title }, class={ repost: is-repost }, onkeydown={ on-key-down })
 
 	div.reply-to(if={ p.reply_to })
 		mk-post-sub(post={ p.reply_to })
@@ -351,7 +351,7 @@ script.
 				controller: @repost-form-controller
 				post: @p
 		@repost-form-controller.trigger \open
-	
+
 	@like = ~>
 		if @p.is_liked
 			@api \posts/likes/delete do
@@ -369,3 +369,23 @@ script.
 	@toggle-detail = ~>
 		@is-detail-opened = !@is-detail-opened
 		@update!
+
+	@on-key-down = (e) ~>
+		| e.which == 38 or (e.which == 9 and e.shift-key) => # ↑ or Shift+Tab
+			focus @root, (e) -> e.previous-element-sibling
+		| e.which == 40 or e.which == 9 => # ↓ or Tab
+			focus @root, (e) -> e.next-element-sibling
+		| e.which == 69 => # e
+			@repost!
+		| e.which == 70 or e.which == 76 => # f or l
+			@like!
+		| e.which == 82 => # r
+			@reply!
+
+	function focus(el, fn)
+		target = fn el
+		if target?
+			if target.has-attribute \tabindex
+				target.focus!
+			else
+				focus target, fn
