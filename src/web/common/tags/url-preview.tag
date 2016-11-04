@@ -11,7 +11,7 @@ mk-url-preview
 style.
 	display block
 	font-family sans-serif
-	font-size 1rem
+	font-size 16px
 
 	> a
 		display block
@@ -72,6 +72,17 @@ style.
 					color #666
 					font-size 0.8em
 					line-height 16px
+
+	@media (min-width 500px)
+		font-size 8px
+
+		> a
+			> .thumbnail
+				width 70px
+
+				& + article
+					left 70px
+					width calc(100% - 70px)
 
 script.
 	@mixin \api
