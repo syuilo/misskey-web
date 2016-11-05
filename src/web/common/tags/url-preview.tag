@@ -73,7 +73,7 @@ style.
 					font-size 0.8em
 					line-height 16px
 
-	@media (min-width 500px)
+	@media (max-width 500px)
 		font-size 8px
 
 		> a
