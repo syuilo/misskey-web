@@ -267,7 +267,8 @@ script.
 		true
 
 	@on-header-mousedown = (e) ~>
-		@main.focus!
+		if not contains @main, document.active-element
+			@main.focus!
 
 		position = @main.get-bounding-client-rect!
 
@@ -321,3 +322,11 @@ script.
 				e.stop-propagation!
 				@close!
 		true # Riot 3.0.0 にしたら削除して大丈夫かも
+
+	function contains(parent, child)
+		node = child.parent-node
+		while node?
+			if node == parent
+				return true
+			node = node.parent-node
+		return false
