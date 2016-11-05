@@ -28,6 +28,7 @@ style.
 		display block
 		margin 0
 		line-height 32px
+		font-size 14px
 		text-align center
 		color #aaa
 		background #fdfdfd
