@@ -371,9 +371,9 @@ script.
 		@update!
 
 	@on-key-down = (e) ~>
-		| e.which == 38 or (e.which == 9 and e.shift-key) => # ↑ or Shift+Tab
+		| e.which == 38 or e.which == 74 or (e.which == 9 and e.shift-key) => # ↑, j or Shift+Tab
 			focus @root, (e) -> e.previous-element-sibling
-		| e.which == 40 or e.which == 9 => # ↓ or Tab
+		| e.which == 40 or e.which == 75 or e.which == 9 => # ↓, k or Tab
 			focus @root, (e) -> e.next-element-sibling
 		| e.which == 69 => # e
 			@repost!
