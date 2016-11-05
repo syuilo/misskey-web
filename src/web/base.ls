@@ -11,7 +11,7 @@ require \fetch
 if NodeList.prototype.for-each == undefined
 	NodeList.prototype.for-each = Array.prototype.for-each
 
-# Load dependencies
+# Load common dependencies
 #--------------------------------
 
 require \velocity
