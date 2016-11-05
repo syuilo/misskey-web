@@ -73,3 +73,6 @@ script.
 
 	@set-wallpaper = ~>
 		@NotImplementedException!
+
+	@add-app = ~>
+		@NotImplementedException!
