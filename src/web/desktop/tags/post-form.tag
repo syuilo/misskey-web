@@ -374,7 +374,7 @@ script.
 		return false
 
 	@onkeypress = (e) ~>
-		if (e.char-code == 10 || e.char-code == 13) && e.ctrl-key
+		if (e.key-code == 10 || e.key-code == 13) && e.ctrl-key
 			@post!
 		else
 			return true
