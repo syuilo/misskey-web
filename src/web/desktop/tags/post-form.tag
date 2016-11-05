@@ -374,10 +374,10 @@ script.
 		return false
 
 	@onkeypress = (e) ~>
-		if (e.char-code == 10 || e.char-code == 13) && e.ctrl-key
+		if e.which == 13 && e.ctrl-key
 			@post!
 		else
-			return true
+			return true # Riot 3.0.0 にしたら削除して大丈夫かも
 
 	@onpaste = (e) ~>
 		data = e.clipboard-data
