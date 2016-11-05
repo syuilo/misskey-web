@@ -6,7 +6,7 @@ mk-input-dialog
 		</yield>
 		<yield to="content">
 		div.body
-			input@text(type='text', oninput={ parent.update }, placeholder={ parent.placeholder })
+			input@text(type='text', oninput={ parent.update }, onkeydown={ parent.on-keydown }, placeholder={ parent.placeholder })
 		div.action
 			button.cancel(onclick={ parent.cancel }) キャンセル
 			button.ok(disabled={ parent.text.value.length == 0 }, onclick={ parent.ok }) 決定
@@ -158,3 +158,10 @@ script.
 	@ok = ~>
 		@done = true
 		@window-controller.trigger \close
+
+	@on-keydown = (e) ~>
+		if e.which == 13 # Enter
+			e.prevent-default!
+			e.stop-propagation!
+			@ok!
+		true # Riot 3.0.0 にしたら削除して大丈夫かも
