@@ -89,14 +89,3 @@ script.
 
 	@close = ~>
 		@window-controller.trigger \close
-
-	@on-document-keydown = (e) ~>
-		tag = e.target.tag-name.to-lower-case!
-		if e.which == 27 # Esc
-			@window-controller.trigger \close
-
-	@on \mount ~>
-		document.add-event-listener \keydown @on-document-keydown
-
-	@on \unmount ~>
-		document.remove-event-listener \keydown @on-document-keydown

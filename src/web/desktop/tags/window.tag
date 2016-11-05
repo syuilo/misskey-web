@@ -1,6 +1,6 @@
 mk-window(data-flexible={ opts.height == null }, data-colored={ opts.colored }, ondragover={ ondragover })
 	div.bg@bg(show={ is-modal }, onclick={ bg-click })
-	div.main@main(onmousedown={ on-body-mousedown })
+	div.main@main(tabindex='-1', data-is-modal={ is-modal }, onmousedown={ on-body-mousedown }, onkeydown={ on-keydown })
 		header@header(onmousedown={ on-header-mousedown })
 			h1(data-yield='header')
 				| <yield from="header"/>
@@ -36,6 +36,11 @@ style.
 		overflow hidden
 		opacity 0
 		pointer-events none
+
+		&:focus
+			&:not([data-is-modal])
+				box-shadow 0 0 0px 1px rgba($theme-color, 0.5), 0 2px 6px 0 rgba(0, 0, 0, 0.2)
+				//box-shadow 0 2px 6px 0 rgba($theme-color, 0.5)
 
 		> header
 			position relative
@@ -198,6 +203,8 @@ script.
 			easing: \ease-out
 		}
 
+		@main.focus!
+
 		set-timeout ~>
 			@controller.trigger \opened
 		, 300ms
@@ -260,6 +267,8 @@ script.
 		true
 
 	@on-header-mousedown = (e) ~>
+		@main.focus!
+
 		position = @main.get-bounding-client-rect!
 
 		click-x = e.client-x
@@ -304,3 +313,11 @@ script.
 
 	@ondragover = (e) ~>
 		e.data-transfer.drop-effect = \none
+
+	@on-keydown = (e) ~>
+		if e.which == 27 # Esc
+			if @can-close
+				e.prevent-default!
+				e.stop-propagation!
+				@close!
+		true # Riot 3.0.0 にしたら削除して大丈夫かも
