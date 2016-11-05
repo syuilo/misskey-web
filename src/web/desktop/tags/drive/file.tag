@@ -146,11 +146,12 @@ style.
 
 script.
 	@mixin \i
+	@mixin \bytes-to-size
 
 	@file = @opts.file
 	@browser = @parent
 
-	@title = @file.name + '\n' + @file.type
+	@title = @file.name + '\n' + @file.type + ' ' + (@bytes-to-size @file.datasize)
 
 	@onclick = ~>
 		if @browser.multiple
