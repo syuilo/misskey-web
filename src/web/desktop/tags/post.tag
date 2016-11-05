@@ -236,12 +236,13 @@ style.
 			> footer
 				> button
 					margin 0 28px 0 0
-					padding 8px
+					padding 0 8px
+					line-height 32px
+					font-size 1em
+					color #ddd
 					background transparent
 					border none
 					box-shadow none
-					font-size 1em
-					color #ddd
 					cursor pointer
 
 					&:hover
