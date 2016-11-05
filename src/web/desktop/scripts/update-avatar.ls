@@ -5,14 +5,9 @@ riot = require 'riot'
 dialog = require './dialog.ls'
 api = require '../../common/scripts/api.ls'
 
-module.exports = (I, cb) ~>
-	browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
-	browser-controller = riot.observable!
-	riot.mount browser, do
-		multiple: false
-		controller: browser-controller
-	browser-controller.trigger \open
-	browser-controller.one \selected (file) ~>
+module.exports = (I, cb, file = null) ~>
+
+	@file-selected = (file) ~>
 		cropper = document.body.append-child document.create-element \mk-crop-window
 		cropper-controller = riot.observable!
 		riot.mount cropper, do
@@ -76,3 +71,15 @@ module.exports = (I, cb) ~>
 		.catch (err) ~>
 			console.error err
 			#@opts.ui.trigger \notification 'Error!'
+
+	if file?
+		@file-selected file
+	else
+		browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
+		browser-controller = riot.observable!
+		riot.mount browser, do
+			multiple: false
+			controller: browser-controller
+		browser-controller.trigger \open
+		browser-controller.one \selected (file) ~>
+			@file-selected file

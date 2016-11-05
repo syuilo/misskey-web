@@ -1,27 +1,20 @@
 mk-drive-browser-folder-contextmenu
-	mk-contextmenu(controller={ ctx-controller })
-		ul
-			li(onclick={ parent.move }): p
-				i.fa.fa-arrow-right
-				| このフォルダへ移動
-			li(onclick={ parent.new-window }): p
-				i.fa.fa-share-square-o
-				| 新しいウィンドウで表示
-		ul
-			li(onclick={ parent.rename }): p
-				i.fa.fa-i-cursor
-				| 名前を変更
-		ul
-			li(onclick={ parent.delete }): p
-				i.fa.fa-trash-o
-				| 削除
-		ul
-			li(onclick={ parent.create-folder }): p
-				i.fa.fa-folder-o
-				| フォルダーを作成
-			li(onclick={ parent.upload }): p
-				i.fa.fa-upload
-				| ファイルをアップロード
+	mk-contextmenu(controller={ ctx-controller }): ul
+		li(onclick={ parent.move }): p
+			i.fa.fa-arrow-right
+			| このフォルダへ移動
+		li(onclick={ parent.new-window }): p
+			i.fa.fa-share-square-o
+			| 新しいウィンドウで表示
+			li.separator
+		li(onclick={ parent.rename }): p
+			i.fa.fa-i-cursor
+			| 名前を変更
+			li.separator
+		li(onclick={ parent.delete }): p
+			i.fa.fa-trash-o
+			| 削除
+			li.separator
 
 script.
 	@controller = @opts.controller

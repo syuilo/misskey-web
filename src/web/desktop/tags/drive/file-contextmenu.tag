@@ -1,28 +1,42 @@
 mk-drive-browser-file-contextmenu
-	mk-contextmenu(controller={ ctx-controller })
-		ul
-			li(onclick={ parent.rename }): p
-				i.fa.fa-i-cursor
-				| 名前を変更
-			li(onclick={ parent.copy-url }): p
-				i.fa.fa-link
-				| URLをコピー
-			li: a(href={ parent.file.url + '?download' }, download={ parent.file.name }, onclick={ parent.download })
-				i.fa.fa-download
-				| ダウンロード
-		ul
-			li(onclick={ parent.delete }): p
-				i.fa.fa-trash-o
-				| 削除
-		ul
-			li(onclick={ parent.create-folder }): p
-				i.fa.fa-folder-o
-				| フォルダーを作成
-			li(onclick={ parent.upload }): p
-				i.fa.fa-upload
-				| ファイルをアップロード
+	mk-contextmenu(controller={ ctx-controller }): ul
+		li(onclick={ parent.rename }): p
+			i.fa.fa-i-cursor
+			| 名前を変更
+		li(onclick={ parent.copy-url }): p
+			i.fa.fa-link
+			| URLをコピー
+		li: a(href={ parent.file.url + '?download' }, download={ parent.file.name }, onclick={ parent.download })
+			i.fa.fa-download
+			| ダウンロード
+		li.separator
+		li(onclick={ parent.delete }): p
+			i.fa.fa-trash-o
+			| 削除
+		li.separator
+		li.has-child
+			p
+				| その他...
+				i.fa.fa-caret-right
+			ul
+				li(onclick={ parent.set-avatar }): p
+					| アバターに設定
+				li(onclick={ parent.set-banner }): p
+					| バナーに設定
+				li(onclick={ parent.set-wallpaper }): p
+					| 壁紙に設定
+		li.has-child
+			p
+				| アプリで開く...
+				i.fa.fa-caret-right
+			ul
+				li(onclick={ parent.add-app }): p
+					| アプリを追加...
 
 script.
+	@mixin \i
+	@mixin \update-avatar
+	@mixin \update-banner
 	@mixin \NotImplementedException
 
 	@controller = @opts.controller
@@ -36,7 +50,7 @@ script.
 	@ctx-controller.on \closed ~>
 		@controller.trigger \closed
 		@unmount!
-	
+
 	@copy-url = ~>
 		@NotImplementedException!
 
@@ -45,10 +59,17 @@ script.
 		@ctx-controller.trigger \close
 		return true
 
-	@create-folder = ~>
-		@browser-controller.trigger \create-folder
+	@set-avatar = ~>
 		@ctx-controller.trigger \close
+		@update-avatar @I, (i) ~>
+			@update-i i
+		, @file
 
-	@upload = ~>
-		@browser-controller.trigger \upload
+	@set-banner = ~>
 		@ctx-controller.trigger \close
+		@update-banner @I, (i) ~>
+			@update-i i
+		, @file
+
+	@set-wallpaper = ~>
+		@NotImplementedException!

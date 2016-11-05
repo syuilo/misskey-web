@@ -2,12 +2,16 @@ mk-contextmenu
 	| <yield />
 
 style.
+	$width = 240px
+	$item-height = 38px
+	$padding = 10px
+
 	display none
 	position fixed
 	top 0
 	left 0
 	z-index 4096
-	width 240px
+	width $width
 	font-size 0.8em
 	background #fff
 	border-radius 0 4px 4px 4px
@@ -15,46 +19,78 @@ style.
 
 	ul
 		display block
-		margin 10px 0
-		padding 0
+		margin 0
+		padding $padding 0
 		list-style none
 
-		& + ul
-			padding-top 10px
+	li
+		display block
+		position relative
+
+		&.separator
+			margin-top $padding
+			padding-top $padding
 			border-top solid 1px #eee
 
-		> li
-			display block
-
+		&.has-child
 			> p
-			> a
-				display block
-				position relative
-				z-index 1
-				margin 0
-				padding 0 32px 0 38px
-				line-height 38px
-				color #868C8C
-				text-decoration none
-				cursor pointer
+				cursor default
 
-				*
-					pointer-events none
+				> i:last-child
+					position absolute
+					top 0
+					right 8px
+					line-height $item-height
 
-				> i
-					width 28px
-					margin-left -28px
-					text-align center
+			&:hover > ul
+				visibility visible
 
-				&:hover
-					text-decoration none
+			&:active
+				> p, a
 					background $theme-color
-					color $theme-color-foreground
 
-				&:active
-					text-decoration none
-					background darken($theme-color, 10%)
-					color $theme-color-foreground
+		> p, a
+			display block
+			position relative
+			z-index 1
+			margin 0
+			padding 0 32px 0 38px
+			line-height $item-height
+			color #868C8C
+			text-decoration none
+			cursor pointer
+
+			*
+				pointer-events none
+
+			> i
+				width 28px
+				margin-left -28px
+				text-align center
+
+		&:hover
+			> p, a
+				text-decoration none
+				background $theme-color
+				color $theme-color-foreground
+
+		&:active
+			> p, a
+				text-decoration none
+				background darken($theme-color, 10%)
+				color $theme-color-foreground
+
+	li > ul
+		visibility hidden
+		position absolute
+		top 0
+		left $width
+		margin-top -($padding)
+		width $width
+		background #fff
+		border-radius 0 4px 4px 4px
+		box-shadow 2px 2px 8px rgba(0, 0, 0, 0.2)
+		transition visibility 0s linear 0.2s
 
 script.
 	@controller = @opts.controller
