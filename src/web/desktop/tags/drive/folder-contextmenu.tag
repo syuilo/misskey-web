@@ -6,15 +6,14 @@ mk-drive-browser-folder-contextmenu
 		li(onclick={ parent.new-window }): p
 			i.fa.fa-share-square-o
 			| 新しいウィンドウで表示
-			li.separator
+		li.separator
 		li(onclick={ parent.rename }): p
 			i.fa.fa-i-cursor
 			| 名前を変更
-			li.separator
+		li.separator
 		li(onclick={ parent.delete }): p
 			i.fa.fa-trash-o
 			| 削除
-			li.separator
 
 script.
 	@controller = @opts.controller
