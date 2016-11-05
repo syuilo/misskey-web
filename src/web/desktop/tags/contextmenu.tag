@@ -60,6 +60,9 @@ style.
 			text-decoration none
 			cursor pointer
 
+			&:hover
+				text-decoration none
+
 			*
 				pointer-events none
 
