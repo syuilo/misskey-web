@@ -20,6 +20,7 @@ style.
 
 	.day
 		margin 10px 0
+		line-height 32px
 		font-size 2em
 
 script.

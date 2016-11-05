@@ -4,10 +4,10 @@ mk-user-recommendation-home-widget
 		| おすすめユーザー
 	button(onclick={ refresh }, title='他を見る'): i.fa.fa-refresh
 	div.user(if={ users.length != 0 }, each={ _user in users })
-		a.avatar-anchor(href= config.url + '/' + { _user.username })
+		a.avatar-anchor(href={ CONFIG.url + '/' + _user.username })
 			img.avatar(src={ _user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-preview={ _user.id })
 		div.body
-			p.name { _user.name }
+			a.name(href={ CONFIG.url + '/' + _user.username }, data-user-preview={ _user.id }) { _user.name }
 			p.username @{ _user.username }
 		mk-follow-button(user={ _user })
 	p.empty(if={ users.length == 0 })
@@ -66,7 +66,7 @@ style.
 		> .avatar-anchor
 			display block
 			float left
-			margin 0 16px 0 0
+			margin 0 12px 0 0
 
 			> .avatar
 				display block
@@ -78,14 +78,19 @@ style.
 
 		> .body
 			float left
-			width calc(100% - 64px)
+			width calc(100% - 54px)
 
 			> .name
 				margin 0
+				font-size 16px
+				line-height 24px
 				color #555
 
 			> .username
+				display block
 				margin 0
+				font-size 15px
+				line-height 16px
 				color #ccc
 
 		> mk-follow-button

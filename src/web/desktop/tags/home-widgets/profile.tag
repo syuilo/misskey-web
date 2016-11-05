@@ -32,13 +32,16 @@ style.
 
 	> .name
 		display block
-		margin 8px 0 0 92px
+		margin 10px 0 0 92px
+		line-height 16px
 		font-weight bold
 		color #555
 
 	> .username
 		display block
 		margin 4px 0 8px 92px
+		line-height 16px
+		font-size 0.9em
 		color #999
 
 script.
