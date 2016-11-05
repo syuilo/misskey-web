@@ -7,13 +7,13 @@ mk-nav-home-widget
 	i ・
 	a(href={ CONFIG.urls.dev }) 開発者
 	i ・
-	a(onclick={ debug }) デバッガ
+	a(href='https://twitter.com/misskey_xyz', target='_blank') Follow us on <i class="fa fa-twitter"></i>
 
 style.
 	display block
 	padding 16px
 	font-family 'Meiryo', 'メイリオ', sans-serif
-	font-size 0.9em
+	font-size 12px
 	color #aaa
 	background #fff
 
@@ -22,9 +22,3 @@ style.
 
 	i
 		color #ccc
-
-script.
-	@mixin \open-window
-
-	@debug = ~>
-		@open-window \mk-debugger
