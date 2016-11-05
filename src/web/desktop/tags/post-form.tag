@@ -374,7 +374,7 @@ script.
 		return false
 
 	@onkeypress = (e) ~>
-		if e.which == 13 && e.ctrl-key
+		if (e.which == 10 || e.which == 13) && e.ctrl-key
 			@post!
 		else
 			return true # Riot 3.0.0 にしたら削除して大丈夫かも
