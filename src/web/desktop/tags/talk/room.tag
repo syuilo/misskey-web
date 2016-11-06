@@ -39,12 +39,12 @@ mk-talk-room
 		textarea@text(placeholder='ここにメッセージを入力')
 		div.uploads
 		div.files
-		button(onclick={ say }, disabled={ saying }, title='メッセージを送信')
+		button.submit(onclick={ say }, disabled={ saying }, title='メッセージを送信')
 			i.fa.fa-paper-plane(if={ !saying })
 			i.fa.fa-spinner.fa-spin(if={ saying })
 		button.attach-from-local(type='button', title='PCから画像を添付する')
 			i.fa.fa-upload
-		button.attach-from-album(type='button', title='アルバムから画像を添付する')
+		button.attach-from-drive(type='button', title='アルバムから画像を添付する')
 			i.fa.fa-folder-open
 		input(name='file', type='file', accept='image/*')
 
@@ -286,11 +286,6 @@ style.
 		background rgba(255, 255, 255, 0.95)
 		background-clip content-box
 
-		&:after
-			content ''
-			display block
-			clear both
-
 		.grippie
 			height 10px
 			margin-top -10px
@@ -322,34 +317,24 @@ style.
 			box-shadow none
 			background transparent
 
-		[type=submit]
-			display inline-block
-			float right
-			box-sizing border-box
+		.submit
+			position absolute
+			bottom 0
+			right 0
 			margin 0
-			padding 6px 16px
-			min-width 5em
-			cursor pointer
-			line-height 1.3em
-			font-size 1.3em
-			font-weight normal
-			text-decoration none
-			color #fff
-			background $theme-color
-			outline none
-			border none
-			border-radius 0
-			box-shadow none
-			transition background 0.05s ease
+			padding 10px 14px
+			line-height 1em
+			font-size 1em
+			color #aaa
+			transition color 0.1s ease
 
 			&:hover
-				background lighten($theme-color, 10%)
+				color $theme-color
 
 			&:active
-				background darken($theme-color, 10%)
+				color darken($theme-color, 10%)
+				transition color 0s ease
 
-			*
-				pointer-events none
 
 		.files
 			display block
@@ -399,13 +384,7 @@ style.
 					cursor pointer
 
 		.attach-from-local
-		.attach-from-album
-			-webkit-appearance none
-			-moz-appearance none
-			appearance none
-			display block
-			float left
-			box-sizing border-box
+		.attach-from-drive
 			margin 0
 			padding 10px 14px
 			line-height 1em
@@ -413,16 +392,7 @@ style.
 			font-weight normal
 			text-decoration none
 			color #aaa
-			background transparent
-			outline none
-			border none
-			border-radius 0
-			box-shadow none
-			cursor pointer
 			transition color 0.1s ease
-
-			*
-				pointer-events none
 
 			&:hover
 				color $theme-color
