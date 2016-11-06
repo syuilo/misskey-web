@@ -1,8 +1,7 @@
 mk-profile-home-widget
-	div.banner(style={ I.banner_url ? 'background-image: url(' + I.banner_url + '?thumbnail&size=256)' : '' })
-	a.avatar-anchor(href= config.url + '/' + { I.username })
-		img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ I.id })
-	a.name(href= config.url + '/' + { I.username }) { I.name }
+	div.banner(style={ I.banner_url ? 'background-image: url(' + I.banner_url + '?thumbnail&size=256)' : '' }, onclick={ set-banner })
+	img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, onclick={ set-avatar }, alt='avatar', data-user-preview={ I.id })
+	a.name(href={ CONFIG.url + '/' + I.username }) { I.name }
 	p.username @{ I.username }
 
 style.
@@ -15,20 +14,17 @@ style.
 		background-size cover
 		background-position center
 
-	> .avatar-anchor
+	> .avatar
 		display block
 		position absolute
 		top 76px
 		left 16px
-
-		> .avatar
-			display block
-			width 58px
-			height 58px
-			margin 0
-			border solid 3px #fff
-			border-radius 8px
-			vertical-align bottom
+		width 58px
+		height 58px
+		margin 0
+		border solid 3px #fff
+		border-radius 8px
+		vertical-align bottom
 
 	> .name
 		display block
@@ -47,3 +43,13 @@ style.
 script.
 	@mixin \i
 	@mixin \user-preview
+	@mixin \update-avatar
+	@mixin \update-banner
+
+	@set-avatar = ~>
+		@update-avatar @I, (i) ~>
+			@update-i i
+
+	@set-banner = ~>
+		@update-banner @I, (i) ~>
+			@update-i i
