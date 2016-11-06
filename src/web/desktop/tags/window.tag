@@ -433,8 +433,8 @@ script.
 
 	function drag-clear fn
 		window.remove-event-listener \mousemove  fn
-		window.remove-event-listener \mouseup    drag-clear
 		window.remove-event-listener \mouseleave drag-clear
+		window.remove-event-listener \mouseup    drag-clear
 
 	@ondragover = (e) ~>
 		e.data-transfer.drop-effect = \none
