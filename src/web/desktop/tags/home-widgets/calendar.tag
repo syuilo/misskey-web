@@ -73,6 +73,7 @@ style.
 				margin 0 0 2px 0
 				font-size 12px
 				line-height 18px
+				color #888
 
 				> b
 					margin-left 2px
