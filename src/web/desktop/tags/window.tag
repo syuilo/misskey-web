@@ -197,6 +197,9 @@ style.
 						color darken($theme-color, 30%)
 
 script.
+	@min-height = 40px
+	@min-width = 200px
+
 	@is-open = false
 	@is-modal = if @opts.is-modal? then @opts.is-modal else false
 	@can-close = if @opts.can-close? then @opts.can-close else true
@@ -341,6 +344,7 @@ script.
 		@top!
 		true
 
+	# ヘッダー掴み時
 	@on-header-mousedown = (e) ~>
 		if not contains @main, document.active-element
 			@main.focus!
@@ -356,76 +360,141 @@ script.
 		window-width = @main.offset-width
 		window-height = @main.offset-height
 
+		# 動かした時
 		drag-listen (me) ~>
 			move-left = me.client-x - move-base-x
 			move-top = me.client-y - move-base-y
 
-			if move-left < 0
-				move-left = 0
-
+			# 上はみ出し
 			if move-top < 0
 				move-top = 0
 
-			if move-left + window-width > browser-width
-				move-left = browser-width - window-width
+			# 左はみ出し
+			if move-left < 0
+				move-left = 0
 
+			# 下はみ出し
 			if move-top + window-height > browser-height
 				move-top = browser-height - window-height
+
+			# 右はみ出し
+			if move-left + window-width > browser-width
+				move-left = browser-width - window-width
 
 			@main.style.left = move-left + \px
 			@main.style.top = move-top + \px
 
+	# 上ハンドル掴み時
 	@on-top-handle-mousedown = (e) ~>
 		base = e.client-y
 		height = parse-int((get-computed-style @main, '').height, 10)
 		top = parse-int((get-computed-style @main, '').top, 10)
 
+		# 動かした時
 		drag-listen (me) ~>
 			move = me.client-y - base
-			@main.style.height = (height + -move) + \px
-			@main.style.top = (top + move) + \px
+			if top + move > 0
+				if height + -move > @min-height
+					@apply-transform-height height + -move
+					@apply-transform-top top + move
+				else # 最小の高さより小さくなろうとした時
+					@apply-transform-height @min-height
+					@apply-transform-top top + (height - @min-height)
+			else # 上のはみ出し時
+				@apply-transform-height top + height
+				@apply-transform-top 0
 
+	# 右ハンドル掴み時
 	@on-right-handle-mousedown = (e) ~>
 		base = e.client-x
 		width = parse-int((get-computed-style @main, '').width, 10)
+		left = parse-int((get-computed-style @main, '').left, 10)
+		browser-width = window.inner-width
 
+		# 動かした時
 		drag-listen (me) ~>
 			move = me.client-x - base
-			@main.style.width = (width + move) + \px
+			if left + width + move < browser-width
+				if width + move > @min-width
+					@apply-transform-width width + move
+				else # 最小の幅より小さくなろうとした時
+					@apply-transform-width @min-width
+			else # 右のはみ出し時
+				@apply-transform-width browser-width - left
 
+	# 下ハンドル掴み時
 	@on-bottom-handle-mousedown = (e) ~>
 		base = e.client-y
 		height = parse-int((get-computed-style @main, '').height, 10)
+		top = parse-int((get-computed-style @main, '').top, 10)
+		browser-height = window.inner-height
 
+		# 動かした時
 		drag-listen (me) ~>
 			move = me.client-y - base
-			@main.style.height = (height + move) + \px
+			if top + height + move < browser-height
+				if height + move > @min-height
+					@apply-transform-height height + move
+				else # 最小の高さより小さくなろうとした時
+					@apply-transform-height @min-height
+			else # 下のはみ出し時
+				@apply-transform-height browser-height - top
 
+	# 左ハンドル掴み時
 	@on-left-handle-mousedown = (e) ~>
 		base = e.client-x
 		width = parse-int((get-computed-style @main, '').width, 10)
 		left = parse-int((get-computed-style @main, '').left, 10)
 
+		# 動かした時
 		drag-listen (me) ~>
 			move = me.client-x - base
-			@main.style.width = (width + -move) + \px
-			@main.style.left = (left + move) + \px
+			if left + move > 0
+				if width + -move > @min-width
+					@apply-transform-width width + -move
+					@apply-transform-left left + move
+				else # 最小の幅より小さくなろうとした時
+					@apply-transform-width @min-width
+					@apply-transform-left left + (width - @min-width)
+			else # 左のはみ出し時
+				@apply-transform-width left + width
+				@apply-transform-left 0
 
+	# 左上ハンドル掴み時
 	@on-top-left-handle-mousedown = (e) ~>
 		@on-top-handle-mousedown e
 		@on-left-handle-mousedown e
 
+	# 右上ハンドル掴み時
 	@on-top-right-handle-mousedown = (e) ~>
 		@on-top-handle-mousedown e
 		@on-right-handle-mousedown e
 
+	# 右下ハンドル掴み時
 	@on-bottom-right-handle-mousedown = (e) ~>
 		@on-bottom-handle-mousedown e
 		@on-right-handle-mousedown e
 
+	# 左下ハンドル掴み時
 	@on-bottom-left-handle-mousedown = (e) ~>
 		@on-bottom-handle-mousedown e
 		@on-left-handle-mousedown e
+
+	# 高さを適用
+	@apply-transform-height = (height) ~>
+		@main.style.height = height + \px
+
+	# 幅を適用
+	@apply-transform-width = (width) ~>
+		@main.style.width = width + \px
+
+	# Y座標を適用
+	@apply-transform-top = (top) ~>
+		@main.style.top = top + \px
+
+	# X座標を適用
+	@apply-transform-left = (left) ~>
+		@main.style.left = left + \px
 
 	function drag-listen fn
 		window.add-event-listener \mousemove  fn
