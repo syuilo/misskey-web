@@ -47,4 +47,8 @@ module.exports = (callback) ~>
 		..set-attribute \id \app
 		.. |> document.body.append-child
 
-	callback me
+	try
+		callback me
+	catch e
+		document.body.innerHTML = '致命的な問題が発生しました。'
+		console.error e
