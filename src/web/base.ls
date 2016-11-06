@@ -50,5 +50,5 @@ module.exports = (callback) ~>
 	try
 		callback me
 	catch e
-		document.body.innerHTML = '致命的な問題が発生しました。'
+		document.body.innerHTML = '<div id="error"><p>致命的な問題が発生しました。</p></div>'
 		console.error e
