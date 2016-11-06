@@ -1,7 +1,7 @@
 mk-window(data-flexible={ is-flexible }, data-colored={ opts.colored }, ondragover={ ondragover })
 	div.bg@bg(show={ is-modal }, onclick={ bg-click })
 	div.main@main(tabindex='-1', data-is-modal={ is-modal }, onmousedown={ on-body-mousedown }, onkeydown={ on-keydown })
-		div.body@body
+		div.body
 			header@header(onmousedown={ on-header-mousedown })
 				h1(data-yield='header')
 					| <yield from="header"/>
@@ -109,10 +109,11 @@ style.
 				cursor nesw-resize
 
 		> .body
+			height 100%
+			overflow hidden
 			background #fff
 			border-radius 6px
 			box-shadow 0 2px 6px 0 rgba(0, 0, 0, 0.2)
-			overflow hidden
 
 			> header
 				position relative
@@ -205,8 +206,8 @@ script.
 	@controller = @opts.controller
 
 	@on \mount ~>
-		@body.style.width = @opts.width || \530px
-		@body.style.height = @opts.height || \auto
+		@main.style.width = @opts.width || \530px
+		@main.style.height = @opts.height || \auto
 
 		@main.style.top = \15%
 		@main.style.left = (window.inner-width / 2) - (@main.offset-width / 2) + \px
@@ -376,38 +377,38 @@ script.
 
 	@on-top-handle-mousedown = (e) ~>
 		base = e.client-y
-		height = parse-int((get-computed-style @body, '').height, 10)
+		height = parse-int((get-computed-style @main, '').height, 10)
 		top = parse-int((get-computed-style @main, '').top, 10)
 
 		drag-listen (me) ~>
 			move = me.client-y - base
-			@body.style.height = (height + -move) + \px
+			@main.style.height = (height + -move) + \px
 			@main.style.top = (top + move) + \px
 
 	@on-right-handle-mousedown = (e) ~>
 		base = e.client-x
-		width = parse-int((get-computed-style @body, '').width, 10)
+		width = parse-int((get-computed-style @main, '').width, 10)
 
 		drag-listen (me) ~>
 			move = me.client-x - base
-			@body.style.width = (width + move) + \px
+			@main.style.width = (width + move) + \px
 
 	@on-bottom-handle-mousedown = (e) ~>
 		base = e.client-y
-		height = parse-int((get-computed-style @body, '').height, 10)
+		height = parse-int((get-computed-style @main, '').height, 10)
 
 		drag-listen (me) ~>
 			move = me.client-y - base
-			@body.style.height = (height + move) + \px
+			@main.style.height = (height + move) + \px
 
 	@on-left-handle-mousedown = (e) ~>
 		base = e.client-x
-		width = parse-int((get-computed-style @body, '').width, 10)
+		width = parse-int((get-computed-style @main, '').width, 10)
 		left = parse-int((get-computed-style @main, '').left, 10)
 
 		drag-listen (me) ~>
 			move = me.client-x - base
-			@body.style.width = (width + -move) + \px
+			@main.style.width = (width + -move) + \px
 			@main.style.left = (left + move) + \px
 
 	@on-top-left-handle-mousedown = (e) ~>
