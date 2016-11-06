@@ -127,6 +127,3 @@ script.
 	@on \mount ~>
 		@draw!
 		set-interval @draw, 1000ms
-
-	function is-leap-year y
-		not ((y % 4) && (y % 100) || !(y % 400))
