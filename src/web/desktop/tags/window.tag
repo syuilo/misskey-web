@@ -430,8 +430,6 @@ script.
 		window.add-event-listener \mousemove  fn
 		window.add-event-listener \mouseleave drag-clear.bind null fn
 		window.add-event-listener \mouseup    drag-clear.bind null fn
-		window.add-event-listener \dragstart  drag-clear.bind null fn
-		window.add-event-listener \dragend    drag-clear.bind null fn
 
 	function drag-clear fn
 		window.remove-event-listener \mousemove  fn
