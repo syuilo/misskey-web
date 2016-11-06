@@ -1,5 +1,5 @@
 mk-calendar-home-widget(data-special={ special })
-	div.calendar
+	div.calendar(data-is-holiday={ is-holiday })
 		p.month-and-year
 			span.year { year }年
 			span.month { month }月
@@ -46,7 +46,11 @@ style.
 		width 60%
 		text-align center
 
-		p
+		&[data-is-holiday]
+			> .day
+				color #ef95a0
+
+		> p
 			margin 0
 			line-height 18px
 			font-size 14px
@@ -54,7 +58,7 @@ style.
 			> span
 				margin 0 4px
 
-		.day
+		> .day
 			margin 10px 0
 			line-height 32px
 			font-size 28px
@@ -125,6 +129,9 @@ script.
 		@day-p   = @day-numer   / @day-denom   * 100
 		@month-p = @month-numer / @month-denom * 100
 		@year-p  = @year-numer  / @year-denom  * 100
+
+		@is-holiday =
+			(now.get-day! == 0 or now.get-day! == 6)
 
 		@special =
 			| nm == 0 and nd == 1 => \on-new-years-day
