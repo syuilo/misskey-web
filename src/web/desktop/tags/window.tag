@@ -118,9 +118,11 @@ style.
 			> header
 				position relative
 				z-index 128
+				overflow hidden
 				cursor move
 				background #fff
 				background-clip padding-box
+				border-radius 6px 6px 0 0
 				box-shadow 0 1px 0 rgba(#000, 0.1)
 
 				&, *
