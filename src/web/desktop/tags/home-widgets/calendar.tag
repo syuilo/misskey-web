@@ -1,4 +1,4 @@
-mk-calendar-home-widget
+mk-calendar-home-widget(data-special={ special })
 	div.calendar
 		p.month-and-year
 			span.year { year }年
@@ -32,6 +32,9 @@ style.
 	padding 16px 0
 	color #777
 	background #fff
+
+	&[data-special='on-new-years-day']
+		border-color #ef95a0 !important
 
 	&:after
 		content ""
@@ -122,6 +125,10 @@ script.
 		@day-p   = @day-numer   / @day-denom   * 100
 		@month-p = @month-numer / @month-denom * 100
 		@year-p  = @year-numer  / @year-denom  * 100
+
+		@special =
+			| nm == 0 and nd == 1 => \on-new-years-day
+			| _ => false
 
 		@update!
 
