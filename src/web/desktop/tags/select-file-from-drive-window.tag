@@ -1,8 +1,7 @@
 mk-select-file-from-drive-window
 	mk-window(controller={ window-controller }, is-modal={ true }, width={ '800px' }, height={ '500px' })
 		<yield to="header">
-		i.fa.fa-file-o
-		| ファイルを選択
+		mk-raw(content={ parent.title })
 		span.count(if={ parent.multiple && parent.file.length > 0 }) ({ parent.file.length }ファイル選択中)
 		</yield>
 		<yield to="content">
@@ -17,8 +16,9 @@ mk-select-file-from-drive-window
 style.
 	> mk-window
 		[data-yield='header']
-			> i
-				margin-right 4px
+			> mk-raw
+				> i
+					margin-right 4px
 
 			.count
 				margin-left 8px
@@ -148,6 +148,7 @@ script.
 
 	@controller = @opts.controller
 	@multiple = if @opts.multiple? then @opts.multiple else false
+	@title = @opts.title || '<i class="fa fa-file-o"></i>ファイルを選択'
 
 	@window-controller = riot.observable!
 	@browser-controller = riot.observable!

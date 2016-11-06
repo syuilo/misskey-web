@@ -80,6 +80,7 @@ module.exports = (I, cb, file = null) ~>
 		riot.mount browser, do
 			multiple: false
 			controller: browser-controller
+			title: '<i class="fa fa-picture-o"></i>バナーにする画像を選択'
 		browser-controller.trigger \open
 		browser-controller.one \selected (file) ~>
 			@file-selected file
