@@ -4,12 +4,13 @@
 route = require \page
 page = null
 
-module.exports = (me) ~> 
+module.exports = (me) ~>
 
 	# Routing
 	#--------------------------------
 
 	route \/ index
+	route \/i/notifications notifications
 	route \/i/drive drive
 	route \/i/drive/folder/:folder drive
 	route \/i/drive/file/:file drive
@@ -29,6 +30,9 @@ module.exports = (me) ~>
 
 	function entrance
 		mount document.create-element \mk-entrance
+
+	function notifications
+		mount document.create-element \mk-notifications-page
 
 	function user page, ctx
 		document.create-element \mk-user-page
