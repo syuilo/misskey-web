@@ -1,5 +1,4 @@
 mk-ui-header
-	a.mobile(if={ is-mobile }, href={ CONFIG.urls.mobile }) モバイル版はこちら
 	mk-donation(if={ SIGNIN && !I.data.no_donation })
 	div.main
 		div.backdrop
@@ -51,7 +50,7 @@ style.
 				background-size 64px
 				background-position center
 				background-repeat no-repeat
-				filter opacity(20%) grayscale(100%) 
+				filter opacity(20%) grayscale(100%)
 
 		> .main
 			position relative
@@ -88,11 +87,3 @@ style(theme='dark').
 
 		> .backdrop
 			background #0D0D0D
-
-script.
-	ua = navigator.user-agent.to-lower-case!
-	@is-mobile =
-		(ua.index-of \mobile)  > -1 or
-		(ua.index-of \iphone)  > -1 or
-		(ua.index-of \ipad)    > -1 or
-		(ua.index-of \android) > -1

@@ -10,7 +10,6 @@ import config from './config';
 
 const subdomainPrefix = '__';
 
-const mobileDomain = `/${subdomainPrefix}/mobile`;
 const signupDomain = `/${subdomainPrefix}/signup`;
 const signinDomain = `/${subdomainPrefix}/signin`;
 const signoutDomain = `/${subdomainPrefix}/signout`;
@@ -41,12 +40,6 @@ router.get(`${signoutDomain}/`, (req, res) => {
 router.get('/_/api/url', require('./api/url').default);
 router.post('/_/api/rss-proxy', require('./api/rss-proxy').default);
 
-router.get(`${mobileDomain}/*`, (req, res) => {
-	res.sendFile(`${__dirname}/web/mobile/view.html`, {
-		maxAge: ms('7 days')
-	});
-});
-
 router.get(`${authDomain}/`, (req, res) => {
 	res.redirect(config.url);
 });
@@ -64,7 +57,7 @@ router.get(`${devDomain}/*`, (req, res) => {
 });
 
 router.get('*', (req, res) => {
-	res.sendFile(`${__dirname}/web/desktop/view.html`, {
+	res.sendFile(`${__dirname}/web/client.html`, {
 		maxAge: ms('7 days')
 	});
 });

@@ -66,10 +66,10 @@ const project = ts.createProject('tsconfig.json', {
 gulp.task('build', [
 	'build-before',
 	'build:ts',
-	'build:pug',
 	'copy:bower_components',
 	'build:scripts',
 	'build:styles',
+	'build:pug',
 	'build-copy'
 ], () => {
 	gutil.log('ビルドが終了しました。');
@@ -107,7 +107,7 @@ gulp.task('build:ts', () => {
 
 //////////////////////////////////////////////////
 // Pugのビルド
-gulp.task('build:pug', () => {
+gulp.task('build:pug', ['build:scripts', 'build:styles'], () => {
 	gutil.log('Pugをコンパイルします...');
 
 	const config = require('./src/config.ts').default;
