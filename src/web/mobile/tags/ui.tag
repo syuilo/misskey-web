@@ -12,6 +12,7 @@ style.
 	display block
 
 script.
+	@mixin \stream
 
 	@ready-count = 0
 
@@ -19,9 +20,11 @@ script.
 	#	alert text
 
 	@on \mount ~>
+		@stream.on \notification @on-stream-notification
 		@ready!
 
 	@on \unmount ~>
+		@stream.off \notification @on-stream-notification
 		@slide.slide-close!
 
 	@ready = ~>
@@ -36,3 +39,8 @@ script.
 		@main.style.padding-top = top + \px
 		@nav.style.margin-top = top + \px
 		@nav.query-selector '.body > .content' .style.padding-bottom = top + \px
+
+	@on-stream-notification = (notification) ~>
+		el = document.body.append-child document.create-element \mk-notify
+		riot.mount el, do
+			notification: notification

@@ -2,39 +2,36 @@ mk-notification(class={ notification.type })
 	mk-time(time={ notification.created_at })
 
 	div.main(if={ notification.type == 'like' })
-		a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id })
+		a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username })
 			img.avatar(src={ notification.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 		div.text
 			p
 				i.fa.fa-thumbs-o-up
-				a(href= config.url + '/' + { notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
+				a(href= config.url + '/' + { notification.user.username }) { notification.user.name }
 			a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 
 	div.main(if={ notification.type == 'repost' })
-		a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user.id })
+		a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username })
 			img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 		div.text
 			p
 				i.fa.fa-retweet
-				a(href= config.url + '/' + { notification.post.user.username }, data-user-preview={ notification.post.user.id }) { notification.post.user.name }
+				a(href= config.url + '/' + { notification.post.user.username }) { notification.post.user.name }
 			a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post.repost) }
 
 	div.main(if={ notification.type == 'follow' })
-		a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id })
+		a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username })
 			img.avatar(src={ notification.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 		div.text
 			p
 				i.fa.fa-user-plus
-				a(href= config.url + '/' + { notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
+				a(href= config.url + '/' + { notification.user.username }) { notification.user.name }
 
 style.
 	display block
 	position relative
 	margin 0
 	padding 16px
-
-	&:last-child
-		border-bottom none
 
 	> mk-time
 		display inline
