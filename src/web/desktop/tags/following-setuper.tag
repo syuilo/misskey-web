@@ -49,7 +49,7 @@ style.
 			> .avatar-anchor
 				display block
 				float left
-				margin 0 16px 0 0
+				margin 0 12px 0 0
 
 				> .avatar
 					display block
@@ -61,16 +61,20 @@ style.
 
 			> .body
 				float left
-				width calc(100% - 64px)
+				width calc(100% - 54px)
 
 				> .name
 					margin 0
+					font-size 16px
+					line-height 24px
 					color #555
-				
+
 				> .username
 					margin 0
+					font-size 15px
+					line-height 16px
 					color #ccc
-			
+
 			> mk-follow-button
 				position absolute
 				top 16px
