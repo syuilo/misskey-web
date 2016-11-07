@@ -67,7 +67,7 @@ script.
 	@controller.on \add-post (post) ~>
 		@posts.unshift post
 		@update!
-	
+
 	@controller.on \clear ~>
 		@posts = []
 		@update!
