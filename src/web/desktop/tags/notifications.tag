@@ -47,7 +47,7 @@ mk-notifications
 
 style.
 	display block
-	
+
 	> .notifications
 		> .notification
 			position relative
@@ -86,7 +86,7 @@ style.
 					max-width 36px
 					max-height 36px
 					border-radius 6px
-		
+
 			.text
 				float right
 				box-sizing border-box
@@ -98,7 +98,7 @@ style.
 
 					i
 						margin-right 4px
-		
+
 			&.like, &.repost
 				.post-preview
 					color rgba(0, 0, 0, 0.7)
@@ -110,7 +110,7 @@ style.
 						font-style normal
 						display inline-block
 						margin-right 3px
-					
+
 					&:before
 						content "\f10d"
 
@@ -124,7 +124,7 @@ style.
 			&.repost
 				.text p i
 					color #77B255
-			
+
 			&.follow
 				.text p i
 					color #53c7ce
@@ -154,7 +154,7 @@ style.
 		padding 16px
 		text-align center
 		color #aaa
-	
+
 	> .loading
 		margin 0
 		padding 16px
@@ -181,12 +181,12 @@ script.
 			@update!
 		.catch (err, text-status) ->
 			console.error err
-		
+
 		@stream.on \notification @on-notification
-	
+
 	@on \unmount ~>
 		@stream.off \notification @on-notification
-	
+
 	@on-notification = (notification) ~>
 		@notifications.unshift notification
 		@update!
