@@ -23,7 +23,7 @@ style.
 		> a
 			font-weight bold
 			color #fff
-		
+
 		> button
 			position absolute
 			top 0
@@ -32,13 +32,12 @@ style.
 			color #fff
 
 script.
+	@mixin \i
 	@mixin \update-avatar
 
 	@set = ~>
-		@update-avatar (i) ~>
-			i._web = window.I._web
-			window.I = i
-			@update!
+		@update-avatar @I, (i) ~>
+			@update-i i
 
 	@close = (e) ~>
 		e.prevent-default!
