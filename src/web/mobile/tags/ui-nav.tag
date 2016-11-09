@@ -27,7 +27,7 @@ mk-ui-nav
 					| トーク
 					i.angle.fa.fa-angle-right
 			ul
-				li.settings: a
+				li.settings: a(onclick={ search })
 					i.icon.fa.fa-search
 					| 検索
 					i.angle.fa.fa-angle-right
@@ -163,6 +163,12 @@ style.
 
 script.
 	@mixin \i
+	@mixin \page
 
 	@on \mount ~>
 		@opts.ready!
+
+	@search = ~>
+		query = window.prompt \検索
+		if query? and query != ''
+			@page '/search:' + query
