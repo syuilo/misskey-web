@@ -34,9 +34,11 @@ mk-drive-browser-file-contextmenu
 					| アプリを追加...
 
 script.
+	@mixin \api
 	@mixin \i
 	@mixin \update-avatar
 	@mixin \update-banner
+	@mixin \input-dialog
 	@mixin \NotImplementedException
 
 	@controller = @opts.controller
@@ -50,6 +52,22 @@ script.
 	@ctx-controller.on \closed ~>
 		@controller.trigger \closed
 		@unmount!
+
+	@rename = ~>
+		@ctx-controller.trigger \close
+
+		name <~ @input-dialog do
+			'ファイル名の変更'
+			'新しいファイル名を入力してください'
+			@file.name
+
+		@api \drive/files/update do
+			file: @file.id
+			name: name
+		.then ~>
+			# something
+		.catch (err) ~>
+			console.error err
 
 	@copy-url = ~>
 		@NotImplementedException!
