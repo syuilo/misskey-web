@@ -1,6 +1,6 @@
 mk-header-search
-	form.search(action= config.searchUrl, method='get', role='search')
-		input(type='search', name='q', placeholder!='&#xf002; 検索')
+	form.search(onsubmit={ onsubmit })
+		input@q(type='search', placeholder!='&#xf002; 検索')
 		div.result
 
 style.
@@ -12,9 +12,6 @@ style.
 		position relative
 
 		> input
-			-webkit-appearance none
-			-moz-appearance none
-			appearance none
 			user-select text
 			-moz-user-select text
 			-webkit-user-select text
@@ -36,10 +33,13 @@ style.
 			transition color 0.5s ease, border 0.5s ease
 			font-family FontAwesome, 'Meiryo UI', 'Meiryo', 'メイリオ', sans-serif
 
-			&[data-active='true']
-				background #fff
-
 			&::-webkit-input-placeholder,
 			&:-ms-input-placeholder,
 			&:-moz-placeholder
 				color $ui-controll-foreground-color
+
+script.
+	@mixin \page
+
+	@onsubmit = ~>
+		@page '/search:' + @q.value

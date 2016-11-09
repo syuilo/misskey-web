@@ -1,6 +1,7 @@
 # Router
 #================================
 
+riot = require \riot
 route = require \page
 page = null
 
@@ -10,6 +11,7 @@ module.exports = (me) ~>
 	#--------------------------------
 
 	route \/ index
+	route \/search::query search
 	route \/:user user.bind null \home
 	route \/:user/graphs user.bind null \graphs
 	route \/:user/:post post
@@ -26,6 +28,11 @@ module.exports = (me) ~>
 
 	function entrance
 		mount document.create-element \mk-entrance
+
+	function search ctx
+		document.create-element \mk-search-page
+			..set-attribute \query ctx.params.query
+			.. |> mount
 
 	function user page, ctx
 		document.create-element \mk-user-page
@@ -44,12 +51,13 @@ module.exports = (me) ~>
 	# Exec
 	#--------------------------------
 
+	riot.mixin \page do
+		page: route
+
 	route!
 
 # Mount
 #================================
-
-riot = require \riot
 
 function mount content
 	if page? then page.unmount!
