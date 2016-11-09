@@ -22,6 +22,14 @@ mk-notification-preview(class={ notification.type })
 				i.fa.fa-user-plus
 				| { notification.user.name }
 
+	div.main(if={ notification.type == 'mention' })
+		img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+		div.text
+			p
+				i.fa.fa-reply
+				| { notification.post.user.name }
+			p.post-preview { get-post-summary(notification.post) }
+
 style.
 	display block
 	position relative
@@ -86,6 +94,10 @@ style.
 	&.follow
 		.text p i
 			color #53c7ce
+
+	&.mention
+		.text p i
+			color #fff
 
 script.
 	@mixin \get-post-summary

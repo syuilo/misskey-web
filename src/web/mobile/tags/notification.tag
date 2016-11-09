@@ -27,6 +27,15 @@ mk-notification(class={ notification.type })
 				i.fa.fa-user-plus
 				a(href= config.url + '/' + { notification.user.username }) { notification.user.name }
 
+	div.main(if={ notification.type == 'mention' })
+		a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username })
+			img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+		div.text
+			p
+				i.fa.fa-reply
+				a(href= config.url + '/' + { notification.post.user.username }) { notification.post.user.name }
+			a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
+
 style.
 	display block
 	position relative
@@ -104,6 +113,9 @@ style.
 			color #53c7ce
 
 	&.mention
+		.text p i
+			color #555
+
 		.post-preview
 			color rgba(0, 0, 0, 0.7)
 

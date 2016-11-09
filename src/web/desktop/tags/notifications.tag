@@ -30,6 +30,15 @@ mk-notifications
 							i.fa.fa-user-plus
 							a(href= config.url + '/' + { notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
 
+				div.main(if={ notification.type == 'mention' })
+					a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user.id })
+						img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
+					div.text
+						p
+							i.fa.fa-reply
+							a(href= config.url + '/' + { notification.post.user.username }, data-user-preview={ notification.post.user.id }) { notification.post.user.name }
+						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
+
 			p.date(if={ i != notifications.length - 1 && notification._date != notifications[i + 1]._date })
 				span
 					i.fa.fa-angle-up
@@ -130,6 +139,9 @@ style.
 					color #53c7ce
 
 			&.mention
+				.text p i
+					color #555
+
 				.post-preview
 					color rgba(0, 0, 0, 0.7)
 
