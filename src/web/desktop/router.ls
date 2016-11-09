@@ -48,11 +48,14 @@ module.exports = (me) ~>
 	function not-found
 		mount document.create-element \mk-not-found
 
-	# Exec
+	# Register mixin
 	#--------------------------------
 
 	riot.mixin \page do
 		page: route
+
+	# Exec
+	#--------------------------------
 
 	route!
 
