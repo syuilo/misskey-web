@@ -14,9 +14,6 @@ style.
 	display block
 	background #fff
 
-	> mk-following-setuper
-		border-bottom solid 1px #eee
-
 	> .loading
 		padding 64px 0
 
