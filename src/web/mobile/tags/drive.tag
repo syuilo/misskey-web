@@ -251,7 +251,9 @@ script.
 			return
 
 		if (@files.some (f) ~> f.id == file.id)
-			# TODO: ただreturnするのではなく情報を更新する
+			exist = (@files.map (f) -> f.id).index-of file.id
+			@files[exist] = file
+			@update!
 			return
 
 		if unshift
