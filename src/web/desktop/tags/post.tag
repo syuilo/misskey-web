@@ -322,8 +322,13 @@ script.
 
 	@on \mount ~>
 		if @p.text?
-			tokens = @analyze @p.text
-			@text.innerHTML = @compile tokens
+			tokens = if @p._highlight?
+				then @analyze @p._highlight
+				else @analyze @p.text
+
+			@text.innerHTML = if @p._highlight?
+				then @compile tokens, true, false
+				else @compile tokens
 
 			@text.child-nodes.for-each (e) ~>
 				if e.tag-name == \MK-URL

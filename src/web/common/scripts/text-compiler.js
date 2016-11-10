@@ -1,14 +1,22 @@
-module.exports = function(tokens, canBreak) {
+module.exports = function(tokens, canBreak, escape) {
 	if (canBreak == null) {
 		canBreak = true;
+	}
+	if (escape == null) {
+		escape = true;
 	}
 	return tokens.map(function(token) {
 		switch (token.type) {
 			case 'text':
-				return token.content
-					.replace(/>/g, '&gt;')
-					.replace(/</g, '&lt;')
-					.replace(/(\r\n|\n|\r)/g, canBreak ? '<br>' : ' ');
+				if (escape) {
+					return token.content
+						.replace(/>/g, '&gt;')
+						.replace(/</g, '&lt;')
+						.replace(/(\r\n|\n|\r)/g, canBreak ? '<br>' : ' ');
+				} else {
+					return token.content
+						.replace(/(\r\n|\n|\r)/g, canBreak ? '<br>' : ' ');
+				}
 			case 'link':
 				return '<mk-url href="' + token.content + '" target="_blank"></mk-url>';
 			case 'mention':

@@ -5,6 +5,7 @@ mk-search
 
 style.
 	display block
+	padding-bottom 32px
 
 	> header
 		width 100%
