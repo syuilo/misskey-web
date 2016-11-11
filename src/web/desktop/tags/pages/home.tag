@@ -5,6 +5,7 @@ style.
 	display block
 
 script.
+	@mixin \i
 	@mixin \ui-progress
 	@mixin \stream
 	@mixin \get-post-summary
@@ -26,7 +27,7 @@ script.
 		@Progress.done!
 
 	@on-stream-post = (post) ~>
-		if document.hidden
+		if document.hidden and post.user.id !== @I.id
 			@unread-count++
 			document.title = '(' + @unread-count + ') ' + @get-post-summary post
 
