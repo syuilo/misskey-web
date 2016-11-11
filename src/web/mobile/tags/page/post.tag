@@ -22,7 +22,7 @@ script.
 	@on \mount ~>
 		#document.title = 'Misskey'
 		#@ui.trigger \title '<i class="fa fa-sticky-note-o"></i>投稿'
-		@ui.trigger \bg '#fff'
+		@ui.trigger \bg '#f00'
 
 		@Progress.start!
 
