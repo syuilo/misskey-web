@@ -26,6 +26,11 @@ mk-user
 					a
 						b { user.followers_count }
 						i フォロワー
+			nav
+				a(data-is-active={ page == 'home' }) 投稿
+				a(data-is-active={ page == 'media' }) メディア
+				a(data-is-active={ page == 'graphs' }) グラフ
+				a(data-is-active={ page == 'likes' }) いいね
 
 		div.body
 			mk-user-timeline(if={ page == 'home' }, user={ user-promise })
@@ -134,6 +139,25 @@ style.
 
 						> i
 							font-size 14px
+
+			> nav
+				display flex
+				justify-content center
+				border-bottom solid 1px #ddd
+
+				> a
+					display block
+					flex 1 1
+					text-align center
+					line-height 52px
+					font-size 14px
+					color #657786
+					border-bottom solid 2px transparent
+
+					&[data-is-active]
+						font-weight bold
+						color $theme-color
+						border-color $theme-color
 
 script.
 	@mixin \api
