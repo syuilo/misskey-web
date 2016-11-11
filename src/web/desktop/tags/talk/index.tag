@@ -332,16 +332,9 @@ style.
 
 		&, *
 			user-select none
-			-moz-user-select none
-			-webkit-user-select none
-			-ms-user-select none
 			cursor default
 
 		> ul
-			display -webkit-flex
-			display -moz-flex
-			display -ms-flex
-			display -o-flex
 			display flex
 			justify-content center
 			position relative
