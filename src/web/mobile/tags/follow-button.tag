@@ -53,6 +53,9 @@ style.
 			cursor wait !important
 			opacity 0.7
 
+		> i
+			margin-right 4px
+
 script.
 	@mixin \api
 	@mixin \is-promise
