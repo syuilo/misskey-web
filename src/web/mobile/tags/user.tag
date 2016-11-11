@@ -44,7 +44,7 @@ style.
 				background-position center
 
 			> .body
-				padding 0 8px
+				padding 8px
 				margin 0 auto
 				max-width 600px
 
@@ -64,32 +64,53 @@ style.
 						> img
 							display block
 							position absolute
-							left 0
-							bottom 0
+							left -2px
+							bottom -2px
+							box-sizing border-box
 							width 100%
 							border 2px solid #fff
 							border-radius 6px
 
+							@media (min-width 500px)
+								left -4px
+								bottom -4px
+								border 4px solid #fff
+
 					> mk-follow-button
 						float right
-						line-height 40px
+						height 40px
 
 				> .title
-					padding 8px 0
+					margin 8px 0
 
 					> h1
 						margin 0
+						line-height 22px
 						font-size 20px
 						color #222
 
 					> .username
+						display inline-block
+						line-height 20px
 						font-size 16px
-						color #888
+						font-weight bold
+						color #657786
+
+					> .followed
+						margin-left 8px
+						padding 2px 4px
+						font-size 12px
+						color #555
+						background #fafafa
+						border-radius 4px
 
 				> .bio
+					margin 8px 0
 					color #333
 
 				> .info
+					margin 8px 0
+
 					> .location
 						display inline
 						margin 0
@@ -97,6 +118,21 @@ style.
 
 						> i
 							margin-right 4px
+
+				> .friends
+					> a
+						color #657786
+
+						&:first-child
+							margin-right 16px
+
+						> b
+							margin-right 4px
+							font-size 16px
+							color #14171a
+
+						> i
+							font-size 14px
 
 script.
 	@mixin \api

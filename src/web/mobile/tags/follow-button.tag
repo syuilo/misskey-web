@@ -6,7 +6,7 @@ mk-follow-button
 		i.fa.fa-plus(if={ !init && !wait && !user.is_following })
 		i.fa.fa-spinner.fa-pulse.fa-fw(if={ init })
 		i.fa.fa-spinner.fa-pulse.fa-fw(if={ wait })
-		| { user.is_following ? 'フォロー解除' : 'フォローする' }
+		| { user.is_following ? 'フォロー解除' : 'フォロー' }
 
 style.
 	display block
@@ -18,10 +18,12 @@ style.
 		position relative
 		cursor pointer
 		box-sizing border-box
-		padding 0
+		padding 0 16px
 		margin 0
-		font-size 1em
+		height inherit
+		font-size 16px
 		outline none
+		border solid 1px $theme-color
 		border-radius 4px
 		box-shadow none
 		font-family sans-serif
@@ -29,46 +31,19 @@ style.
 		*
 			pointer-events none
 
-		&:focus
-			&:after
-				content ""
-				pointer-events none
-				position absolute
-				top -5px
-				right -5px
-				bottom -5px
-				left -5px
-				border 2px solid rgba($theme-color, 0.3)
-				border-radius 8px
-
 		&.follow
-			color #888
-			background linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%)
-			border solid 1px #e2e2e2
+			color $theme-color
+			background transparent
 
 			&:hover
-				background linear-gradient(to bottom, #f9f9f9 0%, #ececec 100%)
-				border-color #dcdcdc
+				background rgba($theme-color, 0.1)
 
 			&:active
-				background #ececec
-				border-color #dcdcdc
+				background rgba($theme-color, 0.2)
 
 		&.unfollow
 			color $theme-color-foreground
-			background linear-gradient(to bottom, lighten($theme-color, 25%) 0%, lighten($theme-color, 10%) 100%)
-			border solid 1px lighten($theme-color, 15%)
-
-			&:not(:disabled)
-				font-weight bold
-
-			&:hover:not(:disabled)
-				background linear-gradient(to bottom, lighten($theme-color, 8%) 0%, darken($theme-color, 8%) 100%)
-				border-color $theme-color
-
-			&:active:not(:disabled)
-				background $theme-color
-				border-color $theme-color
+			background $theme-color
 
 		&.wait
 			cursor wait !important
