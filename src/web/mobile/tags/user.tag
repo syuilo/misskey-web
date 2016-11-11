@@ -144,6 +144,8 @@ style.
 			> nav
 				display flex
 				justify-content center
+				margin 0 auto
+				max-width 600px
 				border-bottom solid 1px #ddd
 
 				> a
