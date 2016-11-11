@@ -27,13 +27,14 @@ mk-user
 						b { user.followers_count }
 						i フォロワー
 			nav
-				a(data-is-active={ page == 'home' }) 投稿
-				a(data-is-active={ page == 'media' }) メディア
-				a(data-is-active={ page == 'graphs' }) グラフ
-				a(data-is-active={ page == 'likes' }) いいね
+				a(data-is-active={ page == 'posts' }, onclick={ go-posts }) 投稿
+				a(data-is-active={ page == 'media' }, onclick={ go-media }) メディア
+				a(data-is-active={ page == 'graphs' }, onclick={ go-graphs }) グラフ
+				a(data-is-active={ page == 'likes' }, onclick={ go-likes }) いいね
 
 		div.body
-			mk-user-timeline(if={ page == 'home' }, user={ user-promise })
+			mk-user-timeline(if={ page == 'posts' }, user={ user-promise })
+			mk-user-timeline(if={ page == 'media' }, user={ user-promise }, with-media={ true })
 			mk-user-graphs(if={ page == 'graphs' }, user={ user-promise })
 
 style.
@@ -151,6 +152,7 @@ style.
 					text-align center
 					line-height 52px
 					font-size 14px
+					text-decoration none
 					color #657786
 					border-bottom solid 2px transparent
 
@@ -164,7 +166,7 @@ script.
 
 	@event = @opts.event
 	@username = @opts.user
-	@page = if @opts.page? then @opts.page else \home
+	@page = if @opts.page? then @opts.page else \posts
 	@fetching = true
 
 	@user-promise = new Promise (resolve, reject) ~>
@@ -179,3 +181,19 @@ script.
 
 	@on \mount ~>
 		@user-promise.then!
+
+	@go-posts = ~>
+		@page = \posts
+		@update!
+
+	@go-media = ~>
+		@page = \media
+		@update!
+
+	@go-graphs = ~>
+		@page = \graphs
+		@update!
+
+	@go-likes = ~>
+		@page = \likes
+		@update!

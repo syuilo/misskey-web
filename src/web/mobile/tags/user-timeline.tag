@@ -47,6 +47,7 @@ script.
 	@controller = riot.observable!
 	@timeline = @tags[\mk-timeline]
 	@event = @opts.event
+	@with-media = @opts.with-media
 
 	@on \mount ~>
 		window.add-event-listener \scroll @on-scroll
@@ -64,6 +65,7 @@ script.
 	@load = (cb) ~>
 		@api \users/posts do
 			user: @user.id
+			with_images: @with-media
 		.then (posts) ~>
 			@is-loading = false
 			@is-empty = posts.length == 0
@@ -81,6 +83,7 @@ script.
 		@update!
 		@api \users/posts do
 			user: @user.id
+			with_images: @with-media
 			max: @timeline.posts[@timeline.posts.length - 1].id
 		.then (posts) ~>
 			@more-loading = false
