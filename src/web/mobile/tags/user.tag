@@ -100,7 +100,7 @@ style.
 						margin-left 8px
 						padding 2px 4px
 						font-size 12px
-						color #555
+						color #666
 						background #fafafa
 						border-radius 4px
 
