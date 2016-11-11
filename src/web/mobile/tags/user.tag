@@ -75,6 +75,7 @@ style.
 								left -4px
 								bottom -4px
 								border 4px solid #fff
+								border-radius 12px
 
 					> mk-follow-button
 						float right
@@ -100,7 +101,7 @@ style.
 						margin-left 8px
 						padding 2px 4px
 						font-size 12px
-						color #666
+						color #657786
 						background #fafafa
 						border-radius 4px
 
