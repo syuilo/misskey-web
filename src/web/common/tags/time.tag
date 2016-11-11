@@ -1,21 +1,35 @@
 mk-time
-	time(datetime={ opts.time }) { text }
+	time(datetime={ opts.time })
+		span(if={ mode == 'relative' }) { relative }
+		span(if={ mode == 'absolute' }) { absolute }
+		span(if={ mode == 'detail' }) { absolute } ({ relative })
 
 script.
 	@time = new Date @opts.time
+	@mode = @opts.mode || \relative
 	@tickid = null
 
+	@absolute =
+		@time.get-full-year! + '年' +
+		@time.get-month!     + '月' +
+		@time.get-date!      + '日' +
+		+ ' ' +
+		@time.get-hours!     + ':' +
+		@time.get-minutes!
+
 	@on \mount ~>
-		@tick!
-		@tickid = set-interval @tick, 1000ms
+		if @mode == \relative or @mode == \detail
+			@tick!
+			@tickid = set-interval @tick, 1000ms
 
 	@on \unmount ~>
-		clear-interval @tickid
+		if @mode == \relative or @mode == \detail
+			clear-interval @tickid
 
 	@tick = ~>
 		now = new Date!
 		ago = ~~((now - @time) / 1000)
-		@text = switch
+		@relative = switch
 			| ago >= 31536000s => ~~(ago / 31536000s) + '年前'
 			| ago >= 2592000s  => ~~(ago / 2592000s)  + 'ヶ月前'
 			| ago >= 604800s   => ~~(ago / 604800s)   + '週間前'
