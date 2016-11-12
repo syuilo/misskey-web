@@ -28,7 +28,7 @@ script.
 
 	@tick = ~>
 		now = new Date!
-		ago = ~~((now - @time) / 1000)
+		ago = (now - @time) / 1000ms
 		@relative = switch
 			| ago >= 31536000s => ~~(ago / 31536000s) + '年前'
 			| ago >= 2592000s  => ~~(ago / 2592000s)  + 'ヶ月前'
