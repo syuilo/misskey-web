@@ -8,6 +8,7 @@ mk-header-nav: ul(if={ SIGNIN })
 	li.messaging: a(href= config.messagingUrl, onclick={ messaging })
 		i.fa.fa-comments
 		p メッセージ
+		i.fa.fa-circle(if={ messaging-notice })
 	li.info: a(onclick={ info })
 		i.fa.fa-info
 		p お知らせ
@@ -60,14 +61,29 @@ style.
 					color darken($ui-controll-foreground-color, 20%)
 					text-decoration none
 
-				> i
+				> i:first-child
 					margin-right 8px
+
+				> i:last-child
+					margin-left 5px
+					vertical-align super
+					font-size 10px
+					color $theme-color
 
 				> p
 					display inline
 					margin 0
 
 script.
+	@mixin \api
+
+	@on \mount ~>
+		@api \messaging/unread
+		.then (count) ~>
+			if count.count > 0
+				@messaging-notice = true
+				@update!
+
 	@messaging = ~>
 		riot.mount document.body.append-child document.create-element \mk-messaging-window
 
