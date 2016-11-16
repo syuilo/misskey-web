@@ -8,7 +8,7 @@ mk-header-nav: ul(if={ SIGNIN })
 	li.messaging: a(href= config.messagingUrl, onclick={ messaging })
 		i.fa.fa-comments
 		p メッセージ
-		i.fa.fa-circle(if={ messaging-notice })
+		i.fa.fa-circle(if={ has-unread-messaging-messages })
 	li.info: a(onclick={ info })
 		i.fa.fa-info
 		p お知らせ
@@ -76,13 +76,30 @@ style.
 
 script.
 	@mixin \api
+	@mixin \stream
 
 	@on \mount ~>
+		@stream.on \read_all_messaging_messages @on-read-all-messaging-messages
+		@stream.on \unread_messaging_message @on-unread-messaging-message
+
+		# Fetch count of unread messaging messages
 		@api \messaging/unread
 		.then (count) ~>
 			if count.count > 0
-				@messaging-notice = true
+				@has-unread-messaging-messages = true
 				@update!
+
+	@on \unmount ~>
+		@stream.off \read_all_messaging_messages @on-read-all-messaging-messages
+		@stream.off \unread_messaging_message @on-unread-messaging-message
+
+	@on-read-all-messaging-messages = ~>
+		@has-unread-messaging-messages = false
+		@update!
+
+	@on-unread-messaging-message = ~>
+		@has-unread-messaging-messages = true
+		@update!
 
 	@messaging = ~>
 		riot.mount document.body.append-child document.create-element \mk-messaging-window
