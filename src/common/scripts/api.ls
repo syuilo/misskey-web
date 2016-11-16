@@ -13,17 +13,12 @@ module.exports = (i, endpoint, data) ->
 
 	if i? and typeof i == \object then i = i._web
 
-	web = (endpoint.index-of '://') > -1
-
-	body = []
+	body = ["_i=#i"]
 
 	for k, v of data
 		if v != undefined
 			v = encodeURIComponent v
 			body.push "#k=#v"
-
-	if i? and not web
-		body.push "_i=#i"
 
 	opts =
 		method: \POST
@@ -31,11 +26,7 @@ module.exports = (i, endpoint, data) ->
 			'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 		body: body.join \&
 
-	if web
-		ep = endpoint
-		opts.credentials = \include
-	else
-		ep = "#{CONFIG.api.url}/#{endpoint}"
+	ep = "#{CONFIG.api.url}/#{endpoint}"
 
 	if api-stack == 1
 		spinner := document.create-element \div

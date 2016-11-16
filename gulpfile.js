@@ -1,7 +1,3 @@
-//////////////////////////////////////////////////
-// MISSKEY-WEB BUILDER
-//////////////////////////////////////////////////
-
 'use strict';
 
 Error.stackTraceLimit = Infinity;
@@ -10,10 +6,6 @@ const fs = require('fs');
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const glob = require('glob');
-const del = require('del');
-const babel = require('gulp-babel');
-const ts = require('gulp-typescript');
-const tslint = require('gulp-tslint');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
@@ -27,7 +19,6 @@ const aliasify = require('aliasify');
 const riotify = require('riotify');
 const transformify = require('syuilo-transformify');
 const pug = require('gulp-pug');
-require('typescript-require')(require('./tsconfig.json'));
 
 const env = process.env.NODE_ENV;
 const isProduction = env === 'production';
@@ -57,15 +48,7 @@ const aliasifyConfig = {
 	}
 };
 
-const project = ts.createProject('tsconfig.json', {
-	typescript: require('typescript')
-});
-
-//////////////////////////////////////////////////
-// Full build
 gulp.task('build', [
-	'build-before',
-	'build:ts',
 	'copy:bower_components',
 	'build:scripts',
 	'build:styles',
@@ -79,50 +62,17 @@ gulp.task('build', [
 	}
 });
 
-gulp.task('clean-build', [
-	'clean',
-	'build'
-]);
-
-//////////////////////////////////////////////////
-// LOG INFO
-gulp.task('build-before', () => {
-	gutil.log('Misskey-Webのビルドを開始します。時間がかかる場合があります。');
-	gutil.log('ENV: ' + env);
-});
-
-//////////////////////////////////////////////////
-// TypeScriptのビルド
-gulp.task('build:ts', () => {
-	gutil.log('TypeScriptをコンパイルします...');
-
-	return project
-		.src()
-		.pipe(project())
-		.pipe(babel({
-			presets: ['es2015', 'stage-3']
-		}))
-		.pipe(gulp.dest('./built/'));
-});
-
 //////////////////////////////////////////////////
 // Pugのビルド
 gulp.task('build:pug', ['build:scripts', 'build:styles'], () => {
 	gutil.log('Pugをコンパイルします...');
 
-	const config = require('./src/config.ts').default;
-
 	return gulp.src([
-		'./src/web/**/*.pug',
-		'!./src/web/common/**/*.pug'
+		'./src/**/*.pug',
+		'!./src/common/**/*.pug'
 	])
-		.pipe(pug({
-			locals: {
-				env,
-				config
-			}
-		}))
-		.pipe(gulp.dest('./built/web/'));
+		.pipe(pug())
+		.pipe(gulp.dest('./built/'));
 });
 
 //////////////////////////////////////////////////
@@ -141,7 +91,7 @@ gulp.task('build:scripts', done => {
 
 	const config = require('./src/config.ts').default;
 
-	glob('./src/web/**/*.ls', (err, files) => {
+	glob('./src/**/*.ls', (err, files) => {
 		const tasks = files.map(entry => {
 			let bundle =
 				browserify({
@@ -432,7 +382,7 @@ gulp.task('build:scripts', done => {
 					return source.replace(/class="\{\(\{(.+?)\}\)\}"/g, 'class="{$1}"');
 				}))*/
 				.bundle()
-				.pipe(source(entry.replace('src/web', 'resources').replace('.ls', '.js')));
+				.pipe(source(entry.replace('src', 'resources').replace('.ls', '.js')));
 
 			if (isProduction) {
 				bundle = bundle
@@ -453,10 +403,7 @@ gulp.task('build:scripts', done => {
 gulp.task('build:styles', ['copy:bower_components'], () => {
 	gutil.log('フロントサイドスタイルを構築します...');
 
-	const config = require('./src/config.ts').default;
-
-	return gulp.src('./src/web/**/*.styl')
-		.pipe(replace(/url\("#/g, 'url\("' + config.urls.resources))
+	return gulp.src('./src/**/*.styl')
 		.pipe(stylus({
 			'include css': true
 		}))
@@ -471,63 +418,27 @@ gulp.task('build:styles', ['copy:bower_components'], () => {
 //////////////////////////////////////////////////
 // その他のリソースのコピー
 gulp.task('build-copy', [
-	'build:ts',
 	'build:scripts',
 	'build:styles'
 ], () => {
 	gutil.log('必要なリソースをコピーします...');
 
 	return es.merge(
-		gulp.src('./src/web/**/*.pug').pipe(gulp.dest('./built/web/')),
+		gulp.src('./src/**/*.pug').pipe(gulp.dest('./built/')),
 		gulp.src('./src/resources/**/*').pipe(gulp.dest('./built/resources/')),
-		gulp.src('./src/web/desktop/resources/**/*').pipe(gulp.dest('./built/resources/desktop/')),
-		gulp.src('./src/web/mobile/resources/**/*').pipe(gulp.dest('./built/resources/mobile/')),
-		gulp.src('./src/web/dev/resources/**/*').pipe(gulp.dest('./built/resources/dev/')),
-		gulp.src('./src/web/auth/resources/**/*').pipe(gulp.dest('./built/resources/auth/')),
-		gulp.src('./src/resources/favicon.ico').pipe(gulp.dest('./built/resources/')),
+		gulp.src('./src/desktop/resources/**/*').pipe(gulp.dest('./built/resources/desktop/')),
+		gulp.src('./src/mobile/resources/**/*').pipe(gulp.dest('./built/resources/mobile/')),
+		gulp.src('./src/dev/resources/**/*').pipe(gulp.dest('./built/resources/dev/')),
+		gulp.src('./src/auth/resources/**/*').pipe(gulp.dest('./built/resources/auth/')),
+		gulp.src('./resources/favicon.ico').pipe(gulp.dest('./built/resources/')),
 		gulp.src([
-			'./src/web/**/*',
-			'!./src/web/**/*.styl',
-			'!./src/web/**/*.js',
-			'!./src/web/**/*.ts',
-			'!./src/web/**/*.ls'
+			'./src/**/*',
+			'!./src/**/*.styl',
+			'!./src/**/*.js',
+			'!./src/**/*.ts',
+			'!./src/**/*.ls'
 		]).pipe(gulp.dest('./built/resources/'))
 	);
-});
-
-//////////////////////////////////////////////////
-// テスト
-gulp.task('test', [
-	'lint'
-]);
-
-//////////////////////////////////////////////////
-// Lint
-gulp.task('lint', () => {
-	gutil.log('構文の正当性を確認します...');
-
-	return gulp.src('./src/**/*.ts')
-		.pipe(tslint({
-			formatter: "verbose"
-		}))
-		.pipe(tslint.report())
-});
-
-//////////////////////////////////////////////////
-// CLEAN
-gulp.task('clean', cb => {
-	del([
-		'./built',
-		'./tmp'
-	], cb);
-});
-
-gulp.task('clean-all', ['clean'], cb => {
-	del([
-		'./node_modules',
-		'./bower_components',
-		'./typings'
-	], cb);
 });
 
 class Tag {

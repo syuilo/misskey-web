@@ -1,10 +1,4 @@
-/.config
 /node_modules
 /built
-/typings
 /bower_components
 npm-debug.log
-/tmp
-/_tmp
-/uploads
-/storage

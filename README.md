@@ -7,56 +7,10 @@ Misskey Web
 
 *Misskey* official client for the Web.
 
-Required
---------
-**Nothing** except for *Node.js*
-
-Build
------
-1. `git clone git://github.com/syuilo/misskey-web.git`
-2. `cd misskey-web`
-3. `npm install`
-4. `npm run dtsm`
-4. `./node_modules/.bin/bower install --allow-root`
-5. `npm run build`
-
-Launch
-------
-`npm start`
-
-Configuration
--------------
-**初回起動時に表示されるウィザードに従えば自動的に設定ファイルが生成・設定されます**が、一応サンプル載せときます:
-``` yaml
-maintainer: Your Name <youremail@example.com>
-
-url: "https://misskey.xyz"
-port: 80
-
-https:
-  enable: true
-  key: "path/of/your/tls/key"
-  cert: "path/of/your/tls/cert"
-  ca: "path/of/your/tls/ca"
-
-core:
-  apikey: hoge
-  url: "https://api.misskey.xyz"
-
-proxy:
-  url: "https://proxy.himasaku.net"
-
-# SEE: https://www.google.com/recaptcha/intro/index.html
-recaptcha:
-  siteKey: hima
-  secretKey: saku
-
-```
-
 Repositories
 ------------
 * **misskey-web** ... :round_pushpin: This repository
-* [misskey-core](https://github.com/syuilo/misskey-core) ... Core API server
+* [misskey-core](https://github.com/syuilo/misskey-core) ... Core server
 * [misskey-file](https://github.com/syuilo/misskey-file) ... Drive file server
 
 License
