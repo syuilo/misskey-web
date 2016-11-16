@@ -358,7 +358,6 @@ style.
 				background-color #eee
 				background-repeat no-repeat
 				background-position center center
-				//background-size contain
 				background-size cover
 				cursor move
 
@@ -406,7 +405,7 @@ style.
 
 script.
 	@mixin \api
-	@mixin \stream
+	@mixin \talking-stream
 
 	@user = @opts.user
 	@group = @opts.group
@@ -415,7 +414,8 @@ script.
 	@messages = []
 
 	@on \mount ~>
-		@stream.on \talk_message @on-stream-talk-message
+		@talking-stream.connect @user.id
+		@talking-stream.event.on \message @on-stream-talk-message
 
 		@api \talk/messages do
 			user: if @user? then @user.id else undefined
@@ -428,7 +428,7 @@ script.
 			console.error err
 
 	@on \unmount ~>
-		@stream.off \talk_message @on-stream-talk-message
+		@talking-stream.close!
 
 	@say = ~>
 		@saying = true

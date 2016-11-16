@@ -13,6 +13,10 @@ module.exports = (me) ~>
 	riot.mixin \sortable do
 		Sortable: require \Sortable
 
+	talking-stream = (require './common/scripts/talking-stream.ls') me
+	riot.mixin \talking-stream do
+		talking-stream: talking-stream
+
 	riot.mixin \is-promise do
 		is-promise: require './common/scripts/is-promise.ls'
 
