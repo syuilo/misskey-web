@@ -3,7 +3,7 @@ mk-messaging
 			div.form
 				label(for='search-input')
 					i.fa.fa-search
-				input@search-input(type='search', oninput={ search }, placeholder='ユーザーを探してトークを開始', title='ユーザー名を入力してユーザーを探します')
+				input@search-input(type='search', oninput={ search }, placeholder='ユーザーを探す')
 			div.result
 				ol.users(if={ search-result.length > 0 })
 					li(each={ user in search-result })
@@ -27,7 +27,7 @@ mk-messaging
 		p.no-history(if={ history.length == 0 })
 			| 履歴はありません。
 			br
-			| ユーザーを検索して、いつでもトークを開始できます。
+			| ユーザーを検索して、いつでもメッセージを送受信できます。
 	nav
 		ul
 			li.active: a

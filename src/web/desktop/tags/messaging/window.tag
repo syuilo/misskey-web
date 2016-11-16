@@ -2,7 +2,7 @@ mk-messaging-window
 	mk-window(controller={ window-controller }, is-modal={ false }, width={ '500px' }, height={ '560px' })
 		<yield to="header">
 		i.fa.fa-comments
-		| トーク
+		| メッセージ
 		</yield>
 		<yield to="content">
 		mk-messaging(event={ parent.messaging-event })
