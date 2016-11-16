@@ -27,17 +27,27 @@ export default (endpoint: string, params: any = {}, user: any = null, withFile: 
 
 	request(options, (err, response, body) => {
 		if (err) {
-			reject(err);
-		} else if (response.statusCode !== 200) {
+			return reject(err);
+		}
+
+		let res;
+
+		try {
+			res = JSON.parse(body);
+		} catch (e) {
+			console.log(body);
+			return;
+		}
+
+		if (response.statusCode !== 200) {
 			reject({
 				statusCode: response.statusCode,
-				body: JSON.parse(body).error
+				body: res.error
 			});
 		} else if (body === undefined) {
 			reject('something-happened');
 		} else {
-			const parsed = JSON.parse(body);
-			resolve(parsed);
+			resolve(res);
 		}
 	});
 });
