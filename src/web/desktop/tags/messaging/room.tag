@@ -1,4 +1,4 @@
-mk-talk-room
+mk-messaging-room
 	header(if={ group }): div.container
 		div.kyoppie
 			h1 { group.name }
@@ -32,7 +32,7 @@ mk-talk-room
 			span(if={ user }) このユーザーとまだ会話したことがありません
 			span(if={ group }) このグループにまだ会話はありません
 		virtual(each={ message in messages })
-			mk-talk-message(message={ message })
+			mk-messaging-message(message={ message })
 	div.typings
 	form
 		div.grippie(title='ドラッグしてフォームの広さを調整')
@@ -405,7 +405,7 @@ style.
 
 script.
 	@mixin \api
-	@mixin \talking-stream
+	@mixin \messaging-stream
 
 	@user = @opts.user
 	@group = @opts.group
@@ -414,10 +414,11 @@ script.
 	@messages = []
 
 	@on \mount ~>
-		@talking-stream.connect @user.id
-		@talking-stream.event.on \message @on-stream-talk-message
+		@messaging-stream.connect @user.id
+		@messaging-stream.event.on \message @on-message
+		@messaging-stream.event.on \read @on-read
 
-		@api \talk/messages do
+		@api \messaging/messages do
 			user: if @user? then @user.id else undefined
 			group: if @group? then @group.id else undefined
 		.then (messages) ~>
@@ -428,11 +429,11 @@ script.
 			console.error err
 
 	@on \unmount ~>
-		@talking-stream.close!
+		@messaging-stream.close!
 
 	@say = ~>
 		@saying = true
-		@api \talk/messages/create do
+		@api \messaging/messages/create do
 			user: if @user? then @user.id else undefined
 			group: if @group? then @group.id else undefined
 			text: @text.value
@@ -444,7 +445,16 @@ script.
 			@saying = false
 			@update!
 
-	@on-stream-talk-message = (message) ~>
+	@on-message = (message) ~>
 		console.log message
 		@messages.push message
 		@update!
+
+	@on-read = (ids) ~>
+		console.log ids
+		if not Array.isArray ids then ids = [ids]
+		ids.for-each (id) ~>
+			if (@messages.some (x) ~> x.id == id)
+				exist = (@messages.map (x) -> x.id).index-of id
+				@messages[exist].is_read = true
+				@update!

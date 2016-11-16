@@ -1,4 +1,4 @@
-mk-talk
+mk-messaging
 	div.search
 			div.form
 				label(for='search-input')
@@ -204,7 +204,7 @@ style.
 					opacity 0.8
 
 				&[data-is-unread='true'] > a > article
-					background-image url("/_/resources/desktop/pages/i/talks-widget/unread.svg")
+					background-image url("/_/resources/desktop/unread.svg")
 					background-repeat no-repeat
 					background-position 0 center
 
@@ -384,7 +384,7 @@ script.
 	@search-result = []
 
 	@on \mount ~>
-		@api \talk/history
+		@api \messaging/history
 		.then (history) ~>
 			@is-loading = false
 			history.for-each (message) ~>

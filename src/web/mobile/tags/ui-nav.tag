@@ -22,9 +22,9 @@ mk-ui-nav
 					i.icon.fa.fa-bell-o
 					| 通知
 					i.angle.fa.fa-angle-right
-				li.talks: a
+				li.messaging: a
 					i.icon.fa.fa-comments-o
-					| トーク
+					| メッセージ
 					i.angle.fa.fa-angle-right
 			ul
 				li.settings: a(onclick={ search })

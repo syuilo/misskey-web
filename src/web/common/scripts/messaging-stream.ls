@@ -10,7 +10,7 @@ function init me
 
 	function connect otherparty
 		host = CONFIG.api.url.replace \http \ws
-		socket := new ReconnectingWebSocket host + '/talk?otherparty=' + otherparty
+		socket := new ReconnectingWebSocket host + '/messaging?otherparty=' + otherparty
 
 		socket.onopen = ~>
 			socket.send JSON.stringify do

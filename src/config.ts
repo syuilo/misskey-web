@@ -36,7 +36,7 @@ const hosts = conf.hosts = {
 	signout: `signout.${host}`,
 	share: `share.${host}`,
 	search: `search.${host}`,
-	talk: `talk.${host}`,
+	messaging: `messaging.${host}`,
 	help: `help.${host}`
 };
 
@@ -50,7 +50,7 @@ conf.urls = {
 	signout: `${scheme}://${hosts.signout}`,
 	share: `${scheme}://${hosts.share}`,
 	search: `${scheme}://${hosts.search}`,
-	talk: `${scheme}://${hosts.talk}`,
+	messaging: `${scheme}://${hosts.messaging}`,
 	help: `${scheme}://${hosts.help}`
 };
 

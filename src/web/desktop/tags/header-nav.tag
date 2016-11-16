@@ -5,10 +5,10 @@ mk-header-nav: ul(if={ SIGNIN })
 	li.mentions: a(href= config.url + '/i/mentions')
 		i.fa.fa-at
 		p あなた宛て
-	li.talks: a(href= config.talkUrl, onclick={ talk })
+	li.messaging: a(href= config.messagingUrl, onclick={ messaging })
 		i.fa.fa-comments
-		p トーク
-	li.talks: a(onclick={ info })
+		p メッセージ
+	li.info: a(onclick={ info })
 		i.fa.fa-info
 		p お知らせ
 
@@ -68,8 +68,8 @@ style.
 					margin 0
 
 script.
-	@talk = ~>
-		riot.mount document.body.append-child document.create-element \mk-talk-window
+	@messaging = ~>
+		riot.mount document.body.append-child document.create-element \mk-messaging-window
 
 	@info = ~>
 		riot.mount document.body.append-child document.create-element \mk-idol-master-cinderella-girls-starlight-stage-information-window
