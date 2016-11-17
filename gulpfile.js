@@ -23,6 +23,22 @@ const pug = require('gulp-pug');
 const env = process.env.NODE_ENV;
 const isProduction = env === 'production';
 
+const argv = require('yargs').argv;
+
+const config = {
+	url: argv['url'],
+	themeColor: argv['theme-color'],
+	proxy: {
+		url: argv['proxy-url']
+	},
+	recaptcha: {
+		siteKey: argv['recaptcha-siteKey']
+	}
+};
+
+config.host = config.url.substr(config.url.indexOf('://') + 3);
+config.scheme = config.url.substr(0, config.url.indexOf('://'));
+
 /*
  * Browserifyのモジュールエイリアス
  */
@@ -88,8 +104,6 @@ gulp.task('copy:bower_components', () => {
 // フロントサイドのスクリプトのビルド
 gulp.task('build:scripts', done => {
 	gutil.log('フロントサイドスクリプトを構築します...');
-
-	const config = require('./src/config.ts').default;
 
 	glob('./src/**/*.ls', (err, files) => {
 		const tasks = files.map(entry => {
@@ -246,7 +260,7 @@ gulp.task('build:scripts', done => {
 					styles.forEach(style => {
 						const head = style.lines.shift();
 						style.lines.unshift('$theme-color = ' + config.themeColor);
-						style.lines.unshift('$theme-color-foreground = ' + config.themeColorForeground);
+						style.lines.unshift('$theme-color-foreground = #fff');
 						style.lines.unshift(head);
 					});
 
@@ -339,14 +353,12 @@ gulp.task('build:scripts', done => {
 					return source
 						.replace(/CONFIG\.theme-color/g, `'${config.themeColor}'`)
 						.replace(/CONFIG\.themeColor/g, `'${config.themeColor}'`)
-						.replace(/CONFIG\.api\.url/g, `'${config.core.url}'`)
+						.replace(/CONFIG\.api\.url/g, `'${scheme}://api.${config.host}'`)
 						.replace(/CONFIG\.proxy\.url/g, `'${config.proxy.url}'`)
-						.replace(/CONFIG\.urls\.mobile/g, `'${config.urls.mobile}'`)
-						.replace(/CONFIG\.urls\.about/g, `'${config.urls.about}'`)
-						.replace(/CONFIG\.urls\.signin/g, `'${config.urls.signin}'`)
-						.replace(/CONFIG\.urls\.signout/g, `'${config.urls.signout}'`)
-						.replace(/CONFIG\.urls\.signup/g, `'${config.urls.signup}'`)
-						.replace(/CONFIG\.urls\.dev/g, `'${config.urls.dev}'`)
+						.replace(/CONFIG\.urls\.about/g, `'${scheme}://about.${config.host}'`)
+						.replace(/CONFIG\.urls\.signin/g, `'${scheme}://signin.${config.host}'`)
+						.replace(/CONFIG\.urls\.signout/g, `'${scheme}://signout.${config.host}'`)
+						.replace(/CONFIG\.urls\.dev/g, `'${scheme}://dev.${config.host}'`)
 						.replace(/CONFIG\.url/g, `'${config.url}'`)
 						.replace(/CONFIG\.host/g, `'${config.host}'`)
 						.replace(/CONFIG\.recaptch\.siteKey/g, `'${config.recaptcha.siteKey}'`)

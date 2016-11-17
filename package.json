@@ -25,7 +25,8 @@
     "riotify": "1.0.1",
     "syuilo-transformify": "0.1.2",
     "vinyl-buffer": "1.0.0",
-    "vinyl-source-stream": "1.1.0"
+    "vinyl-source-stream": "1.1.0",
+    "yargs": "6.4.0"
   },
   "dependencies": {
     "chart.js": "2.3.0",
