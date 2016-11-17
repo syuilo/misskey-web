@@ -103,9 +103,9 @@ gulp.task('copy:bower_components', () => {
 });
 
 //////////////////////////////////////////////////
-// フロントサイドのスクリプトのビルド
+// スクリプトのビルド
 gulp.task('build:scripts', done => {
-	gutil.log('フロントサイドスクリプトを構築します...');
+	gutil.log('スクリプトを構築します...');
 
 	glob('./src/**/*.ls', (err, files) => {
 		const tasks = files.map(entry => {
@@ -123,7 +123,6 @@ gulp.task('build:scripts', done => {
 
 					return source;
 				}))
-
 
 				// tagの{}の''を不要にする (その代わりスタイルの記法は使えなくなるけど)
 				.transform(transformify((source, file) => {
@@ -329,7 +328,6 @@ gulp.task('build:scripts', done => {
 					return tag.compile();
 				}))
 
-
 				// tagのstyleおよびscriptのインデントを不要にする
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
@@ -379,11 +377,6 @@ gulp.task('build:scripts', done => {
 						}
 					}
 				})
-				.transform(transformify((source, file) => {
-					if (file.indexOf('\\post-form-window') == -1) return source;
-					console.log(source);
-					return source;
-				}))
 				// Riotが謎の空白を挿入する
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
