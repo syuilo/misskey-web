@@ -359,7 +359,7 @@ gulp.task('build:scripts', done => {
 						.replace(/CONFIG\.proxy\.url/g, `'${config.proxy.url}'`)
 						.replace(/CONFIG\.urls\.about/g, `'${config.scheme}://about.${config.host}'`)
 						.replace(/CONFIG\.urls\.signin/g, `'${config.scheme}://signin.${config.host}'`)
-						.replace(/CONFIG\.urls\.signout/g, `'${config.scheme}://signout.${config.host}'`)
+						.replace(/CONFIG\.urls\.signup/g, `'${config.scheme}://signup.${config.host}'`)
 						.replace(/CONFIG\.urls\.dev/g, `'${config.scheme}://dev.${config.host}'`)
 						.replace(/CONFIG\.url/g, `'${config.url}'`)
 						.replace(/CONFIG\.host/g, `'${config.host}'`)
