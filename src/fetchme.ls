@@ -22,7 +22,7 @@ fetchme = (_i, cb) ~>
 	.then (res) ~>
 		if res.status != 200
 			alert 'ユーザー認証に失敗しました。ログアウトします。'
-			location.href = CONFIG.urls.signout
+			location.href = '/signout!'
 			return
 
 		i <~ res.json!.then

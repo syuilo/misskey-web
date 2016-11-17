@@ -44,7 +44,7 @@ config.scheme = config.url.substr(0, config.url.indexOf('://'));
 const aliasifyConfig = {
 	"aliases": {
 		"fetch": "./bower_components/fetch/fetch.js",
-		"page": "./bower_components/page/page.js",
+		"page": "./node_modules/page/page.js",
 		"NProgress": "./bower_components/nprogress/nprogress.js",
 		"velocity": "./bower_components/velocity/velocity.js",
 		"chart.js": "./node_modules/chart.js/src/chart.js",
@@ -82,8 +82,7 @@ gulp.task('build:pug', ['build:scripts', 'build:styles'], () => {
 	gutil.log('Pugをコンパイルします...');
 
 	return gulp.src([
-		'./src/**/*.pug',
-		'!./src/common/**/*.pug'
+		'./src/*/view.pug'
 	])
 		.pipe(pug({
 			themeColor: config.themeColor
@@ -105,7 +104,7 @@ gulp.task('copy:bower_components', () => {
 gulp.task('build:scripts', done => {
 	gutil.log('スクリプトを構築します...');
 
-	glob('./src/**/*.ls', (err, files) => {
+	glob('./src/*/script.ls', (err, files) => {
 		const tasks = files.map(entry => {
 			let bundle =
 				browserify({
@@ -116,9 +115,7 @@ gulp.task('build:scripts', done => {
 
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
-
 					console.log(file);
-
 					return source;
 				}))
 
@@ -429,20 +426,11 @@ gulp.task('build-copy', [
 	gutil.log('必要なリソースをコピーします...');
 
 	return es.merge(
-		gulp.src('./src/**/*.pug').pipe(gulp.dest('./built/')),
 		gulp.src('./src/resources/**/*').pipe(gulp.dest('./built/resources/')),
 		gulp.src('./src/desktop/resources/**/*').pipe(gulp.dest('./built/resources/desktop/')),
 		gulp.src('./src/mobile/resources/**/*').pipe(gulp.dest('./built/resources/mobile/')),
 		gulp.src('./src/dev/resources/**/*').pipe(gulp.dest('./built/resources/dev/')),
-		gulp.src('./src/auth/resources/**/*').pipe(gulp.dest('./built/resources/auth/')),
-		gulp.src('./resources/favicon.ico').pipe(gulp.dest('./built/resources/')),
-		gulp.src([
-			'./src/**/*',
-			'!./src/**/*.styl',
-			'!./src/**/*.js',
-			'!./src/**/*.ts',
-			'!./src/**/*.ls'
-		]).pipe(gulp.dest('./built/resources/'))
+		gulp.src('./src/auth/resources/**/*').pipe(gulp.dest('./built/resources/auth/'))
 	);
 });
 

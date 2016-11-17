@@ -9,6 +9,7 @@
     "aliasify": "2.1.0",
     "browserify": "13.1.1",
     "browserify-livescript": "0.2.3",
+    "chart.js": "2.4.0",
     "event-stream": "3.3.4",
     "glob": "7.1.1",
     "gulp": "3.9.1",
@@ -20,12 +21,12 @@
     "gulp-uglify": "2.0.0",
     "gulp-util": "3.0.7",
     "livescript": "1.5.0",
+    "page": "1.7.1",
     "riotify": "1.0.1",
     "syuilo-transformify": "0.1.2",
+    "textarea-caret": "3.0.2",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
-    "yargs": "6.4.0",
-    "chart.js": "2.4.0",
-    "textarea-caret": "3.0.2"
+    "yargs": "6.4.0"
   }
 }
