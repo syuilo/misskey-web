@@ -96,18 +96,9 @@ script.
 			info <~ res.json!.then
 			@title = info.title
 			@description = info.description
-			@thumbnail = wrap info.thumbnail
-			@icon = wrap info.icon
+			@thumbnail = info.thumbnail
+			@icon = info.icon
 			@sitename = info.sitename
 
 			@loading = false
 			@update!
-
-	function wrap(url)
-		if !url?
-			return null
-
-		if (url.substr 0 4) == \data
-			return url
-
-		CONFIG.proxy.url + '/' + url

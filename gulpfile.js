@@ -27,9 +27,6 @@ const argv = require('yargs').argv;
 const config = {
 	url: argv['url'],
 	themeColor: '#f7796c',
-	proxy: {
-		url: argv['proxy-url']
-	},
 	recaptcha: {
 		siteKey: argv['recaptcha-siteKey']
 	}
