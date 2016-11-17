@@ -5,6 +5,9 @@
   "description": "Misskey Web",
   "license": "MIT",
   "repository": "https://github.com/syuilo/misskey-web.git",
+  "scripts": {
+    "test": "gulp test --url=http://example.com"
+  },
   "dependencies": {
     "aliasify": "2.1.0",
     "browserify": "13.1.1",

@@ -76,6 +76,8 @@ gulp.task('build', [
 	}
 });
 
+gulp.task('test', ['build']);
+
 //////////////////////////////////////////////////
 // Pugのビルド
 gulp.task('build:pug', ['build:scripts', 'build:styles'], () => {
