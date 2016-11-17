@@ -13,7 +13,10 @@ module.exports = (i, endpoint, data) ->
 
 	if i? and typeof i == \object then i = i._web
 
-	body = ["_i=#i"]
+	body = []
+
+	# append user token when signed in
+	if i? then body.push "_i=#i"
 
 	for k, v of data
 		if v != undefined
@@ -26,7 +29,9 @@ module.exports = (i, endpoint, data) ->
 			'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 		body: body.join \&
 
-	ep = "#{CONFIG.api.url}/#{endpoint}"
+	ep = if (endpoint.index-of '://') > -1
+		then endpoint
+		else "#{CONFIG.api.url}/#{endpoint}"
 
 	if api-stack == 1
 		spinner := document.create-element \div
