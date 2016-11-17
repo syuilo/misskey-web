@@ -27,7 +27,7 @@ const argv = require('yargs').argv;
 
 const config = {
 	url: argv['url'],
-	themeColor: argv['theme-color'],
+	themeColor: '#f7796c',
 	proxy: {
 		url: argv['proxy-url']
 	},
