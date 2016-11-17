@@ -17,8 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "cropperjs": "0.7.2",
-    "fastclick": "1.0.6",
+    "cropperjs": "0.8.1",
     "fuck-adblock": "3.2.0",
     "Sortable": "1.4.2",
     "Swiper": "swiper#3.3.0",
