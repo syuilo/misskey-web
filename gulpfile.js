@@ -2,7 +2,6 @@
 
 Error.stackTraceLimit = Infinity;
 
-const fs = require('fs');
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const glob = require('glob');
@@ -54,7 +53,6 @@ const aliasifyConfig = {
 		"strength.js": "./bower_components/password-strength.js/strength.js",
 		"cropper": "./bower_components/cropperjs/dist/cropper.js",
 		"Sortable": "./bower_components/Sortable/Sortable.js",
-		"fastclick": "./bower_components/fastclick/lib/fastclick.js",
 		"fuck-adblock": "./bower_components/fuck-adblock/fuckadblock.js",
 		"Swiper": "./bower_components/Swiper/dist/js/swiper.js",
 		"reconnecting-websocket": "./bower_components/reconnectingWebsocket/reconnecting-websocket.js"
