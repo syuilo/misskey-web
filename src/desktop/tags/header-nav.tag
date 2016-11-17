@@ -1,11 +1,11 @@
 mk-header-nav: ul(if={ SIGNIN })
-	li.home.active: a(href= config.url)
+	li.home.active: a(href={ CONFIG.url })
 		i.fa.fa-home
 		p ホーム
-	li.mentions: a(href= config.url + '/i/mentions')
+	li.mentions: a(href={ CONFIG.url + '/i/mentions' })
 		i.fa.fa-at
 		p あなた宛て
-	li.messaging: a(href= config.messagingUrl, onclick={ messaging })
+	li.messaging: a(onclick={ messaging })
 		i.fa.fa-comments
 		p メッセージ
 		i.fa.fa-circle(if={ has-unread-messaging-messages })

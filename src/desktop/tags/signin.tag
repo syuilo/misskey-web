@@ -3,7 +3,7 @@ mk-signin
 		h1
 			img@avatar(src={ user.avatar_url + '?thumbnail&size=32' }, if={ user })
 			p { user ? user.name : 'アカウント' }
-		a.help(href= config.urls.help, title='お困りですか？'): i.fa.fa-question
+		a.help(href={ CONFIG.urls.about + '/help' }, title='お困りですか？'): i.fa.fa-question
 		label.user-name
 			input@username(
 				type='text'
