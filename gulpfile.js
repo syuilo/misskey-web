@@ -87,7 +87,9 @@ gulp.task('build:pug', ['build:scripts', 'build:styles'], () => {
 		'./src/**/*.pug',
 		'!./src/common/**/*.pug'
 	])
-		.pipe(pug())
+		.pipe(pug({
+			themeColor: config.themeColor
+		}))
 		.pipe(gulp.dest('./built/'));
 });
 
