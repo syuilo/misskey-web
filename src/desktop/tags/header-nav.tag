@@ -9,7 +9,7 @@ mk-header-nav: ul(if={ SIGNIN })
 		i.fa.fa-comments
 		p メッセージ
 		i.fa.fa-circle(if={ has-unread-messaging-messages })
-	li.info: a(onclick={ info })
+	li.info: a(href='https://twitter.com/misskey_xyz', target='_blank')
 		i.fa.fa-info
 		p お知らせ
 
@@ -103,6 +103,3 @@ script.
 
 	@messaging = ~>
 		riot.mount document.body.append-child document.create-element \mk-messaging-window
-
-	@info = ~>
-		riot.mount document.body.append-child document.create-element \mk-idol-master-cinderella-girls-starlight-stage-information-window
