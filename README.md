@@ -11,7 +11,7 @@ Repositories
 ------------
 * **misskey-web** ... :round_pushpin: This repository
 * [misskey-core](https://github.com/syuilo/misskey-core) ... Core server
-* [misskey-file](https://github.com/syuilo/misskey-file) ... Drive file server
+* [misskey-text](https://github.com/syuilo/misskey-text) ... Misskey's text parser
 
 License
 -------

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "aliasify": "2.1.0",
+    "bower": "1.8.0",
     "browserify": "13.1.1",
     "browserify-livescript": "0.2.3",
     "chart.js": "2.4.0",
