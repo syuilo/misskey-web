@@ -341,16 +341,16 @@ script.
 		if (contains @folders-container, e.target) or (contains @files-container, e.target)
 			return true
 
-		rect = @main.get-bounding-client-rect!
+		rect = @refs.main.get-bounding-client-rect!
 
-		left = e.page-x + @main.scroll-left - rect.left - window.page-x-offset
-		top = e.page-y + @main.scroll-top - rect.top - window.page-y-offset
+		left = e.page-x + @refs.main.scroll-left - rect.left - window.page-x-offset
+		top = e.page-y + @refs.main.scroll-top - rect.top - window.page-y-offset
 
 		move = (e) ~>
 			@selection.style.display = \block
 
-			cursor-x = e.page-x + @main.scroll-left - rect.left - window.page-x-offset
-			cursor-y = e.page-y + @main.scroll-top - rect.top - window.page-y-offset
+			cursor-x = e.page-x + @refs.main.scroll-left - rect.left - window.page-x-offset
+			cursor-y = e.page-y + @refs.main.scroll-top - rect.top - window.page-y-offset
 			w = cursor-x - left
 			h = cursor-y - top
 

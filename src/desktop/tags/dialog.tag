@@ -110,13 +110,13 @@ script.
 			easing: \linear
 		}
 
-		Velocity @main, {
+		Velocity @refs.main, {
 			opacity: 0
 			scale: 1.2
 		} {
 			duration: 0
 		}
-		Velocity @main, {
+		Velocity @refs.main, {
 			opacity: 1
 			scale: 1
 		} {
@@ -135,9 +135,9 @@ script.
 			easing: \linear
 		}
 
-		@main.style.pointer-events = \none
-		Velocity @main, \finish true
-		Velocity @main, {
+		@refs.main.style.pointer-events = \none
+		Velocity @refs.main, \finish true
+		Velocity @refs.main, {
 			opacity: 0
 			scale: 0.8
 		} {

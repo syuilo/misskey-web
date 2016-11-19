@@ -211,33 +211,33 @@ script.
 	@controller = @opts.controller
 
 	@on \mount ~>
-		@main.style.width = @opts.width || \530px
-		@main.style.height = @opts.height || \auto
+		@refs.main.style.width = @opts.width || \530px
+		@refs.main.style.height = @opts.height || \auto
 
-		@main.style.top = \15%
-		@main.style.left = (window.inner-width / 2) - (@main.offset-width / 2) + \px
+		@refs.main.style.top = \15%
+		@refs.main.style.left = (window.inner-width / 2) - (@refs.main.offset-width / 2) + \px
 
 		@header.add-event-listener \contextmenu (e) ~>
 			e.prevent-default!
 
 		window.add-event-listener \resize ~>
-			position = @main.get-bounding-client-rect!
+			position = @refs.main.get-bounding-client-rect!
 			browser-width = window.inner-width
 			browser-height = window.inner-height
-			window-width = @main.offset-width
-			window-height = @main.offset-height
+			window-width = @refs.main.offset-width
+			window-height = @refs.main.offset-height
 
 			if position.left < 0
-				@main.style.left = 0
+				@refs.main.style.left = 0
 
 			if position.top < 0
-				@main.style.top = 0
+				@refs.main.style.top = 0
 
 			if position.left + window-width > browser-width
-				@main.style.left = browser-width - window-width + \px
+				@refs.main.style.left = browser-width - window-width + \px
 
 			if position.top + window-height > browser-height
-				@main.style.top = browser-height - window-height + \px
+				@refs.main.style.top = browser-height - window-height + \px
 
 	@controller.on \toggle ~>
 		@toggle!
@@ -271,10 +271,10 @@ script.
 				easing: \linear
 			}
 
-		@main.style.pointer-events = \auto
-		Velocity @main, \finish true
-		Velocity @main, {scale: 1.1} 0ms
-		Velocity @main, {
+		@refs.main.style.pointer-events = \auto
+		Velocity @refs.main, \finish true
+		Velocity @refs.main, {scale: 1.1} 0ms
+		Velocity @refs.main, {
 			opacity: 1
 			scale: 1
 		} {
@@ -283,7 +283,7 @@ script.
 			easing: \ease-out
 		}
 
-		@main.focus!
+		@refs.main.focus!
 
 		set-timeout ~>
 			@controller.trigger \opened
@@ -304,9 +304,9 @@ script.
 				easing: \linear
 			}
 
-		@main.style.pointer-events = \none
-		Velocity @main, \finish true
-		Velocity @main, {
+		@refs.main.style.pointer-events = \none
+		Velocity @refs.main, \finish true
+		Velocity @refs.main, {
 			opacity: 0
 			scale: 0.8
 		} {
@@ -331,7 +331,7 @@ script.
 			if mz > z then z := mz
 
 		if z > 0
-			@main.style.z-index = z + 1
+			@refs.main.style.z-index = z + 1
 			if @is-modal then @bg.style.z-index = z + 1
 
 	@repel-move = (e) ~>
@@ -348,10 +348,10 @@ script.
 
 	# ヘッダー掴み時
 	@on-header-mousedown = (e) ~>
-		if not contains @main, document.active-element
-			@main.focus!
+		if not contains @refs.main, document.active-element
+			@refs.main.focus!
 
-		position = @main.get-bounding-client-rect!
+		position = @refs.main.get-bounding-client-rect!
 
 		click-x = e.client-x
 		click-y = e.client-y
@@ -359,8 +359,8 @@ script.
 		move-base-y = click-y - position.top
 		browser-width = window.inner-width
 		browser-height = window.inner-height
-		window-width = @main.offset-width
-		window-height = @main.offset-height
+		window-width = @refs.main.offset-width
+		window-height = @refs.main.offset-height
 
 		# 動かした時
 		drag-listen (me) ~>
@@ -383,14 +383,14 @@ script.
 			if move-left + window-width > browser-width
 				move-left = browser-width - window-width
 
-			@main.style.left = move-left + \px
-			@main.style.top = move-top + \px
+			@refs.main.style.left = move-left + \px
+			@refs.main.style.top = move-top + \px
 
 	# 上ハンドル掴み時
 	@on-top-handle-mousedown = (e) ~>
 		base = e.client-y
-		height = parse-int((get-computed-style @main, '').height, 10)
-		top = parse-int((get-computed-style @main, '').top, 10)
+		height = parse-int((get-computed-style @refs.main, '').height, 10)
+		top = parse-int((get-computed-style @refs.main, '').top, 10)
 
 		# 動かした時
 		drag-listen (me) ~>
@@ -409,8 +409,8 @@ script.
 	# 右ハンドル掴み時
 	@on-right-handle-mousedown = (e) ~>
 		base = e.client-x
-		width = parse-int((get-computed-style @main, '').width, 10)
-		left = parse-int((get-computed-style @main, '').left, 10)
+		width = parse-int((get-computed-style @refs.main, '').width, 10)
+		left = parse-int((get-computed-style @refs.main, '').left, 10)
 		browser-width = window.inner-width
 
 		# 動かした時
@@ -427,8 +427,8 @@ script.
 	# 下ハンドル掴み時
 	@on-bottom-handle-mousedown = (e) ~>
 		base = e.client-y
-		height = parse-int((get-computed-style @main, '').height, 10)
-		top = parse-int((get-computed-style @main, '').top, 10)
+		height = parse-int((get-computed-style @refs.main, '').height, 10)
+		top = parse-int((get-computed-style @refs.main, '').top, 10)
 		browser-height = window.inner-height
 
 		# 動かした時
@@ -445,8 +445,8 @@ script.
 	# 左ハンドル掴み時
 	@on-left-handle-mousedown = (e) ~>
 		base = e.client-x
-		width = parse-int((get-computed-style @main, '').width, 10)
-		left = parse-int((get-computed-style @main, '').left, 10)
+		width = parse-int((get-computed-style @refs.main, '').width, 10)
+		left = parse-int((get-computed-style @refs.main, '').left, 10)
 
 		# 動かした時
 		drag-listen (me) ~>
@@ -484,19 +484,19 @@ script.
 
 	# 高さを適用
 	@apply-transform-height = (height) ~>
-		@main.style.height = height + \px
+		@refs.main.style.height = height + \px
 
 	# 幅を適用
 	@apply-transform-width = (width) ~>
-		@main.style.width = width + \px
+		@refs.main.style.width = width + \px
 
 	# Y座標を適用
 	@apply-transform-top = (top) ~>
-		@main.style.top = top + \px
+		@refs.main.style.top = top + \px
 
 	# X座標を適用
 	@apply-transform-left = (left) ~>
-		@main.style.left = left + \px
+		@refs.main.style.left = left + \px
 
 	function drag-listen fn
 		window.add-event-listener \mousemove  fn
