@@ -22,7 +22,7 @@ script.
 		else
 			hhmm .= replace \: '<span style=\'visibility:hidden\'>:</span>'
 
-		@time.innerHTML = "#yyyymmdd<br>#hhmm"
+		@refs.time.innerHTML = "#yyyymmdd<br>#hhmm"
 
 	@on \mount ~>
 		@draw!
