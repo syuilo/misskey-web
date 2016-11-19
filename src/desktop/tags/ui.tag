@@ -35,12 +35,12 @@ script.
 		@ui.trigger \unblur 300ms
 
 	@ui.on \blur (duration = 100ms) ~>
-		Velocity @global, \finish true
-		Velocity @global, { blur: 5 } duration
+		Velocity @refs.global, \finish true
+		Velocity @refs.global, { blur: 5 } duration
 
 	@ui.on \unblur (duration = 100ms) ~>
-		Velocity @global, \finish true
-		Velocity @global, { blur: 0 } duration
+		Velocity @refs.global, \finish true
+		Velocity @refs.global, { blur: 0 } duration
 
 	@ui.on \notification (text) ~>
 		alert text
@@ -49,7 +49,7 @@ script.
 		@set-root-layout!
 
 	@set-root-layout = ~>
-		@root.style.padding-top = @header.client-height + \px
+		@root.style.padding-top = @refs.header.client-height + \px
 
 	@on \mount ~>
 		@set-root-layout!
