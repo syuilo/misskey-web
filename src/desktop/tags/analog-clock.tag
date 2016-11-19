@@ -22,10 +22,9 @@ script.
 			@x = x
 			@y = y
 
-		canvas = @canvas
-		ctx = canvas.get-context \2d
-		canv-w = canvas.width
-		canv-h = canvas.height
+		ctx = @refs.canvas.get-context \2d
+		canv-w = @refs.canvas.width
+		canv-h = @refs.canvas.height
 		ctx.clear-rect 0, 0, canv-w, canv-h
 
 		# 背景
