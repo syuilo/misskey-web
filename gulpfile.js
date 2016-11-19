@@ -148,7 +148,7 @@ gulp.task('build:scripts', done => {
 					return tag.compile();
 				}))
 
-				// tagの@hogeをname='hoge'にする
+				// tagの@hogeをref='hoge'にする
 				.transform(transformify((source, file) => {
 					if (file.substr(-4) !== '.tag') return source;
 
@@ -165,9 +165,9 @@ gulp.task('build:scripts', done => {
 								const match = line.match(/@[a-z-]+/);
 								let name = match[0];
 								if (line[line.indexOf(name) + name.length] === '(') {
-									line = line.replace(name + '(', '(name=\'' + camelCase(name.substr(1)) + '\',');
+									line = line.replace(name + '(', '(ref=\'' + camelCase(name.substr(1)) + '\',');
 								} else {
-									line = line.replace(name, '(name=\'' + camelCase(name.substr(1)) + '\')');
+									line = line.replace(name, '(ref=\'' + camelCase(name.substr(1)) + '\')');
 								}
 							}
 							return line;

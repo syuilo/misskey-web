@@ -13,7 +13,7 @@ style.
 		margin 16px 22px
 
 	> .form
-		[name='text']
+		[ref='text']
 			display block
 			box-sizing border-box
 			padding 12px

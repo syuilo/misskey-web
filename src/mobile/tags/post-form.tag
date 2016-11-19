@@ -93,10 +93,10 @@ style.
 		border solid 1px rgba($theme-color, 0.2)
 		border-radius 4px
 
-	[name='file']
+	[ref='file']
 		display none
 
-	[name='text']
+	[ref='text']
 		display block
 		box-sizing border-box
 		padding 12px
@@ -143,8 +143,8 @@ style.
 				border-color rgba($theme-color, 0.5)
 				transition border-color 0s ease
 
-	[name='upload']
-	[name='drive']
+	[ref='upload']
+	[ref='drive']
 		-webkit-appearance none
 		-moz-appearance none
 		appearance none
