@@ -7,10 +7,10 @@ riot = require \riot
 api = require './common/scripts/api.ls'
 generate-default-userdata = require './common/scripts/generate-default-userdata.ls'
 
-fetchme = (_i, cb) ~>
+fetchme = (token, cb) ~>
 	me = null
 
-	if not _i?
+	if not token?
 		return done!
 
 	# ユーザー情報フェッチ
@@ -18,7 +18,7 @@ fetchme = (_i, cb) ~>
 		method: \POST
 		headers:
 			'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-		body: "_i=#_i"
+		body: "i=#token"
 	.then (res) ~>
 		if res.status != 200
 			alert 'ユーザー認証に失敗しました。ログアウトします。'
@@ -27,7 +27,7 @@ fetchme = (_i, cb) ~>
 
 		i <~ res.json!.then
 		me := i
-		me._web = _i
+		me.token = token
 
 		# initialize it if user data is empty
 		if me.data?
@@ -39,7 +39,7 @@ fetchme = (_i, cb) ~>
 		info = document.create-element \mk-core-error
 			|> document.body.append-child
 		riot.mount info, do
-			retry: ~> fetchme _i, cb
+			retry: ~> fetchme token, cb
 
 	function done
 		if cb? then cb me
@@ -47,7 +47,7 @@ fetchme = (_i, cb) ~>
 	function init
 		data = generate-default-userdata!
 
-		api _i, \i/appdata/set do
+		api token, \i/appdata/set do
 			data: JSON.stringify data
 		.then ~>
 			me.data = data

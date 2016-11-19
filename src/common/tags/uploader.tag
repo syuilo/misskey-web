@@ -181,7 +181,7 @@ script.
 		reader.read-as-data-URL file
 
 		data = new FormData!
-		data.append \_i @I._web
+		data.append \i @I.token
 		data.append \file file
 
 		if folder?

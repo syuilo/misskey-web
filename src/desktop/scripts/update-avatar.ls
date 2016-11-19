@@ -18,7 +18,7 @@ module.exports = (I, cb, file = null) ~>
 		cropper-controller.trigger \open
 		cropper-controller.on \cropped (blob) ~>
 			data = new FormData!
-			data.append \_i I._web
+			data.append \i I.token
 			data.append \file blob, file.name + '.cropped.png'
 			api I, \drive/folders/find do
 				name: 'アイコン'

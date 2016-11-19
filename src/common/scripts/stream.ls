@@ -15,7 +15,7 @@ function init me
 		state := \connected
 		state-ev.trigger \connected
 		socket.send JSON.stringify do
-			i: me._web
+			i: me.token
 
 	socket.onclose = ~>
 		state := \reconnecting

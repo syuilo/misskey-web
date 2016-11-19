@@ -14,7 +14,7 @@ function init me
 
 		socket.onopen = ~>
 			socket.send JSON.stringify do
-				i: me._web
+				i: me.token
 
 		socket.onmessage = (message) ~>
 			try

@@ -11,12 +11,12 @@ riot.mixin \net do
 module.exports = (i, endpoint, data) ->
 	api-stack++
 
-	if i? and typeof i == \object then i = i._web
+	if i? and typeof i == \object then i = i.token
 
 	body = []
 
 	# append user token when signed in
-	if i? then body.push "_i=#i"
+	if i? then body.push "i=#i"
 
 	for k, v of data
 		if v != undefined

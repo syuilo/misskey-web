@@ -1,10 +1,10 @@
-mk-messaging-message(data-is-me={ message._is_me })
+mk-messaging-message(data-is-me={ message.is_me })
 	a.avatar-anchor(href={ CONFIG.url + '/' + message.user.username }, title={ message.user.username }, target='_blank')
 		img.avatar(src={ message.user.avatar_url + '?thumbnail&size=64' }, alt='')
 	div.content-container
 		div.balloon
-			p.read(if={ message._is_me && message.is_read }) 既読
-			button.delete-button(if={ message._is_me }, title='メッセージを削除')
+			p.read(if={ message.is_me && message.is_read }) 既読
+			button.delete-button(if={ message.is_me }, title='メッセージを削除')
 				img(src='/_/resources/desktop/messaging/delete.png', alt='Delete')
 			div.content(if={ !message.is_deleted })
 				div.text(if={ message.text }) { message.text }
@@ -251,4 +251,4 @@ script.
 	@mixin \i
 
 	@message = @opts.message
-	@message._is_me = @message.user.id == @I.id
+	@message.is_me = @message.user.id == @I.id

@@ -14,15 +14,15 @@ mk-messaging
 	div.main
 		div.history(if={ history.length > 0 })
 			virtual(each={ history })
-				a.user(data-is-me={ _is_me }, onclick={ _click })
-					img.avatar(src={ (_is_me ? recipient.avatar_url : user.avatar_url) + '?thumbnail&size=64' }, alt='')
+				a.user(data-is-me={ is_me }, onclick={ _click })
+					img.avatar(src={ (is_me ? recipient.avatar_url : user.avatar_url) + '?thumbnail&size=64' }, alt='')
 					header
-						span.name { _is_me ? recipient.name : user.name }
-						span.username { '@' + (_is_me ? recipient.username : user.username ) }
+						span.name { is_me ? recipient.name : user.name }
+						span.username { '@' + (is_me ? recipient.username : user.username ) }
 						mk-time(time={ created_at })
 					div.body
 						p.text
-							span.me(if={ _is_me }) あなた:
+							span.me(if={ is_me }) あなた:
 							| { text }
 		p.no-history(if={ history.length == 0 })
 			| 履歴はありません。
@@ -388,10 +388,10 @@ script.
 		.then (history) ~>
 			@is-loading = false
 			history.for-each (message) ~>
-				message._is_me = message.user? and message.user.id == @I.id
+				message.is_me = message.user? and message.user.id == @I.id
 				message._click = ~>
 					if message.recipient?
-						if message._is_me
+						if message.is_me
 							@event.trigger \navigate-user message.recipient
 						else
 							@event.trigger \navigate-user message.user
