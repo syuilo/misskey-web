@@ -1,10 +1,10 @@
-#================================
 # Fetch me
 #================================
 
 riot = require \riot
 
 api = require './common/scripts/api.ls'
+signout = require './common/scripts/signout.ls'
 generate-default-userdata = require './common/scripts/generate-default-userdata.ls'
 
 fetchme = (token, cb) ~>
