@@ -87,3 +87,6 @@ style(theme='dark').
 
 		> .backdrop
 			background #0D0D0D
+
+script.
+	@mixin \i
