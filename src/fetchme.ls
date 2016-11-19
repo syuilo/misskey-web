@@ -20,9 +20,8 @@ fetchme = (token, cb) ~>
 			'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 		body: "i=#token"
 	.then (res) ~>
-		if res.status != 200
-			location.href = '/signout!'
-			return
+		# When failed to authenticate user
+		if res.status != 200 then signout!
 
 		i <~ res.json!.then
 		me := i
