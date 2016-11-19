@@ -6,17 +6,17 @@ easing = [0 0.7 0 1]
 riot.mixin \window do
 	init: ->
 		@open = ~>
-			@bg.style.pointer-events = \auto
-			Velocity @bg, {
+			@refs.bg.style.pointer-events = \auto
+			Velocity @refs.bg, {
 				opacity: 1
 			} {
 				duration: duration
 				easing: \linear
 			}
 
-			@body.style.pointer-events = \auto
-			Velocity @body, { top: window.inner-height + \px } 0ms
-			Velocity @body, {
+			@refs.body.style.pointer-events = \auto
+			Velocity @refs.body, { top: window.inner-height + \px } 0ms
+			Velocity @refs.body, {
 				top: \16px
 			} {
 				duration: duration
@@ -24,16 +24,16 @@ riot.mixin \window do
 			}
 
 		@close = ~>
-			@bg.style.pointer-events = \none
-			Velocity @bg, {
+			@refs.bg.style.pointer-events = \none
+			Velocity @refs.bg, {
 				opacity: 0
 			} {
 				duration: duration
 				easing: \linear
 			}
 
-			@body.style.pointer-events = \none
-			Velocity @body, {
+			@refs.body.style.pointer-events = \none
+			Velocity @refs.body, {
 				top: window.inner-height + \px
 			} {
 				duration: duration

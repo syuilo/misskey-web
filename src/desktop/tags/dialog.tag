@@ -90,8 +90,8 @@ script.
 			@close!
 
 	@on \mount ~>
-		@header.innerHTML = @opts.title
-		@body.innerHTML = @opts.text
+		@refs.header.innerHTML = @opts.title
+		@refs.body.innerHTML = @opts.text
 
 	@controller.on \open ~>
 		@open!
@@ -100,9 +100,9 @@ script.
 		@close!
 
 	@open = ~>
-		@bg.style.pointer-events = \auto
-		Velocity @bg, \finish true
-		Velocity @bg, {
+		@refs.bg.style.pointer-events = \auto
+		Velocity @refs.bg, \finish true
+		Velocity @refs.bg, {
 			opacity: 1
 		} {
 			queue: false
@@ -125,9 +125,9 @@ script.
 		}
 
 	@close = ~>
-		@bg.style.pointer-events = \none
-		Velocity @bg, \finish true
-		Velocity @bg, {
+		@refs.bg.style.pointer-events = \none
+		Velocity @refs.bg, \finish true
+		Velocity @refs.bg, {
 			opacity: 0
 		} {
 			queue: false
@@ -148,7 +148,7 @@ script.
 				@unmount!
 		}
 
-	@bg-click = ~>
+	@refs.bg-click = ~>
 		if @can-through
 			if @opts.on-through?
 				@opts.on-through!

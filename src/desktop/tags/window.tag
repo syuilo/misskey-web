@@ -217,7 +217,7 @@ script.
 		@refs.main.style.top = \15%
 		@refs.main.style.left = (window.inner-width / 2) - (@refs.main.offset-width / 2) + \px
 
-		@header.add-event-listener \contextmenu (e) ~>
+		@refs.header.add-event-listener \contextmenu (e) ~>
 			e.prevent-default!
 
 		window.add-event-listener \resize ~>
@@ -261,9 +261,9 @@ script.
 		@top!
 
 		if @is-modal
-			@bg.style.pointer-events = \auto
-			Velocity @bg, \finish true
-			Velocity @bg, {
+			@refs.bg.style.pointer-events = \auto
+			Velocity @refs.bg, \finish true
+			Velocity @refs.bg, {
 				opacity: 1
 			} {
 				queue: false
@@ -294,9 +294,9 @@ script.
 		@controller.trigger \closing
 
 		if @is-modal
-			@bg.style.pointer-events = \none
-			Velocity @bg, \finish true
-			Velocity @bg, {
+			@refs.bg.style.pointer-events = \none
+			Velocity @refs.bg, \finish true
+			Velocity @refs.bg, {
 				opacity: 0
 			} {
 				queue: false
@@ -332,13 +332,13 @@ script.
 
 		if z > 0
 			@refs.main.style.z-index = z + 1
-			if @is-modal then @bg.style.z-index = z + 1
+			if @is-modal then @refs.bg.style.z-index = z + 1
 
 	@repel-move = (e) ~>
 		e.stop-propagation!
 		return true
 
-	@bg-click = ~>
+	@refs.bg-click = ~>
 		if @can-close
 			@close!
 
