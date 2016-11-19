@@ -186,7 +186,7 @@ script.
 			@update!
 
 	@onsubmit = ~>
-		@api CONFIG.urls.signin, do
+		@api \signin do
 			username: @username.value
 			password: @password.value
 		.then ->

@@ -349,8 +349,6 @@ gulp.task('build:scripts', done => {
 						.replace(/CONFIG\.themeColor/g, `'${config.themeColor}'`)
 						.replace(/CONFIG\.api\.url/g, `'${config.scheme}://api.${config.host}'`)
 						.replace(/CONFIG\.urls\.about/g, `'${config.scheme}://about.${config.host}'`)
-						.replace(/CONFIG\.urls\.signin/g, `'${config.scheme}://signin.${config.host}'`)
-						.replace(/CONFIG\.urls\.signup/g, `'${config.scheme}://signup.${config.host}'`)
 						.replace(/CONFIG\.urls\.dev/g, `'${config.scheme}://dev.${config.host}'`)
 						.replace(/CONFIG\.url/g, `'${config.url}'`)
 						.replace(/CONFIG\.host/g, `'${config.host}'`)

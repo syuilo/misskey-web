@@ -332,7 +332,7 @@ script.
 			password: password
 			'g-recaptcha-response': grecaptcha.get-response!
 		.then ~>
-			@api CONFIG.urls.signin, do
+			@api \signup do
 				username: username
 				password: password
 			.then ~>
