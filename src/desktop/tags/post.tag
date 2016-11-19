@@ -49,10 +49,7 @@ mk-post(tabindex='-1', title={ title }, class={ repost: is-repost }, onkeydown={
 					i.fa.fa-caret-down(if={ !is-detail-opened })
 					i.fa.fa-caret-up(if={ is-detail-opened })
 	div.detail(if={ is-detail-opened })
-		// Riot3.0.0未満では、 if が評価されずに必ずカスタムタグが(内部的に)レンダリングされてしまうバグがあるので、
-		// その対策としてのハック SEE: https://github.com/riot/riot/issues/1020#issuecomment-156388012
-		//mk-post-likes-graph(width='462', height='130', post={ p })
-		mk-post-status-graph(width='462', height='130', post={ parent.p }, each={ is-detail-opened ? [1] : [] })
+		mk-post-likes-graph(width='462', height='130', post={ p })
 
 style.
 	display block
@@ -326,11 +323,11 @@ script.
 				then @analyze @p._highlight
 				else @analyze @p.text
 
-			@text.innerHTML = if @p._highlight?
+			@refs.text.innerHTML = if @p._highlight?
 				then @compile tokens, true, false
 				else @compile tokens
 
-			@text.child-nodes.for-each (e) ~>
+			@refs.text.child-nodes.for-each (e) ~>
 				if e.tag-name == \MK-URL
 					riot.mount e
 
@@ -338,7 +335,7 @@ script.
 			tokens
 				.filter (t) -> t.type == \link
 				.map (t) ~>
-					@preview = @text.append-child document.create-element \mk-url-preview
+					@preview = @refs.text.append-child document.create-element \mk-url-preview
 					riot.mount @preview, do
 						url: t.content
 
