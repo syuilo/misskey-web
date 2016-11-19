@@ -29,6 +29,9 @@ module.exports = (i, endpoint, data) ->
 			'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
 		body: body.join \&
 
+	if endpoint == \signin
+		opts.credentials = \include
+
 	ep = if (endpoint.index-of '://') > -1
 		then endpoint
 		else "#{CONFIG.api.url}/#{endpoint}"
