@@ -40,7 +40,6 @@ script.
 		'ドライブでファイルをドラッグしてフォルダ移動できます'
 		'ドライブでフォルダをドラッグしてフォルダ移動できます'
 		'ホームをカスタマイズできます(準備中)'
-		'$write コマンドを使うと、テキストファイルを生成できます'
 		'MisskeyはMIT Licenseです'
 	]
 
@@ -52,7 +51,7 @@ script.
 		clear-interval @clock
 
 	@set = ~>
-		@text.innerHTML = @tips[Math.floor Math.random! * @tips.length]
+		@refs.text.innerHTML = @tips[Math.floor Math.random! * @tips.length]
 		@update!
 
 	@change = ~>
