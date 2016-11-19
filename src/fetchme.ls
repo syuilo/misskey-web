@@ -10,10 +10,10 @@ generate-default-userdata = require './common/scripts/generate-default-userdata.
 fetchme = (token, cb) ~>
 	me = null
 
-	if not token?
-		return done!
+	# Return when not signed in
+	if not token? then return done!
 
-	# ユーザー情報フェッチ
+	# Fetch user
 	fetch "#{CONFIG.api.url}/i" do
 		method: \POST
 		headers:
@@ -21,7 +21,6 @@ fetchme = (token, cb) ~>
 		body: "i=#token"
 	.then (res) ~>
 		if res.status != 200
-			alert 'ユーザー認証に失敗しました。ログアウトします。'
 			location.href = '/signout!'
 			return
 
@@ -30,12 +29,8 @@ fetchme = (token, cb) ~>
 		me.token = token
 
 		# initialize it if user data is empty
-		if me.data?
-			done!
-		else
-			init!
-	.catch (e) ~>
-		console.error e
+		if me.data? then done! else init!
+	.catch ~>
 		info = document.create-element \mk-core-error
 			|> document.body.append-child
 		riot.mount info, do
