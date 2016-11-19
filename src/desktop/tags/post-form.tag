@@ -315,7 +315,7 @@ script.
 	@autocomplete = null
 
 	@on \mount ~>
-		@autocomplete = new @Autocomplete @text
+		@autocomplete = new @Autocomplete @refs.text
 		@autocomplete.attach!
 
 	@on \unmount ~>
@@ -427,7 +427,7 @@ script.
 		@controller.trigger \change-files @files
 		@update!
 
-		new @Sortable @attaches, do
+		new @Sortable @refs.attaches, do
 			draggable: \.file
 			animation: 150ms
 
@@ -439,7 +439,7 @@ script.
 			else undefined
 
 		@api \posts/create do
-			text: @text.value
+			text: @refs.text.value
 			images: files
 			reply_to: if @opts.reply? then @opts.reply.id else undefined
 		.then (data) ~>
