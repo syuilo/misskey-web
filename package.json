@@ -6,7 +6,8 @@
   "license": "MIT",
   "repository": "https://github.com/syuilo/misskey-web.git",
   "scripts": {
-    "test": "gulp test --url=http://example.com"
+    "build": "gulp build",
+    "test": "gulp test --url=https://misskey.xyz --secondary-url=https://himasaku.net"
   },
   "dependencies": {
     "aliasify": "2.1.0",
