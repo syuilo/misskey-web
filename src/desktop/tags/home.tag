@@ -63,8 +63,8 @@ script.
 		@I.data.home.for-each (widget) ~>
 			el = document.create-element \mk- + widget.name + \-home-widget
 			switch widget.place
-				| \left => @left.append-child el
-				| \right => @right.append-child el
+				| \left => @refs.left.append-child el
+				| \right => @refs.right.append-child el
 			@home.push (riot.mount el, do
 				id: widget.id
 				data: widget.data
