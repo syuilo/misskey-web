@@ -1,13 +1,18 @@
 mk-analog-clock
 	canvas@canvas(width='256', height='256')
 
+style.
+	> canvas
+		display block
+		width 256px
+		height 256px
+
 script.
-	self = @
+	@on \mount ~>
+		@draw!
+		set-interval @draw, 1000ms
 
-	draw!
-	set-interval draw, 1000ms
-
-	function draw
+	@draw = ~>
 		now = new Date!
 		s = now.get-seconds!
 		m = now.get-minutes!
@@ -17,7 +22,7 @@ script.
 			@x = x
 			@y = y
 
-		canvas = self.canvas
+		canvas = @canvas
 		ctx = canvas.get-context \2d
 		canv-w = canvas.width
 		canv-h = canvas.height
@@ -93,9 +98,3 @@ script.
 			(canv-w / 2) + uv.x * length
 			(canv-h / 2) + uv.y * length
 		ctx.stroke!
-
-style.
-	> canvas
-		display block
-		width 256px
-		height 256px
