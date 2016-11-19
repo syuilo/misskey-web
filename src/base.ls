@@ -27,6 +27,7 @@ require './common/tags.ls'
 
 fetchme = require './fetchme.ls'
 mixins = require './mixins.ls'
+panic = require './panic.ls'
 
 # Get token from cookie
 i = ((document.cookie.match /i=(\w+)/) || [null null]).1
@@ -49,6 +50,5 @@ module.exports = (callback) ~>
 
 	try
 		callback me
-	catch e
-		document.body.innerHTML = '<div id="error"><p>致命的な問題が発生しました。</p></div>'
-		console.error e
+	catch error
+		panic error
