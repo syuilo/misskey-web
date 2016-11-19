@@ -75,6 +75,7 @@ style.
 					margin 0
 
 script.
+	@mixin \i
 	@mixin \api
 	@mixin \stream
 
