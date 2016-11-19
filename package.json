@@ -7,7 +7,7 @@
   "repository": "https://github.com/syuilo/misskey-web.git",
   "scripts": {
     "build": "gulp build",
-    "test": "gulp test --url=https://misskey.xyz --secondary-url=https://himasaku.net"
+    "test": "gulp test --url=https://misskey.xyz"
   },
   "dependencies": {
     "aliasify": "2.1.0",
