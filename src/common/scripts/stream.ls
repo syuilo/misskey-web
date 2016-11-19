@@ -1,8 +1,8 @@
 # Stream
 #================================
 
-ReconnectingWebSocket = require 'reconnecting-websocket'
-riot = require 'riot'
+ReconnectingWebSocket = require \reconnecting-websocket
+riot = require \riot
 
 function init me
 	state = \initializing
