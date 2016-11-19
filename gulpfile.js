@@ -352,7 +352,7 @@ gulp.task('build:scripts', done => {
 						.replace(/CONFIG\.urls\.dev/g, `'${config.scheme}://dev.${config.host}'`)
 						.replace(/CONFIG\.url/g, `'${config.url}'`)
 						.replace(/CONFIG\.host/g, `'${config.host}'`)
-						.replace(/CONFIG\.recaptch\.siteKey/g, `'${config.recaptcha.siteKey}'`)
+						.replace(/CONFIG\.recaptcha\.siteKey/g, `'${config.recaptcha.siteKey}'`)
 						;
 				}))
 

@@ -86,7 +86,7 @@ mk-signup
 			div.g-recaptcha(
 				data-callback='onRecaptchaed'
 				data-expired-callback='onRecaptchaExpired'
-				data-sitekey=CONFIG.recaptcha.siteKey)
+				data-sitekey={ CONFIG.recaptcha.site-key })
 
 		label.agree-tou
 			input(
