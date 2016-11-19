@@ -91,7 +91,7 @@ script.
 	@loading = true
 
 	@on \mount ~>
-		fetch CONFIG.url + '/_/api/url?url=' + @url
+		fetch CONFIG.url + '/api:url?url=' + @url
 		.then (res) ~>
 			info <~ res.json!.then
 			@title = info.title
