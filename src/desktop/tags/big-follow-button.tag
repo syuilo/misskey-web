@@ -17,14 +17,6 @@ style.
 
 	> button
 		display block
-		-ms-appearance none
-		-moz-appearance none
-		-webkit-appearance none
-		appearance none
-		-ms-user-select none
-		-moz-user-select none
-		-webkit-user-select none
-		user-select none
 		position relative
 		cursor pointer
 		box-sizing border-box
@@ -84,7 +76,7 @@ style.
 			&:active:not(:disabled)
 				background $theme-color
 				border-color $theme-color
-		
+
 		&.wait
 			cursor wait !important
 			opacity 0.7
