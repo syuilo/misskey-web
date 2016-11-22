@@ -1,5 +1,5 @@
 mk-ui-header-account
-	button.header(data-active={ is-open }, onclick={ toggle })
+	button.header(data-active={ is-open.toString() }, onclick={ toggle })
 		span.username
 			| { I.username }
 			i.fa.fa-angle-down(if={ !is-open })
