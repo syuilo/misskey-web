@@ -325,7 +325,7 @@ script.
 		@refs.text.focus!
 
 	@clear = ~>
-		@text.value = ''
+		@refs.text.value = ''
 		@files = []
 		@controller.trigger \change-files
 		@update!
