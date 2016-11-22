@@ -1,5 +1,5 @@
 mk-user-preview
-	div.banner@banner(style={ user.banner_url ? 'background-image: url(' + user.banner_url + '?thumbnail&size=1024)' : '' }, onclick={ on-update-banner })
+	div.banner(style={ user.banner_url ? 'background-image: url(' + user.banner_url + '?thumbnail&size=512)' : '' })
 	a.avatar(href={ CONFIG.url + '/' + user.username }, target='_blank'): img(src={ user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 	div.title
 		p.name { user.name }
@@ -94,6 +94,7 @@ style.
 		right 8px
 
 script.
+	@mixin \i
 	@mixin \api
 
 	@u = @opts.user
