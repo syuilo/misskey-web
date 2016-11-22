@@ -72,7 +72,7 @@ class Autocomplete
 			close: @close
 			type: type
 			q: q
-		
+
 		@suggestion = mounted.0
 
 	# サジェストを閉じます。
