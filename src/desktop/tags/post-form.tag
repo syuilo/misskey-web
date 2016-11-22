@@ -322,7 +322,7 @@ script.
 		@autocomplete.detach!
 
 	@controller.on \focus ~>
-		@text.focus!
+		@refs.text.focus!
 
 	@clear = ~>
 		@text.value = ''

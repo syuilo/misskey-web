@@ -338,7 +338,7 @@ script.
 		e.stop-propagation!
 		return true
 
-	@refs.bg-click = ~>
+	@bg-click = ~>
 		if @can-close
 			@close!
 
@@ -348,6 +348,8 @@ script.
 
 	# ヘッダー掴み時
 	@on-header-mousedown = (e) ~>
+		e.prevent-default!
+
 		if not contains @refs.main, document.active-element
 			@refs.main.focus!
 
@@ -388,6 +390,8 @@ script.
 
 	# 上ハンドル掴み時
 	@on-top-handle-mousedown = (e) ~>
+		e.prevent-default!
+
 		base = e.client-y
 		height = parse-int((get-computed-style @refs.main, '').height, 10)
 		top = parse-int((get-computed-style @refs.main, '').top, 10)
@@ -408,6 +412,8 @@ script.
 
 	# 右ハンドル掴み時
 	@on-right-handle-mousedown = (e) ~>
+		e.prevent-default!
+
 		base = e.client-x
 		width = parse-int((get-computed-style @refs.main, '').width, 10)
 		left = parse-int((get-computed-style @refs.main, '').left, 10)
@@ -426,6 +432,8 @@ script.
 
 	# 下ハンドル掴み時
 	@on-bottom-handle-mousedown = (e) ~>
+		e.prevent-default!
+
 		base = e.client-y
 		height = parse-int((get-computed-style @refs.main, '').height, 10)
 		top = parse-int((get-computed-style @refs.main, '').top, 10)
@@ -444,6 +452,8 @@ script.
 
 	# 左ハンドル掴み時
 	@on-left-handle-mousedown = (e) ~>
+		e.prevent-default!
+
 		base = e.client-x
 		width = parse-int((get-computed-style @refs.main, '').width, 10)
 		left = parse-int((get-computed-style @refs.main, '').left, 10)
