@@ -5,17 +5,8 @@ riot = require \riot
 
 riot.mixin \user-preview do
 	init: ->
-		# Riotのバグ？でなぜか複数イベント指定をすると発火しない
-		#
-		#@on \mount .on \updated ~>
-		#	elems = @root.query-selector-all '[data-user-preview]:not([data-user-preview-attached])'
-		#	elems.for-each attach.bind @
-		#
-		#	↓だから個別にしています↓
-
 		@on \mount ~>
 			scan.call @
-
 		@on \updated ~>
 			scan.call @
 
