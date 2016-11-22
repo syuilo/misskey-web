@@ -148,7 +148,6 @@ script.
 				@select-next!
 			| _ =>
 				@close!
-				return true
 
 	@select-next = ~>
 		@select++
@@ -172,7 +171,7 @@ script.
 
 		@users[@select]._selected = true
 
-		@users-el.child-nodes[@select].focus!
+		@refs.users-el.child-nodes[@select].focus!
 
 		@update!
 
