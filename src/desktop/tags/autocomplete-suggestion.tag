@@ -1,10 +1,9 @@
 mk-autocomplete-suggestion
 	ol.users@users(if={ users.length > 0 })
-		virtual(each={ users })
-			li(onclick={ parent.on-click }, onkeydown={ parent.on-keydown }, tabindex='-1')
-				img.avatar(src={ avatar_url + '?thumbnail&size=32' }, alt='')
-				span.name { name }
-				span.username @{ username }
+		li(each={ users }, onclick={ parent.on-click }, onkeydown={ parent.on-keydown }, tabindex='-1')
+			img.avatar(src={ avatar_url + '?thumbnail&size=32' }, alt='')
+			span.name { name }
+			span.username @{ username }
 
 style.
 	display block
