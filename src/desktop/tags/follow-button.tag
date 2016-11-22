@@ -1,17 +1,18 @@
 mk-follow-button
-	button(class={ init: init, wait: wait, follow: !user.is_following, unfollow: user.is_following },
+	button(if={ !init }, class={ wait: wait, follow: !user.is_following, unfollow: user.is_following },
 			onclick={ onclick },
-			disabled={ init || wait },
+			disabled={ wait },
 			title={ user.is_following ? 'フォロー解除' : 'フォローする' })
-		i.fa.fa-minus(if={ !init && !wait && user.is_following })
-		i.fa.fa-plus(if={ !init && !wait && !user.is_following })
-		i.fa.fa-spinner.fa-pulse.fa-fw(if={ init })
+		i.fa.fa-minus(if={ !wait && user.is_following })
+		i.fa.fa-plus(if={ !wait && !user.is_following })
 		i.fa.fa-spinner.fa-pulse.fa-fw(if={ wait })
+	div.init(if={ init }): i.fa.fa-spinner.fa-pulse.fa-fw
 
 style.
 	display block
 
 	> button
+	> .init
 		display block
 		position relative
 		cursor pointer
@@ -69,7 +70,7 @@ style.
 			&:active:not(:disabled)
 				background $theme-color
 				border-color $theme-color
-		
+
 		&.wait
 			cursor wait !important
 			opacity 0.7
@@ -85,12 +86,13 @@ script.
 
 	@user = null
 	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
-	@init = false
+	@init = true
 	@wait = false
 
 	@on \mount ~>
 		@user-promise.then (user) ~>
 			@user = user
+			@init = false
 			@update!
 			@stream.on \follow @on-stream-follow
 			@stream.on \unfollow @on-stream-unfollow
