@@ -11,7 +11,7 @@ mk-post-form(ondragover={ ondragover }, ondragenter={ ondragenter }, ondragleave
 	mk-uploader(controller={ uploader-controller })
 	button@upload(title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-upload
 	button@drive(title='ドライブからファイルを添付', onclick={ select-file-from-drive }): i.fa.fa-cloud
-	p.text-count(class={ over: text.value.length > 300 }) のこり{ 300 - text.value.length }文字
+	p.text-count(class={ over: text.value.length > 300 }) のこり{ 300 - refs.text.value.length }文字
 	button@submit(class={ wait: wait }, disabled={ wait || (text.value.length == 0 && files.length == 0) }, onclick={ post })
 		| { wait ? '投稿中' : opts.reply ? '返信' : '投稿' }
 		mk-ellipsis(if={ wait })
