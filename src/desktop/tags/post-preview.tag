@@ -13,12 +13,6 @@ mk-post-preview(title={ title })
 			div.body
 				mk-sub-post-content.text(post={ post })
 
-script.
-	@mixin \user-preview
-
-	@title = 'a'
-	@post = @opts.post
-
 style.
 	display block
 	position relative
@@ -94,3 +88,9 @@ style.
 					padding 0
 					font-size 1.1em
 					color #717171
+
+script.
+	@mixin \user-preview
+
+	@title = 'a'
+	@post = @opts.post
