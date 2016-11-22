@@ -171,8 +171,6 @@ script.
 		@refs.users.children[@select].set-attribute \data-selected \true
 		@refs.users.children[@select].focus!
 
-		@update!
-
 	@complete = (user) ~>
 		@opts.complete user
 
