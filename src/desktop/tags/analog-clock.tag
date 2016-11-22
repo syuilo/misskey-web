@@ -10,7 +10,10 @@ style.
 script.
 	@on \mount ~>
 		@draw!
-		set-interval @draw, 1000ms
+		@clock = set-interval @draw, 1000ms
+
+	@on \unmount ~>
+		clear-interval @clock
 
 	@draw = ~>
 		now = new Date!

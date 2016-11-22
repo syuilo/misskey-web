@@ -177,6 +177,9 @@ script.
 
 	@is-open = false
 
+	@on \before-unmount ~>
+		@close!
+
 	@toggle = ~>
 		if @is-open
 			@close!
