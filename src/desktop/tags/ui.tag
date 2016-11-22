@@ -49,7 +49,7 @@ script.
 		@set-root-layout!
 
 	@set-root-layout = ~>
-		@root.style.padding-top = @refs.header.client-height + \px
+		@root.style.padding-top = @refs.header.root.client-height + \px
 
 	@on \mount ~>
 		@set-root-layout!
