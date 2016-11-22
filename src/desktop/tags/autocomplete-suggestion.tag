@@ -1,7 +1,7 @@
 mk-autocomplete-suggestion
 	ol.users@users(if={ users.length > 0 })
 		virtual(each={ user in users })
-			li(onclick={ user._click }, class={ selected: user._selected }, onkeydown={ on-keydown } tabindex='-1')
+			li(onclick={ user._click }, data-selected={ user._selected.toString() }, onkeydown={ on-keydown } tabindex='-1')
 				img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
 				span.name { user.name }
 				span.username @{ user.username }
@@ -42,7 +42,7 @@ style.
 				user-select none
 
 			&:hover
-			&.selected
+			&[data-selected='true']
 				color #fff
 				background $theme-color
 

@@ -7,9 +7,11 @@ document.domain = CONFIG.host
 # ↓ iOS待ちPolyfill (SEE: http://caniuse.com/#feat=fetch)
 require \fetch
 
-# ↓ Firefox, Edge待ちPolyfill
+# ↓ NodeList、HTMLCollectionで forEach を使えるようにする
 if NodeList.prototype.for-each == undefined
 	NodeList.prototype.for-each = Array.prototype.for-each
+if HTMLCollection.prototype.for-each == undefined
+	HTMLCollection.prototype.for-each = Array.prototype.for-each
 
 # Load common dependencies
 #--------------------------------
