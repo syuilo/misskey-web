@@ -1,7 +1,7 @@
 mk-autocomplete-suggestion
 	ol.users@users(if={ users.length > 0 })
 		virtual(each={ user in users })
-			li(onclick={ user._click }, data-selected={ user._selected.toString() }, onkeydown={ on-keydown } tabindex='-1')
+			li(onclick={ user._click }, onkeydown={ on-keydown } tabindex='-1')
 				img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
 				span.name { user.name }
 				span.username @{ user.username }
@@ -166,11 +166,10 @@ script.
 		@apply-select!
 
 	@apply-select = ~>
-		@users.for-each (user) ~>
-			user._selected = false
+		@refs.users.children.for-each (el) ~>
+			el.remove-attribute \data-selected
 
-		@users[@select]._selected = true
-
+		@refs.users.children[@select].set-attribute \data-selected \true
 		@refs.users.children[@select].focus!
 
 		@update!
