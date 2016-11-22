@@ -304,7 +304,9 @@ script.
 		@stream.on \drive_folder_created @on-stream-drive-folder-created
 		@stream.on \drive_folder_updated @on-stream-drive-folder-updated
 
-		if @opts.folder?
+		# Riotのバグ？でnullを渡しても""になる
+		#if @opts.folder?
+		if @opts.folder
 			@move @opts.folder
 		else
 			@load!
@@ -338,7 +340,7 @@ script.
 			@add-folder folder, true
 
 	@onmousedown = (e) ~>
-		if (contains @folders-container, e.target) or (contains @files-container, e.target)
+		if (contains @refs.folders-container, e.target) or (contains @refs.files-container, e.target)
 			return true
 
 		rect = @refs.main.get-bounding-client-rect!
@@ -347,7 +349,7 @@ script.
 		top = e.page-y + @refs.main.scroll-top - rect.top - window.page-y-offset
 
 		move = (e) ~>
-			@selection.style.display = \block
+			@refs.selection.style.display = \block
 
 			cursor-x = e.page-x + @refs.main.scroll-left - rect.left - window.page-x-offset
 			cursor-y = e.page-y + @refs.main.scroll-top - rect.top - window.page-y-offset
@@ -355,24 +357,24 @@ script.
 			h = cursor-y - top
 
 			if w > 0
-				@selection.style.width = w + \px
-				@selection.style.left = left + \px
+				@refs.selection.style.width = w + \px
+				@refs.selection.style.left = left + \px
 			else
-				@selection.style.width = -w + \px
-				@selection.style.left = cursor-x + \px
+				@refs.selection.style.width = -w + \px
+				@refs.selection.style.left = cursor-x + \px
 
 			if h > 0
-				@selection.style.height = h + \px
-				@selection.style.top = top + \px
+				@refs.selection.style.height = h + \px
+				@refs.selection.style.top = top + \px
 			else
-				@selection.style.height = -h + \px
-				@selection.style.top = cursor-y + \px
+				@refs.selection.style.height = -h + \px
+				@refs.selection.style.top = cursor-y + \px
 
 		up = (e) ~>
 			document.document-element.remove-event-listener \mousemove move
 			document.document-element.remove-event-listener \mouseup up
 
-			@selection.style.display = \none
+			@refs.selection.style.display = \none
 
 		document.document-element.add-event-listener \mousemove move
 		document.document-element.add-event-listener \mouseup up
@@ -461,7 +463,9 @@ script.
 		return false
 
 	@oncontextmenu = (e) ~>
+		e.prevent-default!
 		e.stop-immediate-propagation!
+
 		ctx = document.body.append-child document.create-element \mk-drive-browser-base-contextmenu
 		ctx-controller = riot.observable!
 		riot.mount ctx, do
@@ -470,6 +474,7 @@ script.
 		ctx-controller.trigger \open do
 			x: e.page-x - window.page-x-offset
 			y: e.page-y - window.page-y-offset
+
 		return false
 
 	@controller.on \upload ~>

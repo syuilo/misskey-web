@@ -1,4 +1,4 @@
-mk-drive-browser-folder(data-is-contextmenu-showing={ is-contextmenu-showing }, data-draghover={ draghover }, onclick={ onclick }, onmouseover={ onmouseover }, onmouseout={ onmouseout }, ondragover={ ondragover }, ondragenter={ ondragenter }, ondragleave={ ondragleave }, ondrop={ ondrop }, oncontextmenu={ oncontextmenu }, draggable='true', ondragstart={ ondragstart }, ondragend={ ondragend }, title={ title })
+mk-drive-browser-folder(data-is-contextmenu-showing={ is-contextmenu-showing.toString() }, data-draghover={ draghover.toString() }, onclick={ onclick }, onmouseover={ onmouseover }, onmouseout={ onmouseout }, ondragover={ ondragover }, ondragenter={ ondragenter }, ondragleave={ ondragleave }, ondrop={ ondrop }, oncontextmenu={ oncontextmenu }, draggable='true', ondragstart={ ondragstart }, ondragend={ ondragend }, title={ title })
 	p.name
 		i.fa.fa-fw(class={ fa-folder-o: !hover, fa-folder-open-o: hover })
 		| { folder.name }
@@ -26,8 +26,8 @@ style.
 	&:active
 		background lighten($theme-color, 85%)
 
-	&[data-is-contextmenu-showing]
-	&[data-draghover]
+	&[data-is-contextmenu-showing='true']
+	&[data-draghover='true']
 		&:after
 			content ""
 			pointer-events none
@@ -39,7 +39,7 @@ style.
 			border 2px dashed rgba($theme-color, 0.3)
 			border-radius 4px
 
-	&[data-draghover]
+	&[data-draghover='true']
 		background lighten($theme-color, 90%)
 
 	> .name
@@ -161,7 +161,9 @@ script.
 		@browser.is-drag-source = false
 
 	@oncontextmenu = (e) ~>
+		e.prevent-default!
 		e.stop-immediate-propagation!
+
 		@is-contextmenu-showing = true
 		@update!
 		ctx = document.body.append-child document.create-element \mk-drive-browser-folder-contextmenu
@@ -176,4 +178,5 @@ script.
 		ctx-controller.on \closed ~>
 			@is-contextmenu-showing = false
 			@update!
+
 		return false
