@@ -1,4 +1,4 @@
-mk-header-post-button
+mk-ui-header-post-button
 	button(onclick={ post }, title='新規投稿')
 		i.fa.fa-pencil-square-o
 

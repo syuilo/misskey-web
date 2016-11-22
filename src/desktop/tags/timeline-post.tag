@@ -1,7 +1,7 @@
-mk-post(tabindex='-1', title={ title }, class={ repost: is-repost }, onkeydown={ on-key-down })
+mk-timeline-post(tabindex='-1', title={ title }, class={ repost: is-repost }, onkeydown={ on-key-down })
 
 	div.reply-to(if={ p.reply_to })
-		mk-post-sub(post={ p.reply_to })
+		mk-timeline-post-sub(post={ p.reply_to })
 
 	div.repost(if={ is-repost })
 		p
@@ -374,6 +374,9 @@ script.
 		@update!
 
 	@on-key-down = (e) ~>
+		e.prevent-default!
+
+		switch
 		| e.which == 38 or e.which == 74 or (e.which == 9 and e.shift-key) => # ↑, j or Shift+Tab
 			focus @root, (e) -> e.previous-element-sibling
 		| e.which == 40 or e.which == 75 or e.which == 9 => # ↓, k or Tab

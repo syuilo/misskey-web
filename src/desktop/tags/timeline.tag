@@ -1,10 +1,10 @@
 mk-timeline
-	virtual(each={ _post, i in posts })
-		mk-post(post={ _post })
-		p.date(if={ i != posts.length - 1 && _post._date != posts[i + 1]._date })
+	virtual(each={ post, i in posts })
+		mk-timeline-post(post={ post })
+		p.date(if={ i != posts.length - 1 && post._date != posts[i + 1]._date })
 			span
 				i.fa.fa-angle-up
-				| { _post._datetext }
+				| { post._datetext }
 			span
 				i.fa.fa-angle-down
 				| { posts[i + 1]._datetext }
@@ -14,7 +14,7 @@ mk-timeline
 style.
 	display block
 
-	> mk-post
+	> mk-timeline-post
 		border-bottom solid 1px #eaeaea
 
 		&:first-child
@@ -49,7 +49,7 @@ style.
 		border-bottom-right-radius 4px
 
 style(theme='dark').
-	> mk-post
+	> mk-timeline-post
 		border-bottom-color #222221
 
 script.

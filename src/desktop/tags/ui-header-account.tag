@@ -1,4 +1,4 @@
-mk-header-account
+mk-ui-header-account
 	button.header(data-active={ is-open }, onclick={ toggle })
 		span.username
 			| { I.username }

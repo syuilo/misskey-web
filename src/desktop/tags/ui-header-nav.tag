@@ -1,4 +1,4 @@
-mk-header-nav: ul(if={ SIGNIN })
+mk-ui-header-nav: ul(if={ SIGNIN })
 	li.home.active: a(href={ CONFIG.url })
 		i.fa.fa-home
 		p ホーム

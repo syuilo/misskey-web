@@ -1,4 +1,4 @@
-mk-header-clock
+mk-ui-header-clock
 	div.header
 		time@time
 	div.content

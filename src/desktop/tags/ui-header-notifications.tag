@@ -1,4 +1,4 @@
-mk-header-notifications
+mk-ui-header-notifications
 	button.header(data-active={ is-open }, onclick={ toggle })
 		i.fa.fa-bell-o
 	div.notifications(if={ is-open })
@@ -70,7 +70,7 @@ style.
 			border-right solid 14px transparent
 			border-bottom solid 14px #fff
 			border-left solid 14px transparent
-		
+
 		> mk-notifications
 			max-height 350px
 			font-size 1rem

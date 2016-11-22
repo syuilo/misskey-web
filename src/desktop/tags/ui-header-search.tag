@@ -1,4 +1,4 @@
-mk-header-search
+mk-ui-header-search
 	form.search(onsubmit={ onsubmit })
 		input@q(type='search', placeholder!='&#xf002; 検索')
 		div.result

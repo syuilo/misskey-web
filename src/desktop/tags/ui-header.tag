@@ -4,13 +4,13 @@ mk-ui-header
 		div.backdrop
 		div.main: div.container
 			div.left
-				mk-header-nav
+				mk-ui-header-nav
 			div.right
-				mk-header-search
-				mk-header-account(if={ SIGNIN })
-				mk-header-notifications(if={ SIGNIN })
-				mk-header-post-button(if={ SIGNIN }, ui={ opts.ui })
-				mk-header-clock
+				mk-ui-header-search
+				mk-ui-header-account(if={ SIGNIN })
+				mk-ui-header-notifications(if={ SIGNIN })
+				mk-ui-header-post-button(if={ SIGNIN }, ui={ opts.ui })
+				mk-ui-header-clock
 
 style.
 	display block
