@@ -7,7 +7,7 @@ mk-ui-header-account
 		img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 	div.menu(if={ is-open })
 		ul
-			li: a(href= config.url + '/' + { I.username })
+			li: a(href={ '/' + I.username })
 				i.fa.fa-user
 				| プロフィール
 				i.fa.fa-angle-right
@@ -15,7 +15,7 @@ mk-ui-header-account
 				i.fa.fa-cloud
 				| ドライブ
 				i.fa.fa-angle-right
-			li: a(href= config.url + '/{ I.username }/likes')
+			li: a(href='/i/likes')
 				i.fa.fa-star
 				| お気に入り
 				i.fa.fa-angle-right
@@ -25,7 +25,7 @@ mk-ui-header-account
 				| 設定
 				i.fa.fa-angle-right
 		ul
-			li: a(href= config.signoutUrl)
+			li: a(href='/signout!')
 				i(class='fa fa-power-off')
 				| サインアウト
 				i.fa.fa-angle-right
