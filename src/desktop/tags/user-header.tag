@@ -137,11 +137,11 @@ script.
 		height = 280px
 
 		pos = 50 - ((top / height) * 50)
-		@banner.style.background-position = 'center ' + pos + '%'
+		@refs.banner.style.background-position = 'center ' + pos + '%'
 
 		blur = top / 32
 		if blur <= 10
-			@banner.style.filter = 'blur(' + blur + 'px)'
+			@refs.banner.style.filter = 'blur(' + blur + 'px)'
 
 	@on-update-banner = ~>
 		if not @SIGNIN or @I.id != @user.id
