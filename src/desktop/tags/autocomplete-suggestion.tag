@@ -1,10 +1,10 @@
 mk-autocomplete-suggestion
 	ol.users@users(if={ users.length > 0 })
-		virtual(each={ user in users })
-			li(onclick={ user._click }, onkeydown={ on-keydown }, tabindex='-1')
-				img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
-				span.name { user.name }
-				span.username @{ user.username }
+		virtual(each={ users })
+			li(onclick={ parent.on-click }, onkeydown={ parent.on-keydown }, tabindex='-1')
+				img.avatar(src={ avatar_url + '?thumbnail&size=32' }, alt='')
+				span.name { name }
+				span.username @{ username }
 
 style.
 	display block
@@ -101,9 +101,6 @@ script.
 			query: @q
 			limit: 30users
 		.then (users) ~>
-			users.for-each (user) ~>
-				user._click = ~>
-					@complete user
 			@users = users
 			@loading = false
 			@update!
@@ -120,6 +117,9 @@ script.
 	@mousedown = (e) ~>
 		if (!contains @root, e.target) and (@root != e.target)
 			@close!
+
+	@on-click = (e) ~>
+		@complete e.item
 
 	@on-keydown = (e) ~>
 		key = e.which
