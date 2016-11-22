@@ -352,9 +352,9 @@ script.
 
 		if @p.text?
 			tokens = @analyze @p.text
-			@text.innerHTML = @compile tokens
+			@refs.text.innerHTML = @compile tokens
 
-			@text.child-nodes.for-each (e) ~>
+			@refs.text.children.for-each (e) ~>
 				if e.tag-name == \MK-URL
 					riot.mount e
 

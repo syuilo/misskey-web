@@ -1,5 +1,5 @@
 mk-autocomplete-suggestion
-	ol.users@users-el(if={ users.length > 0 })
+	ol.users@users(if={ users.length > 0 })
 		virtual(each={ user in users })
 			li(onclick={ user._click }, class={ selected: user._selected }, onkeydown={ on-keydown } tabindex='-1')
 				img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
@@ -171,7 +171,7 @@ script.
 
 		@users[@select]._selected = true
 
-		@refs.users-el.child-nodes[@select].focus!
+		@refs.users.children[@select].focus!
 
 		@update!
 

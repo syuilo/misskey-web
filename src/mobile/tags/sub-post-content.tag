@@ -27,13 +27,10 @@ script.
 	@post = @opts.post
 
 	@on \mount ~>
-		# ↓の @post? はRiotのバグのため付与しています
-		# このバグ(https://github.com/riot/riot/issues/1020)が修正され次第消してください
-		# Riot3.0.0では修正されるみたい
-		if @post? and @post.text?
+		if @post.text?
 			tokens = @analyze @post.text
-			@text.innerHTML = @compile tokens, false
+			@refs.text.innerHTML = @compile tokens, false
 
-			@text.child-nodes.for-each (e) ~>
+			@refs.text.children.for-each (e) ~>
 				if e.tag-name == \MK-URL
 					riot.mount e

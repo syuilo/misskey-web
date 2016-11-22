@@ -327,7 +327,7 @@ script.
 				then @compile tokens, true, false
 				else @compile tokens
 
-			@refs.text.child-nodes.for-each (e) ~>
+			@refs.text.children.for-each (e) ~>
 				if e.tag-name == \MK-URL
 					riot.mount e
 

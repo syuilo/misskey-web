@@ -290,11 +290,11 @@ script.
 				then @analyze @p._highlight
 				else @analyze @p.text
 
-			@text.innerHTML = if @p._highlight?
+			@refs.text.innerHTML = if @p._highlight?
 				then @compile tokens, true, false
 				else @compile tokens
 
-			@text.child-nodes.for-each (e) ~>
+			@refs.text.children.for-each (e) ~>
 				if e.tag-name == \MK-URL
 					riot.mount e
 
