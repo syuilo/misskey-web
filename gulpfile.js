@@ -21,6 +21,7 @@ const pug = require('gulp-pug');
 
 const env = process.env.NODE_ENV;
 const isProduction = env === 'production';
+const isDebug = !isProduction;
 
 const argv = require('yargs').argv;
 
@@ -68,7 +69,7 @@ gulp.task('build', [
 ], () => {
 	gutil.log('ビルドが終了しました。');
 
-	if (!isProduction) {
+	if (isDebug) {
 		gutil.log('■　注意！　開発モードでのビルドです。');
 	}
 });
