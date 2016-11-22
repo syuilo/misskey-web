@@ -1,21 +1,22 @@
 mk-user-preview
-	div.banner(style={ user.banner_url ? 'background-image: url(' + user.banner_url + '?thumbnail&size=512)' : '' })
-	a.avatar(href={ CONFIG.url + '/' + user.username }, target='_blank'): img(src={ user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
-	div.title
-		p.name { user.name }
-		p.username @{ user.username }
-	div.bio { user.bio }
-	div.status
-		div
-			p 投稿
-			a { user.posts_count }
-		div
-			p フォロー
-			a { user.following_count }
-		div
-			p フォロワー
-			a { user.followers_count }
-	mk-follow-button(if={ SIGNIN && user.id != I.id }, user={ user-promise })
+	virtual(if={ user != null })
+		div.banner(style={ user.banner_url ? 'background-image: url(' + user.banner_url + '?thumbnail&size=512)' : '' })
+		a.avatar(href={ CONFIG.url + '/' + user.username }, target='_blank'): img(src={ user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+		div.title
+			p.name { user.name }
+			p.username @{ user.username }
+		div.bio { user.bio }
+		div.status
+			div
+				p 投稿
+				a { user.posts_count }
+			div
+				p フォロー
+				a { user.following_count }
+			div
+				p フォロワー
+				a { user.followers_count }
+		mk-follow-button(if={ SIGNIN && user.id != I.id }, user={ user-promise })
 
 style.
 	display block

@@ -61,6 +61,8 @@ script.
 
 	@title = @folder.name
 	@hover = false
+	@draghover = false
+	@is-contextmenu-showing = false
 
 	@onclick = ~>
 		@browser.move @folder

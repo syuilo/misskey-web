@@ -3,14 +3,14 @@ mk-user-recommendation-home-widget
 		i.fa.fa-users
 		| おすすめユーザー
 	button(onclick={ refresh }, title='他を見る'): i.fa.fa-refresh
-	div.user(if={ users.length != 0 }, each={ _user in users })
+	div.user(if={ !loading && users.length != 0 }, each={ _user in users })
 		a.avatar-anchor(href={ CONFIG.url + '/' + _user.username })
 			img.avatar(src={ _user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-preview={ _user.id })
 		div.body
 			a.name(href={ CONFIG.url + '/' + _user.username }, data-user-preview={ _user.id }) { _user.name }
 			p.username @{ _user.username }
 		mk-follow-button(user={ _user })
-	p.empty(if={ users.length == 0 })
+	p.empty(if={ !loading && users.length == 0 })
 		| いません！
 	p.loading(if={ loading })
 		i.fa.fa-spinner.fa-pulse.fa-fw
