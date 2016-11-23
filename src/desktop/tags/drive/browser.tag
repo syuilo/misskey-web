@@ -479,7 +479,7 @@ script.
 		return false
 
 	@controller.on \upload ~>
-		@file-input.click!
+		@refs.file-input.click!
 
 	@controller.on \move (folder) ~>
 		@move folder
@@ -503,7 +503,7 @@ script.
 			console.error err
 
 	@change-file-input = ~>
-		files = @file-input.files
+		files = @refs.file-input.files
 		for i from 0 to files.length - 1
 			file = files.item i
 			@upload file, @folder

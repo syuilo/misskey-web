@@ -75,10 +75,6 @@ style.
 			cursor wait !important
 			opacity 0.7
 
-		&.init
-			cursor wait !important
-			opacity 0.7
-
 script.
 	@mixin \api
 	@mixin \is-promise

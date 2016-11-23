@@ -18,7 +18,7 @@ mk-uploader
 				span.percentage(if={ progress != undefined }) { Math.floor((progress.value / progress.max) * 100) }
 			progress(if={ progress != undefined && progress.value != progress.max }, value={ progress.value }, max={ progress.max })
 			div.progress.initing(if={ progress == undefined })
-			div.progress.waiting(if={ progress.value == progress.max })
+			div.progress.waiting(if={ progress != undefined && progress.value == progress.max })
 
 style.
 	display block
