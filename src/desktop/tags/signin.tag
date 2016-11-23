@@ -180,16 +180,16 @@ script.
 
 	@oninput = ~>
 		@api \users/show do
-			username: @username.value
+			username: @refs.username.value
 		.then (user) ~>
 			@user = user
 			@update!
 
 	@onsubmit = ~>
 		@api \signin do
-			username: @username.value
-			password: @password.value
+			username: @refs.username.value
+			password: @refs.password.value
 		.then ->
 			location.reload!
 		.catch ->
-			alert \a
+			alert 'something happened'

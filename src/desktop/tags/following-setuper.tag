@@ -1,13 +1,13 @@
 mk-following-setuper
 	p.title 気になるユーザーをフォロー:
 	div.users(if={ users.length > 0 })
-		div.user(if={ users.length != 0 }, each={ _user in users })
-			a.avatar-anchor(href= config.url + '/' + { _user.username })
-				img.avatar(src={ _user.avatar_url + '?thumbnail&size=42' }, alt='', data-user-preview={ _user.id })
+		div.user(each={ users })
+			a.avatar-anchor(href={ CONFIG.url + '/' + username })
+				img.avatar(src={ avatar_url + '?thumbnail&size=42' }, alt='', data-user-preview={ id })
 			div.body
-				a.name(href={ CONFIG.url + '/' + _user.username }, target='_blank', data-user-preview={ _user.id }) { _user.name }
-				p.username @{ _user.username }
-			mk-follow-button(user={ _user })
+				a.name(href={ CONFIG.url + '/' + username }, target='_blank', data-user-preview={ id }) { name }
+				p.username @{ username }
+			mk-follow-button(user={ this })
 	p.empty(if={ users.length == 0 })
 		| おすすめのユーザーは見つかりませんでした。
 	p.loading(if={ loading })

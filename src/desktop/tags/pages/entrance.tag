@@ -95,7 +95,7 @@ script.
 	@mode = \signin
 
 	@on \mount ~>
-		new @Sortable @title, do
+		new @Sortable @refs.title, do
 			animation: 150ms
 
 	@signup = ~>

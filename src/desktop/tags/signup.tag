@@ -12,7 +12,7 @@ mk-signup
 				required
 				onkeyup={ on-change-username })
 
-			p.profile-page-url-preview(if={ username.value != '' && username-state != 'invalid-format' && username-state != 'min-range' && username-state != 'max-range' }) { CONFIG.url + '/' + username.value }
+			p.profile-page-url-preview(if={ refs.username.value != '' && username-state != 'invalid-format' && username-state != 'min-range' && username-state != 'max-range' }) { CONFIG.url + '/' + refs.username.value }
 
 			p.info(if={ username-state == 'wait' }, style='color:#999')
 				i.fa.fa-fw.fa-spinner.fa-pulse
@@ -258,7 +258,7 @@ script.
 		head.append-child script
 
 	@on-change-username = ~>
-		username = @username.value
+		username = @refs.username.value
 
 		if username == ''
 			@username-state = null
@@ -291,7 +291,7 @@ script.
 				@update!
 
 	@on-change-password = ~>
-		password = @password.value
+		password = @refs.password.value
 
 		if password == ''
 			@password-strength = ''
@@ -306,11 +306,13 @@ script.
 		else
 			@password-strength = \low
 
-		@password-metar.style.width = (strength * 100) + \%
+		@update!
+
+		@refs.password-metar.style.width = (strength * 100) + \%
 
 	@on-change-password-retype = ~>
-		password = @password.value
-		retyped-password = @password-retype.value
+		password = @refs.password.value
+		retyped-password = @refs.password-retype.value
 
 		if retyped-password == ''
 			@password-retype-state = null
@@ -322,17 +324,17 @@ script.
 			@password-retype-state = \not-match
 
 	@onsubmit = ~>
-		username = @username.value
-		password = @password.value
+		username = @refs.username.value
+		password = @refs.password.value
 
 		locker = document.body.append-child document.create-element \mk-locker
 
-		@api CONFIG.urls.signup, do
+		@api \signup do
 			username: username
 			password: password
 			'g-recaptcha-response': grecaptcha.get-response!
 		.then ~>
-			@api \signup do
+			@api \signin do
 				username: username
 				password: password
 			.then ~>
