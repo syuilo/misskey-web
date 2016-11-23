@@ -148,8 +148,7 @@ script.
 	@event = @opts.event
 
 	@is-select-mode = @opts.select? and @opts.select
-	# Note: Riot3.0.0にしたら xmultiple を multiple に変更 (2.xでは、真理値属性と判定され__がプレフィックスされてしまう)
-	@multiple = if @opts.xmultiple? then @opts.xmultiple else false
+	@multiple = if @opts.multiple? then @opts.multiple else false
 
 	@on \mount ~>
 		@stream.on \drive_file_created @on-stream-drive-file-created

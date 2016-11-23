@@ -5,8 +5,7 @@ mk-drive-browser-window
 		| ドライブ
 		</yield>
 		<yield to="content">
-		// Note: Riot3.0.0にしたら xmultiple を multiple に変更 (2.xでは、真理値属性と判定され__がプレフィックスされてしまう)
-		mk-drive-browser(controller={ parent.browser-controller }, xmultiple={ true }, folder={ parent.folder })
+		mk-drive-browser(controller={ parent.browser-controller }, multiple={ true }, folder={ parent.folder })
 		</yield>
 
 style.

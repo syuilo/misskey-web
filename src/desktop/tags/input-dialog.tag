@@ -1,5 +1,5 @@
 mk-input-dialog
-	mk-window(controller={ window-controller }, is-modal={ true }, width={ '500px' })
+	mk-window@window(controller={ window-controller }, is-modal={ true }, width={ '500px' })
 		<yield to="header">
 		i.fa.fa-i-cursor
 		| { parent.title }
@@ -9,7 +9,7 @@ mk-input-dialog
 			input@text(type='text', oninput={ parent.update }, onkeydown={ parent.on-keydown }, placeholder={ parent.placeholder })
 		div.action
 			button.cancel(onclick={ parent.cancel }) キャンセル
-			button.ok(disabled={ parent.text.value.length == 0 }, onclick={ parent.ok }) 決定
+			button.ok(disabled={ refs.text.value.length == 0 }, onclick={ parent.ok }) 決定
 		</yield>
 
 style.
@@ -135,7 +135,7 @@ script.
 	@window-controller = riot.observable!
 
 	@on \mount ~>
-		@text = @tags['mk-window'].text
+		@text = @refs.window.refs.text
 		if @default?
 			@text.value = @default
 		@window-controller.trigger \open
@@ -164,4 +164,3 @@ script.
 			e.prevent-default!
 			e.stop-propagation!
 			@ok!
-		true # Riot 3.0.0 にしたら削除して大丈夫かも

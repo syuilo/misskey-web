@@ -7,7 +7,7 @@ mk-drive-selector
 				| ファイルを選択
 				span.count(if={ files.length > 0 }) ({ files.length })
 			button.ok(onclick={ ok }): i.fa.fa-check
-		mk-drive(select={ true }, xmultiple={ opts.multiple }, controller={ controller }, event={ event })
+		mk-drive(select={ true }, multiple={ opts.multiple }, controller={ controller }, event={ event })
 
 style.
 	display block

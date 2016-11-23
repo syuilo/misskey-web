@@ -5,8 +5,7 @@ mk-select-file-from-drive-window
 		span.count(if={ parent.multiple && parent.file.length > 0 }) ({ parent.file.length }ファイル選択中)
 		</yield>
 		<yield to="content">
-		// Note: Riot3.0.0にしたら xmultiple を multiple に変更 (2.xでは、真理値属性と判定され__がプレフィックスされてしまう)
-		mk-drive-browser(controller={ parent.browser-controller }, xmultiple={ parent.multiple })
+		mk-drive-browser(controller={ parent.browser-controller }, multiple={ parent.multiple })
 		div
 			button.upload(title='PCからドライブにファイルをアップロード', onclick={ parent.upload }): i.fa.fa-upload
 			button.cancel(onclick={ parent.cancel }) キャンセル

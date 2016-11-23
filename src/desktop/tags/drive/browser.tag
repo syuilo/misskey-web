@@ -286,8 +286,7 @@ script.
 	@folder = null
 
 	@controller = @opts.controller
-	# Note: Riot3.0.0にしたら xmultiple を multiple に変更 (2.xでは、真理値属性と判定され__がプレフィックスされてしまう)
-	@multiple = if @opts.xmultiple? then @opts.xmultiple else false
+	@multiple = if @opts.multiple? then @opts.multiple else false
 
 	@uploader-controller = riot.observable!
 
