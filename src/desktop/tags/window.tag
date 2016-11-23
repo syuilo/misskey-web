@@ -220,24 +220,29 @@ script.
 		@refs.header.add-event-listener \contextmenu (e) ~>
 			e.prevent-default!
 
-		window.add-event-listener \resize ~>
-			position = @refs.main.get-bounding-client-rect!
-			browser-width = window.inner-width
-			browser-height = window.inner-height
-			window-width = @refs.main.offset-width
-			window-height = @refs.main.offset-height
+		window.add-event-listener \resize @on-browser-resize
 
-			if position.left < 0
-				@refs.main.style.left = 0
+	@on \unmount ~>
+		window.remove-event-listener \resize @on-browser-resize
 
-			if position.top < 0
-				@refs.main.style.top = 0
+	@on-browser-resize = ~>
+		position = @refs.main.get-bounding-client-rect!
+		browser-width = window.inner-width
+		browser-height = window.inner-height
+		window-width = @refs.main.offset-width
+		window-height = @refs.main.offset-height
 
-			if position.left + window-width > browser-width
-				@refs.main.style.left = browser-width - window-width + \px
+		if position.left < 0
+			@refs.main.style.left = 0
 
-			if position.top + window-height > browser-height
-				@refs.main.style.top = browser-height - window-height + \px
+		if position.top < 0
+			@refs.main.style.top = 0
+
+		if position.left + window-width > browser-width
+			@refs.main.style.left = browser-width - window-width + \px
+
+		if position.top + window-height > browser-height
+			@refs.main.style.top = browser-height - window-height + \px
 
 	@controller.on \toggle ~>
 		@toggle!
@@ -527,7 +532,6 @@ script.
 				e.prevent-default!
 				e.stop-propagation!
 				@close!
-		true # Riot 3.0.0 にしたら削除して大丈夫かも
 
 	function contains(parent, child)
 		node = child.parent-node
