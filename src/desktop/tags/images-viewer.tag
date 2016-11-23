@@ -1,6 +1,6 @@
 mk-images-viewer
 	div.image@view(onmousemove={ mousemove }, style={ 'background-image: url(' + image.url + '?thumbnail' }, onclick={ click })
-		img@img(src={ image.url + '?thumbnail&size=512' }, alt={ image.name }, title={ image.name })
+		img(src={ image.url + '?thumbnail&size=512' }, alt={ image.name }, title={ image.name })
 
 style.
 	display block
@@ -27,21 +27,15 @@ style.
 
 script.
 	@images = @opts.images
-
-	@on \mount ~>
-		# ↓の @images? はRiotのバグのため付与しています
-		# このバグ(https://github.com/riot/riot/issues/1020)が修正され次第消してください
-		# Riot3.0.0では修正されるみたい
-		if @images?
-			@image = @images.0
+	@image = @images.0
 
 	@mousemove = (e) ~>
-		rect = @view.get-bounding-client-rect!
+		rect = @refs.view.get-bounding-client-rect!
 		mouse-x = e.client-x - rect.left
 		mouse-y = e.client-y - rect.top
-		xp = mouse-x / @view.offset-width * 100
-		yp = mouse-y / @view.offset-height * 100
-		@view.style.background-position = xp + '% ' + yp + '%'
+		xp = mouse-x / @refs.view.offset-width * 100
+		yp = mouse-y / @refs.view.offset-height * 100
+		@refs.view.style.background-position = xp + '% ' + yp + '%'
 
 	@click = ~>
 		dialog = document.body.append-child document.create-element \mk-image-dialog
