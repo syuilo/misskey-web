@@ -1,9 +1,9 @@
 mk-user-home
 	div.side
-		mk-user-profile(user={ user-promise })
-		mk-user-photos(user={ user-promise })
+		mk-user-profile(user={ user })
+		mk-user-photos(user={ user })
 	main
-		mk-user-timeline(user={ user-promise }, event={ tl-event })
+		mk-user-timeline(user={ user }, event={ tl-event })
 
 style.
 	display -webkit-flex
@@ -42,7 +42,7 @@ style.
 		padding 16px 0 16px 0
 
 script.
-	@user-promise = @opts.user
+	@user = @opts.user
 	@event = @opts.event
 	@tl-event = riot.observable!
 

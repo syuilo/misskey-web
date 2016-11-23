@@ -5,7 +5,7 @@ mk-timeline-home-widget
 	p.empty(if={ is-empty })
 		i.fa.fa-comments-o
 		| 自分の投稿や、自分がフォローしているユーザーの投稿が表示されます。
-	mk-timeline(controller={ controller })
+	mk-timeline@timeline(controller={ controller })
 		<yield to="footer">
 		i.fa.fa-moon-o(if={ !parent.more-loading })
 		i.fa.fa-spinner.fa-pulse.fa-fw(if={ parent.more-loading })
@@ -46,7 +46,6 @@ script.
 	@no-following = @I.following_count == 0
 	@controller = riot.observable!
 	@event = @opts.event
-	@timeline = @tags[\mk-timeline]
 
 	@on \mount ~>
 		@stream.on \post @on-stream-post
@@ -87,12 +86,12 @@ script.
 			if cb? then cb!
 
 	@more = ~>
-		if @more-loading or @is-loading or @timeline.posts.length == 0
+		if @more-loading or @is-loading or @refs.timeline.posts.length == 0
 			return
 		@more-loading = true
 		@update!
 		@api \posts/timeline do
-			max: @timeline.posts[@timeline.posts.length - 1].id
+			max: @refs.timeline.posts[@refs.timeline.posts.length - 1].id
 		.then (posts) ~>
 			@more-loading = false
 			@update!

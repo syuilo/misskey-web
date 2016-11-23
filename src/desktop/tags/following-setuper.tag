@@ -1,6 +1,6 @@
 mk-following-setuper
 	p.title 気になるユーザーをフォロー:
-	div.users(if={ users.length > 0 })
+	div.users(if={ !loading && users.length > 0 })
 		div.user(each={ users })
 			a.avatar-anchor(href={ CONFIG.url + '/' + username })
 				img.avatar(src={ avatar_url + '?thumbnail&size=42' }, alt='', data-user-preview={ id })
@@ -8,7 +8,7 @@ mk-following-setuper
 				a.name(href={ CONFIG.url + '/' + username }, target='_blank', data-user-preview={ id }) { name }
 				p.username @{ username }
 			mk-follow-button(user={ this })
-	p.empty(if={ users.length == 0 })
+	p.empty(if={ !loading && users.length == 0 })
 		| おすすめのユーザーは見つかりませんでした。
 	p.loading(if={ loading })
 		i.fa.fa-spinner.fa-pulse.fa-fw

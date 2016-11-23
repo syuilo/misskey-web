@@ -32,7 +32,6 @@ style.
 			margin 0 auto 16px auto
 
 script.
-	@user-promise = @opts.user
 	@event = @opts.event
 
 	@on \mount ~>

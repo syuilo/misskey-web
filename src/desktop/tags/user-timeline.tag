@@ -4,7 +4,7 @@ mk-user-timeline
 	p.empty(if={ is-empty })
 		i.fa.fa-comments-o
 		| このユーザーはまだ何も投稿していないようです。
-	mk-timeline(controller={ controller })
+	mk-timeline@timeline(controller={ controller })
 		<yield to="footer">
 		i.fa.fa-moon-o(if={ !parent.more-loading })
 		i.fa.fa-spinner.fa-pulse.fa-fw(if={ parent.more-loading })
@@ -43,7 +43,6 @@ script.
 	@more-loading = false
 	@unread-count = 0
 	@controller = riot.observable!
-	@timeline = @tags[\mk-timeline]
 	@event = @opts.event
 
 	@on \mount ~>
@@ -83,13 +82,13 @@ script.
 			if cb? then cb!
 
 	@more = ~>
-		if @more-loading or @is-loading or @timeline.posts.length == 0
+		if @more-loading or @is-loading or @refs.timeline.posts.length == 0
 			return
 		@more-loading = true
 		@update!
 		@api \users/posts do
 			user: @user.id
-			max: @timeline.posts[@timeline.posts.length - 1].id
+			max: @refs.timeline.posts[@refs.timeline.posts.length - 1].id
 		.then (posts) ~>
 			@more-loading = false
 			@update!

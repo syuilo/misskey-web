@@ -1,10 +1,10 @@
 mk-user
 	div.user(if={ !fetching })
 		header
-			mk-user-header(user={ user-promise })
+			mk-user-header(user={ user })
 		div.body
-			mk-user-home(if={ page == 'home' }, user={ user-promise }, event={ content-event })
-			mk-user-graphs(if={ page == 'graphs' }, user={ user-promise }, event={ content-event })
+			mk-user-home(if={ page == 'home' }, user={ user }, event={ content-event })
+			mk-user-graphs(if={ page == 'graphs' }, user={ user }, event={ content-event })
 
 style.
 	display block
@@ -37,15 +37,16 @@ script.
 	@page = if @opts.page? then @opts.page else \home
 	@fetching = true
 	@content-event = riot.observable!
+	@user = null
 
-	@user-promise = new Promise (resolve, reject) ~>
+	@on \mount ~>
 		@api \users/show do
 			username: @username
 		.then (user) ~>
 			@fetching = false
+			@user = user
 			@update!
 			@event.trigger \user-fetched user
-			resolve user
 
 	@content-event.on \loaded ~>
 		@event.trigger \loaded

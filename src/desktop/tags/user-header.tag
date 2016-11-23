@@ -111,21 +111,15 @@ style.
 
 script.
 	@mixin \i
-	@mixin \is-promise
 	@mixin \update-banner
 	@mixin \NotImplementedException
 
-	@user = null
-	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
+	@user = @opts.user
 
 	@on \mount ~>
 		window.add-event-listener \load @scroll
 		window.add-event-listener \scroll @scroll
 		window.add-event-listener \resize @scroll
-
-		@user-promise.then (user) ~>
-			@user = user
-			@update!
 
 	@on \unmount ~>
 		window.remove-event-listener \load @scroll

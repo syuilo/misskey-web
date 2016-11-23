@@ -1,6 +1,6 @@
 mk-user-profile
 	div.friend-form(if={ SIGNIN && I.id != user.id })
-		mk-big-follow-button(user={ user-promise })
+		mk-big-follow-button(user={ user })
 		p.followed(if={ user.is_followed }) フォローされています
 	div.bio(if={ user.bio != '' }) { user.bio }
 	div.friends
@@ -43,7 +43,7 @@ style.
 		padding 16px
 		color #555
 		border-top solid 1px #eee
-	
+
 	> .friends
 		padding 16px
 		color #555
@@ -57,12 +57,6 @@ style.
 				margin-right 8px
 
 script.
-	@mixin \is-promise
+	@mixin \i
 
-	@user = null
-	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
-
-	@on \mount ~>
-		@user-promise.then (user) ~>
-			@user = user
-			@update!
+	@user = @opts.user
