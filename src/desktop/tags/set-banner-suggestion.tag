@@ -1,6 +1,6 @@
 mk-set-banner-suggestion(onclick={ set })
 	p
-		a(onclick={ set }) バナーを設定
+		b バナーを設定
 		| してみませんか？
 		button(onclick={ close }): i.fa.fa-times
 

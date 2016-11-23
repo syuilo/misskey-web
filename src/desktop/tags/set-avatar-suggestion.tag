@@ -1,6 +1,6 @@
 mk-set-avatar-suggestion(onclick={ set })
 	p
-		a(onclick={ set }) アバターを設定
+		b アバターを設定
 		| してみませんか？
 		button(onclick={ close }): i.fa.fa-times
 
