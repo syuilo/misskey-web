@@ -9,7 +9,10 @@ style.
 script.
 	@mixin \api
 
-	@folder = @opts.folder
+	# Riotのバグでnullを渡しても""になる
+	# https://github.com/riot/riot/issues/2080
+	#@folder = @opts.folder
+	@folder = if @opts.folder? and @opts.folder != '' then @opts.folder else null
 	@browser = @parent
 
 	@hover = false
