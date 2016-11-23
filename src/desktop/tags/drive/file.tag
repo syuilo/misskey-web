@@ -1,4 +1,4 @@
-mk-drive-browser-file(data-is-selected={ file._selected }, data-is-contextmenu-showing={ is-contextmenu-showing }, onclick={ onclick }, oncontextmenu={ oncontextmenu }, draggable='true', ondragstart={ ondragstart }, ondragend={ ondragend }, title={ title })
+mk-drive-browser-file(data-is-selected={ (file._selected || false).toString() }, data-is-contextmenu-showing={ is-contextmenu-showing.toString() }, onclick={ onclick }, oncontextmenu={ oncontextmenu }, draggable='true', ondragstart={ ondragstart }, ondragend={ ondragend }, title={ title })
 	div.label(if={ I.avatar == file.id })
 		img(src='/_/resources/label.svg')
 		p アバター
@@ -39,7 +39,7 @@ style.
 			&:after
 				background #0b588c
 
-	&[data-is-selected]
+	&[data-is-selected='true']
 		background $theme-color
 
 		&:hover
@@ -56,7 +56,7 @@ style.
 		> .name
 			color $theme-color-foreground
 
-	&[data-is-contextmenu-showing]
+	&[data-is-contextmenu-showing='true']
 		&:after
 			content ""
 			pointer-events none
@@ -153,6 +153,8 @@ script.
 
 	@title = @file.name + '\n' + @file.type + ' ' + (@bytes-to-size @file.datasize)
 
+	@is-contextmenu-showing = false
+
 	@onclick = ~>
 		if @browser.multiple
 			if @file._selected?
@@ -170,7 +172,9 @@ script.
 				@browser.controller.trigger \change-selection @file
 
 	@oncontextmenu = (e) ~>
+		e.prevent-default!
 		e.stop-immediate-propagation!
+
 		@is-contextmenu-showing = true
 		@update!
 		ctx = document.body.append-child document.create-element \mk-drive-browser-file-contextmenu
