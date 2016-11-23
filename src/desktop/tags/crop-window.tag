@@ -1,5 +1,5 @@
 mk-crop-window
-	mk-window(controller={ window-controller }, is-modal={ true }, width={ '800px' })
+	mk-window@window(controller={ window-controller }, is-modal={ true }, width={ '800px' })
 		<yield to="header">
 		i.fa.fa-crop
 		| { parent.title }
@@ -180,7 +180,7 @@ script.
 	@window-controller = riot.observable!
 
 	@on \mount ~>
-		@img = @tags['mk-window'].img
+		@img = @refs.window.refs.img
 		@cropper = new @Cropper @img, do
 			aspect-ratio: @aspect-ratio
 			highlight: no
