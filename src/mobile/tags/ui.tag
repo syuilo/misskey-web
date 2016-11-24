@@ -31,14 +31,14 @@ script.
 		@ready-count++
 
 		if @ready-count == 2
-			@slide = SpSlidemenu @refs.main, @refs.nav, \#hamburger {direction: \left}
+			@slide = SpSlidemenu @refs.main, @refs.nav.root, \#hamburger {direction: \left}
 			@init-view-position!
 
 	@init-view-position = ~>
-		top = @refs.header.offset-height
+		top = @refs.header.root.offset-height
 		@refs.main.style.padding-top = top + \px
-		@refs.nav.style.margin-top = top + \px
-		@refs.nav.query-selector '.body > .content' .style.padding-bottom = top + \px
+		@refs.nav.root.style.margin-top = top + \px
+		@refs.nav.root.query-selector '.body > .content' .style.padding-bottom = top + \px
 
 	@on-stream-notification = (notification) ~>
 		el = document.body.append-child document.create-element \mk-notify

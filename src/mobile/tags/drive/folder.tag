@@ -42,6 +42,7 @@ style.
 
 script.
 	@browser = @parent
+	@folder = @opts.folder
 
 	@onclick = ~>
-		@browser.move @opts.folder
+		@browser.move @folder

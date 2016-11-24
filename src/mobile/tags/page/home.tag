@@ -1,5 +1,5 @@
 mk-home-page
-	mk-ui: mk-home(event={ event })
+	mk-ui: mk-home(event={ parent.event })
 
 style.
 	display block

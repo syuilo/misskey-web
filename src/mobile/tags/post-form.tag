@@ -198,7 +198,7 @@ script.
 	@event = @opts.event
 
 	@on \mount ~>
-		@text.focus!
+		@refs.text.focus!
 
 	@onkeypress = (e) ~>
 		if (e.char-code == 10 || e.char-code == 13) && e.ctrl-key
@@ -267,7 +267,7 @@ script.
 			else undefined
 
 		@api \posts/create do
-			text: @text.value
+			text: @refs.text.value
 			images: files
 			reply_to: if @opts.reply? then @opts.reply.id else undefined
 		.then (data) ~>

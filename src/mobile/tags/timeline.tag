@@ -1,10 +1,10 @@
 mk-timeline
-	virtual(each={ _post, i in posts })
-		mk-timeline-post(post={ _post })
-		p.date(if={ i != posts.length - 1 && _post._date != posts[i + 1]._date })
+	virtual(each={ post, i in posts })
+		mk-timeline-post(post={ post })
+		p.date(if={ i != posts.length - 1 && post._date != posts[i + 1]._date })
 			span
 				i.fa.fa-angle-up
-				| { _post._datetext }
+				| { post._datetext }
 			span
 				i.fa.fa-angle-down
 				| { posts[i + 1]._datetext }

@@ -123,10 +123,11 @@ script.
 	@mixin \bytes-to-size
 
 	@browser = @parent
-	@is-selected = @browser.selected-files.some (f) ~> f.id == opts.file.id
+	@file = @opts.file
+	@is-selected = @browser.selected-files.some (f) ~> f.id == @file.id
 
 	@browser.event.on \change-selected (selects) ~>
-		@is-selected = selects.some (f) ~> f.id == opts.file.id
+		@is-selected = selects.some (f) ~> f.id == @file.id
 
 	@onclick = ~>
-		@browser.choose-file @opts.file
+		@browser.choose-file @file

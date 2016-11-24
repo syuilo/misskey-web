@@ -87,4 +87,4 @@ script.
 		@core.trigger \post
 
 	@ui.on \title (title) ~>
-		@title.innerHTML = title
+		@refs.title.innerHTML = title
