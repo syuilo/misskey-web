@@ -13,9 +13,6 @@ mk-post-preview
 			div.body
 				mk-sub-post-content.text(post={ post })
 
-script.
-	@post = @opts.post
-
 style.
 	display block
 	position relative
@@ -90,3 +87,6 @@ style.
 					padding 0
 					font-size 1.1em
 					color #717171
+
+script.
+	@post = @opts.post
