@@ -1,17 +1,18 @@
 mk-follow-button
-	button(class={ init: init, wait: wait, follow: !user.is_following, unfollow: user.is_following },
+	button(if={ !init }, class={ wait: wait, follow: !user.is_following, unfollow: user.is_following },
 			onclick={ onclick },
-			disabled={ init || wait })
-		i.fa.fa-minus(if={ !init && !wait && user.is_following })
-		i.fa.fa-plus(if={ !init && !wait && !user.is_following })
-		i.fa.fa-spinner.fa-pulse.fa-fw(if={ init })
+			disabled={ wait })
+		i.fa.fa-minus(if={ !wait && user.is_following })
+		i.fa.fa-plus(if={ !wait && !user.is_following })
 		i.fa.fa-spinner.fa-pulse.fa-fw(if={ wait })
 		| { user.is_following ? 'フォロー解除' : 'フォロー' }
+	div.init(if={ init }): i.fa.fa-spinner.fa-pulse.fa-fw
 
 style.
 	display block
 
 	> button
+	> .init
 		display block
 		appearance none
 		user-select none
