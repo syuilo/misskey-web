@@ -180,8 +180,8 @@ script.
 		.then (user) ~>
 			@fetching = false
 			@user = user
-			@update!
 			@event.trigger \loaded user
+			@update!
 			resolve user
 
 	@on \mount ~>

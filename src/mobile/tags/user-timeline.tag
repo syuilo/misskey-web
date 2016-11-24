@@ -56,7 +56,7 @@ script.
 			@update!
 
 			@load ~>
-				@event.trigger \loaded
+				if @event? then @event.trigger \loaded
 
 	@on \unmount ~>
 		window.remove-event-listener \scroll @on-scroll

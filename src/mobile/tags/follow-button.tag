@@ -64,12 +64,13 @@ script.
 
 	@user = null
 	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
-	@init = false
+	@init = true
 	@wait = false
 
 	@on \mount ~>
 		@user-promise.then (user) ~>
 			@user = user
+			@init = false
 			@update!
 			@stream.on \follow @on-stream-follow
 			@stream.on \unfollow @on-stream-unfollow
