@@ -76,14 +76,14 @@ script.
 			if cb? then cb!
 
 	@more = ~>
-		if @more-loading or @is-loading or @timeline.posts.length == 0
+		if @more-loading or @is-loading or @refs.timeline.posts.length == 0
 			return
 		@more-loading = true
 		@update!
 		@api \users/posts do
 			user: @user.id
 			with_images: @with-media
-			max: @timeline.posts[@timeline.posts.length - 1].id
+			max: @refs.timeline.tail!.id
 		.then (posts) ~>
 			@more-loading = false
 			@update!

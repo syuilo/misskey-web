@@ -88,7 +88,7 @@ script.
 		@update!
 		@api \users/posts do
 			user: @user.id
-			max: @refs.timeline.posts[@refs.timeline.posts.length - 1].id
+			max: @refs.timeline.tail!.id
 		.then (posts) ~>
 			@more-loading = false
 			@update!

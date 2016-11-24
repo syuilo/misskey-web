@@ -78,3 +78,6 @@ script.
 			month = (new Date post.created_at).get-month! + 1
 			post._date = date
 			post._datetext = month + '月 ' + date + '日'
+
+	@tail = ~>
+		@posts[@posts.length - 1]

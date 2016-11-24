@@ -91,7 +91,7 @@ script.
 		@more-loading = true
 		@update!
 		@api \posts/timeline do
-			max: @refs.timeline.posts[@refs.timeline.posts.length - 1].id
+			max: @refs.timeline.tail!.id
 		.then (posts) ~>
 			@more-loading = false
 			@update!
