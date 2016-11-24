@@ -1,22 +1,19 @@
 mk-timeline-post-sub
 	article
-		a.avatar-anchor(href= config.url + '/' + { post.user.username })
+		a.avatar-anchor(href={ '/' + post.user.username })
 			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 		div.main
 			header
 				div.left
-					a.name(href= config.url + '/' + { post.user.username })
+					a.name(href={ '/' + post.user.username })
 						| { post.user.name }
 					span.username
 						| @{ post.user.username }
 				div.right
-					a.time(href={ CONFIG.url + '/' + post.user.username + '/' + post.id })
+					a.time(href={ '/' + post.user.username + '/' + post.id })
 						mk-time(time={ post.created_at })
 			div.body
 				mk-sub-post-content.text(post={ post })
-
-script.
-	@post = @opts.post
 
 style.
 	display block
@@ -104,3 +101,6 @@ style.
 					padding 0
 					font-size 1.1em
 					color #717171
+
+script.
+	@post = @opts.post
