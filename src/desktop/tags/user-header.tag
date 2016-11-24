@@ -2,7 +2,7 @@ mk-user-header(data-is-dark-background={ user.banner_url != null })
 	div.banner@banner(style={ user.banner_url ? 'background-image: url(' + user.banner_url + '?thumbnail&size=1024)' : '' }, onclick={ on-update-banner })
 	img.avatar(src={ user.avatar_url + '?thumbnail&size=150' }, alt='avatar')
 	div.title
-		p.name(href= config.url + '/' + { user.username }) { user.name }
+		p.name(href={ CONFIG.url + '/' + user.username }) { user.name }
 		p.username @{ user.username }
 		p.location(if={ user.location })
 			i.fa.fa-map-marker

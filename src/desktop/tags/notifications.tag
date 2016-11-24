@@ -10,7 +10,7 @@ mk-notifications
 					div.text
 						p
 							i.fa.fa-thumbs-o-up
-							a(href= config.url + '/' + { notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
+							a(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
 						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 
 				div.main(if={ notification.type == 'repost' })
@@ -19,7 +19,7 @@ mk-notifications
 					div.text
 						p
 							i.fa.fa-retweet
-							a(href= config.url + '/' + { notification.post.user.username }, data-user-preview={ notification.post.user.id }) { notification.post.user.name }
+							a(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user.id }) { notification.post.user.name }
 						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post.repost) }
 
 				div.main(if={ notification.type == 'follow' })
@@ -28,7 +28,7 @@ mk-notifications
 					div.text
 						p
 							i.fa.fa-user-plus
-							a(href= config.url + '/' + { notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
+							a(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
 
 				div.main(if={ notification.type == 'mention' })
 					a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user.id })
@@ -36,7 +36,7 @@ mk-notifications
 					div.text
 						p
 							i.fa.fa-reply
-							a(href= config.url + '/' + { notification.post.user.username }, data-user-preview={ notification.post.user.id }) { notification.post.user.name }
+							a(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user.id }) { notification.post.user.name }
 						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 
 			p.date(if={ i != notifications.length - 1 && notification._date != notifications[i + 1]._date })
