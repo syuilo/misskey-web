@@ -27,7 +27,7 @@
     "gulp-util": "3.0.7",
     "livescript": "1.5.0",
     "page": "1.7.1",
-    "riotify": "1.0.1",
+    "riotify": "2.0.0",
     "syuilo-transformify": "0.1.2",
     "textarea-caret": "3.0.2",
     "vinyl-buffer": "1.0.0",
