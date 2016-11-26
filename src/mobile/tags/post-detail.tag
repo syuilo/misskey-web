@@ -1,11 +1,11 @@
-mk-post-detail(title={ title }, class={ repost: is-repost })
+mk-post-detail
 
 	div.fetching(if={ fetching })
 		mk-ellipsis-icon
 
 	div.main(if={ !fetching })
 
-		button.read-more(if={ p.reply_to.reply_to && context == null }, title='会話をもっと読み込む', onclick={ load-context }, disabled={ loading-context })
+		button.read-more(if={ p.reply_to && p.reply_to.reply_to && context == null }, onclick={ load-context }, disabled={ loading-context })
 			i.fa.fa-ellipsis-v(if={ !loading-context })
 			i.fa.fa-spinner.fa-pulse(if={ loading-context })
 
@@ -18,16 +18,16 @@ mk-post-detail(title={ title }, class={ repost: is-repost })
 
 		div.repost(if={ is-repost })
 			p
-				a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user.id }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar')
+				a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar')
 				i.fa.fa-retweet
 				a.name(href={ CONFIG.url + '/' + post.user.username }) { post.user.name }
 				| がRepost
 
 		article
 			a.avatar-anchor(href={ CONFIG.url + '/' + p.user.username })
-				img.avatar(src={ p.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ p.user.id })
+				img.avatar(src={ p.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 			header
-				a.name(href={ CONFIG.url + '/' + p.user.username }, data-user-preview={ p.user.id })
+				a.name(href={ CONFIG.url + '/' + p.user.username })
 					| { p.user.name }
 				span.username
 					| @{ p.user.username }
@@ -50,21 +50,21 @@ mk-post-detail(title={ title }, class={ repost: is-repost })
 					p.count(if={ p.likes_count > 0 }) { p.likes_count }
 				button(onclick={ NotImplementedException }): i.fa.fa-ellipsis-h
 			div.reposts-and-likes
-				div.reposts(if={ reposts.length > 0 })
+				div.reposts(if={ reposts && reposts.length > 0 })
 					header
 						a { p.repost_count }
 						p Repost
 					ol.users
 						li.user(each={ reposts })
-							a.avatar-anchor(href={ CONFIG.url + '/' + user.username }, title={ user.name }, data-user-preview={ user.id })
+							a.avatar-anchor(href={ CONFIG.url + '/' + user.username }, title={ user.name })
 								img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
-				div.likes(if={ likes.length > 0 })
+				div.likes(if={ likes && likes.length > 0 })
 					header
 						a { p.likes_count }
 						p いいね
 					ol.users
 						li.user(each={ likes })
-							a.avatar-anchor(href={ CONFIG.url + '/' + username }, title={ name }, data-user-preview={ id })
+							a.avatar-anchor(href={ CONFIG.url + '/' + username }, title={ name })
 								img.avatar(src={ avatar_url + '?thumbnail&size=32' }, alt='')
 
 		div.replies
@@ -328,15 +328,8 @@ script.
 	@fetching = true
 	@loading-context = false
 	@content = null
+	@event = @opts.event
 	@post = null
-	@post-promise = new Promise (resolve, reject) ~>
-		@api \posts/show do
-			id: @opts.post
-		.then (post) ~>
-			@fetching = false
-			@post = post
-			@event.trigger \loaded
-			resolve post
 
 	@reply-form = null
 	@reply-form-controller = riot.observable!
@@ -345,52 +338,56 @@ script.
 	@repost-form-controller = riot.observable!
 
 	@on \mount ~>
-		_ <~ @post-promise.then
-		@is-repost = @post.repost?
-		@p = if @is-repost then @post.repost else @post
-		@summary = @get-post-summary @p
-
-		if @p.text?
-			tokens = @analyze @p.text
-			@refs.text.innerHTML = @compile tokens
-
-			@refs.text.children.for-each (e) ~>
-				if e.tag-name == \MK-URL
-					riot.mount e
-
-			# URLをプレビュー
-			tokens
-				.filter (t) -> t.type == \link
-				.map (t) ~>
-					@preview = @text.append-child document.create-element \mk-url-preview
-					riot.mount @preview, do
-						url: t.content
-
-		# Get likes
-		@api \posts/likes do
-			id: @p.id
-			limit: 8
-		.then (likes) ~>
-			@likes = likes
+		@api \posts/show do
+			id: @opts.post
+		.then (post) ~>
+			@post = post
+			@is-repost = @post.repost?
+			@p = if @is-repost then @post.repost else @post
+			@summary = @get-post-summary @p
+			if @event then @event.trigger \loaded
+			@fetching = false
 			@update!
 
-		# Get reposts
-		@api \posts/reposts do
-			id: @p.id
-			limit: 8
-		.then (reposts) ~>
-			@reposts = reposts
-			@update!
+			if @p.text?
+				tokens = @analyze @p.text
+				@refs.text.innerHTML = @compile tokens
 
-		# Get replies
-		@api \posts/replies do
-			id: @p.id
-			limit: 8
-		.then (replies) ~>
-			@replies = replies
-			@update!
+				@refs.text.children.for-each (e) ~>
+					if e.tag-name == \MK-URL
+						riot.mount e
 
-		@update!
+				# URLをプレビュー
+				tokens
+					.filter (t) -> t.type == \link
+					.map (t) ~>
+						@preview = @text.append-child document.create-element \mk-url-preview
+						riot.mount @preview, do
+							url: t.content
+
+			# Get likes
+			@api \posts/likes do
+				id: @p.id
+				limit: 8
+			.then (likes) ~>
+				@likes = likes
+				@update!
+
+			# Get reposts
+			@api \posts/reposts do
+				id: @p.id
+				limit: 8
+			.then (reposts) ~>
+				@reposts = reposts
+				@update!
+
+			# Get replies
+			@api \posts/replies do
+				id: @p.id
+				limit: 8
+			.then (replies) ~>
+				@replies = replies
+				@update!
 
 	@reply = ~>
 		form = document.body.append-child document.create-element \mk-post-form-dialog
