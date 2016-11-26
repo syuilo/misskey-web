@@ -13,7 +13,6 @@ script.
 	@on \mount ~>
 		document.title = 'Misskey | 通知'
 		@ui.trigger \title '<i class="fa fa-bell-o"></i>通知'
-		@ui.trigger \bg '#f9f9f9'
 
 		@Progress.start!
 

@@ -17,7 +17,6 @@ script.
 	@on \mount ~>
 		document.title = 'Misskey'
 		@ui.trigger \title '<i class="fa fa-home"></i>ホーム'
-		@ui.trigger \bg '#f9f9f9'
 
 		@Progress.start!
 

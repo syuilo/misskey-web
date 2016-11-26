@@ -13,7 +13,6 @@ script.
 	@on \mount ~>
 		document.title = 'Misskey Drive'
 		@ui.trigger \title '<i class="fa fa-cloud"></i>ドライブ'
-		@ui.trigger \bg '#fff'
 
 	@event.on \begin-load ~>
 		@Progress.start!

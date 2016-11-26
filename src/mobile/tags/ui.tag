@@ -11,6 +11,10 @@ mk-ui
 style.
 	display block
 
+	> .global
+		> .content
+			background #fff
+
 script.
 	@mixin \stream
 

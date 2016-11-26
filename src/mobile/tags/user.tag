@@ -39,7 +39,6 @@ mk-user
 
 style.
 	display block
-	background #fff
 
 	> .user
 		> header

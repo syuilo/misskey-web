@@ -61,20 +61,6 @@ style.
 	@media (min-width 500px)
 		font-size 16px
 
-	&:focus
-		z-index 1
-
-		&:after
-			content ""
-			pointer-events none
-			position absolute
-			top 2px
-			right 2px
-			bottom 2px
-			left 2px
-			border 2px solid rgba($theme-color, 0.3)
-			border-radius 4px
-
 	> .repost
 		position relative
 		color #9dbb00

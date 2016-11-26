@@ -47,10 +47,6 @@ style.
 		border-bottom-left-radius 4px
 		border-bottom-right-radius 4px
 
-	@media (min-width 500px)
-		border solid 1px rgba(#000, 0.1)
-		border-radius 6px
-
 script.
 	@posts = []
 	@controller = @opts.controller

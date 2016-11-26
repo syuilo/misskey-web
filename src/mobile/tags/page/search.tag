@@ -14,7 +14,6 @@ script.
 		document.title = 'Misskey | 検索'
 		# TODO: クエリをHTMLエスケープ
 		@ui.trigger \title '<i class="fa fa-search"></i>' + @opts.query
-		@ui.trigger \bg '#f9f9f9'
 
 		@Progress.start!
 
