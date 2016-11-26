@@ -81,10 +81,14 @@ script.
 	@mixin \ui
 
 	@on \mount ~>
+		@ui.on \title @set-title
 		@opts.ready!
+
+	@on \unmount ~>
+		@ui.off \title @set-title
 
 	@post = ~>
 		@core.trigger \post
 
-	@ui.on \title (title) ~>
+	@set-title = (title) ~>
 		@refs.title.innerHTML = title

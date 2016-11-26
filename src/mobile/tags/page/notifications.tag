@@ -1,5 +1,5 @@
 mk-notifications-page
-	mk-ui: mk-notifications(event={ event })
+	mk-ui: mk-notifications(event={ parent.event })
 
 style.
 	display block
