@@ -50,8 +50,15 @@ style.
 				text-overflow ellipsis
 
 				> i
-				> .icon
 					margin-right 8px
+
+				> img
+					display inline-block
+					vertical-align bottom
+					width ($height - 16px)
+					height ($height - 16px)
+					margin 8px
+					border-radius 6px
 
 			> .nav
 				display block

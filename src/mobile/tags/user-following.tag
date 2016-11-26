@@ -45,7 +45,7 @@ script.
 
 	@on \mount ~>
 		@api \users/following do
-			user: @user
+			user: @user.id
 		.then (users) ~>
 			@users = users
 			@fetching = false

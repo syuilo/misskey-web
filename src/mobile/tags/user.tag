@@ -20,10 +20,10 @@ mk-user
 						| { user.location }
 
 				div.friends
-					a
+					a(href='{ user.username }/following')
 						b { user.following_count }
 						i フォロー
-					a
+					a(href='{ user.username }/followers')
 						b { user.followers_count }
 						i フォロワー
 			nav
