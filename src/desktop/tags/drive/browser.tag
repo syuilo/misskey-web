@@ -48,7 +48,6 @@ style.
 		display block
 		position relative
 		z-index 2
-		box-sizing border-box
 		width 100%
 		overflow auto
 		font-size 0.9em
@@ -58,15 +57,11 @@ style.
 		box-shadow 0 1px 0 rgba(0, 0, 0, 0.05)
 
 		&, *
-			-ms-user-select none
-			-moz-user-select none
-			-webkit-user-select none
 			user-select none
 
 		> .path
 			display inline-block
 			vertical-align bottom
-			box-sizing border-box
 			margin 0
 			padding 0 8px
 			width calc(100% - 200px)
@@ -108,15 +103,8 @@ style.
 		> .search
 			display inline-block
 			vertical-align bottom
-			-webkit-appearance none
-			-moz-appearance none
-			appearance none
 			user-select text
-			-moz-user-select text
-			-webkit-user-select text
-			-ms-user-select text
 			cursor auto
-			box-sizing border-box
 			margin 0
 			padding 0 18px
 			width 200px
@@ -141,15 +129,11 @@ style.
 
 	> .main
 		position relative
-		box-sizing border-box
 		padding 8px
 		height calc(100% - 38px)
 		overflow auto
 
 		&, *
-			-ms-user-select none
-			-moz-user-select none
-			-webkit-user-select none
 			user-select none
 
 		&.loading
@@ -166,7 +150,6 @@ style.
 
 		> .selection
 			display none
-			box-sizing border-box
 			position absolute
 			z-index 128
 			top 0
@@ -253,7 +236,6 @@ style.
 
 	> .dropzone
 		position absolute
-		box-sizing border-box
 		left 0
 		top 38px
 		width 100%

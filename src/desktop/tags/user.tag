@@ -12,7 +12,6 @@ style.
 
 	> .user
 		> header
-			box-sizing border-box
 			max-width 560px + 270px
 			margin 0 auto
 			padding 0 16px
@@ -24,7 +23,6 @@ style.
 				overflow hidden
 
 		> .body
-			box-sizing border-box
 			max-width 560px + 270px
 			margin 0 auto
 			padding 0 16px

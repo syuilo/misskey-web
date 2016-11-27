@@ -28,7 +28,6 @@ style.
 		left 0
 		right 0
 		margin 0 auto
-		box-sizing border-box
 		width calc(100% - 32px)
 		max-width 500px
 		height calc(100% - 32px)

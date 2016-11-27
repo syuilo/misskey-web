@@ -26,7 +26,6 @@ style.
 
 				> input
 					display block
-					box-sizing border-box
 					padding 8px
 					margin 0
 					width 100%
@@ -61,14 +60,10 @@ style.
 
 				.ok
 				.cancel
-					-webkit-appearance none
-					-moz-appearance none
-					appearance none
 					display block
 					position absolute
 					bottom 16px
 					cursor pointer
-					box-sizing border-box
 					padding 0
 					margin 0
 					width 120px

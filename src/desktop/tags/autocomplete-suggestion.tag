@@ -19,7 +19,6 @@ style.
 
 	> .users
 		display block
-		box-sizing border-box
 		margin 0
 		padding 4px 0
 		max-height 190px
@@ -29,7 +28,6 @@ style.
 
 		> li
 			display block
-			box-sizing border-box
 			padding 4px 12px
 			white-space nowrap
 			overflow hidden

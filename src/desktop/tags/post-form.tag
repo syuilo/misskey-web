@@ -121,7 +121,6 @@ style.
 
 	[ref='text']
 		display block
-		box-sizing border-box
 		padding 12px
 		margin 0
 		width 100%
@@ -181,15 +180,11 @@ style.
 			color #ec3828
 
 	[ref='submit']
-		-webkit-appearance none
-		-moz-appearance none
-		appearance none
 		display block
 		position absolute
 		bottom 16px
 		right 16px
 		cursor pointer
-		box-sizing border-box
 		padding 0
 		margin 0
 		width 110px
@@ -251,13 +246,9 @@ style.
 
 	[ref='upload']
 	[ref='drive']
-		-webkit-appearance none
-		-moz-appearance none
-		appearance none
 		display inline-block
 		position relative
 		cursor pointer
-		box-sizing border-box
 		padding 0
 		margin 8px 4px 0 0
 		width 40px
@@ -294,7 +285,6 @@ style.
 
 	> .dropzone
 		position absolute
-		box-sizing border-box
 		left 0
 		top 0
 		width 100%

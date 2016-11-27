@@ -98,7 +98,6 @@ mk-new-app-form
 
 style.
 	display block
-	box-sizing border-box
 	overflow hidden
 
 	> form
@@ -171,11 +170,9 @@ style.
 		[type=text]
 		[type=url]
 		textarea
-			appearance none
 			user-select text
 			display inline-block
 			cursor auto
-			box-sizing border-box
 			padding 8px 12px
 			margin 0
 			width 100%

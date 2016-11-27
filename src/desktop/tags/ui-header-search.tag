@@ -13,11 +13,7 @@ style.
 
 		> input
 			user-select text
-			-moz-user-select text
-			-webkit-user-select text
-			-ms-user-select text
 			cursor auto
-			box-sizing border-box
 			margin 0
 			padding 6px 18px
 			width 14em

@@ -51,7 +51,6 @@ style.
 		box-shadow 1px 1px 3px rgba(0, 0, 0, 0.2)
 
 	> .title
-		box-sizing border-box
 		position absolute
 		bottom $footer-height
 		left 0

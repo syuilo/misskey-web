@@ -103,7 +103,6 @@ mk-signup
 
 style.
 	display block
-	box-sizing border-box
 	padding 18px 32px 0 32px
 	min-width 368px
 	overflow hidden
@@ -178,11 +177,9 @@ style.
 						transition all 0.1s ease
 
 		[type=text], [type=password]
-			appearance none
 			user-select text
 			display inline-block
 			cursor auto
-			box-sizing border-box
 			padding 0 12px
 			margin 0
 			width 100%

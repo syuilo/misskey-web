@@ -66,7 +66,6 @@ style.
 	> .info
 		display block
 		float left
-		box-sizing border-box
 		width 40%
 		padding 0 16px 0 0
 

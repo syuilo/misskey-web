@@ -44,7 +44,6 @@ style.
 
 	> .content-container
 		display block
-		box-sizing border-box
 		position relative
 		margin 0 12px
 		padding 0
@@ -53,7 +52,6 @@ style.
 		> .balloon
 			display block
 			float inherit
-			box-sizing border-box
 			position relative
 			margin 0
 			padding 0

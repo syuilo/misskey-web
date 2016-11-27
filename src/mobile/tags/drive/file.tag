@@ -23,7 +23,6 @@ style.
 	display block
 
 	&, *
-		-webkit-user-select none
 		user-select none
 
 	*
@@ -31,7 +30,6 @@ style.
 
 	> .container
 		position relative
-		box-sizing border-box
 		max-width 500px
 		margin 0 auto
 		padding 16px

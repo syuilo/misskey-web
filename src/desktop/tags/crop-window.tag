@@ -95,14 +95,10 @@ style.
 				.ok
 				.cancel
 				.skip
-					-webkit-appearance none
-					-moz-appearance none
-					appearance none
 					display block
 					position absolute
 					bottom 16px
 					cursor pointer
-					box-sizing border-box
 					padding 0
 					margin 0
 					height 40px

@@ -37,7 +37,6 @@ style.
 
 	> nav
 		display block
-		box-sizing border-box
 		width 100%
 		padding 10px 12px
 		overflow auto

@@ -22,7 +22,6 @@ mk-uploader
 
 style.
 	display block
-	box-sizing border-box
 	overflow auto
 
 	&:empty
@@ -101,9 +100,6 @@ style.
 						content '%'
 
 			> progress
-				-webkit-appearance none
-				-moz-appearance none
-				appearance none
 				display block
 				position absolute
 				bottom 0
@@ -123,9 +119,6 @@ style.
 					background rgba($theme-color, 0.1)
 
 			> .progress
-				-webkit-appearance none
-				-moz-appearance none
-				appearance none
 				display block
 				position absolute
 				bottom 0

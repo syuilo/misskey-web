@@ -36,7 +36,6 @@ style.
 
 			> h1
 				display block
-				box-sizing border-box
 				margin 0 auto
 				padding 0
 				width 100%

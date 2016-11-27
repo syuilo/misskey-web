@@ -71,7 +71,6 @@ style.
 							position absolute
 							left -2px
 							bottom -2px
-							box-sizing border-box
 							width 100%
 							border 2px solid #fff
 							border-radius 6px

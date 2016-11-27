@@ -33,15 +33,11 @@ style.
 				background lighten($theme-color, 95%)
 
 				.upload
-					-webkit-appearance none
-					-moz-appearance none
-					appearance none
 					display inline-block
 					position absolute
 					top 8px
 					left 16px
 					cursor pointer
-					box-sizing border-box
 					padding 0
 					margin 8px 4px 0 0
 					width 40px
@@ -78,14 +74,10 @@ style.
 
 				.ok
 				.cancel
-					-webkit-appearance none
-					-moz-appearance none
-					appearance none
 					display block
 					position absolute
 					bottom 16px
 					cursor pointer
-					box-sizing border-box
 					padding 0
 					margin 0
 					width 120px

@@ -58,7 +58,6 @@ style.
 
 		> img
 			display block
-			box-sizing border-box
 			width 84px
 			height 84px
 			margin 0 auto -38px auto
@@ -79,7 +78,6 @@ style.
 
 		> section
 			float left
-			box-sizing border-box
 			width 50%
 			padding 8px
 			text-align left

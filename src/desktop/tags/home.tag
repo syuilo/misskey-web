@@ -26,7 +26,6 @@ style.
 		> *
 			position relative
 			float left
-			box-sizing border-box
 
 			> *
 				display block

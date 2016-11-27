@@ -43,7 +43,6 @@ style.
 
 			> a
 				display inline-block
-				box-sizing border-box
 				z-index 1
 				height 100%
 				padding 0 24px

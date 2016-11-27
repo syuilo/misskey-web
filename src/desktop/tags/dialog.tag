@@ -24,7 +24,6 @@ style.
 
 	> .main
 		display block
-		box-sizing border-box
 		position fixed
 		z-index 8192
 		top 20%
@@ -55,7 +54,6 @@ style.
 			> button
 				display inline-block
 				float right
-				box-sizing border-box
 				margin 0
 				padding 10px 10px
 				font-size 1.1em

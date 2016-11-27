@@ -65,7 +65,6 @@ style.
 		position relative
 
 	.content
-		box-sizing border-box
 		min-height 100%
 
 	.me
@@ -142,7 +141,6 @@ style.
 					top 0
 					bottom 0
 					right 38px
-					box-sizing border-box
 					margin auto 0
 					padding 0px 8px
 					min-width 2em

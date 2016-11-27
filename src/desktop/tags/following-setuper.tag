@@ -103,7 +103,6 @@ style.
 		color #999
 
 	> .close
-		appearance none
 		cursor pointer
 		display block
 		position absolute

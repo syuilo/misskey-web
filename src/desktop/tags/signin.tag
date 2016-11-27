@@ -28,7 +28,6 @@ style.
 		display block
 		position relative
 		z-index 2
-		box-sizing border-box
 		padding 10px 28px 0 28px
 
 		&:hover
@@ -66,7 +65,6 @@ style.
 					display none
 
 		> .help
-			appearance none
 			cursor pointer
 			display block
 			position absolute
@@ -113,11 +111,9 @@ style.
 
 			input[type=text]
 			input[type=password]
-				appearance none
 				user-select text
 				display inline-block
 				cursor auto
-				box-sizing border-box
 				padding 0 0 0 38px
 				margin 0
 				width 100%
@@ -146,9 +142,7 @@ style.
 						color #797776
 
 		[type=submit]
-			appearance none
 			cursor pointer
-			box-sizing border-box
 			padding 16px 16px 32px 16px
 			margin -6px 0 0 0
 			width 100%

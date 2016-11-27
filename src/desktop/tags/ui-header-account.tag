@@ -81,7 +81,6 @@ style.
 		> .avatar
 			display block
 			float left
-			box-sizing border-box
 			min-width 32px
 			max-width 32px
 			min-height 32px

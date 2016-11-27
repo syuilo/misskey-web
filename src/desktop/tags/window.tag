@@ -142,9 +142,6 @@ style.
 					color #666
 
 				> .close
-					-webkit-appearance none
-					-moz-appearance none
-					appearance none
 					cursor pointer
 					display block
 					position absolute

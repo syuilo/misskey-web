@@ -79,7 +79,6 @@ style.
 		left 0
 		width 200px
 		height 100%
-		box-sizing border-box
 		padding 16px 0 0 0
 		border-right solid 1px #ddd
 

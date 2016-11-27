@@ -42,9 +42,6 @@ style.
 
 				> progress
 				> .progress
-					-webkit-appearance none
-					-moz-appearance none
-					appearance none
 					display block
 					margin 0
 					width 100%

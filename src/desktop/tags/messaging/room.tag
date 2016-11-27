@@ -128,12 +128,7 @@ style.
 					> .dropdown-content
 						visibility visible
 
-
-
 				> button
-					-webkit-appearance none
-					-moz-appearance none
-					appearance none
 					display block
 					margin 0
 					padding 0
@@ -190,7 +185,6 @@ style.
 							> *
 								display inline-block
 								z-index 1
-								box-sizing border-box
 								vertical-align top
 								width 100%
 								margin 0
@@ -222,7 +216,6 @@ style.
 		overflow auto
 
 		> .empty
-			box-sizing border-box
 			width 100%
 			margin 0
 			padding 16px 8px 8px 8px
@@ -301,7 +294,6 @@ style.
 		textarea
 			cursor auto
 			display block
-			box-sizing border-box
 			width 100%
 			min-width 100%
 			max-width 100%
@@ -366,9 +358,6 @@ style.
 						display block
 
 				> .remove
-					-webkit-appearance none
-					-moz-appearance none
-					appearance none
 					display none
 					position absolute
 					right -6px

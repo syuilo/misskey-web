@@ -8,17 +8,12 @@ script.
 
 style.
 	display inline-block
-	box-sizing border-box
 	padding 8px
 	height 100%
 	vertical-align top
 
 	> button
-		-webkit-appearance none
-		-moz-appearance none
-		appearance none
 		display inline-block
-		box-sizing border-box
 		margin 0
 		padding 0 10px
 		height 100%

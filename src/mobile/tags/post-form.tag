@@ -98,7 +98,6 @@ style.
 
 	[ref='text']
 		display block
-		box-sizing border-box
 		padding 12px
 		margin 0
 		width 100%
@@ -145,13 +144,9 @@ style.
 
 	[ref='upload']
 	[ref='drive']
-		-webkit-appearance none
-		-moz-appearance none
-		appearance none
 		display inline-block
 		position relative
 		cursor pointer
-		box-sizing border-box
 		padding 0
 		margin 8px 4px 0 0
 		width 40px

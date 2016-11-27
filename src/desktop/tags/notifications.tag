@@ -98,7 +98,6 @@ style.
 
 			.text
 				float right
-				box-sizing border-box
 				width calc(100% - 36px)
 				padding-left 8px
 

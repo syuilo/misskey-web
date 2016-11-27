@@ -16,7 +16,6 @@ style.
 		display block
 		position relative
 		cursor pointer
-		box-sizing border-box
 		padding 0
 		margin 0
 		width 32px

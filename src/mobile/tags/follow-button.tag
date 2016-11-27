@@ -14,11 +14,9 @@ style.
 	> button
 	> .init
 		display block
-		appearance none
 		user-select none
 		position relative
 		cursor pointer
-		box-sizing border-box
 		padding 0 16px
 		margin 0
 		height inherit

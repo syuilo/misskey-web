@@ -90,11 +90,7 @@ style.
 	> .main
 
 		> .read-more
-			-webkit-appearance none
-			-moz-appearance none
-			appearance none
 			display block
-			box-sizing border-box
 			margin 0
 			padding 10px 0
 			width 100%
@@ -273,7 +269,6 @@ style.
 
 					> header
 						flex 1 1 80px
-						box-sizing border-box
 						max-width 80px
 						padding 8px 5px 0px 10px
 

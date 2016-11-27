@@ -40,7 +40,6 @@ style.
 
 		> article
 			position relative
-			box-sizing border-box
 			padding 16px
 
 			> header

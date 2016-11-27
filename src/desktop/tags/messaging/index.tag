@@ -45,7 +45,6 @@ style.
 
 	> .search
 		display block
-		box-sizing border-box
 		position absolute
 		top 0
 		left 0
@@ -82,7 +81,6 @@ style.
 					color #555
 
 			> input
-				box-sizing border-box
 				margin 0
 				padding 0 12px 0 38px
 				width 100%
@@ -124,7 +122,6 @@ style.
 					> a
 						display inline-block
 						z-index 1
-						box-sizing border-box
 						width 100%
 						padding 8px 32px
 						vertical-align top

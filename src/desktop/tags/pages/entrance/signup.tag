@@ -20,7 +20,6 @@ style.
 		box-shadow 0 0 8px rgba(0, 0, 0, 0.1)
 
 	> .cancel
-		appearance none
 		cursor pointer
 		display block
 		position absolute

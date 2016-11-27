@@ -43,7 +43,6 @@ style.
 
 		> .img
 			flex 1 1 33%
-			box-sizing border-box
 			width 33%
 			height 80px
 			background-position center center
