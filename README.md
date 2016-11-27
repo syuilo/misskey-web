@@ -5,13 +5,8 @@ Misskey Web
 [![][dependencies-badge]][dependencies-link]
 [![][mit-badge]][mit]
 
-*Misskey* official client for the Web.
-
-Repositories
-------------
-* **misskey-web** ... :round_pushpin: This repository
-* [misskey-core](https://github.com/syuilo/misskey-core) ... Core server
-* [misskey-text](https://github.com/syuilo/misskey-text) ... Misskey's text parser
+*Misskey* web client implementation.
+Includes HTML, CSS, JavaScript and other resources.
 
 License
 -------
