@@ -15,7 +15,7 @@ style.
 	display block
 	position relative
 	margin 0
-	padding 14px 16px 9px 16px
+	padding 16px
 	font-size 12px
 
 	@media (min-width 350px)
