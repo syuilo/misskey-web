@@ -17,19 +17,19 @@ style.
 			font-size .9em
 			font-weight 400
 			font-style normal
-		
+
 		> .schema
 			opacity 0.5
-		
+
 		> .hostname
 			font-weight bold
-		
+
 		> .pathname
 			opacity 0.8
-		
+
 		> .query
 			opacity 0.5
-		
+
 		> .hash
 			font-style italic
 
