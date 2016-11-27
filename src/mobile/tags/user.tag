@@ -161,6 +161,7 @@ style.
 						font-weight bold
 						color $theme-color
 						border-color $theme-color
+
 		> .body
 			@media (min-width 500px)
 				padding 16px 0 0 0
