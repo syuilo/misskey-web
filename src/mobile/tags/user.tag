@@ -105,7 +105,7 @@ style.
 						padding 2px 4px
 						font-size 12px
 						color #657786
-						background #fafafa
+						background #f8f8f8
 						border-radius 4px
 
 				> .bio
