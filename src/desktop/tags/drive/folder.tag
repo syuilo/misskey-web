@@ -72,6 +72,7 @@ script.
 		@hover = false
 
 	@ondragover = (e) ~>
+		e.prevent-default!
 		e.stop-propagation!
 		# 自分自身がドラッグされていない場合
 		if !@is-dragging

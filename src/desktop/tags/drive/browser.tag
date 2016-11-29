@@ -351,6 +351,7 @@ script.
 		return false
 
 	@ondragover = (e) ~>
+		e.prevent-default!
 		e.stop-propagation!
 		# ドラッグ元が自分自身の所有するアイテムかどうか
 		if !@is-drag-source
