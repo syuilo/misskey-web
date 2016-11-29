@@ -1,7 +1,7 @@
 mk-timeline-post-sub
 	article
 		a.avatar-anchor(href={ '/' + post.user.username })
-			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=96' }, alt='avatar')
 		div.main
 			header
 				a.name(href={ '/' + post.user.username })

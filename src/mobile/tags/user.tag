@@ -4,7 +4,7 @@ mk-user
 			div.banner(style={ user.banner_url ? 'background-image: url(' + user.banner_url + '?thumbnail&size=1024)' : '' })
 			div.body
 				div.top
-					a.avatar: img(src={ user.avatar_url + '?thumbnail&size=128' }, alt='avatar')
+					a.avatar: img(src={ user.avatar_url + '?thumbnail&size=160' }, alt='avatar')
 					mk-follow-button(user={ user-promise })
 
 				div.title

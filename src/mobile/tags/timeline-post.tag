@@ -13,7 +13,7 @@ mk-timeline-post(class={ repost: is-repost })
 
 	article
 		a.avatar-anchor(href={ CONFIG.url + '/' + p.user.username })
-			img.avatar(src={ p.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+			img.avatar(src={ p.user.avatar_url + '?thumbnail&size=96' }, alt='avatar')
 		div.main
 			header
 				a.name(href={ CONFIG.url + '/' + p.user.username })
