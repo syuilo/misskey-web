@@ -10,12 +10,12 @@ script.
 	@tickid = null
 
 	@absolute =
-		@time.get-full-year! + '年' +
-		@time.get-month!     + '月' +
-		@time.get-date!      + '日' +
+		@time.get-full-year! + \年 +
+		@time.get-month!     + \月 +
+		@time.get-date!      + \日 +
 		' ' +
-		@time.get-hours!     + ':' +
-		@time.get-minutes!
+		@time.get-hours!     + \時 +
+		@time.get-minutes!   + \分
 
 	@on \mount ~>
 		if @mode == \relative or @mode == \detail
