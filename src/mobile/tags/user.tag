@@ -5,7 +5,7 @@ mk-user
 			div.body
 				div.top
 					a.avatar: img(src={ user.avatar_url + '?thumbnail&size=160' }, alt='avatar')
-					mk-follow-button(user={ user-promise })
+					mk-follow-button(if={ SIGNIN && I.id != user.id }, user={ user })
 
 				div.title
 					h1 { user.name }
@@ -165,6 +165,7 @@ style.
 				padding 16px 0 0 0
 
 script.
+	@mixin \i
 	@mixin \api
 
 	@event = @opts.event
