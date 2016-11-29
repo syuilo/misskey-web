@@ -121,8 +121,8 @@ style.
 		width 100%
 		max-width 100%
 		min-width 100%
-		min-height calc(1em + 12px + 12px)
-		font-size 1em
+		min-height calc(16px + 12px + 12px)
+		font-size 16px
 		color #333
 		background #fff
 		outline none
