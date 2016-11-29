@@ -6,10 +6,10 @@ mk-input-dialog
 		</yield>
 		<yield to="content">
 		div.body
-			input@text(type='text', oninput={ parent.update }, onkeydown={ parent.on-keydown }, placeholder={ parent.placeholder })
+			input@text(oninput={ parent.update }, onkeydown={ parent.on-keydown }, placeholder={ parent.placeholder })
 		div.action
 			button.cancel(onclick={ parent.cancel }) キャンセル
-			button.ok(disabled={ refs.text.value.length == 0 }, onclick={ parent.ok }) 決定
+			button.ok(disabled={ !parent.allow-empty && refs.text.value.length == 0 }, onclick={ parent.ok }) 決定
 		</yield>
 
 style.
@@ -122,6 +122,7 @@ script.
 	@title = @opts.title
 	@placeholder = @opts.placeholder
 	@default = @opts.default
+	@allow-empty = if @opts.allow-empty? then @opts.allow-empty else true
 
 	@window-controller = riot.observable!
 
@@ -147,6 +148,7 @@ script.
 		@window-controller.trigger \close
 
 	@ok = ~>
+		if not @allow-empty and @text.value == '' then return
 		@done = true
 		@window-controller.trigger \close
 
