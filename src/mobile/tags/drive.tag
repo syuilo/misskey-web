@@ -143,7 +143,10 @@ script.
 		@stream.on \drive_folder_created @on-stream-drive-folder-created
 		@stream.on \drive_folder_updated @on-stream-drive-folder-updated
 
-		if @opts.folder?
+		# Riotのバグでnullを渡しても""になる
+		# https://github.com/riot/riot/issues/2080
+		#if @opts.folder?
+		if @opts.folder? and @opts.folder != ''
 			@cd @opts.folder
 		else
 			@load!
