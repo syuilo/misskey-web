@@ -2,8 +2,8 @@ mk-repost-form
 	mk-post-preview(post={ opts.post })
 	div.form(if={ quote })
 		textarea@text(disabled={ wait }, placeholder='この投稿を引用...')
-	a.quote(if={ !quote }, onclick={ onquote }) 引用する...
 	footer
+		a.quote(if={ !quote }, onclick={ onquote }) 引用する...
 		button.cancel(onclick={ cancel }) キャンセル
 		button.ok(onclick={ ok }) Repost
 
@@ -44,18 +44,18 @@ style.
 			&::-webkit-input-placeholder
 				color rgba($theme-color, 0.3)
 
-	> .quote
-		position absolute
-		bottom 16px
-		left 28px
-		line-height 40px
-
 	> div
 		padding 16px
 
 	> footer
 		height 72px
 		background lighten($theme-color, 95%)
+
+		> .quote
+			position absolute
+			bottom 16px
+			left 28px
+			line-height 40px
 
 		button
 			display block
@@ -125,7 +125,7 @@ script.
 		@wait = true
 		@api \posts/create do
 			repost: @opts.post.id
-			text: if @quote then @text.value else undefined
+			text: if @quote then @refs.text.value else undefined
 		.then (data) ~>
 			@event.trigger \posted
 			#@opts.ui.trigger \notification '投稿しました。'

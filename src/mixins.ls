@@ -13,6 +13,9 @@ module.exports = (me) ~>
 	riot.mixin \sortable do
 		Sortable: require \Sortable
 
+	riot.mixin \signout do
+		signout: require './common/scripts/signout.ls'
+
 	messaging-stream = (require './common/scripts/messaging-stream.ls') me
 	riot.mixin \messaging-stream do
 		messaging-stream: messaging-stream

@@ -25,7 +25,7 @@ mk-ui-header-account
 				| 設定
 				i.fa.fa-angle-right
 		ul
-			li: a(href='/signout!')
+			li(onclick={ signout }): p
 				i(class='fa fa-power-off')
 				| サインアウト
 				i.fa.fa-angle-right
@@ -171,6 +171,7 @@ style.
 
 script.
 	@mixin \i
+	@mixin \signout
 
 	@is-open = false
 
