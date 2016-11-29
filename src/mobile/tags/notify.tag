@@ -5,9 +5,10 @@ style.
 	display block
 	position fixed
 	z-index 1024
-	top 100%
+	bottom -64px
 	left 0
 	width 100%
+	height 64px
 	pointer-events none
 	-webkit-backdrop-filter blur(2px)
 	backdrop-filter blur(2px)
@@ -16,7 +17,7 @@ style.
 script.
 	@on \mount ~>
 		Velocity @root, {
-			top: (window.inner-height - @root.client-height) + \px
+			bottom: \0px
 		} {
 			duration: 500ms
 			easing: \ease-out
@@ -24,7 +25,7 @@ script.
 
 		set-timeout ~>
 			Velocity @root, {
-				top: '100%'
+				bottom: \-64px
 			} {
 				duration: 500ms
 				easing: \ease-out
