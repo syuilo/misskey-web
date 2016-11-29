@@ -316,7 +316,9 @@ script.
 		else
 			@password-retype-state = \not-match
 
-	@onsubmit = ~>
+	@onsubmit = (e) ~>
+		e.prevent-default!
+
 		username = @refs.username.value
 		password = @refs.password.value
 
@@ -339,3 +341,5 @@ script.
 			@recaptchaed = false
 
 			locker.parent-node.remove-child locker
+
+		false

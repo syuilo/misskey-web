@@ -172,7 +172,9 @@ script.
 			@user = user
 			@update!
 
-	@onsubmit = ~>
+	@onsubmit = (e) ~>
+		e.prevent-default!
+
 		@api \signin do
 			username: @refs.username.value
 			password: @refs.password.value
@@ -180,3 +182,5 @@ script.
 			location.reload!
 		.catch ->
 			alert 'something happened'
+
+		false
