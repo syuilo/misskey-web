@@ -8,7 +8,7 @@ module.exports = (me) ~>
 	i = if me? then me.token else null
 
 	riot.mixin \cropper do
-		Cropper: require \cropper
+		Cropper: (require \cropper).default
 
 	riot.mixin \sortable do
 		Sortable: require \Sortable
