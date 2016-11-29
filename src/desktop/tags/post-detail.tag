@@ -1,11 +1,11 @@
-mk-post-detail(title={ title }, class={ repost: is-repost })
+mk-post-detail(title={ title })
 
 	div.fetching(if={ fetching })
 		mk-ellipsis-icon
 
 	div.main(if={ !fetching })
 
-		button.read-more(if={ p.reply_to.reply_to && context == null }, title='会話をもっと読み込む', onclick={ load-context }, disabled={ loading-context })
+		button.read-more(if={ p.reply_to && p.reply_to.reply_to && context == null }, title='会話をもっと読み込む', onclick={ load-context }, disabled={ loading-context })
 			i.fa.fa-ellipsis-v(if={ !loading-context })
 			i.fa.fa-spinner.fa-pulse(if={ loading-context })
 
@@ -50,7 +50,7 @@ mk-post-detail(title={ title }, class={ repost: is-repost })
 					p.count(if={ p.likes_count > 0 }) { p.likes_count }
 				button(onclick={ NotImplementedException }): i.fa.fa-ellipsis-h
 			div.reposts-and-likes
-				div.reposts(if={ reposts.length > 0 })
+				div.reposts(if={ reposts && reposts.length > 0 })
 					header
 						a { p.repost_count }
 						p Repost
@@ -58,7 +58,7 @@ mk-post-detail(title={ title }, class={ repost: is-repost })
 						li.user(each={ reposts })
 							a.avatar-anchor(href={ CONFIG.url + '/' + user.username }, title={ user.name }, data-user-preview={ user.id })
 								img.avatar(src={ user.avatar_url + '?thumbnail&size=32' }, alt='')
-				div.likes(if={ likes.length > 0 })
+				div.likes(if={ likes && likes.length > 0 })
 					header
 						a { p.likes_count }
 						p いいね
@@ -241,7 +241,7 @@ style.
 						display inline
 						margin 0 0 0 8px
 						color #999
-					
+
 					&.liked
 						color $theme-color
 
@@ -314,18 +314,11 @@ script.
 	@mixin \user-preview
 	@mixin \NotImplementedException
 
+	@event = @opts.event
 	@fetching = true
 	@loading-context = false
 	@content = null
 	@post = null
-	@post-promise = new Promise (resolve, reject) ~>
-		@api \posts/show do
-			id: @opts.post
-		.then (post) ~>
-			@fetching = false
-			@post = post
-			@event.trigger \loaded
-			resolve post
 
 	@reply-form = null
 	@reply-form-controller = riot.observable!
@@ -334,51 +327,60 @@ script.
 	@repost-form-controller = riot.observable!
 
 	@on \mount ~>
-		_ <~ @post-promise.then
-		@is-repost = @post.repost?
-		@p = if @is-repost then @post.repost else @post
 
-		if @p.text?
-			tokens = @analyze @p.text
-			@refs.text.innerHTML = @compile tokens
+		@api \posts/show do
+			id: @opts.post
+		.then (post) ~>
+			@fetching = false
+			@post = post
+			@event.trigger \loaded
 
-			@refs.text.children.for-each (e) ~>
-				if e.tag-name == \MK-URL
-					riot.mount e
+			@is-repost = @post.repost?
+			@p = if @is-repost then @post.repost else @post
 
-			# URLをプレビュー
-			tokens
-				.filter (t) -> t.type == \link
-				.map (t) ~>
-					@preview = @text.append-child document.create-element \mk-url-preview
-					riot.mount @preview, do
-						url: t.content
-
-		# Get likes
-		@api \posts/likes do
-			id: @p.id
-			limit: 8
-		.then (likes) ~>
-			@likes = likes
 			@update!
 
-		# Get reposts
-		@api \posts/reposts do
-			id: @p.id
-			limit: 8
-		.then (reposts) ~>
-			@reposts = reposts
-			@update!
+			if @p.text?
+				tokens = @analyze @p.text
+				@refs.text.innerHTML = @compile tokens
 
-		# Get replies
-		@api \posts/replies do
-			id: @p.id
-			limit: 8
-		.then (replies) ~>
-			@replies = replies
-			@update!
+				@refs.text.children.for-each (e) ~>
+					if e.tag-name == \MK-URL
+						riot.mount e
 
-		@update!
+				# URLをプレビュー
+				tokens
+					.filter (t) -> t.type == \link
+					.map (t) ~>
+						@preview = @text.append-child document.create-element \mk-url-preview
+						riot.mount @preview, do
+							url: t.content
+
+			# Get likes
+			@api \posts/likes do
+				id: @p.id
+				limit: 8
+			.then (likes) ~>
+				@likes = likes
+				@update!
+
+			# Get reposts
+			@api \posts/reposts do
+				id: @p.id
+				limit: 8
+			.then (reposts) ~>
+				@reposts = reposts
+				@update!
+
+			# Get replies
+			@api \posts/replies do
+				id: @p.id
+				limit: 8
+			.then (replies) ~>
+				@replies = replies
+				@update!
+
+			@update!
 
 	@reply = ~>
 		if !@reply-form?
@@ -395,7 +397,7 @@ script.
 				controller: @repost-form-controller
 				post: @p
 		@repost-form-controller.trigger \open
-	
+
 	@like = ~>
 		if @p.is_liked
 			@api \posts/likes/delete do

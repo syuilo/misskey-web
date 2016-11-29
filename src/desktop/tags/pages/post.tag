@@ -1,5 +1,5 @@
 mk-post-page
-	mk-ui: main: mk-post-detail(post={ post }, event={ event })
+	mk-ui: main: mk-post-detail(post={ parent.post }, event={ parent.event })
 
 style.
 	display block
