@@ -20,14 +20,6 @@ style.
 	width 100%
 	box-shadow 0 1px 1px rgba(0, 0, 0, 0.075)
 
-	> .mobile
-		display block
-		padding 32px
-		text-align center
-		font-size 96px
-		color #fff
-		background orange
-
 	> .main
 
 		> .backdrop
