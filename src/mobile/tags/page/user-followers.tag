@@ -24,7 +24,7 @@ script.
 
 			document.title = user.name + 'のフォロワー | Misskey'
 			# TODO: ユーザー名をエスケープ
-			@ui.trigger \title '<img src="' + user.avatar_url + '?thumbnail&size=32">' + user.name + 'のフォロー'
+			@ui.trigger \title '<img src="' + user.avatar_url + '?thumbnail&size=64">' + user.name + 'のフォロー'
 
 			@update!
 
