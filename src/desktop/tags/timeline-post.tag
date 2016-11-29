@@ -1,4 +1,4 @@
-mk-timeline-post(tabindex='-1', title={ title }, class={ repost: is-repost }, onkeydown={ on-key-down })
+mk-timeline-post(tabindex='-1', title={ title }, onkeydown={ on-key-down })
 
 	div.reply-to(if={ p.reply_to })
 		mk-timeline-post-sub(post={ p.reply_to })
@@ -16,14 +16,12 @@ mk-timeline-post(tabindex='-1', title={ title }, class={ repost: is-repost }, on
 			img.avatar(src={ p.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ p.user.id })
 		div.main
 			header
-				div.left
-					a.name(href={ CONFIG.url + '/' + p.user.username }, data-user-preview={ p.user.id })
-						| { p.user.name }
-					span.username
-						| @{ p.user.username }
-				div.right
-					a.time(href={ url })
-						mk-time(time={ p.created_at })
+				a.name(href={ CONFIG.url + '/' + p.user.username }, data-user-preview={ p.user.id })
+					| { p.user.name }
+				span.username
+					| @{ p.user.username }
+				a.created-at(href={ url })
+					mk-time(time={ p.created_at })
 			div.body
 				div.text
 					a.reply(if={ p.reply_to }): i.fa.fa-reply
@@ -145,39 +143,32 @@ style.
 			> header
 				margin-bottom 4px
 				white-space nowrap
+				line-height 24px
 
-				&:after
-					content ""
-					display block
-					clear both
+				> .name
+					display inline
+					margin 0
+					padding 0
+					color #777
+					font-size 1em
+					font-weight 700
+					text-align left
+					text-decoration none
 
-				> .left
-					float left
+					&:hover
+						text-decoration underline
 
-					> .name
-						display inline
-						margin 0
-						padding 0
-						color #777
-						font-size 1em
-						font-weight 700
-						text-align left
-						text-decoration none
+				> .username
+					text-align left
+					margin 0 0 0 8px
+					color #ccc
 
-						&:hover
-							text-decoration underline
-
-					> .username
-						text-align left
-						margin 0 0 0 8px
-						color #ccc
-
-				> .right
-					float right
-
-					> .time
-						font-size 0.9em
-						color #c0c0c0
+				> .created-at
+					position absolute
+					top 0
+					right 0
+					font-size 0.9em
+					color #c0c0c0
 
 			> .body
 
