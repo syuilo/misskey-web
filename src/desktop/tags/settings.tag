@@ -1,24 +1,24 @@
 mk-settings
 	div.nav
-		p(class={ active: page == 'account' }, onmousedown={ page-account })
+		p(class={ active: page == 'account' }, onmousedown={ set-page.bind(null, 'account') })
 			i.fa.fa-fw.fa-user
 			| アカウント
-		p(class={ active: page == 'web' }, onmousedown={ page-web })
+		p(class={ active: page == 'web' }, onmousedown={ set-page.bind(null, 'web') })
 			i.fa.fa-fw.fa-desktop
 			| Web
-		p(class={ active: page == 'notification' }, onmousedown={ page-notification })
+		p(class={ active: page == 'notification' }, onmousedown={ set-page.bind(null, 'notification') })
 			i.fa.fa-fw.fa-bell-o
 			| 通知
-		p(class={ active: page == 'drive' }, onmousedown={ page-drive })
+		p(class={ active: page == 'drive' }, onmousedown={ set-page.bind(null, 'drive') })
 			i.fa.fa-fw.fa-cloud
 			| ドライブ
-		p(class={ active: page == 'apps' }, onmousedown={ page-apps })
+		p(class={ active: page == 'apps' }, onmousedown={ set-page.bind(null, 'apps') })
 			i.fa.fa-fw.fa-puzzle-piece
 			| アプリ
-		p(class={ active: page == 'signin' }, onmousedown={ page-signin })
+		p(class={ active: page == 'signin' }, onmousedown={ set-page.bind(null, 'signin') })
 			i.fa.fa-fw.fa-sign-in
 			| ログイン履歴
-		p(class={ active: page == 'password' }, onmousedown={ page-password })
+		p(class={ active: page == 'password' }, onmousedown={ set-page.bind(null, 'password') })
 			i.fa.fa-fw.fa-unlock-alt
 			| パスワード
 	div.pages
@@ -191,23 +191,8 @@ script.
 
 	@page = \account
 
-	@page-account = ~>
-		@page = \account
-
-	@page-web = ~>
-		@page = \web
-
-	@page-apps = ~>
-		@page = \apps
-
-	@page-drive = ~>
-		@page = \drive
-
-	@page-signin = ~>
-		@page = \signin
-
-	@page-password = ~>
-		@page = \password
+	@set-page = (page) ~>
+		@page = page
 
 	@avatar = ~>
 		@update-avatar @I, (i) ~>
@@ -215,9 +200,9 @@ script.
 
 	@update-account = ~>
 		@api \i/update do
-			name: @account-name.value
-			location: @account-location.value
-			bio: @account-bio.value
+			name: @refs.account-name.value
+			location: @refs.account-location.value
+			bio: @refs.account-bio.value
 		.then (i) ~>
 			@update-i i
 			alert \ok
