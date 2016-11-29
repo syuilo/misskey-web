@@ -26,7 +26,6 @@ style.
 
 	> form
 		display block
-		position relative
 		z-index 2
 		padding 10px 28px 0 28px
 
@@ -54,7 +53,6 @@ style.
 
 			> img
 				display inline-block
-				position relative
 				top 10px
 				width 32px
 				height 32px
@@ -77,7 +75,6 @@ style.
 			color #999
 			border none
 			outline none
-			box-shadow none
 			background transparent
 			opacity 0
 			transition opacity 0.1s ease
@@ -93,7 +90,6 @@ style.
 
 		label
 			display block
-			position relative
 			margin 12px 0
 
 			i
@@ -124,8 +120,6 @@ style.
 				outline none
 				border solid 1px #eee
 				border-radius 4px
-				box-shadow none
-				font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
 
 				&:hover
 					background rgba(255, 255, 255, 0.7)
@@ -151,7 +145,6 @@ style.
 			outline none
 			border none
 			border-radius 0
-			box-shadow none
 			background transparent
 			transition all .5s ease
 

@@ -15,7 +15,6 @@ style.
 
 	> p
 		display block
-		position relative
 		margin 0 auto
 		padding 8px
 		max-width 1024px

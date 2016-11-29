@@ -17,7 +17,6 @@ style.
 	box-shadow 0 1px 0 rgba(#000, 0.075)
 
 	> .main
-		position relative
 		color rgba(#000, 0.6)
 
 		> .backdrop
@@ -31,7 +30,6 @@ style.
 			background-color rgba(#fff, 0.75)
 
 		> .content
-			position relative
 			z-index 1024
 
 			> h1

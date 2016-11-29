@@ -15,16 +15,12 @@ mk-post-preview(title={ title })
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 0
-	font-family 'Meiryo', 'メイリオ', 'sans-serif'
 	font-size 0.9em
 	background #fff
-	background-clip padding-box
 
 	> article
-		position relative
 
 		&:after
 			content ""

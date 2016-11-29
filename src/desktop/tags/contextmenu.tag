@@ -25,7 +25,6 @@ style.
 
 	li
 		display block
-		position relative
 
 		&.separator
 			margin-top $padding
@@ -51,7 +50,6 @@ style.
 
 		> p, a
 			display block
-			position relative
 			z-index 1
 			margin 0
 			padding 0 32px 0 38px

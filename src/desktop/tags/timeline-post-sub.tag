@@ -23,14 +23,11 @@ script.
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 0
-	font-family 'Meiryo', 'メイリオ', 'sans-serif'
 	font-size 0.9em
 
 	> article
-		position relative
 		padding 16px
 
 		&:after

@@ -25,7 +25,6 @@ style.
 		outline none
 		border none
 		border-radius 2px
-		box-shadow none
 		transition background 0.1s ease
 		cursor pointer
 

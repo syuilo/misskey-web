@@ -61,7 +61,6 @@ style.
 
 					> .avatar
 						display block
-						position relative
 						float left
 						width 25%
 						height 40px

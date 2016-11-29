@@ -34,9 +34,6 @@ style.
 		width 480px
 		background #fff
 
-		*:not(i)
-			font-family 'メイリオ', 'Meiryo', sans-serif !important
-
 		> header
 			margin 1em 0
 			color $theme-color
@@ -64,7 +61,6 @@ style.
 				outline none
 				border none
 				border-radius 0
-				box-shadow none
 				cursor pointer
 				transition color 0.1s ease
 

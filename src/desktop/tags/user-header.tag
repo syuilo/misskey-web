@@ -17,7 +17,6 @@ style.
 	$footer-height = 58px
 
 	display block
-	position relative
 	background #fff
 
 	&[data-is-dark-background]
@@ -77,7 +76,6 @@ style.
 				margin-right 4px
 
 	> footer
-		position relative
 		z-index 1
 		height $footer-height
 		padding-left 195px

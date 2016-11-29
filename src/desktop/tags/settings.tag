@@ -128,7 +128,6 @@ style.
 
 			label
 				display block
-				position relative
 				margin 16px 0
 
 				&:after
@@ -172,7 +171,6 @@ style.
 						font-weight bold
 
 				> .avatar
-					position relative
 
 					> img
 						display block

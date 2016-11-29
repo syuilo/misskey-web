@@ -9,7 +9,6 @@ style.
 	> form
 		display block
 		float left
-		position relative
 
 		> input
 			user-select text
@@ -25,13 +24,10 @@ style.
 			//border solid 1px #ddd
 			border none
 			border-radius 0
-			box-shadow none
 			transition color 0.5s ease, border 0.5s ease
-			font-family FontAwesome, 'Meiryo UI', 'Meiryo', 'メイリオ', sans-serif
+			font-family FontAwesome, sans-serif
 
 			&::-webkit-input-placeholder,
-			&:-ms-input-placeholder,
-			&:-moz-placeholder
 				color $ui-controll-foreground-color
 
 script.

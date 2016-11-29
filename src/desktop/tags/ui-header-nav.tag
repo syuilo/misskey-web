@@ -35,7 +35,6 @@ style.
 			vertical-align top
 			height 48px
 			line-height 48px
-			background-clip padding-box !important
 
 			&.active
 				> a

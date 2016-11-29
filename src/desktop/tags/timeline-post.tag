@@ -53,12 +53,9 @@ mk-timeline-post(tabindex='-1', title={ title }, class={ repost: is-repost }, on
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 0
-	font-family 'Meiryo', 'メイリオ', sans-serif
 	background #fff
-	background-clip padding-box
 
 	&:focus
 		z-index 1
@@ -75,7 +72,6 @@ style.
 			border-radius 4px
 
 	> .repost
-		position relative
 		color #9dbb00
 		background linear-gradient(to bottom, #edfde2 0%, #fff 100%)
 
@@ -118,7 +114,6 @@ style.
 			background transparent
 
 	> article
-		position relative
 		padding 28px 32px 18px 32px
 
 		&:after
@@ -213,7 +208,6 @@ style.
 						max-width 100%
 
 				> .repost
-					position relative
 					margin 8px 0
 
 					> i:first-child
@@ -239,7 +233,6 @@ style.
 					color #ddd
 					background transparent
 					border none
-					box-shadow none
 					cursor pointer
 
 					&:hover
@@ -255,7 +248,7 @@ style.
 
 					&:last-child
 						position absolute
-						right 32px
+						right 0
 						margin 0
 
 	> .detail

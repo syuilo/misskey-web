@@ -29,11 +29,9 @@ mk-entrance
 style.
 	display block
 	height 100%
-	font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
 
 	> main
 		display block
-		position relative
 
 		&:after
 			content ''

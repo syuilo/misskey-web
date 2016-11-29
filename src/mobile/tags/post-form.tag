@@ -16,11 +16,9 @@ style.
 	background lighten($theme-color, 95%)
 
 	> .attaches
-		position relative
 		margin 0
 		padding 0
 		background lighten($theme-color, 98%)
-		background-clip padding-box
 		border solid 1px rgba($theme-color, 0.1)
 		border-top none
 		border-radius 0 0 4px 4px
@@ -39,7 +37,6 @@ style.
 
 			> .file
 				display block
-				position relative
 				float left
 				margin 4px
 				padding 0
@@ -65,7 +62,6 @@ style.
 
 			> .add
 				display block
-				position relative
 				float left
 				margin 4px
 				padding 0
@@ -107,13 +103,10 @@ style.
 		font-size 1em
 		color #333
 		background #fff
-		background-clip padding-box
 		outline none
 		border solid 1px rgba($theme-color, 0.1)
 		border-radius 4px
-		box-shadow none
 		transition border-color .3s ease
-		font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
 
 		&:hover
 			border-color rgba($theme-color, 0.2)
@@ -145,7 +138,6 @@ style.
 	[ref='upload']
 	[ref='drive']
 		display inline-block
-		position relative
 		cursor pointer
 		padding 0
 		margin 8px 4px 0 0

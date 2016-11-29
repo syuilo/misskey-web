@@ -5,7 +5,6 @@ mk-drive-browser-folder(data-is-contextmenu-showing={ is-contextmenu-showing.toS
 
 style.
 	display block
-	position relative
 	margin 4px
 	padding 8px
 	width 144px

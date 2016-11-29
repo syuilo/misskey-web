@@ -41,9 +41,6 @@ style.
 			}
 
 			.cropper-bg {
-				-webkit-animation: cropper-bg 0.5s linear infinite;
-				-moz-animation: cropper-bg 0.5s linear infinite;
-				-ms-animation: cropper-bg 0.5s linear infinite;
 				animation: cropper-bg 0.5s linear infinite;
 			}
 
@@ -88,7 +85,6 @@ style.
 			}
 
 			> .action
-				position relative
 				height 72px
 				background lighten($theme-color, 95%)
 
@@ -105,7 +101,6 @@ style.
 					font-size 1em
 					outline none
 					border-radius 4px
-					box-shadow none
 
 					&:focus
 						&:after

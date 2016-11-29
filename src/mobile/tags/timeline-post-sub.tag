@@ -17,13 +17,11 @@ mk-timeline-post-sub
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 0
 	font-size 0.9em
 
 	> article
-		position relative
 		padding 16px
 
 		&:after

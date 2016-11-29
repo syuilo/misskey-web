@@ -23,7 +23,6 @@ style.
 	position absolute
 	z-index 2048
 	width 250px
-	font-family 'Meiryo', 'メイリオ', sans-serif
 	background #fff
 	background-clip content-box
 	border solid 1px rgba(0, 0, 0, 0.1)

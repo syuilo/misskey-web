@@ -51,7 +51,6 @@ style.
 			color #999
 
 	> .user
-		position relative
 		padding 16px
 		border-bottom solid 1px #eee
 

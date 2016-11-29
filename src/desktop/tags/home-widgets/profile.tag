@@ -5,7 +5,7 @@ mk-profile-home-widget
 	p.username @{ I.username }
 
 style.
-	position relative
+	display block
 	background #fff
 
 	> .banner

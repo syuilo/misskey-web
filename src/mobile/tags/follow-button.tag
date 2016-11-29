@@ -15,7 +15,6 @@ style.
 	> .init
 		display block
 		user-select none
-		position relative
 		cursor pointer
 		padding 0 16px
 		margin 0
@@ -24,8 +23,6 @@ style.
 		outline none
 		border solid 1px $theme-color
 		border-radius 4px
-		box-shadow none
-		font-family sans-serif
 
 		*
 			pointer-events none

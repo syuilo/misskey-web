@@ -20,7 +20,6 @@ style.
 	$me-balloon-color = #23A7B6
 
 	display block
-	position relative
 	padding 10px 12px 10px 12px
 	background-color transparent
 
@@ -44,7 +43,6 @@ style.
 
 	> .content-container
 		display block
-		position relative
 		margin 0 12px
 		padding 0
 		max-width calc(100% - 78px)
@@ -52,7 +50,6 @@ style.
 		> .balloon
 			display block
 			float inherit
-			position relative
 			margin 0
 			padding 0
 			max-width 100%

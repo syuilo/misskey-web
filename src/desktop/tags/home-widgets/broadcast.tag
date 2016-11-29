@@ -17,7 +17,6 @@ style.
 	padding 10px 10px 10px 50px
 	background transparent
 	border-color #4078c0 !important
-	font-family 'Meiryo', 'メイリオ', sans-serif
 
 	&:after
 		content ""
@@ -26,7 +25,6 @@ style.
 
 	> .icon
 		display block
-		position relative
 		float left
 		margin-left -40px
 

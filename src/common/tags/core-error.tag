@@ -16,7 +16,6 @@ style.
 	width 100%
 	height 100%
 	text-align center
-	font-family 'メイリオ', sans-serif
 	background #f8f8f8
 
 	> i

@@ -16,7 +16,6 @@ style.
 	> mk-search-posts
 		max-width 600px
 		margin 0 auto
-		background-clip padding-box
 		border solid 1px rgba(0, 0, 0, 0.075)
 		border-radius 6px
 		overflow hidden

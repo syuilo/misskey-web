@@ -73,14 +73,11 @@ mk-post-detail(title={ title }, class={ repost: is-repost })
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 0
 	width 640px
 	overflow hidden
-	font-family 'Meiryo', 'メイリオ', sans-serif
 	background #fff
-	background-clip padding-box
 	border solid 1px rgba(0, 0, 0, 0.1)
 	border-radius 8px
 
@@ -103,7 +100,6 @@ style.
 			border none
 			border-bottom solid 1px #eef0f2
 			border-radius 6px 6px 0 0
-			box-shadow none
 
 			&:hover
 				background #f6f6f6
@@ -151,7 +147,6 @@ style.
 			border-bottom 1px solid #eef0f2
 
 		> article
-			position relative
 			padding 28px 32px 18px 32px
 
 			&:after
@@ -235,7 +230,6 @@ style.
 					padding 8px
 					background transparent
 					border none
-					box-shadow none
 					font-size 1em
 					color #ddd
 					cursor pointer
@@ -294,7 +288,6 @@ style.
 
 						> .user
 							display block
-							position relative
 							float left
 							margin 4px
 							padding 0

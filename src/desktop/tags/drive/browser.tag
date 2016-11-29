@@ -42,11 +42,9 @@ mk-drive-browser
 
 style.
 	display block
-	position relative
 
 	> nav
 		display block
-		position relative
 		z-index 2
 		width 100%
 		overflow auto
@@ -117,7 +115,7 @@ style.
 			border-radius 0
 			box-shadow none
 			transition color 0.5s ease, border 0.5s ease
-			font-family FontAwesome, 'Meiryo UI', 'Meiryo', 'メイリオ', sans-serif
+			font-family FontAwesome, sans-serif
 
 			&[data-active='true']
 				background #fff
@@ -128,7 +126,6 @@ style.
 				color $ui-controll-foreground-color
 
 	> .main
-		position relative
 		padding 8px
 		height calc(100% - 38px)
 		overflow auto
@@ -192,10 +189,8 @@ style.
 				margin 100px auto
 				width 40px
 				height 40px
-				position relative
 				text-align center
 
-				-webkit-animation sk-rotate 2.0s infinite linear
 				animation sk-rotate 2.0s infinite linear
 
 			.dot1, .dot2
@@ -207,30 +202,20 @@ style.
 				background-color rgba(0, 0, 0, 0.3)
 				border-radius 100%
 
-				-webkit-animation sk-bounce 2.0s infinite ease-in-out
 				animation sk-bounce 2.0s infinite ease-in-out
 
 			.dot2
 				top auto
 				bottom 0
-				-webkit-animation-delay -1.0s
 				animation-delay -1.0s
 
-			@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
-			@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
-
-			@-webkit-keyframes sk-bounce {
-				0%, 100% { -webkit-transform: scale(0.0) }
-				50% { -webkit-transform: scale(1.0) }
-			}
+			@keyframes sk-rotate { 100% { transform: rotate(360deg); }}
 
 			@keyframes sk-bounce {
 				0%, 100% {
 					transform: scale(0.0);
-					-webkit-transform: scale(0.0);
 				} 50% {
 					transform: scale(1.0);
-					-webkit-transform: scale(1.0);
 				}
 			}
 

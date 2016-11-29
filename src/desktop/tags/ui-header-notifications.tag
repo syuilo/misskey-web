@@ -9,7 +9,6 @@ style.
 
 	display block
 	float left
-	position relative
 
 	> .header
 		display block

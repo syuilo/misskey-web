@@ -35,8 +35,6 @@ style.
 	$ui-controll-foreground-color = #9eaba8
 
 	display inline-block
-	position relative
-	font-family 'Meiryo UI', 'Meiryo', 'メイリオ', sans-serif
 	overflow visible
 
 	> .header

@@ -11,13 +11,10 @@ style.
 	display -ms-flex
 	display flex
 	justify-content center
-	position relative
 
 	> *
 		> *
 			display block
-			position relative
-			background-clip padding-box
 			//border solid 1px #eaeaea
 			border solid 1px rgba(0, 0, 0, 0.075)
 			border-radius 6px
@@ -27,14 +24,12 @@ style.
 				margin-bottom 16px
 
 	> main
-		position relative
 		flex 1 1 560px
 		max-width 560px
 		margin 0
 		padding 16px 0 16px 16px
 
 	> .side
-		position relative
 		flex 1 1 270px
 		max-width 270px
 		margin 0

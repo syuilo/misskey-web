@@ -12,10 +12,8 @@ style.
 	margin-top calc(1em + 8px)
 	overflow hidden
 	background #fff
-	background-clip padding-box
 	border solid 1px rgba(0, 0, 0, 0.1)
 	border-radius 4px
-	font-family 'Meiryo', 'メイリオ', sans-serif
 
 	> .users
 		display block

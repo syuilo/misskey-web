@@ -12,7 +12,6 @@ mk-donate-home-widget
 
 style.
 	display block
-	font-family 'Meiryo', 'メイリオ', sans-serif
 	background #fff
 	border-color #ead8bb !important
 

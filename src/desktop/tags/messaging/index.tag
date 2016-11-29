@@ -54,7 +54,6 @@ style.
 		box-shadow 0 0px 2px rgba(0, 0, 0, 0.2)
 
 		> .form
-			position relative
 			padding 8px
 			background #f7f7f7
 
@@ -104,7 +103,6 @@ style.
 
 		> .result
 			display block
-			position relative
 			top 0
 			left 0
 			z-index 2
@@ -177,7 +175,6 @@ style.
 
 			> a
 				display block
-				position relative
 				padding 20px 30px
 				text-decoration none
 				background #fff
@@ -188,10 +185,6 @@ style.
 
 					> .avatar
 						filter saturate(200%)
-						-webkit-filter saturate(200%)
-						-moz-filter saturate(200%)
-						-o-filter saturate(200%)
-						-ms-filter saturate(200%)
 
 				&:active
 					background #eee
@@ -314,7 +307,6 @@ style.
 			padding 2em 1em
 			text-align center
 			color #999
-			font-family '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', 'Meiryo UI', 'Meiryo', 'メイリオ', sans-serif
 			font-weight 500
 
 	> nav
@@ -334,7 +326,6 @@ style.
 		> ul
 			display flex
 			justify-content center
-			position relative
 			margin 0
 			padding 0
 			list-style none

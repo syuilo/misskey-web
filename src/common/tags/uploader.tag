@@ -35,7 +35,6 @@ style.
 
 		> li
 			display block
-			position relative
 			margin 8px 0 0 0
 			padding 0
 			height 36px

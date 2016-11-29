@@ -16,7 +16,7 @@ mk-user-profile
 			b フォロワー
 
 style.
-	position relative
+	display block
 	background #fff
 
 	> *:first-child

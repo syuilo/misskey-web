@@ -12,7 +12,6 @@ mk-nav-home-widget
 style.
 	display block
 	padding 16px
-	font-family 'Meiryo', 'メイリオ', sans-serif
 	font-size 12px
 	color #aaa
 	background #fff

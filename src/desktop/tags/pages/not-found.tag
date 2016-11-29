@@ -10,7 +10,6 @@ style.
 
 	main
 		display block
-		position relative
 		width 600px
 		margin 32px auto
 

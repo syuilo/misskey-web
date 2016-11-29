@@ -108,12 +108,9 @@ style.
 	overflow hidden
 
 	> form
-		*:not(i)
-			font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif !important
 
 		label
 			display block
-			position relative
 			margin 16px 0
 
 			> .caption
@@ -192,7 +189,6 @@ style.
 			border-radius 4px
 			box-shadow 0 0 0 114514px #fff inset
 			transition all .3s ease
-			font-family 'Meiryo', 'メイリオ', 'Meiryo UI', '游ゴシック', 'YuGothic', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', sans-serif
 
 			&:hover
 				border-color rgba(0, 0, 0, 0.2)

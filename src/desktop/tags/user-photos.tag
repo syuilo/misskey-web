@@ -14,11 +14,9 @@ mk-user-photos
 
 style.
 	display block
-	position relative
 	background #fff
 
 	> .title
-		position relative
 		z-index 1
 		margin 0
 		padding 0 16px
@@ -38,7 +36,6 @@ style.
 		display flex
 		justify-content center
 		flex-wrap wrap
-		position relative
 		padding 8px
 
 		> .img

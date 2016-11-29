@@ -73,7 +73,6 @@ mk-post-detail
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 0
 
@@ -144,7 +143,6 @@ style.
 			border-bottom 1px solid #eef0f2
 
 		> article
-			position relative
 			padding 14px 16px 9px 16px
 
 			@media (min-width 500px)
@@ -297,7 +295,6 @@ style.
 
 						> .user
 							display block
-							position relative
 							float left
 							margin 4px
 							padding 0

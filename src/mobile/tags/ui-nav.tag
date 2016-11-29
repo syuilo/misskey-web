@@ -62,14 +62,12 @@ style.
 	.body
 		height 100%
 		overflow hidden
-		position relative
 
 	.content
 		min-height 100%
 
 	.me
 		display block
-		position relative
 		margin 0
 		padding 16px
 
@@ -115,7 +113,6 @@ style.
 
 			a
 				display block
-				position relative
 				padding 0 20px
 				line-height 3rem
 				line-height calc(1rem + 30px)

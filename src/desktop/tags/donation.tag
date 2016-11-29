@@ -21,7 +21,6 @@ mk-donation
 
 style.
 	display block
-	position relative
 
 	> .close
 		position absolute

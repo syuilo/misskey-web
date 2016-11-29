@@ -18,7 +18,6 @@ style.
 	> button
 	> .init
 		display block
-		position relative
 		cursor pointer
 		padding 0
 		margin 0
@@ -27,8 +26,6 @@ style.
 		font-size 1em
 		outline none
 		border-radius 4px
-		box-shadow none
-		font-family sans-serif
 
 		*
 			pointer-events none

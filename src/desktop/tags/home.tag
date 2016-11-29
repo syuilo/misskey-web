@@ -9,7 +9,6 @@ style.
 	display block
 
 	> .main
-		position relative
 		margin 0 auto
 		width 1100px
 
@@ -24,13 +23,10 @@ style.
 			clear both
 
 		> *
-			position relative
 			float left
 
 			> *
 				display block
-				position relative
-				background-clip padding-box
 				//border solid 1px #eaeaea
 				border solid 1px rgba(0, 0, 0, 0.075)
 				border-radius 6px

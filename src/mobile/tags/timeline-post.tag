@@ -47,10 +47,8 @@ mk-timeline-post(class={ repost: is-repost })
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 0
-	font-family sans-serif
 	font-size 12px
 
 	@media (min-width 350px)
@@ -60,7 +58,6 @@ style.
 		font-size 16px
 
 	> .repost
-		position relative
 		color #9dbb00
 		background linear-gradient(to bottom, #edfde2 0%, #fff 100%)
 
@@ -108,7 +105,6 @@ style.
 			background transparent
 
 	> article
-		position relative
 		padding 14px 16px 9px 16px
 
 		&:after
@@ -212,7 +208,6 @@ style.
 						max-width 100%
 
 				> .repost
-					position relative
 					margin 8px 0
 
 					> i:first-child

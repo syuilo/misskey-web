@@ -13,7 +13,6 @@ mk-rss-reader-home-widget
 
 style.
 	display block
-	position relative
 	background #fff
 
 	> .title

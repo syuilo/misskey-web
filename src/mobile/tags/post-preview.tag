@@ -15,15 +15,12 @@ mk-post-preview
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 0
 	font-size 0.9em
 	background #fff
-	background-clip padding-box
 
 	> article
-		position relative
 
 		&:after
 			content ""

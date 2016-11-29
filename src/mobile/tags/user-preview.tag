@@ -13,7 +13,6 @@ mk-user-preview
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 16px
 	font-size 12px

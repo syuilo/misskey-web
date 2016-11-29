@@ -54,8 +54,6 @@ script.
 
 		document.add-event-listener \keydown @on-document-keydown
 
-		window.add-event-listener \scroll @on-scroll
-
 		@load ~>
 			@event.trigger \loaded
 
@@ -65,7 +63,6 @@ script.
 		@stream.off \unfollow @on-stream-unfollow
 
 		document.remove-event-listener \keydown @on-document-keydown
-		window.remove-event-listener \scroll @on-scroll
 
 	@on-document-keydown = (e) ~>
 		tag = e.target.tag-name.to-lower-case!
@@ -109,8 +106,3 @@ script.
 
 	@on-stream-unfollow = ~>
 		@load!
-
-	@on-scroll = ~>
-		current = window.scroll-y + window.inner-height
-		if current > document.body.offset-height - 16 # 遊び
-			@more!

@@ -35,7 +35,6 @@ style.
 
 	display block
 	float left
-	position relative
 
 	> .header
 		display block
@@ -142,7 +141,6 @@ style.
 				> a
 				> p
 					display block
-					position relative
 					z-index 1
 					padding 0 28px
 					margin 0

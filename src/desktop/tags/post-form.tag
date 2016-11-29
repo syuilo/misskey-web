@@ -20,7 +20,6 @@ mk-post-form(ondragover={ ondragover }, ondragenter={ ondragenter }, ondragleave
 
 style.
 	display block
-	position relative
 	padding 16px
 	background lighten($theme-color, 95%)
 
@@ -30,11 +29,9 @@ style.
 		clear both
 
 	> .attaches
-		position relative
 		margin 0
 		padding 0
 		background lighten($theme-color, 98%)
-		background-clip padding-box
 		border solid 1px rgba($theme-color, 0.1)
 		border-top none
 		border-radius 0 0 4px 4px
@@ -62,7 +59,6 @@ style.
 
 			> .file
 				display block
-				position relative
 				float left
 				margin 4px
 				padding 0
@@ -88,7 +84,6 @@ style.
 
 			> .add
 				display block
-				position relative
 				float left
 				margin 4px
 				padding 0
@@ -130,13 +125,10 @@ style.
 		font-size 1em
 		color #333
 		background #fff
-		background-clip padding-box
 		outline none
 		border solid 1px rgba($theme-color, 0.1)
 		border-radius 4px
-		box-shadow none
 		transition border-color .3s ease
-		font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
 
 		&:hover
 			border-color rgba($theme-color, 0.2)
@@ -174,7 +166,6 @@ style.
 		margin 0
 		line-height 40px
 		color rgba($theme-color, 0.5)
-		font-family sans-serif
 
 		&.over
 			color #ec3828
@@ -195,7 +186,6 @@ style.
 		outline none
 		border solid 1px lighten($theme-color, 15%)
 		border-radius 4px
-		box-shadow none
 
 		&:not(:disabled)
 			font-weight bold
@@ -247,7 +237,6 @@ style.
 	[ref='upload']
 	[ref='drive']
 		display inline-block
-		position relative
 		cursor pointer
 		padding 0
 		margin 8px 4px 0 0
@@ -259,7 +248,6 @@ style.
 		outline none
 		border solid 1px transparent
 		border-radius 4px
-		box-shadow none
 
 		&:hover
 			background transparent

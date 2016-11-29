@@ -101,12 +101,9 @@ style.
 	overflow hidden
 
 	> form
-		*:not(i)
-			font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif !important
 
 		section
 			display block
-			position relative
 			margin 16px 0
 
 			.caption

@@ -29,7 +29,6 @@ style.
 		pointer-events none
 
 	> .container
-		position relative
 		max-width 500px
 		margin 0 auto
 		padding 16px

@@ -5,7 +5,6 @@ mk-ripple-button(onmousedown={ onmousedown }, onmouseup={ leave }, onmouseleave=
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 18px
 	line-height 1em
@@ -38,7 +37,6 @@ style.
 		border-radius 100%
 	
 	> span
-		position relative
 		z-index 1
 
 script.

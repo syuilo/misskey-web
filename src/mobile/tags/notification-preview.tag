@@ -32,7 +32,6 @@ mk-notification-preview(class={ notification.type })
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 8px
 	color #fff

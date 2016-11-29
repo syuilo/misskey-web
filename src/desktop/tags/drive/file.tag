@@ -12,12 +12,10 @@ mk-drive-browser-file(data-is-selected={ (file._selected || false).toString() },
 
 style.
 	display block
-	position relative
 	margin 4px
 	padding 8px 0 0 0
 	width 144px
 	height 180px
-	font-family 'Meiryo UI', 'Meiryo', 'メイリオ', sans-serif
 	border-radius 4px
 
 	&, *
@@ -115,7 +113,6 @@ style.
 			transform rotate(-45deg)
 
 	> .thumbnail
-		position relative
 		width 128px
 		height 128px
 		left 8px

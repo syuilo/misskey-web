@@ -19,12 +19,9 @@ mk-post-detail-sub
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 20px 32px
-	font-family 'Meiryo', 'メイリオ', sans-serif
 	background #fdfdfd
-	background-clip padding-box
 
 	&:after
 		content ""

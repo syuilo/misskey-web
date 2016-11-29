@@ -7,11 +7,9 @@ mk-notifications-home-widget
 
 style.
 	display block
-	position relative
 	background #fff
 
 	> .title
-		position relative
 		z-index 1
 		margin 0
 		padding 0 16px

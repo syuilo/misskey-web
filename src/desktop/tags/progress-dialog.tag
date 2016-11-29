@@ -19,7 +19,6 @@ style.
 
 	> mk-window
 		[data-yield='content']
-			font-family 'Meiryo', 'メイリオ', sans-serif
 
 			> .body
 				padding 18px 24px 24px 24px

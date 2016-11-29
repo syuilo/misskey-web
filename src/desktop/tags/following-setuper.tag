@@ -19,7 +19,6 @@ mk-following-setuper
 
 style.
 	display block
-	position relative
 	padding 24px
 	background #fff
 
@@ -36,7 +35,6 @@ style.
 			clear both
 
 		> .user
-			position relative
 			padding 16px
 			width 200px
 			float left
@@ -115,7 +113,6 @@ style.
 		color #999
 		border none
 		outline none
-		box-shadow none
 		background transparent
 
 		&:hover

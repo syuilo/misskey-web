@@ -38,7 +38,6 @@ mk-notification(class={ notification.type })
 
 style.
 	display block
-	position relative
 	margin 0
 	padding 16px
 

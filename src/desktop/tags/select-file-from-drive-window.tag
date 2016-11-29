@@ -28,7 +28,6 @@ style.
 				height calc(100% - 72px)
 
 			> div
-				position relative
 				height 72px
 				background lighten($theme-color, 95%)
 
@@ -48,7 +47,6 @@ style.
 					outline none
 					border solid 1px transparent
 					border-radius 4px
-					box-shadow none
 
 					&:hover
 						background transparent
@@ -85,7 +83,6 @@ style.
 					font-size 1em
 					outline none
 					border-radius 4px
-					box-shadow none
 
 					&:focus
 						&:after

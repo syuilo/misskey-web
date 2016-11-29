@@ -50,7 +50,6 @@ mk-messaging-room
 
 style.
 	display block
-	position relative
 
 	> header
 		display block
@@ -62,7 +61,6 @@ style.
 		background #fff
 
 		> .container
-			position relative
 			max-width 600px
 			width 100%
 			margin 0 auto
@@ -242,7 +240,6 @@ style.
 
 		> .date
 			display block
-			position relative
 			margin 8px 0
 			text-align center
 
@@ -260,7 +257,6 @@ style.
 
 			> p
 				display inline-block
-				position relative
 				margin 0
 				padding 0 16px
 				//font-weight bold
@@ -341,7 +337,6 @@ style.
 
 			> li
 				display block
-				position relative
 				float left
 				margin 4px
 				padding 0

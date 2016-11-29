@@ -9,7 +9,6 @@ style.
 
 	> mk-signin
 		background #fff
-		background-clip padding-box
 		border solid 1px rgba(0, 0, 0, 0.1)
 		border-radius 4px
 		box-shadow 0 0 8px rgba(0, 0, 0, 0.1)

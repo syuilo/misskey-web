@@ -29,7 +29,6 @@ style.
 		background orange
 
 	> .main
-		position relative
 
 		> .backdrop
 			position absolute
@@ -53,7 +52,6 @@ style.
 				filter opacity(20%) grayscale(100%)
 
 		> .main
-			position relative
 			z-index 1024
 			margin 0
 			padding 0

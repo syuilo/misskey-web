@@ -116,19 +116,14 @@ style.
 			box-shadow 0 2px 6px 0 rgba(0, 0, 0, 0.2)
 
 			> header
-				position relative
 				z-index 128
 				overflow hidden
 				cursor move
 				background #fff
-				background-clip padding-box
 				border-radius 6px 6px 0 0
 				box-shadow 0 1px 0 rgba(#000, 0.1)
 
 				&, *
-					-ms-user-select none
-					-moz-user-select none
-					-webkit-user-select none
 					user-select none
 
 				> h1
@@ -154,7 +149,6 @@ style.
 					color rgba(#000, 0.4)
 					border none
 					outline none
-					box-shadow none
 					background transparent
 
 					&:hover
@@ -169,7 +163,6 @@ style.
 						line-height 40px
 
 			> .content
-				position relative
 				height 100%
 
 	&:not([flexible])

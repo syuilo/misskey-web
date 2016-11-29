@@ -10,12 +10,10 @@ mk-url-preview
 
 style.
 	display block
-	font-family sans-serif
 	font-size 16px
 
 	> a
 		display block
-		position relative
 		border solid 1px #eee
 		border-radius 4px
 		overflow hidden
@@ -39,7 +37,6 @@ style.
 				width calc(100% - 100px)
 
 		> article
-			position relative
 			padding 16px
 
 			> header

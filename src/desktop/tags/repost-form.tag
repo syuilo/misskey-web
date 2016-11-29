@@ -24,13 +24,10 @@ style.
 			font-size 1em
 			color #333
 			background #fff
-			background-clip padding-box
 			outline none
 			border solid 1px rgba($theme-color, 0.1)
 			border-radius 4px
-			box-shadow none
 			transition border-color .3s ease
-			font-family 'Meiryo', 'メイリオ', 'Meiryo UI', sans-serif
 
 			&:hover
 				border-color rgba($theme-color, 0.2)
@@ -72,7 +69,6 @@ style.
 			font-size 1em
 			outline none
 			border-radius 4px
-			box-shadow none
 
 			&:focus
 				&:after
