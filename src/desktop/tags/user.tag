@@ -8,7 +8,7 @@ mk-user
 
 style.
 	display block
-	background #fbfbfb
+	background #fff
 
 	> .user
 		> header
