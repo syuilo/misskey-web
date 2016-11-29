@@ -27,7 +27,7 @@ style.
 			transition color 0.5s ease, border 0.5s ease
 			font-family FontAwesome, sans-serif
 
-			&::-webkit-input-placeholder,
+			&::-webkit-input-placeholder
 				color $ui-controll-foreground-color
 
 script.
