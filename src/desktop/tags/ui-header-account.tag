@@ -31,8 +31,6 @@ mk-ui-header-account
 				i.fa.fa-angle-right
 
 style.
-	$ui-controll-foreground-color = #9eaba8
-
 	display block
 	float left
 
@@ -40,7 +38,7 @@ style.
 		display block
 		margin 0
 		padding 0
-		color $ui-controll-foreground-color
+		color #9eaba8
 		border none
 		background transparent
 		cursor pointer
@@ -49,13 +47,13 @@ style.
 			pointer-events none
 
 		&:hover
-			color darken($ui-controll-foreground-color, 20%)
+			color darken(#9eaba8, 20%)
 
 		&:active
-			color darken($ui-controll-foreground-color, 30%)
+			color darken(#9eaba8, 30%)
 
 		&[data-active='true']
-			color darken($ui-controll-foreground-color, 20%)
+			color darken(#9eaba8, 20%)
 
 			> .avatar
 				$saturate = 150%

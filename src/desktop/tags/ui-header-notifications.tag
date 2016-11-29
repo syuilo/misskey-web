@@ -5,8 +5,6 @@ mk-ui-header-notifications
 		mk-notifications
 
 style.
-	$ui-controll-foreground-color = #9eaba8
-
 	display block
 	float left
 
@@ -15,7 +13,7 @@ style.
 		margin 0
 		padding 0
 		width 32px
-		color $ui-controll-foreground-color
+		color #9eaba8
 		border none
 		background transparent
 		cursor pointer
@@ -24,13 +22,13 @@ style.
 			pointer-events none
 
 		&:hover
-			color darken($ui-controll-foreground-color, 20%)
+			color darken(#9eaba8, 20%)
 
 		&:active
-			color darken($ui-controll-foreground-color, 30%)
+			color darken(#9eaba8, 30%)
 
 		&[data-active='true']
-			color darken($ui-controll-foreground-color, 20%)
+			color darken(#9eaba8, 20%)
 
 		> i
 			font-size 1.2em

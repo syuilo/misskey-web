@@ -4,7 +4,6 @@ mk-ui-header-search
 		div.result
 
 style.
-	$ui-controll-foreground-color = #9eaba8
 
 	> form
 		display block
@@ -28,7 +27,7 @@ style.
 			font-family FontAwesome, sans-serif
 
 			&::-webkit-input-placeholder
-				color $ui-controll-foreground-color
+				color #9eaba8
 
 script.
 	@mixin \page

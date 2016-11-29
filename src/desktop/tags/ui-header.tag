@@ -47,7 +47,6 @@ style.
 			z-index 1024
 			margin 0
 			padding 0
-			color $ui-controll-foreground-color
 			background-clip content-box
 			font-size 0.9rem
 			user-select none

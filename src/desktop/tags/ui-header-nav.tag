@@ -14,8 +14,6 @@ mk-ui-header-nav: ul(if={ SIGNIN })
 		p お知らせ
 
 style.
-	$ui-controll-foreground-color = #9eaba8
-
 	display inline-block
 	margin 0
 	padding 0
@@ -47,7 +45,7 @@ style.
 				padding 0 24px
 				font-size 1em
 				font-variant small-caps
-				color $ui-controll-foreground-color
+				color #9eaba8
 				text-decoration none
 				transition none
 				cursor pointer
@@ -56,7 +54,7 @@ style.
 					pointer-events none
 
 				&:hover
-					color darken($ui-controll-foreground-color, 20%)
+					color darken(#9eaba8, 20%)
 					text-decoration none
 
 				> i:first-child
