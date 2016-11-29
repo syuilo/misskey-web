@@ -57,6 +57,7 @@ style.
 			> header
 				margin-bottom 4px
 				white-space nowrap
+				line-height 21px
 
 				> .name
 					display inline
