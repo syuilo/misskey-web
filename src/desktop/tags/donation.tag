@@ -1,5 +1,5 @@
 mk-donation
-	a.close(onclick={ close }) 閉じる x
+	button.close(onclick={ close }) 閉じる x
 	div.message
 		p 利用者の皆さま、
 		p
@@ -10,7 +10,7 @@ mk-donation
 			| 援助をしてくださる利用者はほんの少数です。
 			| お願いいたします。
 			| 今日、利用者の皆さまが¥300ご援助くだされば、募金活動を一時間で終了することができます。
-			| コーヒー1杯ほどの金額です。 
+			| コーヒー1杯ほどの金額です。
 			| Misskeyを活用しておられるのでしたら、広告を掲載せずにもう1年活動できるよう、どうか1分だけお時間をください。
 			| 私は小さな非営利個人ですが、サーバー、プログラム、人件費など、世界でトップクラスのウェブサイト同等のコストがかかります。
 			| 利用者は何億人といますが、他の大きなサイトに比べてほんの少額の費用で運営しているのです。
@@ -21,19 +21,19 @@ mk-donation
 
 style.
 	display block
+	color #fff
+	background #03072C
 
 	> .close
 		position absolute
 		top 16px
 		right 16px
-		color #fff
+		z-index 1
 
 	> .message
 		padding 32px
 		font-size 1.4em
 		font-family serif
-		color #fff
-		background #03072C
 
 		> p
 			display block
@@ -51,7 +51,7 @@ script.
 	@close = (e) ~>
 		e.prevent-default!
 		e.stop-propagation!
-		
+
 		@I.data.no_donation = true
 		@api \i/appdata/set do
 			data: JSON.stringify do
