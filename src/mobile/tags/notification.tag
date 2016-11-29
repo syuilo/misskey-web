@@ -27,12 +27,21 @@ mk-notification(class={ notification.type })
 				i.fa.fa-user-plus
 				a(href={ CONFIG.url + '/' + notification.user.username }) { notification.user.name }
 
-	div.main(if={ notification.type == 'mention' })
+	div.main(if={ notification.type == 'reply' })
 		a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username })
 			img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 		div.text
 			p
 				i.fa.fa-reply
+				a(href={ CONFIG.url + '/' + notification.post.user.username }) { notification.post.user.name }
+			a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
+
+	div.main(if={ notification.type == 'mention' })
+		a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username })
+			img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+		div.text
+			p
+				i.fa.fa-at
 				a(href={ CONFIG.url + '/' + notification.post.user.username }) { notification.post.user.name }
 			a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 
@@ -110,7 +119,7 @@ style.
 		.text p i
 			color #53c7ce
 
-	&.mention
+	&.reply, &.mention
 		.text p i
 			color #555
 
