@@ -13,6 +13,12 @@ function init me
 			icon: file.url + '?thumbnail&size=64'
 		set-timeout (n.close.bind n), 5000ms
 
+	s.event.on \mention (post) ~>
+		n = new Notification "#{post.user.name}さんから:" do
+			body: post.text
+			icon: post.user.avatar?url + '?thumbnail&size=64'
+		set-timeout (n.close.bind n), 5000ms
+
 	riot.mixin \stream do
 		stream: s.event
 		get-stream-state: s.get-state
