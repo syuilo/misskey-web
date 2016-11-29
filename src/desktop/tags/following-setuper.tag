@@ -36,7 +36,7 @@ style.
 
 		> .user
 			padding 16px
-			width 200px
+			width 238px
 			float left
 
 			&:after
