@@ -14,19 +14,12 @@ mk-timeline-post-sub(title={ title })
 				mk-sub-post-content.text(post={ post })
 
 script.
+	@mixin \date-stringify
 	@mixin \user-preview
 
 	@post = @opts.post
 
-	created-at = new Date @post.created_at
-
-	@title =
-		created-at.get-full-year! + \年 +
-		created-at.get-month!     + \月 +
-		created-at.get-date!      + \日 +
-		' ' +
-		created-at.get-hours!     + \時 +
-		created-at.get-minutes!   + \分
+	@title = @date-stringify @post.created_at
 
 style.
 	display block

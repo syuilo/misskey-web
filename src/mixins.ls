@@ -29,6 +29,9 @@ module.exports = (me) ~>
 	riot.mixin \get-post-summary do
 		get-post-summary: require './common/scripts/get-post-summary.ls'
 
+	riot.mixin \date-stringify do
+		date-stringify: require './common/scripts/date-stringify.ls'
+
 	riot.mixin \text do
 		analyze: require 'misskey-text'
 		compile: require './common/scripts/text-compiler.js'

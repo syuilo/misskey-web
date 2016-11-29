@@ -312,6 +312,7 @@ script.
 	@mixin \api
 	@mixin \text
 	@mixin \user-preview
+	@mixin \date-stringify
 	@mixin \NotImplementedException
 
 	@event = @opts.event
@@ -338,15 +339,7 @@ script.
 			@is-repost = @post.repost?
 			@p = if @is-repost then @post.repost else @post
 
-			created-at = new Date @p.created_at
-
-			@title =
-				created-at.get-full-year! + \年 +
-				created-at.get-month!     + \月 +
-				created-at.get-date!      + \日 +
-				' ' +
-				created-at.get-hours!     + \時 +
-				created-at.get-minutes!   + \分
+			@title = @date-stringify @p.created_at
 
 			@update!
 

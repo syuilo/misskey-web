@@ -285,6 +285,7 @@ style(theme='dark').
 script.
 	@mixin \api
 	@mixin \text
+	@mixin \date-stringify
 	@mixin \user-preview
 	@mixin \NotImplementedException
 
@@ -292,15 +293,7 @@ script.
 	@is-repost = @post.repost? and !@post.text?
 	@p = if @is-repost then @post.repost else @post
 
-	created-at = new Date @p.created_at
-
-	@title =
-		created-at.get-full-year! + \年 +
-		created-at.get-month!     + \月 +
-		created-at.get-date!      + \日 +
-		' ' +
-		created-at.get-hours!     + \時 +
-		created-at.get-minutes!   + \分
+	@title = @date-stringify @p.created_at
 
 	@url = CONFIG.url + '/' + @p.user.username + '/' + @p.id
 	@is-detail-opened = false

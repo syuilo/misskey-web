@@ -108,21 +108,14 @@ style.
 script.
 	@mixin \api
 	@mixin \text
+	@mixin \date-stringify
 	@mixin \user-preview
 
 	@post = @opts.post
 
 	@url = CONFIG.url + '/' + @post.user.username + '/' + @post.id
 
-	created-at = new Date @post.created_at
-
-	@title =
-		created-at.get-full-year! + \年 +
-		created-at.get-month!     + \月 +
-		created-at.get-date!      + \日 +
-		' ' +
-		created-at.get-hours!     + \時 +
-		created-at.get-minutes!   + \分
+	@title = @date-stringify @post.created_at
 
 	@reply-form = null
 	@reply-form-controller = riot.observable!
