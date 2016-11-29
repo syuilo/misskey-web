@@ -88,5 +88,14 @@ style.
 script.
 	@mixin \user-preview
 
-	@title = 'a'
 	@post = @opts.post
+
+	created-at = new Date @post.created_at
+
+	@title =
+		created-at.get-full-year! + \年 +
+		created-at.get-month!     + \月 +
+		created-at.get-date!      + \日 +
+		' ' +
+		created-at.get-hours!     + \時 +
+		created-at.get-minutes!   + \分

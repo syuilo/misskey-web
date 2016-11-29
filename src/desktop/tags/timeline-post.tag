@@ -291,7 +291,17 @@ script.
 	@post = @opts.post
 	@is-repost = @post.repost? and !@post.text?
 	@p = if @is-repost then @post.repost else @post
-	@title = 'a' # TODO
+
+	created-at = new Date @p.created_at
+
+	@title =
+		created-at.get-full-year! + \年 +
+		created-at.get-month!     + \月 +
+		created-at.get-date!      + \日 +
+		' ' +
+		created-at.get-hours!     + \時 +
+		created-at.get-minutes!   + \分
+
 	@url = CONFIG.url + '/' + @p.user.username + '/' + @p.id
 	@is-detail-opened = false
 

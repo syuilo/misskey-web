@@ -1,4 +1,4 @@
-mk-post-detail-sub
+mk-post-detail-sub(title={ title })
 	a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username })
 		img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ post.user.id })
 	div.main
@@ -112,6 +112,18 @@ script.
 
 	@post = @opts.post
 
+	@url = CONFIG.url + '/' + @post.user.username + '/' + @post.id
+
+	created-at = new Date @post.created_at
+
+	@title =
+		created-at.get-full-year! + \年 +
+		created-at.get-month!     + \月 +
+		created-at.get-date!      + \日 +
+		' ' +
+		created-at.get-hours!     + \時 +
+		created-at.get-minutes!   + \分
+
 	@reply-form = null
 	@reply-form-controller = riot.observable!
 
@@ -119,8 +131,6 @@ script.
 	@repost-form-controller = riot.observable!
 
 	@on \mount ~>
-		@url = CONFIG.url + '/' + @post.user.username + '/' + @post.id
-
 		if @post.text?
 			tokens = @analyze @post.text
 			@refs.text.innerHTML = @compile tokens
