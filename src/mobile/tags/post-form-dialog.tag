@@ -2,8 +2,8 @@ mk-post-form-dialog
 	div.bg@bg
 	div.form@body
 		header
-			button.close(onclick={ close }): i.fa.fa-times
 			h1 { reply ? '返信' : '新規投稿' }
+			button.close(onclick={ close }): i.fa.fa-times
 			button.post(onclick={ post }, disabled={ posting })
 				i.fa.fa-paper-plane-o(if={ !postiong })
 				i.fa.fa-spinner.fa-pulse(if={ postiong })

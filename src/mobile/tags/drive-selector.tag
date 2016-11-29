@@ -2,10 +2,10 @@ mk-drive-selector
 	div.bg@bg
 	div.body@body
 		header
-			button.close(onclick={ close }): i.fa.fa-times
 			h1
 				| ファイルを選択
 				span.count(if={ files.length > 0 }) ({ files.length })
+			button.close(onclick={ close }): i.fa.fa-times
 			button.ok(onclick={ ok }): i.fa.fa-check
 		mk-drive(select={ true }, multiple={ opts.multiple }, controller={ controller }, event={ event })
 
