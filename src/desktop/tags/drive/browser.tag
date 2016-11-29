@@ -15,12 +15,12 @@ mk-drive-browser
 			div.folders@folders-container(if={ folders.length > 0 })
 				virtual(each={ folder in folders })
 					mk-drive-browser-folder.folder(folder={ folder })
-				p(if={ more-folders })
+				button(if={ more-folders })
 					| もっと読み込む
 			div.files@files-container(if={ files.length > 0 })
 				virtual(each={ file in files })
 					mk-drive-browser-file.file(file={ file })
-				p(if={ more-files })
+				button(if={ more-files })
 					| もっと読み込む
 			div.empty(if={ files.length == 0 && folders.length == 0 && !loading })
 				p(if={ draghover })
