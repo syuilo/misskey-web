@@ -41,6 +41,7 @@ style.
 		> ul
 			$tile = 48px
 
+			box-sizing content-box
 			width $tile * 4
 			margin 0 auto
 			padding $tile
