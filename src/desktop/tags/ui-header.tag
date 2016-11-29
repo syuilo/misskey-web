@@ -18,7 +18,7 @@ style.
 	top 0
 	z-index 1024
 	width 100%
-	box-shadow 0 1px 0 rgba(0, 0, 0, 0.075)
+	box-shadow 0 1px 1px rgba(0, 0, 0, 0.075)
 
 	> .mobile
 		display block
