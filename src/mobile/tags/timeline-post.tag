@@ -271,7 +271,7 @@ script.
 			tokens
 				.filter (t) -> t.type == \link
 				.map (t) ~>
-					@preview = @text.append-child document.create-element \mk-url-preview
+					@preview = @refs.text.append-child document.create-element \mk-url-preview
 					riot.mount @preview, do
 						url: t.content
 
