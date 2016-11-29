@@ -17,13 +17,13 @@ function init me
 		n = new Notification "#{post.user.name}さんから:" do
 			body: post.text
 			icon: post.user.avatar_url + '?thumbnail&size=64'
-		set-timeout (n.close.bind n), 5000ms
+		set-timeout (n.close.bind n), 6000ms
 
 	s.event.on \reply (post) ~>
 		n = new Notification "#{post.user.name}さんから返信:" do
 			body: post.text
 			icon: post.user.avatar_url + '?thumbnail&size=64'
-		set-timeout (n.close.bind n), 5000ms
+		set-timeout (n.close.bind n), 6000ms
 
 	riot.mixin \stream do
 		stream: s.event
