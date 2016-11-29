@@ -110,6 +110,8 @@ script.
 	@mixin \text
 	@mixin \user-preview
 
+	@post = @opts.post
+
 	@reply-form = null
 	@reply-form-controller = riot.observable!
 
@@ -117,14 +119,13 @@ script.
 	@repost-form-controller = riot.observable!
 
 	@on \mount ~>
-		@post = opts.post
 		@url = CONFIG.url + '/' + @post.user.username + '/' + @post.id
 
 		if @post.text?
 			tokens = @analyze @post.text
-			@text.innerHTML = @compile tokens
+			@refs.text.innerHTML = @compile tokens
 
-			@text.children.for-each (e) ~>
+			@refs.text.children.for-each (e) ~>
 				if e.tag-name == \MK-URL
 					riot.mount e
 
@@ -143,7 +144,7 @@ script.
 				controller: @repost-form-controller
 				post: @p
 		@repost-form-controller.trigger \open
-	
+
 	@like = ~>
 		if @post.is_liked
 			@api \posts/likes/delete do
