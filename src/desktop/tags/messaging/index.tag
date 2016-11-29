@@ -62,9 +62,9 @@ style.
 				position absolute
 				top 0
 				left 8px
+				z-index 1
 				height 100%
-				width 1em
-				padding 0 16px
+				width 38px
 				pointer-events none
 
 				> i
