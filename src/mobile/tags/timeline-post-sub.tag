@@ -4,14 +4,12 @@ mk-timeline-post-sub
 			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
 		div.main
 			header
-				div.left
-					a.name(href={ '/' + post.user.username })
-						| { post.user.name }
-					span.username
-						| @{ post.user.username }
-				div.right
-					a.time(href={ '/' + post.user.username + '/' + post.id })
-						mk-time(time={ post.created_at })
+				a.name(href={ '/' + post.user.username })
+					| { post.user.name }
+				span.username
+					| @{ post.user.username }
+				a.created-at(href={ '/' + post.user.username + '/' + post.id })
+					mk-time(time={ post.created_at })
 			div.body
 				mk-sub-post-content.text(post={ post })
 
@@ -64,32 +62,29 @@ style.
 				margin-bottom 4px
 				white-space nowrap
 
-				> .left
-					> .name
-						display inline
-						margin 0
-						padding 0
-						color #607073
-						font-size 1em
-						font-weight 700
-						text-align left
-						text-decoration none
+				> .name
+					display inline
+					margin 0
+					padding 0
+					color #607073
+					font-size 1em
+					font-weight 700
+					text-align left
+					text-decoration none
 
-						&:hover
-							text-decoration underline
+					&:hover
+						text-decoration underline
 
-					> .username
-						text-align left
-						margin 0 0 0 8px
-						color #d1d8da
+				> .username
+					text-align left
+					margin 0 0 0 8px
+					color #d1d8da
 
-				> .right
+				> .created-at
 					position absolute
-					top 16px
-					right 16px
-
-					> .time
-						color #b2b8bb
+					top 0
+					right 0
+					color #b2b8bb
 
 			> .body
 
