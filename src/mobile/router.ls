@@ -15,6 +15,7 @@ module.exports = (me) ~>
 	route \/i/drive drive
 	route \/i/drive/folder/:folder drive
 	route \/i/drive/file/:file drive
+	route \/post::post post
 	route \/search::query search
 	route \/:user user.bind null \posts
 	route \/:user/graphs user.bind null \graphs

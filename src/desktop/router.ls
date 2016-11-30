@@ -11,6 +11,7 @@ module.exports = (me) ~>
 	#--------------------------------
 
 	route \/ index
+	route \/post::post post
 	route \/search::query search
 	route \/:user user.bind null \home
 	route \/:user/graphs user.bind null \graphs

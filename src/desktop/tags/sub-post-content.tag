@@ -2,7 +2,7 @@ mk-sub-post-content
 	div.body
 		a.reply(if={ post.reply_to }): i.fa.fa-reply
 		span@text
-		a.quote(if={ post.repost != null }) RP: ...
+		a.quote(if={ post.repost }, href={ '/post:' + post.repost }) RP: ...
 	details(if={ post.images })
 		summary ({ post.images.length }枚の画像)
 		mk-images-viewer(images={ post.images })
