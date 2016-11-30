@@ -180,8 +180,9 @@ style.
 				> .name
 					display inline-block
 					margin 0
+					line-height 24px
 					color #777
-					font-size 1.2em
+					font-size 18px
 					font-weight 700
 					text-align left
 					text-decoration none
