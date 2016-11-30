@@ -4,19 +4,9 @@ mk-entrance-signup
 
 style.
 	display block
-	width 368px
 	margin 0 auto
-
-	&:hover
-		> .cancel
-			opacity 1
-
-	> mk-signup
-		padding 18px 32px 0 32px
-		background #fff
-		border solid 1px rgba(0, 0, 0, 0.1)
-		border-radius 4px
-		box-shadow 0 0 8px rgba(0, 0, 0, 0.1)
+	padding 0 8px
+	max-width 350px
 
 	> .cancel
 		cursor pointer
@@ -33,7 +23,6 @@ style.
 		outline none
 		box-shadow none
 		background transparent
-		opacity 0
 		transition opacity 0.1s ease
 
 		&:hover

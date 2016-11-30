@@ -98,13 +98,12 @@ mk-signup
 				a() 利用規約
 				| に同意する
 
-		mk-ripple-button(onclick={ onsubmit })
+		button(onclick={ onsubmit })
 			| アカウント作成
 
 style.
 	display block
-	padding 18px 32px 0 32px
-	min-width 368px
+	min-width 302px
 	overflow hidden
 
 	> form
@@ -220,12 +219,20 @@ style.
 				display inline
 				color #555
 
-		mk-ripple-button
-			margin 20px 0 32px 0
+		button
+			margin 0 0 32px 0
+			padding 16px
 			width 100%
 			font-size 1em
 			color #fff
+			background $theme-color
 			border-radius 3px
+
+			&:hover
+				background lighten($theme-color, 5%)
+
+			&:active
+				background darken($theme-color, 5%)
 
 script.
 	@mixin \api

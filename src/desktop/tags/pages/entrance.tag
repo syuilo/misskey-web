@@ -24,7 +24,7 @@ mk-entrance
 			mk-entrance-signup(if={ mode == 'signup' }, onsignin={ signin })
 
 	footer
-		p (c) syuilo 2014-2016
+		mk-copyright
 
 style.
 	display block
@@ -81,7 +81,7 @@ style.
 					opacity 0.3
 
 	> footer
-		> p
+		> mk-copyright
 			margin 0
 			text-align center
 			line-height 64px

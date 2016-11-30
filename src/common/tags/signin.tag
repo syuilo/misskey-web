@@ -3,7 +3,6 @@ mk-signin
 		h1
 			img@avatar(src={ user.avatar_url + '?thumbnail&size=32' }, if={ user })
 			p { user ? user.name : 'アカウント' }
-		a.help(href={ CONFIG.urls.about + '/help' }, title='お困りですか？'): i.fa.fa-question
 		label.user-name
 			input@username(
 				type='text'
@@ -27,11 +26,6 @@ style.
 	> form
 		display block
 		z-index 2
-		padding 10px 28px 0 28px
-
-		&:hover
-			> .help
-				opacity 1
 
 		> h1
 			display block
@@ -61,32 +55,6 @@ style.
 
 				&[src='']
 					display none
-
-		> .help
-			cursor pointer
-			display block
-			position absolute
-			top 0
-			right 0
-			z-index 1
-			margin 0
-			padding 0
-			font-size 1.2em
-			color #999
-			border none
-			outline none
-			background transparent
-			opacity 0
-			transition opacity 0.1s ease
-
-			&:hover
-				color #444
-
-			&:active
-				color #222
-
-			> i
-				padding 14px
 
 		label
 			display block
