@@ -4,8 +4,13 @@ mk-home-page
 style.
 	display block
 
+	background-position center center
+	background-attachment fixed
+	background-size cover
+
 script.
 	@mixin \i
+	@mixin \api
 	@mixin \ui-progress
 	@mixin \stream
 	@mixin \get-post-summary
@@ -15,6 +20,11 @@ script.
 
 	@on \mount ~>
 		document.title = 'Misskey'
+		if @I.data.wallpaper
+			@api \drive/files/show do
+				file: @I.data.wallpaper
+			.then (file) ~>
+				@root.style.background-image = 'url(' + file.url + ')'
 		@Progress.start!
 		@stream.on \post @on-stream-post
 		document.add-event-listener \visibilitychange @window-on-visibilitychange, false

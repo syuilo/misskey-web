@@ -38,6 +38,7 @@ script.
 	@mixin \i
 	@mixin \update-avatar
 	@mixin \update-banner
+	@mixin \update-wallpaper
 	@mixin \input-dialog
 	@mixin \NotImplementedException
 
@@ -90,7 +91,10 @@ script.
 		, @file
 
 	@set-wallpaper = ~>
-		@NotImplementedException!
+		@ctx-controller.trigger \close
+		@update-wallpaper @I, (i) ~>
+			@update-i i
+		, @file
 
 	@add-app = ~>
 		@NotImplementedException!

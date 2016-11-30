@@ -5,6 +5,9 @@ mk-drive-browser-file(data-is-selected={ (file._selected || false).toString() },
 	div.label(if={ I.banner == file.id })
 		img(src='/_/resources/label.svg')
 		p バナー
+	div.label(if={ I.data.wallpaper == file.id })
+		img(src='/_/resources/label.svg')
+		p 壁紙
 	div.thumbnail: img(src={ file.url + '?thumbnail&size=128' }, alt='')
 	p.name
 		span { file.name.lastIndexOf('.') != -1 ? file.name.substr(0, file.name.lastIndexOf('.')) : file.name }

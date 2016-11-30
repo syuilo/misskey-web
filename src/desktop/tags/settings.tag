@@ -21,37 +21,42 @@ mk-settings
 		p(class={ active: page == 'password' }, onmousedown={ set-page.bind(null, 'password') })
 			i.fa.fa-fw.fa-unlock-alt
 			| パスワード
-	div.pages
-		section.account(show={ page == 'account' })
-			h1 アカウント
-			div.id
-				p ユーザーID:
-				code { I.id }
-			label.avatar
-				p アバター
-				img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar')
-				button.style-normal(onclick={ avatar }) 画像を選択
-			label
-				p 名前
-				input@account-name(type='text', value={ I.name })
-			label
-				p 場所
-				input@account-location(type='text', value={ I.location })
-			label
-				p 自己紹介
-				textarea@account-bio { I.bio }
-			button.style-primary(onclick={ update-account }) 保存
 
-		section.web(show={ page == 'web' })
-			h1 その他
-			label.checkbox
-				input(type='checkbox', checked={ I.data.cache }, onclick={ update-cache })
-				p 読み込みを高速化する
-				p API通信時に新鮮なユーザー情報をキャッシュすることでフェッチのオーバーヘッドを無くします。(実験的)
-			label.checkbox
-				input(type='checkbox', checked={ I.data.debug }, onclick={ update-debug })
-				p 開発者モード
-				p デバッグ等の開発者モードを有効にします。
+	div.pages
+		div.account(show={ page == 'account' })
+			section
+				h1 アカウント
+				label.avatar
+					p アバター
+					img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+					button.style-normal(onclick={ avatar }) 画像を選択
+				label
+					p 名前
+					input@account-name(type='text', value={ I.name })
+				label
+					p 場所
+					input@account-location(type='text', value={ I.location })
+				label
+					p 自己紹介
+					textarea@account-bio { I.bio }
+				button.style-primary(onclick={ update-account }) 保存
+
+		div.web(show={ page == 'web' })
+			section
+				h1 デザイン
+				label
+					p 壁紙
+					button.style-normal(onclick={ wallpaper }) 画像を選択
+			section
+				h1 その他
+				label.checkbox
+					input(type='checkbox', checked={ I.data.cache }, onclick={ update-cache })
+					p 読み込みを高速化する
+					p API通信時に新鮮なユーザー情報をキャッシュすることでフェッチのオーバーヘッドを無くします。(実験的)
+				label.checkbox
+					input(type='checkbox', checked={ I.data.debug }, onclick={ update-debug })
+					p 開発者モード
+					p デバッグ等の開発者モードを有効にします。
 
 style.
 	display block
@@ -112,82 +117,73 @@ style.
 		left 200px
 		width calc(100% - 200px)
 
-		> section
-			padding 32px
+		> div
+			> section
+				padding 32px
 
-			//	& + section
-			//		margin-top 16px
+				//	& + section
+				//		margin-top 16px
 
-			h1
-				display block
-				margin 0
-				padding 0 0 8px 0
-				font-size 1em
-				color #555
-				border-bottom solid 1px #eee
-
-			label
-				display block
-				margin 16px 0
-
-				&:after
-					content ""
+				h1
 					display block
-					clear both
+					margin 0
+					padding 0 0 8px 0
+					font-size 1em
+					color #555
+					border-bottom solid 1px #eee
 
-				> p
-					margin 0 0 8px 0
-					font-weight bold
-					color #999
+				label
+					display block
+					margin 16px 0
 
-				&.checkbox
-					> input
-						position absolute
-						top 0
-						left 0
-
-						&:checked + p
-							color $theme-color
+					&:after
+						content ""
+						display block
+						clear both
 
 					> p
-						width calc(100% - 32px)
-						margin 0 0 0 32px
+						margin 0 0 8px 0
 						font-weight bold
+						color #999
 
-						&:last-child
-							font-weight normal
-							color #999
+					&.checkbox
+						> input
+							position absolute
+							top 0
+							left 0
+
+							&:checked + p
+								color $theme-color
+
+						> p
+							width calc(100% - 32px)
+							margin 0 0 0 32px
+							font-weight bold
+
+							&:last-child
+								font-weight normal
+								color #999
 
 			&.account
-				> .id
-					position absolute
-					top 32px
-					right 34px
-					color #aaa
+				> .general
+					> .avatar
+						> img
+							display block
+							float left
+							width 64px
+							height 64px
+							border-radius 4px
 
-					> p
-						display inline
-						margin 0 4px 0 0
-						font-weight bold
-
-				> .avatar
-
-					> img
-						display block
-						float left
-						width 64px
-						height 64px
-						border-radius 4px
-
-					> button
-						float left
-						margin-left 8px
+						> button
+							float left
+							margin-left 8px
 
 script.
 	@mixin \i
 	@mixin \api
 	@mixin \dialog
 	@mixin \update-avatar
+	@mixin \update-wallpaper
 
 	@page = \account
 
@@ -196,6 +192,10 @@ script.
 
 	@avatar = ~>
 		@update-avatar @I, (i) ~>
+			@update-i i
+
+	@wallpaper = ~>
+		@update-wallpaper @I, (i) ~>
 			@update-i i
 
 	@update-account = ~>

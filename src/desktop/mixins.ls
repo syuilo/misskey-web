@@ -32,6 +32,9 @@ module.exports = (me) ~>
 	riot.mixin \update-banner do
 		update-banner: require './scripts/update-banner.ls'
 
+	riot.mixin \update-wallpaper do
+		update-wallpaper: require './scripts/update-wallpaper.ls'
+
 	riot.mixin \autocomplete do
 		Autocomplete: require './scripts/autocomplete.ls'
 

@@ -12,11 +12,6 @@ style.
 		margin 0 auto
 		width 1100px
 
-		//background-image url('/_/resources/desktop/pages/home/nyaruko.jpg')
-		//background-position center center
-		//background-attachment fixed
-		//background-size cover
-
 		&:after
 			content ''
 			display block
