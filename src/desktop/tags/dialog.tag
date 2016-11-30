@@ -142,7 +142,7 @@ script.
 				@unmount!
 		}
 
-	@refs.bg-click = ~>
+	@bg-click = ~>
 		if @can-through
 			if @opts.on-through?
 				@opts.on-through!
