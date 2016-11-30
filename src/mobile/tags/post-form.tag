@@ -204,7 +204,7 @@ script.
 		return true
 
 	@select-file = ~>
-		@file.click!
+		@refs.file.click!
 
 	@select-file-from-drive = ~>
 		browser = document.body.append-child document.create-element \mk-drive-selector
