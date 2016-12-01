@@ -2,7 +2,7 @@ mk-ui-header-nav: ul(if={ SIGNIN })
 	li.home.active: a(href={ CONFIG.url })
 		i.fa.fa-home
 		p ホーム
-	li.mentions: a(href={ CONFIG.url + '/i/mentions' })
+	li.mentions: a(href={ CONFIG.url + '/i>mentions' })
 		i.fa.fa-at
 		p あなた宛て
 	li.messaging: a(onclick={ messaging })

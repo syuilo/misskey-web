@@ -1,7 +1,9 @@
 mk-home
 	div.main
 		div.left@left
-		main: mk-timeline-home-widget(event={ tl-event })
+		main
+			mk-timeline-home-widget(if={ mode == 'timeline' }, event={ tl-event })
+			mk-mentions-home-widget(if={ mode == 'mentions' }, event={ tl-event })
 		div.right@right
 	mk-detect-slow-internet-connection-notice
 
@@ -45,6 +47,10 @@ style.
 script.
 	@mixin \i
 	@event = @opts.event
+	@mode = @opts.mode || \timeline
+
+	# https://github.com/riot/riot/issues/2080
+	if @mode == '' then @mode = \timeline
 
 	@home = []
 	@tl-event = riot.observable!

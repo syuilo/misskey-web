@@ -11,6 +11,7 @@ module.exports = (me) ~>
 	#--------------------------------
 
 	route \/ index
+	route \/i>mentions mentions
 	route \/post::post post
 	route \/search::query search
 	route \/:user user.bind null \home
@@ -29,6 +30,11 @@ module.exports = (me) ~>
 
 	function entrance
 		mount document.create-element \mk-entrance
+
+	function mentions
+		document.create-element \mk-home-page
+			..set-attribute \mode \mentions
+			.. |> mount
 
 	function search ctx
 		document.create-element \mk-search-page
