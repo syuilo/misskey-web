@@ -18,7 +18,6 @@ style.
 script.
 	@mixin \i
 
-	# ↓ CSS backdrop-filter が広く実装され次第廃止(主にChrome待ち)
 	@ui = riot.observable!
 	riot.mixin \ui do
 		ui: @ui
@@ -27,20 +26,6 @@ script.
 
 	@ui.on \toggle-post-form ~>
 		@post-form-controller.trigger \toggle
-
-	@post-form-controller.on \opening ~>
-		@ui.trigger \blur 100ms
-
-	@post-form-controller.on \closing ~>
-		@ui.trigger \unblur 300ms
-
-	@ui.on \blur (duration = 100ms) ~>
-		Velocity @refs.global, \finish true
-		Velocity @refs.global, { blur: 5 } duration
-
-	@ui.on \unblur (duration = 100ms) ~>
-		Velocity @refs.global, \finish true
-		Velocity @refs.global, { blur: 0 } duration
 
 	@ui.on \notification (text) ~>
 		alert text
