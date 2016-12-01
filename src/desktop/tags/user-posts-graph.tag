@@ -19,7 +19,7 @@ script.
 		@update!
 
 		@api \aggregation/users/post do
-			user: @user.id
+			user_id: @user.id
 			limit: 30days
 		.then (data) ~>
 			data = data.reverse!

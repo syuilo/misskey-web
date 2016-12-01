@@ -124,7 +124,7 @@ script.
 	@ok = ~>
 		@wait = true
 		@api \posts/create do
-			repost: @opts.post.id
+			repost_id: @opts.post.id
 			text: if @quote then @refs.text.value else undefined
 		.then (data) ~>
 			@event.trigger \posted

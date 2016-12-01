@@ -1,10 +1,10 @@
 mk-timeline-post-sub(title={ title })
 	article
 		a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username })
-			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ post.user.id })
+			img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ post.user_id })
 		div.main
 			header
-				a.name(href={ CONFIG.url + '/' + post.user.username })
+				a.name(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user_id })
 					| { post.user.name }
 				span.username
 					| @{ post.user.username }

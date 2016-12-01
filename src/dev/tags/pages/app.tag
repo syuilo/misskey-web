@@ -14,7 +14,7 @@ script.
 
 	@on \mount ~>
 		@api \app/show do
-			id: @opts.app
+			app_id: @opts.app
 		.then (app) ~>
 			@app = app
 			@update!

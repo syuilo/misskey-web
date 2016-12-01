@@ -27,8 +27,8 @@ mk-timeline-post(class={ repost: is-repost })
 					a.reply(if={ p.reply_to }): i.fa.fa-reply
 					soan@text
 					a.quote(if={ p.repost != null }) RP:
-				div.images(if={ p.images })
-					mk-images-viewer(images={ p.images })
+				div.media(if={ p.media })
+					mk-images-viewer(images={ p.media })
 				div.repost(if={ p.repost })
 					i.fa.fa-quote-right.fa-flip-horizontal
 					mk-post-preview.repost(post={ p.repost })
@@ -192,7 +192,7 @@ style.
 						font-style oblique
 						color #a0bf46
 
-				> .images
+				> .media
 					> img
 						display block
 						max-width 100%
@@ -285,19 +285,19 @@ script.
 		text = window.prompt '「' + @summary + '」をRepost'
 		if text?
 			@api \posts/create do
-				repost: @p.id
+				repost_id: @p.id
 				text: if text == '' then undefined else text
 
 	@like = ~>
 		if @p.is_liked
 			@api \posts/likes/delete do
-				post: @p.id
+				post_id: @p.id
 			.then ~>
 				@p.is_liked = false
 				@update!
 		else
 			@api \posts/likes/create do
-				post: @p.id
+				post_id: @p.id
 			.then ~>
 				@p.is_liked = true
 				@update!

@@ -20,19 +20,19 @@ script.
 		@update!
 
 		@api \aggregation/posts/like do
-			post: @post.id
+			post_id: @post.id
 			limit: 30days
 		.then (likes) ~>
 			likes = likes.reverse!
 
 			@api \aggregation/posts/repost do
-				post: @post.id
+				post_id: @post.id
 				limit: 30days
 			.then (repost) ~>
 				repost = repost.reverse!
 
 				@api \aggregation/posts/reply do
-					post: @post.id
+					post_id: @post.id
 					limit: 30days
 				.then (replies) ~>
 					replies = replies.reverse!

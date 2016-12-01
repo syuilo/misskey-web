@@ -4,8 +4,8 @@ mk-ui
 	div.global@global
 		mk-ui-header@header(ui={ ui })
 
-		mk-set-avatar-suggestion(if={ SIGNIN && I.avatar == null })
-		mk-set-banner-suggestion(if={ SIGNIN && I.banner == null })
+		mk-set-avatar-suggestion(if={ SIGNIN && I.avatar_id == null })
+		mk-set-banner-suggestion(if={ SIGNIN && I.banner_id == null })
 
 		div.content
 			<yield />

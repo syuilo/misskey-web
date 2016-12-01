@@ -12,7 +12,7 @@ script.
 
 	@fetch = (iknow, limit, cursor, cb) ~>
 		@api \users/followers do
-			user: @user.id
+			user_id: @user.id
 			iknow: iknow
 			limit: limit
 			cursor: if cursor? then cursor else undefined

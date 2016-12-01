@@ -418,8 +418,8 @@ script.
 
 		@api \posts/create do
 			text: @refs.text.value
-			images: files
-			reply_to: if @opts.reply? then @opts.reply.id else undefined
+			media_ids: files
+			reply_to_id: if @opts.reply? then @opts.reply.id else undefined
 		.then (data) ~>
 			@controller.trigger \post
 			@clear!

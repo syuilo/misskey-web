@@ -14,12 +14,12 @@ mk-notifications
 						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 
 				div.main(if={ notification.type == 'repost' })
-					a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user.id })
+					a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user_id })
 						img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
 					div.text
 						p
 							i.fa.fa-retweet
-							a(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user.id }) { notification.post.user.name }
+							a(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user_id }) { notification.post.user.name }
 						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post.repost) }
 
 				div.main(if={ notification.type == 'follow' })
@@ -31,21 +31,21 @@ mk-notifications
 							a(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
 
 				div.main(if={ notification.type == 'reply' })
-					a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user.id })
+					a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user_id })
 						img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
 					div.text
 						p
 							i.fa.fa-reply
-							a(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user.id }) { notification.post.user.name }
+							a(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user_id }) { notification.post.user.name }
 						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 
 				div.main(if={ notification.type == 'mention' })
-					a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user.id })
+					a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user_id })
 						img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
 					div.text
 						p
 							i.fa.fa-at
-							a(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user.id }) { notification.post.user.name }
+							a(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user_id }) { notification.post.user.name }
 						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 
 			p.date(if={ i != notifications.length - 1 && notification._date != notifications[i + 1]._date })

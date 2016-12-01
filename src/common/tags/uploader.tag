@@ -177,7 +177,7 @@ script.
 		data.append \file file
 
 		if folder?
-			data.append \folder folder
+			data.append \folder_id folder
 
 		xhr = new XMLHttpRequest!
 		xhr.open \POST CONFIG.api.url + '/drive/files/create' true

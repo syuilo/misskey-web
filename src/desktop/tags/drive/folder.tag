@@ -74,6 +74,7 @@ script.
 	@ondragover = (e) ~>
 		e.prevent-default!
 		e.stop-propagation!
+
 		# 自分自身がドラッグされていない場合
 		if !@is-dragging
 			# ドラッグされてきたものがファイルだったら
@@ -116,8 +117,8 @@ script.
 			file = obj.id
 			@browser.remove-file file
 			@api \drive/files/update do
-				file: file
-				folder: @folder.id
+				file_id: file
+				folder_id: @folder.id
 			.then ~>
 				# something
 			.catch (err, text-status) ~>
@@ -131,8 +132,8 @@ script.
 				return false
 			@browser.remove-folder folder
 			@api \drive/folders/update do
-				folder: folder
-				parent: @folder.id
+				folder_id: folder
+				parent_id: @folder.id
 			.then ~>
 				# something
 			.catch (err) ~>

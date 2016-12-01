@@ -289,8 +289,7 @@ script.
 
 	@on-stream-drive-file-updated = (file) ~>
 		current = if @folder? then @folder.id else null
-		updated-file-parent = if file.folder? then file.folder else null
-		if current != updated-file-parent
+		if current != file.folder_id
 			@remove-file file
 		else
 			@add-file file, true
@@ -300,8 +299,7 @@ script.
 
 	@on-stream-drive-folder-updated = (folder) ~>
 		current = if @folder? then @folder.id else null
-		updated-folder-parent = if folder.folder? then folder.folder else null
-		if current != updated-folder-parent
+		if current != folder.parent_id
 			@remove-folder folder
 		else
 			@add-folder folder, true
@@ -353,6 +351,7 @@ script.
 	@ondragover = (e) ~>
 		e.prevent-default!
 		e.stop-propagation!
+
 		# ドラッグ元が自分自身の所有するアイテムかどうか
 		if !@is-drag-source
 			# ドラッグされてきたものがファイルだったら
@@ -367,6 +366,7 @@ script.
 		return false
 
 	@ondragenter = (e) ~>
+		e.prevent-default!
 		if !@is-drag-source
 			@draghover = true
 
@@ -398,8 +398,8 @@ script.
 				return false
 			@remove-file file
 			@api \drive/files/update do
-				file: file
-				folder: if @folder? then @folder.id else \null
+				file_id: file
+				folder_id: if @folder? then @folder.id else \null
 			.then ~>
 				# something
 			.catch (err, text-status) ~>
@@ -415,8 +415,8 @@ script.
 				return false
 			@remove-folder folder
 			@api \drive/folders/update do
-				folder: folder
-				parent: if @folder? then @folder.id else \null
+				folder_id: folder
+				parent_id: if @folder? then @folder.id else \null
 			.then ~>
 				# something
 			.catch (err) ~>
@@ -462,7 +462,7 @@ script.
 
 		@api \drive/folders/create do
 			name: name
-			folder: if @folder? then @folder.id else undefined
+			folder_id: if @folder? then @folder.id else undefined
 		.then (folder) ~>
 			@add-folder folder, true
 			@update!
@@ -513,18 +513,18 @@ script.
 		@update!
 
 		@api \drive/folders/show do
-			folder: target-folder
+			folder_id: target-folder
 		.then (folder) ~>
 			@folder = folder
 			@hierarchy-folders = []
 
 			x = (f) ~>
 				@hierarchy-folders.unshift f
-				if f.folder?
-					x f.folder
+				if f.parent?
+					x f.parent
 
-			if folder.folder?
-				x folder.folder
+			if folder.parent?
+				x folder.parent
 
 			@update!
 			@load!
@@ -533,8 +533,7 @@ script.
 
 	@add-folder = (folder, unshift = false) ~>
 		current = if @folder? then @folder.id else null
-		addee-parent = if folder.folder? then folder.folder else null
-		if current != addee-parent
+		if current != folder.parent_id
 			return
 
 		if (@folders.some (f) ~> f.id == folder.id)
@@ -549,8 +548,7 @@ script.
 
 	@add-file = (file, unshift = false) ~>
 		current = if @folder? then @folder.id else null
-		addee-parent = if file.folder? then file.folder else null
-		if current != addee-parent
+		if current != file.folder_id
 			return
 
 		if (@files.some (f) ~> f.id == file.id)
@@ -601,7 +599,7 @@ script.
 
 		# フォルダ一覧取得
 		@api \drive/folders do
-			folder: if @folder? then @folder.id else null
+			folder_id: if @folder? then @folder.id else null
 			limit: folders-max + 1
 		.then (folders) ~>
 			if folders.length == folders-max + 1
@@ -614,7 +612,7 @@ script.
 
 		# ファイル一覧取得
 		@api \drive/files do
-			folder: if @folder? then @folder.id else null
+			folder_id: if @folder? then @folder.id else null
 			limit: files-max + 1
 		.then (files) ~>
 			if files.length == files-max + 1

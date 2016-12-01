@@ -33,8 +33,8 @@ mk-post-detail
 					| @{ p.user.username }
 			div.body
 				div.text@text
-				div.images(if={ p.images })
-					virtual(each={ file in p.images })
+				div.media(if={ p.media })
+					virtual(each={ file in p.media })
 						img(src={ file.url + '?thumbnail&size=512' }, alt={ file.name }, title={ file.name })
 			a.time(href={ url })
 				mk-time(time={ p.created_at }, mode='detail')
@@ -219,7 +219,7 @@ style.
 					> mk-url-preview
 						margin-top 8px
 
-				> .images
+				> .media
 					> img
 						display block
 						max-width 100%
@@ -334,7 +334,7 @@ script.
 
 	@on \mount ~>
 		@api \posts/show do
-			id: @opts.post
+			post_id: @opts.post
 		.then (post) ~>
 			@post = post
 			@is-repost = @post.repost?
@@ -362,7 +362,7 @@ script.
 
 			# Get likes
 			@api \posts/likes do
-				id: @p.id
+				post_id: @p.id
 				limit: 8
 			.then (likes) ~>
 				@likes = likes
@@ -370,7 +370,7 @@ script.
 
 			# Get reposts
 			@api \posts/reposts do
-				id: @p.id
+				post_id: @p.id
 				limit: 8
 			.then (reposts) ~>
 				@reposts = reposts
@@ -378,7 +378,7 @@ script.
 
 			# Get replies
 			@api \posts/replies do
-				id: @p.id
+				post_id: @p.id
 				limit: 8
 			.then (replies) ~>
 				@replies = replies
@@ -394,19 +394,19 @@ script.
 		text = window.prompt '「' + @summary + '」をRepost'
 		if text?
 			@api \posts/create do
-				repost: @p.id
+				repost_id: @p.id
 				text: if text == '' then undefined else text
 
 	@like = ~>
 		if @p.is_liked
 			@api \posts/likes/delete do
-				post: @p.id
+				post_id: @p.id
 			.then ~>
 				@p.is_liked = false
 				@update!
 		else
 			@api \posts/likes/create do
-				post: @p.id
+				post_id: @p.id
 			.then ~>
 				@p.is_liked = true
 				@update!
@@ -416,7 +416,7 @@ script.
 
 		# Get context
 		@api \posts/context do
-			id: @p.reply_to.id
+			post_id: @p.reply_to.id
 		.then (context) ~>
 			@context = context.reverse!
 			@loading-context = false

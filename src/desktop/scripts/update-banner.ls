@@ -42,7 +42,7 @@ module.exports = (I, cb, file = null) ~>
 			controller: progress-controller
 
 		if folder?
-			data.append \folder folder.id
+			data.append \folder_id folder.id
 
 		xhr = new XMLHttpRequest!
 		xhr.open \POST CONFIG.api.url + \/drive/files/create true
@@ -59,7 +59,7 @@ module.exports = (I, cb, file = null) ~>
 
 	@set = (file) ~>
 		api I, \i/update do
-			banner: file.id
+			banner_id: file.id
 		.then (i) ~>
 			dialog do
 				'<i class="fa fa-info-circle"></i>バナーを更新しました'

@@ -27,7 +27,9 @@ script.
 		@hover = false
 
 	@ondragover = (e) ~>
+		e.prevent-default!
 		e.stop-propagation!
+
 		# このフォルダがルートかつカレントディレクトリならドロップ禁止
 		if @folder == null and @browser.folder == null
 			e.data-transfer.drop-effect = \none
@@ -69,8 +71,8 @@ script.
 			file = obj.id
 			@browser.remove-file file
 			@api \drive/files/update do
-				file: file
-				folder: if @folder? then @folder.id else null
+				file_id: file
+				folder_id: if @folder? then @folder.id else null
 			.then ~>
 				# something
 			.catch (err, text-status) ~>
@@ -84,8 +86,8 @@ script.
 				return false
 			@browser.remove-folder folder
 			@api \drive/folders/update do
-				folder: folder
-				parent: if @folder? then @folder.id else null
+				folder_id: folder
+				parent_id: if @folder? then @folder.id else null
 			.then ~>
 				# something
 			.catch (err, text-status) ~>

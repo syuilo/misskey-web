@@ -1,8 +1,8 @@
 mk-drive-browser-file(data-is-selected={ (file._selected || false).toString() }, data-is-contextmenu-showing={ is-contextmenu-showing.toString() }, onclick={ onclick }, oncontextmenu={ oncontextmenu }, draggable='true', ondragstart={ ondragstart }, ondragend={ ondragend }, title={ title })
-	div.label(if={ I.avatar == file.id })
+	div.label(if={ I.avatar_id == file.id })
 		img(src='/_/resources/label.svg')
 		p アバター
-	div.label(if={ I.banner == file.id })
+	div.label(if={ I.banner_id == file.id })
 		img(src='/_/resources/label.svg')
 		p バナー
 	div.label(if={ I.data.wallpaper == file.id })

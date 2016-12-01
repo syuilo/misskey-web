@@ -22,7 +22,7 @@ script.
 		document.title = 'Misskey'
 		if @I.data.wallpaper
 			@api \drive/files/show do
-				file: @I.data.wallpaper
+				file_id: @I.data.wallpaper
 			.then (file) ~>
 				@root.style.background-image = 'url(' + file.url + ')'
 		@Progress.start!
@@ -37,7 +37,7 @@ script.
 		@Progress.done!
 
 	@on-stream-post = (post) ~>
-		if document.hidden and post.user.id !== @I.id
+		if document.hidden and post.user_id !== @I.id
 			@unread-count++
 			document.title = '(' + @unread-count + ') ' + @get-post-summary post
 

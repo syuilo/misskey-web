@@ -1,10 +1,10 @@
 mk-post-detail-sub(title={ title })
 	a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username })
-		img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ post.user.id })
+		img.avatar(src={ post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar', data-user-preview={ post.user_id })
 	div.main
 		header
 			div.left
-				a.name(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user.id })
+				a.name(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user_id })
 					| { post.user.name }
 				span.username
 					| @{ post.user.username }
@@ -13,8 +13,8 @@ mk-post-detail-sub(title={ title })
 					mk-time(time={ post.created_at })
 		div.body
 			div.text@text
-			div.images(if={ post.images })
-				virtual(each={ file in post.images })
+			div.media(if={ post.media })
+				virtual(each={ file in post.media })
 					img(src={ file.url + '?thumbnail&size=512' }, alt={ file.name }, title={ file.name })
 
 style.
@@ -100,7 +100,7 @@ style.
 				> mk-url-preview
 					margin-top 8px
 
-			> .images
+			> .media
 				> img
 					display block
 					max-width 100%
@@ -151,13 +151,13 @@ script.
 	@like = ~>
 		if @post.is_liked
 			@api \posts/likes/delete do
-				post: @post.id
+				post_id: @post.id
 			.then ~>
 				@post.is_liked = false
 				@update!
 		else
 			@api \posts/likes/create do
-				post: @post.id
+				post_id: @post.id
 			.then ~>
 				@post.is_liked = true
 				@update!

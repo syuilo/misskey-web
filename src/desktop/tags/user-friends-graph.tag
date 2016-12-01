@@ -19,13 +19,13 @@ script.
 		@update!
 
 		@api \aggregation/users/followers do
-			user: @user.id
+			user_id: @user.id
 			limit: 30days
 		.then (followers) ~>
 			followers = followers.reverse!
 
 			@api \aggregation/users/following do
-				user: @user.id
+				user_id: @user.id
 				limit: 30days
 			.then (following) ~>
 				following = following.reverse!

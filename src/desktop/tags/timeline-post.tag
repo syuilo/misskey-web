@@ -5,9 +5,9 @@ mk-timeline-post(tabindex='-1', title={ title }, onkeydown={ on-key-down })
 
 	div.repost(if={ is-repost })
 		p
-			a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user.id }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar')
+			a.avatar-anchor(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user_id }): img.avatar(src={ post.user.avatar_url + '?thumbnail&size=32' }, alt='avatar')
 			i.fa.fa-retweet
-			a.name(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user.id }) { post.user.name }
+			a.name(href={ CONFIG.url + '/' + post.user.username }, data-user-preview={ post.user_id }) { post.user.name }
 			| がRepost
 		mk-time(time={ post.created_at })
 
@@ -27,8 +27,8 @@ mk-timeline-post(tabindex='-1', title={ title }, onkeydown={ on-key-down })
 					a.reply(if={ p.reply_to }): i.fa.fa-reply
 					soan@text
 					a.quote(if={ p.repost != null }) RP:
-				div.images(if={ p.images })
-					mk-images-viewer(images={ p.images })
+				div.media(if={ p.media })
+					mk-images-viewer(images={ p.media })
 				div.repost(if={ p.repost })
 					i.fa.fa-quote-right.fa-flip-horizontal
 					mk-post-preview.repost(post={ p.repost })
@@ -193,7 +193,7 @@ style.
 						font-style oblique
 						color #a0bf46
 
-				> .images
+				> .media
 					> img
 						display block
 						max-width 100%
@@ -345,13 +345,13 @@ script.
 	@like = ~>
 		if @p.is_liked
 			@api \posts/likes/delete do
-				post: @p.id
+				post_id: @p.id
 			.then ~>
 				@p.is_liked = false
 				@update!
 		else
 			@api \posts/likes/create do
-				post: @p.id
+				post_id: @p.id
 			.then ~>
 				@p.is_liked = true
 				@update!

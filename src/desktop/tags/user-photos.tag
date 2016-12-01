@@ -73,13 +73,13 @@ script.
 			@update!
 
 			@api \users/posts do
-				user: @user.id
-				with_images: true
+				user_id: @user.id
+				with_media: true
 				limit: 9posts
 			.then (posts) ~>
 				@initializing = false
 				posts.for-each (post) ~>
-					post.images.for-each (image) ~>
+					post.media.for-each (image) ~>
 						if @images.length < 9
 							@images.push image
 				@update!

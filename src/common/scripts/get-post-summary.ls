@@ -1,7 +1,7 @@
 get-post-summary = (post) ~>
 	summary = if post.text? then post.text else ''
-	if post.images?
-		summary += " (#{post.images.length}枚の画像)"
+	if post.media?
+		summary += " (#{post.media.length}枚の画像)"
 	if post.reply_to?
 		if typeof post.reply_to == \string
 			summary += " RE: ..."

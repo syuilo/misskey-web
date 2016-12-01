@@ -63,8 +63,8 @@ script.
 
 	@load = (cb) ~>
 		@api \users/posts do
-			user: @user.id
-			with_images: @with-media
+			user_id: @user.id
+			with_media: @with-media
 		.then (posts) ~>
 			@is-loading = false
 			@is-empty = posts.length == 0
@@ -81,9 +81,9 @@ script.
 		@more-loading = true
 		@update!
 		@api \users/posts do
-			user: @user.id
-			with_images: @with-media
-			max: @refs.timeline.tail!.id
+			user_id: @user.id
+			with_media: @with-media
+			max_id: @refs.timeline.tail!.id
 		.then (posts) ~>
 			@more-loading = false
 			@update!

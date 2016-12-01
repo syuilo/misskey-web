@@ -3,9 +3,9 @@ mk-sub-post-content
 		a.reply(if={ post.reply_to }): i.fa.fa-reply
 		span@text
 		a.quote(if={ post.repost }, href={ '/post:' + post.repost }) RP: ...
-	details(if={ post.images })
-		summary ({ post.images.length }枚の画像)
-		mk-images-viewer(images={ post.images })
+	details(if={ post.media })
+		summary ({ post.media.length }枚の画像)
+		mk-images-viewer(images={ post.media })
 
 style.
 	display block

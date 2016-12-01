@@ -403,8 +403,8 @@ script.
 		@messaging-stream.event.on \read @on-read
 
 		@api \messaging/messages do
-			user: if @user? then @user.id else undefined
-			group: if @group? then @group.id else undefined
+			user_id: if @user? then @user.id else undefined
+			group_id: if @group? then @group.id else undefined
 		.then (messages) ~>
 			@init = false
 			@messages = messages.reverse!
@@ -418,8 +418,8 @@ script.
 	@say = ~>
 		@saying = true
 		@api \messaging/messages/create do
-			user: if @user? then @user.id else undefined
-			group: if @group? then @group.id else undefined
+			user_id: if @user? then @user.id else undefined
+			group_id: if @group? then @group.id else undefined
 			text: @text.value
 		.then (message) ~>
 			# something

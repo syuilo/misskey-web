@@ -103,7 +103,7 @@ script.
 		if typeof @u == \string
 			new Promise (resolve, reject) ~>
 				@api \users/show do
-					id: if @u.0 == \@ then undefined else @u
+					user_id: if @u.0 == \@ then undefined else @u
 					username: if @u.0 == \@ then @u.substr 1 else undefined
 				.then (user) ~>
 					resolve user

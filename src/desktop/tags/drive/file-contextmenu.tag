@@ -63,7 +63,7 @@ script.
 			@file.name
 
 		@api \drive/files/update do
-			file: @file.id
+			file_id: @file.id
 			name: name
 		.then ~>
 			# something

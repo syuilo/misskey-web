@@ -114,7 +114,7 @@ script.
 		@wait = true
 		if @user.is_following
 			@api \following/delete do
-				user: @user.id
+				user_id: @user.id
 			.then ~>
 				@user.is_following = false
 			.catch (err) ->
@@ -124,7 +124,7 @@ script.
 				@update!
 		else
 			@api \following/create do
-				user: @user.id
+				user_id: @user.id
 			.then ~>
 				@user.is_following = true
 			.catch (err) ->
