@@ -16,7 +16,11 @@ module.exports = (i) ->
 				@update do
 					I: i
 
-		update-i: (data) ->
-			if data?
-				i := Object.assign i, data
-			ev.trigger \update
+		update-i: update
+
+	function update(data)
+		if data?
+			i := Object.assign i, data
+		ev.trigger \update
+
+	return update

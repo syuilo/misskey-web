@@ -4,7 +4,7 @@
 ReconnectingWebSocket = require \reconnecting-websocket
 riot = require \riot
 
-function init me
+function init me, iupdate
 	state = \initializing
 	state-ev = riot.observable!
 	event = riot.observable!
@@ -30,6 +30,8 @@ function init me
 			# ignore
 
 	get-state = ~> state
+
+	event.on \i_updated iupdate
 
 	{
 		state-ev

@@ -1,10 +1,6 @@
 riot = require \riot
 
-activate = require './common/scripts/i.ls'
-
 module.exports = (me) ~>
-	activate me
-
 	i = if me? then me.token else null
 
 	riot.mixin \cropper do

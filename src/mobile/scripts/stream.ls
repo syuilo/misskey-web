@@ -4,8 +4,8 @@
 stream = require '../../common/scripts/stream.ls'
 riot = require \riot
 
-function init me
-	s = stream me
+function init me, manager
+	s = stream me, manager
 
 	#s.event.on \drive_file_created (file) ~>
 	#	n = new Notification 'ファイルがアップロードされました' do
