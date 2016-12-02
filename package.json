@@ -20,7 +20,7 @@
     "gulp": "3.9.1",
     "gulp-cssnano": "2.1.2",
     "gulp-livescript": "3.0.1",
-    "gulp-pug": "3.1.0",
+    "gulp-pug": "3.2.0",
     "gulp-replace": "0.5.4",
     "gulp-stylus": "2.6.0",
     "gulp-uglify": "2.0.0",
@@ -34,6 +34,6 @@
     "textarea-caret": "3.0.2",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
-    "yargs": "6.4.0"
+    "yargs": "6.5.0"
   }
 }
