@@ -1,5 +1,5 @@
 mk-home-page
-	mk-ui: mk-home(mode={ parent.opts.mode }, event={ parent.event })
+	mk-ui(page={ page }): mk-home(mode={ parent.opts.mode }, event={ parent.event })
 
 style.
 	display block
@@ -17,6 +17,11 @@ script.
 
 	@event = riot.observable!
 	@unread-count = 0
+
+	@page = switch @opts.mode
+		| \timelie => \home
+		| \mentions => \mentions
+		| _ => \home
 
 	@on \mount ~>
 		document.title = 'Misskey'

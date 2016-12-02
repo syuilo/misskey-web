@@ -4,7 +4,7 @@ mk-ui-header
 		div.backdrop
 		div.main: div.container
 			div.left
-				mk-ui-header-nav
+				mk-ui-header-nav(page={ opts.page })
 			div.right
 				mk-ui-header-search
 				mk-ui-header-account(if={ SIGNIN })

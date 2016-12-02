@@ -1,8 +1,8 @@
 mk-ui-header-nav: ul(if={ SIGNIN })
-	li.home.active: a(href={ CONFIG.url })
+	li.home(class={ active: page == 'home' }): a(href={ CONFIG.url })
 		i.fa.fa-home
 		p ホーム
-	li.mentions: a(href={ CONFIG.url + '/i>mentions' })
+	li.mentions(class={ active: page == 'mentions' }): a(href={ CONFIG.url + '/i>mentions' })
 		i.fa.fa-at
 		p あなた宛て
 	li.messaging: a(onclick={ messaging })
@@ -74,6 +74,8 @@ script.
 	@mixin \i
 	@mixin \api
 	@mixin \stream
+
+	@page = @opts.page
 
 	@on \mount ~>
 		@stream.on \read_all_messaging_messages @on-read-all-messaging-messages

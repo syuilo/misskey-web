@@ -2,7 +2,7 @@ mk-ui
 	mk-post-form-window(controller={ post-form-controller })
 
 	div.global@global
-		mk-ui-header@header(ui={ ui })
+		mk-ui-header@header(ui={ ui }, page={ opts.page })
 
 		mk-set-avatar-suggestion(if={ SIGNIN && I.avatar_id == null })
 		mk-set-banner-suggestion(if={ SIGNIN && I.banner_id == null })
