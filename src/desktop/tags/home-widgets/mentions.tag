@@ -55,7 +55,6 @@ style.
 script.
 	@mixin \i
 	@mixin \api
-	@mixin \stream
 
 	@is-loading = true
 	@is-empty = false
@@ -65,8 +64,6 @@ script.
 	@event = @opts.event
 
 	@on \mount ~>
-		@stream.on \mention @on-mention
-
 		document.add-event-listener \keydown @on-document-keydown
 		window.add-event-listener \scroll @on-scroll
 
@@ -74,8 +71,6 @@ script.
 			@event.trigger \loaded
 
 	@on \unmount ~>
-		@stream.off \mention @on-mention
-
 		document.remove-event-listener \keydown @on-document-keydown
 		window.remove-event-listener \scroll @on-scroll
 
@@ -86,9 +81,11 @@ script.
 				@controller.trigger \focus
 
 	@fetch = (cb) ~>
-		@api \posts/mentions do
+		@api \i/notifications do
 			following: @mode == \following
-		.then (posts) ~>
+			type: 'reply, quote, mention'
+		.then (notifications) ~>
+			posts = notifications.map (n) -> n.post
 			@is-loading = false
 			@is-empty = posts.length == 0
 			@update!
@@ -103,20 +100,17 @@ script.
 			return
 		@more-loading = true
 		@update!
-		@api \posts/mentions do
+		@api \i/notifications do
 			following: @mode == \following
+			type: 'reply, quote, mention'
 			max_id: @refs.timeline.tail!.id
-		.then (posts) ~>
+		.then (notifications) ~>
+			posts = notifications.map (n) -> n.post
 			@more-loading = false
 			@update!
 			@controller.trigger \prepend-posts posts
 		.catch (err) ~>
 			console.error err
-
-	@on-mention = (post) ~>
-		@is-empty = false
-		@update!
-		@controller.trigger \add-post post
 
 	@on-scroll = ~>
 		current = window.scroll-y + window.inner-height
@@ -126,5 +120,4 @@ script.
 	@set-mode = (mode) ~>
 		@update do
 			mode: mode
-
 		@fetch!
