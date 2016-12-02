@@ -1,9 +1,13 @@
 mk-mentions-home-widget
+	header
+		span(data-is-active={ mode == 'all' }, onclick={ set-mode.bind(this, 'all') }) すべて
+		span(data-is-active={ mode == 'following' }, onclick={ set-mode.bind(this, 'following') }) フォロー中
 	div.loading(if={ is-loading })
 		mk-ellipsis-icon
 	p.empty(if={ is-empty })
 		i.fa.fa-comments-o
-		| あなた宛ての投稿はありません。
+		span(if={ mode == 'all' }) あなた宛ての投稿はありません。
+		span(if={ mode == 'following' }) あなたがフォローしているユーザーからの言及はありません。
 	mk-timeline@timeline(controller={ controller })
 		<yield to="footer">
 		i.fa.fa-moon-o(if={ !parent.more-loading })
@@ -13,6 +17,23 @@ mk-mentions-home-widget
 style.
 	display block
 	background #fff
+
+	> header
+		padding 8px 16px
+		border-bottom solid 1px #eee
+
+		> span
+			margin-right 16px
+			line-height 27px
+			font-size 18px
+			color #555
+
+			&:not([data-is-active])
+				color $theme-color
+				cursor pointer
+
+				&:hover
+					text-decoration underline
 
 	> .loading
 		padding 64px 0
@@ -39,6 +60,7 @@ script.
 	@is-loading = true
 	@is-empty = false
 	@more-loading = false
+	@mode = \all
 	@controller = riot.observable!
 	@event = @opts.event
 
@@ -48,7 +70,7 @@ script.
 		document.add-event-listener \keydown @on-document-keydown
 		window.add-event-listener \scroll @on-scroll
 
-		@load ~>
+		@fetch ~>
 			@event.trigger \loaded
 
 	@on \unmount ~>
@@ -63,8 +85,9 @@ script.
 			if e.which == 84 # t
 				@controller.trigger \focus
 
-	@load = (cb) ~>
-		@api \posts/mentions
+	@fetch = (cb) ~>
+		@api \posts/mentions do
+			following: @mode == \following
 		.then (posts) ~>
 			@is-loading = false
 			@is-empty = posts.length == 0
@@ -81,6 +104,7 @@ script.
 		@more-loading = true
 		@update!
 		@api \posts/mentions do
+			following: @mode == \following
 			max_id: @refs.timeline.tail!.id
 		.then (posts) ~>
 			@more-loading = false
@@ -98,3 +122,9 @@ script.
 		current = window.scroll-y + window.inner-height
 		if current > document.body.offset-height - 8
 			@more!
+
+	@set-mode = (mode) ~>
+		@update do
+			mode: mode
+
+		@fetch!
