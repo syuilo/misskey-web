@@ -1,8 +1,8 @@
 mk-sub-post-content
 	div.body
-		a.reply(if={ post.reply_to }): i.fa.fa-reply
+		a.reply(if={ post.reply_to_id }): i.fa.fa-reply
 		span@text
-		a.quote(if={ post.repost }, href={ '/post:' + post.repost }) RP: ...
+		a.quote(if={ post.repost_id }, href={ '/post:' + post.repost_id }) RP: ...
 	details(if={ post.media })
 		summary ({ post.media.length }枚の画像)
 		mk-images-viewer(images={ post.media })
