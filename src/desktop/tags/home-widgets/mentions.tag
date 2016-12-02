@@ -81,11 +81,9 @@ script.
 				@controller.trigger \focus
 
 	@fetch = (cb) ~>
-		@api \i/notifications do
+		@api \posts/mentions do
 			following: @mode == \following
-			type: 'reply, quote, mention'
-		.then (notifications) ~>
-			posts = notifications.map (n) -> n.post
+		.then (posts) ~>
 			@is-loading = false
 			@is-empty = posts.length == 0
 			@update!
@@ -100,12 +98,10 @@ script.
 			return
 		@more-loading = true
 		@update!
-		@api \i/notifications do
+		@api \posts/mentions do
 			following: @mode == \following
-			type: 'reply, quote, mention'
 			max_id: @refs.timeline.tail!.id
-		.then (notifications) ~>
-			posts = notifications.map (n) -> n.post
+		.then (posts) ~>
 			@more-loading = false
 			@update!
 			@controller.trigger \prepend-posts posts
