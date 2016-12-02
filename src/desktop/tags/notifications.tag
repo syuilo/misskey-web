@@ -11,7 +11,7 @@ mk-notifications
 						p
 							i.fa.fa-thumbs-o-up
 							a(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id }) { notification.user.name }
-						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
+						a.post-ref(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 
 				div.main(if={ notification.type == 'repost' })
 					a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user_id })
@@ -20,7 +20,16 @@ mk-notifications
 						p
 							i.fa.fa-retweet
 							a(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user_id }) { notification.post.user.name }
-						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post.repost) }
+						a.post-ref(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post.repost) }
+
+				div.main(if={ notification.type == 'quote' })
+					a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user_id })
+						img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=48' }, alt='avatar')
+					div.text
+						p
+							i.fa.fa-quote-left
+							a(href={ CONFIG.url + '/' + notification.post.user.username }, data-user-preview={ notification.post.user_id }) { notification.post.user.name }
+						a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 
 				div.main(if={ notification.type == 'follow' })
 					a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username }, data-user-preview={ notification.user.id })
@@ -115,29 +124,31 @@ style.
 					i
 						margin-right 4px
 
-			&.like, &.repost
-				.post-preview
-					color rgba(0, 0, 0, 0.7)
+			.post-preview
+				color rgba(0, 0, 0, 0.7)
 
-					&:before, &:after
-						font-family FontAwesome
-						font-size 1em
-						font-weight normal
-						font-style normal
-						display inline-block
-						margin-right 3px
+			.post-ref
+				color rgba(0, 0, 0, 0.7)
 
-					&:before
-						content "\f10d"
+				&:before, &:after
+					font-family FontAwesome
+					font-size 1em
+					font-weight normal
+					font-style normal
+					display inline-block
+					margin-right 3px
 
-					&:after
-						content "\f10e"
+				&:before
+					content "\f10d"
+
+				&:after
+					content "\f10e"
 
 			&.like
 				.text p i
 					color #FFAC33
 
-			&.repost
+			&.repost, &.quote
 				.text p i
 					color #77B255
 
@@ -148,9 +159,6 @@ style.
 			&.reply, &.mention
 				.text p i
 					color #555
-
-				.post-preview
-					color rgba(0, 0, 0, 0.7)
 
 		> .date
 			display block

@@ -8,7 +8,7 @@ mk-notification(class={ notification.type })
 			p
 				i.fa.fa-thumbs-o-up
 				a(href={ CONFIG.url + '/' + notification.user.username }) { notification.user.name }
-			a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
+			a.post-ref(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 
 	div.main(if={ notification.type == 'repost' })
 		a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username })
@@ -17,7 +17,16 @@ mk-notification(class={ notification.type })
 			p
 				i.fa.fa-retweet
 				a(href={ CONFIG.url + '/' + notification.post.user.username }) { notification.post.user.name }
-			a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post.repost) }
+			a.post-ref(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post.repost) }
+
+	div.main(if={ notification.type == 'quote' })
+		a.avatar-anchor(href={ CONFIG.url + '/' + notification.post.user.username })
+			img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+		div.text
+			p
+				i.fa.fa-quote-left
+				a(href={ CONFIG.url + '/' + notification.post.user.username }) { notification.post.user.name }
+			a.post-preview(href={ CONFIG.url + '/' + notification.post.user.username + '/' + notification.post.id }) { get-post-summary(notification.post) }
 
 	div.main(if={ notification.type == 'follow' })
 		a.avatar-anchor(href={ CONFIG.url + '/' + notification.user.username })
@@ -89,29 +98,31 @@ style.
 			i
 				margin-right 4px
 
-	&.like, &.repost
-		.post-preview
-			color rgba(0, 0, 0, 0.7)
+	.post-preview
+		color rgba(0, 0, 0, 0.7)
 
-			&:before, &:after
-				font-family FontAwesome
-				font-size 1em
-				font-weight normal
-				font-style normal
-				display inline-block
-				margin-right 3px
+	.post-ref
+		color rgba(0, 0, 0, 0.7)
 
-			&:before
-				content "\f10d"
+		&:before, &:after
+			font-family FontAwesome
+			font-size 1em
+			font-weight normal
+			font-style normal
+			display inline-block
+			margin-right 3px
 
-			&:after
-				content "\f10e"
+		&:before
+			content "\f10d"
+
+		&:after
+			content "\f10e"
 
 	&.like
 		.text p i
 			color #FFAC33
 
-	&.repost
+	&.repost, &.quote
 		.text p i
 			color #77B255
 

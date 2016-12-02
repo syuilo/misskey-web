@@ -5,7 +5,7 @@ mk-notification-preview(class={ notification.type })
 			p
 				i.fa.fa-thumbs-o-up
 				| { notification.user.name }
-			p.post-preview { get-post-summary(notification.post) }
+			p.post-ref { get-post-summary(notification.post) }
 
 	div.main(if={ notification.type == 'repost' })
 		img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
@@ -13,7 +13,15 @@ mk-notification-preview(class={ notification.type })
 			p
 				i.fa.fa-retweet
 				| { notification.post.user.name }
-			p.post-preview { get-post-summary(notification.post.repost) }
+			p.post-ref { get-post-summary(notification.post.repost) }
+
+	div.main(if={ notification.type == 'quote' })
+		img.avatar(src={ notification.post.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+		div.text
+			p
+				i.fa.fa-quote-left
+				| { notification.post.user.name }
+			p.post-preview { get-post-summary(notification.post) }
 
 	div.main(if={ notification.type == 'follow' })
 		img.avatar(src={ notification.user.avatar_url + '?thumbnail&size=64' }, alt='avatar')
@@ -72,28 +80,27 @@ style.
 			i
 				margin-right 4px
 
-	&.like, &.repost
-		.post-preview
+	.post-ref
 
-			&:before, &:after
-				font-family FontAwesome
-				font-size 1em
-				font-weight normal
-				font-style normal
-				display inline-block
-				margin-right 3px
+		&:before, &:after
+			font-family FontAwesome
+			font-size 1em
+			font-weight normal
+			font-style normal
+			display inline-block
+			margin-right 3px
 
-			&:before
-				content "\f10d"
+		&:before
+			content "\f10d"
 
-			&:after
-				content "\f10e"
+		&:after
+			content "\f10e"
 
 	&.like
 		.text p i
 			color #FFAC33
 
-	&.repost
+	&.repost, &.quote
 		.text p i
 			color #77B255
 
