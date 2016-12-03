@@ -214,7 +214,7 @@ script.
 				files.for-each @add-file
 
 	@change-file = ~>
-		files = @file.files
+		files = @refs.file.files
 		for i from 0 to files.length - 1
 			file = files.item i
 			@upload file
@@ -238,7 +238,7 @@ script.
 		@event.trigger \change-files @files
 		@update!
 
-		new @Sortable @attaches, do
+		new @Sortable @refs.attaches, do
 			draggable: \.file
 			animation: 150ms
 
