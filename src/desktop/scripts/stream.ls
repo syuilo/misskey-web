@@ -15,11 +15,19 @@ function init me, manager
 		set-timeout (n.close.bind n), 5000ms
 
 	s.event.on \mention (post) ~>
-		title = switch
-			| post.reply_to_id? => "#{post.user.name}さんから返信"
-			| post.repost_id?   => "#{post.user.name}さんが引用"
-			| _                 => "#{post.user.name}さんから"
-		n = new Notification "#{title}:" do
+		n = new Notification "#{post.user.name}さんから:" do
+			body: get-post-summary post
+			icon: post.user.avatar_url + '?thumbnail&size=64'
+		set-timeout (n.close.bind n), 6000ms
+
+	s.event.on \reply (post) ~>
+		n = new Notification "#{post.user.name}さんから返信:" do
+			body: get-post-summary post
+			icon: post.user.avatar_url + '?thumbnail&size=64'
+		set-timeout (n.close.bind n), 6000ms
+
+	s.event.on \quote (post) ~>
+		n = new Notification "#{post.user.name}さんが引用:" do
 			body: get-post-summary post
 			icon: post.user.avatar_url + '?thumbnail&size=64'
 		set-timeout (n.close.bind n), 6000ms
