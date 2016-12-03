@@ -19,8 +19,7 @@ module.exports = ~>
 			id: uuid!
 			place: \right
 
-	data =
-		cache: true
+	data =	
 		debug: false
 		home: home-data
 
