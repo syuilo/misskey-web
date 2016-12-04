@@ -1,5 +1,6 @@
 mk-app-page
-	main
+	p(if={ fetching }) 読み込み中
+	main(if={ !fetching })
 		header
 			h1 { app.name }
 		div.body
@@ -12,9 +13,12 @@ style.
 script.
 	@mixin \api
 
+	@fetching = true
+
 	@on \mount ~>
 		@api \app/show do
 			app_id: @opts.app
 		.then (app) ~>
 			@app = app
+			@fetching = false
 			@update!

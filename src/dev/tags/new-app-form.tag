@@ -202,7 +202,7 @@ script.
 	@nid-state = null
 
 	@on-change-nid = ~>
-		nid = @nid.value
+		nid = @refs.nid.value
 
 		if nid == ''
 			@nid-state = null
@@ -235,13 +235,13 @@ script.
 				@update!
 
 	@onsubmit = ~>
-		name = @name.value
-		nid = @nid.value
-		description = @description.value
-		cb = @cb.value
+		name = @refs.name.value
+		nid = @refs.nid.value
+		description = @refs.description.value
+		cb = @refs.cb.value
 		permission = []
 
-		@permission.query-selector-all \input .for-each (el) ~>
+		@refs.permission.query-selector-all \input .for-each (el) ~>
 			if el.checked then permission.push el.value
 
 		locker = document.body.append-child document.create-element \mk-locker
