@@ -368,7 +368,7 @@ script.
 		return true
 
 	@select-file = ~>
-		@file.click!
+		@refs.file.click!
 
 	@select-file-from-drive = ~>
 		browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
@@ -381,7 +381,7 @@ script.
 			files.for-each @add-file
 
 	@change-file = ~>
-		files = @file.files
+		files = @refs.file.files
 		for i from 0 to files.length - 1
 			file = files.item i
 			@upload file
