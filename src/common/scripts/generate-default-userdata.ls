@@ -6,7 +6,7 @@ home =
 
 module.exports = ~>
 	home-data = []
-	
+
 	home.left.for-each (widget) ~>
 		home-data.push do
 			name: widget
@@ -19,7 +19,7 @@ module.exports = ~>
 			id: uuid!
 			place: \right
 
-	data =	
+	data =
 		debug: false
 		home: home-data
 
