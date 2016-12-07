@@ -1,4 +1,7 @@
 mk-user-timeline
+	header
+		span(data-is-active={ mode == 'default' }, onclick={ set-mode.bind(this, 'default') }) 投稿
+		span(data-is-active={ mode == 'with-replies' }, onclick={ set-mode.bind(this, 'with-replies') }) 投稿と返信
 	div.loading(if={ is-loading })
 		mk-ellipsis-icon
 	p.empty(if={ is-empty })
@@ -13,6 +16,23 @@ mk-user-timeline
 style.
 	display block
 	background #fff
+
+	> header
+		padding 8px 16px
+		border-bottom solid 1px #eee
+
+		> span
+			margin-right 16px
+			line-height 27px
+			font-size 18px
+			color #555
+
+			&:not([data-is-active])
+				color $theme-color
+				cursor pointer
+
+				&:hover
+					text-decoration underline
 
 	> .loading
 		padding 64px 0
@@ -44,6 +64,7 @@ script.
 	@unread-count = 0
 	@controller = riot.observable!
 	@event = @opts.event
+	@mode = \default
 
 	@on \mount ~>
 		document.add-event-listener \visibilitychange @window-on-visibilitychange, false
@@ -54,7 +75,7 @@ script.
 			@user = user
 			@update!
 
-			@load ~>
+			@fetch ~>
 				@event.trigger \loaded
 
 	@on \unmount ~>
@@ -68,9 +89,10 @@ script.
 			if e.which == 84 # t
 				@controller.trigger \focus
 
-	@load = (cb) ~>
+	@fetch = (cb) ~>
 		@api \users/posts do
 			user_id: @user.id
+			with_replies: @mode == \with-replies
 		.then (posts) ~>
 			@is-loading = false
 			@is-empty = posts.length == 0
@@ -88,6 +110,7 @@ script.
 		@update!
 		@api \users/posts do
 			user_id: @user.id
+			with_replies: @mode == \with-replies
 			max_id: @refs.timeline.tail!.id
 		.then (posts) ~>
 			@more-loading = false
@@ -114,3 +137,8 @@ script.
 		current = window.scroll-y + window.inner-height
 		if current > document.body.offset-height - 16 # 遊び
 			@more!
+
+	@set-mode = (mode) ~>
+		@update do
+			mode: mode
+		@fetch!
