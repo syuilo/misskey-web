@@ -1,36 +1,11 @@
 mk-messaging-room
-	header(if={ group }): div.container
-		div.kyoppie
-			h1 { group.name }
-			ol.members
-				li.member(each={ member in group.members }, title={ member.name }): a
-					img.avatar(src={ member.avatar_url + '?thumbnail&size=32' }, alt='')
-		div.nav.dropdown
-			button
-				i.fa.fa-bars
-			nav.dropdown-content
-				ul.menu(if={ group.owner.id == me.id })
-					li: p
-						i.fa.fa-cog
-						| グループの設定
-					li: p
-						i.fa.fa-users
-						| メンバーの管理
-				ul.menu
-					li: p.invite
-						i.fa.fa-user-plus
-						| 招待
-					li: p
-						i.fa.fa-minus-circle
-						| グループを離脱
 	div.stream
 		p.initializing(if={ init })
 			i.fa.fa-spinner.fa-spin
 			| 読み込み中
 		p.empty(if={ !init && messages.length == 0 })
 			i.fa.fa-info-circle
-			span(if={ user }) このユーザーとまだ会話したことがありません
-			span(if={ group }) このグループにまだ会話はありません
+			| このユーザーとまだ会話したことがありません
 		virtual(each={ message in messages })
 			mk-messaging-message(message={ message })
 	div.typings
@@ -50,160 +25,6 @@ mk-messaging-room
 
 style.
 	display block
-
-	> header
-		display block
-		position absolute
-		top 0
-		left 0
-		z-index 2
-		width 100%
-		background #fff
-
-		> .container
-			max-width 600px
-			width 100%
-			margin 0 auto
-			padding 0
-
-			> .kyoppie
-				display block
-				width calc(100% - 48px)
-				white-space nowrap
-				overflow hidden
-
-				> h1
-					display inline-block
-					margin 0
-					padding 0 16px
-					line-height 48px
-					font-size 1em
-					color #67747D
-					vertical-align top
-
-
-				> .members
-					display inline-block
-					margin 0
-					padding 0
-					list-style none
-
-					> .member
-						display inline-block
-						margin 0
-						padding 0
-
-						> a
-							display inline-block
-							padding 8px 4px
-
-							> .avatar
-								display inline-block
-								width 32px
-								height 32px
-								border-radius 100%
-								vertical-align top
-
-
-
-
-
-
-			> .dropdown
-				display block
-				position absolute
-				top 0
-				right 0
-				overflow visible
-
-				&[data-active='true']
-					background #eee
-
-					> button
-						color #111 !important
-
-
-					> .dropdown-content
-						visibility visible
-
-				> button
-					display block
-					margin 0
-					padding 0
-					width 48px
-					line-height 48px
-					font-size 1.5em
-					font-weight normal
-					text-decoration none
-					color #888
-					background transparent
-					outline none
-					border none
-					border-radius 0
-					box-shadow none
-					cursor pointer
-					transition color 0.1s ease
-
-					*
-						pointer-events none
-
-
-					&:hover
-						color #444
-
-
-
-				> .dropdown-content
-					visibility hidden
-					display block
-					position absolute
-					top auto
-					right 0
-					z-index 3
-					width 270px
-					margin 0
-					padding 0
-					background #eee
-
-					> ul
-						margin 0
-						padding 0
-						list-style none
-						font-size 1em
-						border-bottom solid 1px #ddd
-
-						&:last-child
-							border-bottom none
-
-
-						> li
-							display inline-block
-							width 100%
-
-							> *
-								display inline-block
-								z-index 1
-								vertical-align top
-								width 100%
-								margin 0
-								padding 12px 20px
-								text-decoration none
-								color #444
-								transition none
-
-								&:hover
-									color #fff
-									background-color $theme-color
-
-
-								&:active
-									color #fff
-									background-color darken($theme-color, 10%)
-
-
-								> i
-									width 2em
-									text-align center
 
 	> .stream
 		position absolute
@@ -323,7 +144,6 @@ style.
 				color darken($theme-color, 10%)
 				transition color 0s ease
 
-
 		.files
 			display block
 			margin 0
@@ -392,7 +212,6 @@ script.
 	@mixin \messaging-stream
 
 	@user = @opts.user
-	@group = @opts.group
 	@init = true
 	@saying = false
 	@messages = []
@@ -403,8 +222,7 @@ script.
 		@messaging-stream.event.on \read @on-read
 
 		@api \messaging/messages do
-			user_id: if @user? then @user.id else undefined
-			group_id: if @group? then @group.id else undefined
+			user_id: @user.id
 		.then (messages) ~>
 			@init = false
 			@messages = messages.reverse!
@@ -418,8 +236,7 @@ script.
 	@say = ~>
 		@saying = true
 		@api \messaging/messages/create do
-			user_id: if @user? then @user.id else undefined
-			group_id: if @group? then @group.id else undefined
+			user_id: @user.id
 			text: @text.value
 		.then (message) ~>
 			# something

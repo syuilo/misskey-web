@@ -28,17 +28,6 @@ mk-messaging
 			| 履歴はありません。
 			br
 			| ユーザーを検索して、いつでもメッセージを送受信できます。
-	nav
-		ul
-			li.active: a
-				i.fa.fa-clock-o
-				p 履歴
-			li: a(href='/i/users')
-				i.fa.fa-user
-				p ユーザー
-			li: a(href='/i/groups')
-				i.fa.fa-users
-				p グループ
 
 style.
 	display block
@@ -218,6 +207,11 @@ style.
 						font-weight bold
 						transition all 0.1s ease
 
+					> .username
+						text-align left
+						margin 0 0 0 8px
+						color rgba(0, 0, 0, 0.5)
+
 					> mk-time
 						position absolute
 						top 16px
@@ -226,81 +220,32 @@ style.
 						color rgba(0, 0, 0, 0.5)
 						font-size small
 
-				&.user
-					> header
-						> .username
-							text-align left
-							margin 0 0 0 8px
-							color rgba(0, 0, 0, 0.5)
+				> .avatar
+					float left
+					width 54px
+					height 54px
+					margin 0 18px 4px 0
+					border-radius 8px
+					transition all 0.1s ease
 
-					> .avatar
-						float left
-						width 54px
-						height 54px
-						margin 0 18px 4px 0
-						border-radius 8px
-						transition all 0.1s ease
+				> .body
 
-					> .body
+					> .text
+						display block
+						margin 0 0 0 0
+						padding 0
+						overflow hidden
+						word-wrap break-word
+						font-size 1.1em
+						color rgba(0, 0, 0, 0.8)
 
-						> .text
-							display block
-							margin 0 0 0 0
-							padding 0
-							overflow hidden
-							word-wrap break-word
-							font-size 1.1em
-							color rgba(0, 0, 0, 0.8)
+						.me
+							color rgba(0, 0, 0, 0.4)
 
-							.me
-								color rgba(0, 0, 0, 0.4)
-
-						> .image
-							display block
-							max-width 100%
-							max-height 512px
-
-				&.group
-					> header
-						> .members-count
-							text-align left
-							margin 0 0 0 8px
-							color rgba(0, 0, 0, 0.5)
-
-					> .mark
-						$stroke = 2px
-						position absolute
-						top 17px
-						left 21px
-						text-shadow 0 $stroke 0 #fff, $stroke 0 0 #fff, 0 -$stroke 0 #fff, -$stroke 0 0 #fff, -$stroke -$stroke 0 #fff, $stroke -$stroke 0 #fff, -$stroke $stroke 0 #fff, $stroke $stroke 0 #fff
-						color #9FA7A6
-
-					> .icon
-						float left
-						width 54px
-						height 54px
-						margin 0 18px 4px 0
-						border-radius 8px
-						transition all 0.1s ease
-
-					> .body
-
-						> .text
-							display block
-							margin 0 0 0 0
-							padding 0
-							overflow hidden
-							word-wrap break-word
-							font-size 1.1em
-							color rgba(0, 0, 0, 0.8)
-
-							.me
-								color rgba(0, 0, 0, 0.4)
-
-						> .image
-							display block
-							max-width 100%
-							max-height 512px
+					> .image
+						display block
+						max-width 100%
+						max-height 512px
 
 		> .no-history
 			margin 0
@@ -308,61 +253,6 @@ style.
 			text-align center
 			color #999
 			font-weight 500
-
-	> nav
-		display block
-		position absolute
-		bottom 0
-		left 0
-		width 100%
-		background #F7F7F7
-		background-clip content-box
-		border-top solid 1px rgba(0, 0, 0, 0.075)
-
-		&, *
-			user-select none
-			cursor default
-
-		> ul
-			display flex
-			justify-content center
-			margin 0
-			padding 0
-			list-style none
-
-			> li
-				display block
-				flex 1 1
-				text-align center
-
-				&.active
-					> a
-						border-top solid 2px $theme-color
-
-				> a
-					display block
-					padding 8px 8px 10px 8px
-					color rgba(0, 0, 0, 0.5)
-					border-top solid 2px transparent
-					cursor pointer
-					transition none
-
-					&:hover
-						text-decoration none
-						background #fff
-
-					&:active
-						background #ECECEC
-
-					*
-						pointer-events none
-
-					> i
-						font-size 1.5em
-
-					> p
-						margin 0
-						font-size 0.7em
 
 script.
 	@mixin \i
@@ -376,15 +266,12 @@ script.
 		.then (history) ~>
 			@is-loading = false
 			history.for-each (message) ~>
-				message.is_me = message.user? and message.user.id == @I.id
+				message.is_me = message.user_id == @I.id
 				message._click = ~>
-					if message.recipient?
-						if message.is_me
-							@event.trigger \navigate-user message.recipient
-						else
-							@event.trigger \navigate-user message.user
-					else if message.group?
-						@event.trigger \navigate-group message.group
+					if message.is_me
+						@event.trigger \navigate-user message.recipient
+					else
+						@event.trigger \navigate-user message.user
 			@history = history
 			@update!
 		.catch (err) ~>
