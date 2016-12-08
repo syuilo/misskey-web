@@ -391,7 +391,7 @@ script.
 			console.error err
 
 	@search = ~>
-		q = @search-input.value
+		q = @refs.search-input.value
 		if q == ''
 			@search-result = []
 		else
