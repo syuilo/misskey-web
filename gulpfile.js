@@ -41,19 +41,18 @@ config.scheme = config.url.substr(0, config.url.indexOf('://'));
  */
 const aliasifyConfig = {
 	"aliases": {
-		"fetch": "./bower_components/fetch/fetch.js",
+		"fetch": "./node_modules/whatwg-fetch/fetch.js",
 		"page": "./node_modules/page/page.js",
-		"NProgress": "./bower_components/nprogress/nprogress.js",
-		"velocity": "./bower_components/velocity/velocity.js",
+		"NProgress": "./node_modules/nprogress/nprogress.js",
+		"velocity": "./node_modules/velocity-animate/velocity.js",
 		"chart.js": "./node_modules/chart.js/src/chart.js",
 		"textarea-caret-position": "./node_modules/textarea-caret/index.js",
-		"misskey-text": "./bower_components/misskey-text/src/index.js",
-		"strength.js": "./bower_components/password-strength.js/strength.js",
-		"cropper": "./bower_components/cropperjs/dist/cropper.js",
-		"Sortable": "./bower_components/Sortable/Sortable.js",
-		"fuck-adblock": "./bower_components/fuck-adblock/fuckadblock.js",
-		"Swiper": "./bower_components/Swiper/dist/js/swiper.js",
-		"reconnecting-websocket": "./bower_components/reconnectingWebsocket/reconnecting-websocket.js"
+		"misskey-text": "./node_modules/misskey-text/src/index.js",
+		"strength.js": "./node_modules/syuilo-password-strength/strength.js",
+		"cropper": "./node_modules/cropperjs/dist/cropper.js",
+		"Sortable": "./node_modules/sortablejs/Sortable.js",
+		"fuck-adblock": "./node_modules/fuckadblock/fuckadblock.js",
+		"reconnecting-websocket": "./node_modules/reconnecting-websocket/dist/index.js"
 	},
 	appliesTo: {
 		"includeExtensions": ['.js', '.ls']
@@ -61,7 +60,6 @@ const aliasifyConfig = {
 };
 
 gulp.task('build', [
-	'copy:bower_components',
 	'build:scripts',
 	'build:styles',
 	'build:pug',
@@ -88,15 +86,6 @@ gulp.task('build:pug', ['build:scripts', 'build:styles'], () => {
 			themeColor: config.themeColor
 		}))
 		.pipe(gulp.dest('./built/'));
-});
-
-//////////////////////////////////////////////////
-// Bowerのパッケージのコピー
-gulp.task('copy:bower_components', () => {
-	gutil.log('Bower経由のパッケージを配置します...');
-
-	return gulp.src('./bower_components/**/*')
-		.pipe(gulp.dest('./built/resources/bower_components/'));
 });
 
 //////////////////////////////////////////////////
@@ -386,7 +375,9 @@ gulp.task('build:scripts', done => {
 			if (isProduction) {
 				bundle = bundle
 					.pipe(buffer())
-					.pipe(uglify());
+					.pipe(uglify({
+						compress: true
+					}));
 			}
 
 			return bundle
@@ -399,7 +390,7 @@ gulp.task('build:scripts', done => {
 
 //////////////////////////////////////////////////
 // フロントサイドのスタイルのビルド
-gulp.task('build:styles', ['copy:bower_components'], () => {
+gulp.task('build:styles', () => {
 	gutil.log('フロントサイドスタイルを構築します...');
 
 	return gulp.src('./src/**/*.styl')
