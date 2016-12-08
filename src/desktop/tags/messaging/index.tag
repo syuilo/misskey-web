@@ -214,8 +214,8 @@ style.
 
 					> mk-time
 						position absolute
-						top 16px
-						right 16px
+						top 0
+						right 0
 						display inline
 						color rgba(0, 0, 0, 0.5)
 						font-size small
