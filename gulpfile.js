@@ -47,7 +47,7 @@ const aliasifyConfig = {
 		"velocity": "./bower_components/velocity/velocity.js",
 		"chart.js": "./node_modules/chart.js/src/chart.js",
 		"textarea-caret-position": "./node_modules/textarea-caret/index.js",
-		"misskey-text": "./bower_components/misskey-text/dist/index.js",
+		"misskey-text": "./bower_components/misskey-text/src/index.js",
 		"strength.js": "./bower_components/password-strength.js/strength.js",
 		"cropper": "./bower_components/cropperjs/dist/cropper.js",
 		"Sortable": "./bower_components/Sortable/Sortable.js",
