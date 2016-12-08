@@ -14,7 +14,7 @@ mk-messaging-room
 		textarea@text(placeholder='ここにメッセージを入力')
 		div.uploads
 		div.files
-		button.submit(onclick={ say }, disabled={ saying }, title='メッセージを送信')
+		button.submit(type='button', onclick={ say }, disabled={ saying }, title='メッセージを送信')
 			i.fa.fa-paper-plane(if={ !saying })
 			i.fa.fa-spinner.fa-spin(if={ saying })
 		button.attach-from-local(type='button', title='PCから画像を添付する')
@@ -237,7 +237,7 @@ script.
 		@saying = true
 		@api \messaging/messages/create do
 			user_id: @user.id
-			text: @text.value
+			text: @refs.text.value
 		.then (message) ~>
 			# something
 		.catch (err) ~>
