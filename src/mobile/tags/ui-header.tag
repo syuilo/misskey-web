@@ -3,7 +3,7 @@ mk-ui-header
 		div.backdrop
 		div.content
 			button.nav#hamburger: i.fa.fa-bars
-			h1@title
+			h1@title Misskey
 			button.post(onclick={ post }): i.fa.fa-pencil
 
 style.
@@ -91,4 +91,5 @@ script.
 		@core.trigger \post
 
 	@ui.one \title (title) ~>
-		@refs.title.innerHTML = title
+		if @refs.title?
+			@refs.title.innerHTML = title
