@@ -7,7 +7,7 @@ mk-messaging-message(data-is-me={ message.is_me })
 			button.delete-button(if={ message.is_me }, title='メッセージを削除')
 				img(src='/_/resources/desktop/messaging/delete.png', alt='Delete')
 			div.content(if={ !message.is_deleted })
-				div.text(if={ message.text }) { message.text }
+				div@text
 				div.image(if={ message.file })
 					img(src={ message.file.url }, alt='image', title={ message.file.name })
 			div.content(if={ message.is_deleted })
@@ -53,8 +53,7 @@ style.
 			margin 0
 			padding 0
 			max-width 100%
-			min-height 2.1em
-			line-height 1.3em
+			min-height 38px
 			border-radius 16px
 
 			&:before
@@ -62,7 +61,7 @@ style.
 				pointer-events none
 				display block
 				position absolute
-				top calc(((1.3em + (8px * 2)) / 2) - 8px)
+				top 12px
 
 			&:hover
 				> .delete-button
@@ -90,6 +89,7 @@ style.
 					cursor pointer
 
 			> .read
+				user-select none
 				display block
 				position absolute
 				z-index 1
@@ -97,7 +97,7 @@ style.
 				left -12px
 				margin 0
 				color rgba(0, 0, 0, 0.5)
-				font-size 0.7em
+				font-size 11px
 
 			> .content
 
@@ -110,7 +110,7 @@ style.
 					font-size 1em
 					color rgba(0, 0, 0, 0.5)
 
-				> .text
+				> [ref='text']
 					display block
 					margin 0
 					padding 8px 16px
@@ -121,47 +121,7 @@ style.
 
 					&, *
 						user-select text
-						-moz-user-select text
-						-webkit-user-select text
-						-ms-user-select text
 						cursor auto
-
-					.url
-						color $theme-color
-						text-decoration none
-
-						&, *
-							cursor pointer
-
-						&:hover
-							text-decoration underline
-
-						&:after
-							content "\f14c"
-							display inline-block
-							padding-left 2px
-							font-family FontAwesome
-							font-size 0.9em
-							font-weight normal
-							font-style normal
-
-						> .protocol
-							opacity 0.5
-
-						> .hostname
-							font-weight normal
-
-						> .pathname
-							opacity 0.8
-
-						> .hash
-							font-style italic
-
-						> .query
-							opacity 0.5
-
-					> p
-						margin 0
 
 					& + .file
 						&.image
@@ -181,30 +141,31 @@ style.
 			clear both
 			margin 0
 			padding 2px
-			font-size 0.65em
+			font-size 10px
 			color rgba(0, 0, 0, 0.4)
 
 			> .is-edited
 				margin-left 4px
 
-	> .avatar-anchor
-		float left
+	&:not([data-is-me='true'])
+		> .avatar-anchor
+			float left
 
-	> .content-container
-		float left
+		> .content-container
+			float left
 
-		> .balloon
-			background #eee
+			> .balloon
+				background #eee
 
-			&:before
-				left -14px
-				border-top solid 8px transparent
-				border-right solid 8px #eee
-				border-bottom solid 8px transparent
-				border-left solid 8px transparent
+				&:before
+					left -14px
+					border-top solid 8px transparent
+					border-right solid 8px #eee
+					border-bottom solid 8px transparent
+					border-left solid 8px transparent
 
-		> footer
-			text-align left
+			> footer
+				text-align left
 
 	&[data-is-me='true']
 		> .avatar-anchor
@@ -229,11 +190,8 @@ style.
 					> p.is-deleted
 						color rgba(255, 255, 255, 0.5)
 
-					> .text
+					> [ref='text']
 						color #fff
-
-						.url
-							color #fff
 
 			> footer
 				text-align right
@@ -244,6 +202,25 @@ style.
 
 script.
 	@mixin \i
+	@mixin \text
 
 	@message = @opts.message
 	@message.is_me = @message.user.id == @I.id
+
+	@on \mount ~>
+		if @message.text?
+			tokens = @analyze @message.text
+
+			@refs.text.innerHTML = @compile tokens
+
+			@refs.text.children.for-each (e) ~>
+				if e.tag-name == \MK-URL
+					riot.mount e
+
+			# URLをプレビュー
+			tokens
+				.filter (t) -> t.type == \link
+				.map (t) ~>
+					@preview = @refs.text.append-child document.create-element \mk-url-preview
+					riot.mount @preview, do
+						url: t.content
