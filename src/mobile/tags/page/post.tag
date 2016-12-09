@@ -20,8 +20,8 @@ script.
 	@event = riot.observable!
 
 	@on \mount ~>
-		#document.title = 'Misskey'
-		#@ui.trigger \title '<i class="fa fa-sticky-note-o"></i>投稿'
+		document.title = 'Misskey'
+		@ui.trigger \title '<i class="fa fa-sticky-note-o"></i>投稿'
 
 		@Progress.start!
 
