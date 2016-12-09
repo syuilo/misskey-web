@@ -257,12 +257,10 @@ script.
 			@update!
 
 	@on-message = (message) ~>
-		console.log message
 		@messages.push message
 		@update!
 
 	@on-read = (ids) ~>
-		console.log ids
 		if not Array.isArray ids then ids = [ids]
 		ids.for-each (id) ~>
 			if (@messages.some (x) ~> x.id == id)
