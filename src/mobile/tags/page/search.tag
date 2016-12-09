@@ -11,7 +11,7 @@ script.
 	@event = riot.observable!
 
 	@on \mount ~>
-		document.title = 'Misskey | 検索'
+		document.title = '検索: ' + @opts.query + ' | Misskey'
 		# TODO: クエリをHTMLエスケープ
 		@ui.trigger \title '<i class="fa fa-search"></i>' + @opts.query
 
