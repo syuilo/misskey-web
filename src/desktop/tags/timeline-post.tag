@@ -47,7 +47,7 @@ mk-timeline-post(tabindex='-1', title={ title }, onkeydown={ on-key-down })
 					i.fa.fa-caret-down(if={ !is-detail-opened })
 					i.fa.fa-caret-up(if={ is-detail-opened })
 	div.detail(if={ is-detail-opened })
-		mk-post-likes-graph(width='462', height='130', post={ p })
+		mk-post-status-graph(width='462', height='130', post={ p })
 
 style.
 	display block
