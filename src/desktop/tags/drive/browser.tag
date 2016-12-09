@@ -539,6 +539,9 @@ script.
 			return
 
 		if (@folders.some (f) ~> f.id == folder.id)
+			exist = (@folders.map (f) -> f.id).index-of folder.id
+			@folders[exist] = folder
+			@update!
 			return
 
 		if unshift

@@ -16,6 +16,9 @@ mk-drive-browser-folder-contextmenu
 			| 削除
 
 script.
+	@mixin \api
+	@mixin \input-dialog
+
 	@controller = @opts.controller
 	@browser-controller = @opts.browser-controller
 	@ctx-controller = riot.observable!
@@ -43,3 +46,19 @@ script.
 	@upload = ~>
 		@browser-controller.trigger \upload
 		@ctx-controller.trigger \close
+
+	@rename = ~>
+		@ctx-controller.trigger \close
+
+		name <~ @input-dialog do
+			'フォルダ名の変更'
+			'新しいフォルダ名を入力してください'
+			@folder.name
+
+		@api \drive/folders/update do
+			folder_id: @folder.id
+			name: name
+		.then ~>
+			# something
+		.catch (err) ~>
+			console.error err
