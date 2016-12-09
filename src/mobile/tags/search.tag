@@ -9,8 +9,5 @@ script.
 	@event = @opts.event
 	@tl-event = riot.observable!
 
-	@on \mount ~>
-		@Progress.start!
-
 	@tl-event.on \loaded ~>
 		@evemt.trigger \loaded
