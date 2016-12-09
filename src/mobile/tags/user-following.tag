@@ -10,8 +10,6 @@ script.
 	@user = @opts.user
 	@event = @opts.event
 
-	console.log @user.following_you_know_count
-
 	@fetch = (iknow, limit, cursor, cb) ~>
 		@api \users/following do
 			user_id: @user.id
