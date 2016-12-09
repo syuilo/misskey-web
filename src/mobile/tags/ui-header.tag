@@ -3,7 +3,7 @@ mk-ui-header
 		div.backdrop
 		div.content
 			button.nav#hamburger: i.fa.fa-bars
-			h1@title Misskey
+			h1@title
 			button.post(onclick={ post }): i.fa.fa-pencil
 
 style.
@@ -85,14 +85,10 @@ script.
 	@mixin \ui
 
 	@on \mount ~>
-		@ui.on \title @set-title
 		@opts.ready!
-
-	@on \unmount ~>
-		@ui.off \title @set-title
 
 	@post = ~>
 		@core.trigger \post
 
-	@set-title = (title) ~>
+	@ui.one \title (title) ~>
 		@refs.title.innerHTML = title
