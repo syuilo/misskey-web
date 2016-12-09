@@ -81,7 +81,7 @@ script.
 		clear-interval @clock
 
 	@fetch = ~>
-		@api CONFIG.url + '/api:rss-proxy' do
+		@api CONFIG.url + '/api:rss' do
 			url: @url
 		.then (feed) ~>
 			@items = feed.rss.channel.item
