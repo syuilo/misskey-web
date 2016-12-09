@@ -8,7 +8,7 @@ mk-messaging-room
 			| このユーザーとまだ会話したことがありません
 		virtual(each={ message, i in messages })
 			mk-messaging-message(message={ message })
-			p.date(if={ i != message.length - 1 && message._date != messages[i + 1]._date })
+			p.date(if={ i != messages.length - 1 && message._date != messages[i + 1]._date })
 				span { messages[i + 1]._datetext }
 
 	div.typings
