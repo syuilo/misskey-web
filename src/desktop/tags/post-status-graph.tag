@@ -37,7 +37,7 @@ script.
 				.then (replies) ~>
 					replies = replies.reverse!
 
-					new Chart @canv, do
+					new Chart @refs.canv, do
 						type: \bar
 						data:
 							labels: likes.map (x, i) ~> if i % 3 == 2 then x.date.day + '日' else ''

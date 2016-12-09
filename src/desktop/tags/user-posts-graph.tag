@@ -23,7 +23,7 @@ script.
 			limit: 30days
 		.then (data) ~>
 			data = data.reverse!
-			new Chart @canv, do
+			new Chart @refs.canv, do
 				type: \line
 				data:
 					labels: data.map (x, i) ~> if i % 3 == 2 then x.date.day + '日' else ''

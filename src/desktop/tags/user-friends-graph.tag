@@ -30,7 +30,7 @@ script.
 			.then (following) ~>
 				following = following.reverse!
 
-				new Chart @canv, do
+				new Chart @refs.canv, do
 					type: \line
 					data:
 						labels: following.map (x, i) ~> if i % 3 == 2 then x.date.day + '日' else ''
