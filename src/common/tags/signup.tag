@@ -56,7 +56,7 @@ mk-signup
 			p.info(if={ password-strength == 'medium' }, style='color:#3CB7B5')
 				i.fa.fa-fw.fa-check
 				| まあまあのパスワード
-			p.info(if={ password-strength == 'heigh' }, style='color:#3CB7B5')
+			p.info(if={ password-strength == 'high' }, style='color:#3CB7B5')
 				i.fa.fa-fw.fa-check
 				| 強いパスワード
 
