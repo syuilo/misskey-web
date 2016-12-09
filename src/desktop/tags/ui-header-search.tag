@@ -32,5 +32,6 @@ style.
 script.
 	@mixin \page
 
-	@onsubmit = ~>
-		@page '/search:' + @q.value
+	@onsubmit = (e) ~>
+		e.prevent-default!
+		@page '/search:' + @refs.q.value
