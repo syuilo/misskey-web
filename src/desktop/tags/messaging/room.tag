@@ -6,8 +6,11 @@ mk-messaging-room
 		p.empty(if={ !init && messages.length == 0 })
 			i.fa.fa-info-circle
 			| このユーザーとまだ会話したことがありません
-		virtual(each={ message in messages })
+		virtual(each={ message, i in messages })
 			mk-messaging-message(message={ message })
+			p.date(if={ i != message.length - 1 && message._date != messages[i + 1]._date })
+				span { messages[i + 1]._datetext }
+
 	div.typings
 	form
 		div.grippie(title='ドラッグしてフォームの広さを調整')
@@ -76,7 +79,7 @@ style.
 				margin 0 auto
 				background rgba(0, 0, 0, 0.1)
 
-			> p
+			> span
 				display inline-block
 				margin 0
 				padding 0 16px
@@ -232,6 +235,13 @@ script.
 
 	@on \unmount ~>
 		@messaging-stream.close!
+
+	@on \update ~>
+		@messages.for-each (message) ~>
+			date = (new Date message.created_at).get-date!
+			month = (new Date message.created_at).get-month! + 1
+			message._date = date
+			message._datetext = month + '月 ' + date + '日'
 
 	@say = ~>
 		@saying = true
