@@ -1,4 +1,10 @@
 mk-timeline
+	div.init(if={ init })
+		i.fa.fa-spinner.fa-pulse
+		| 読み込んでいます
+	div.empty(if={ posts.length == 0 })
+		i.fa.fa-comments-o
+		| { opts.empty || '投稿はありません' }
 	virtual(each={ post, i in posts })
 		mk-timeline-post(post={ post })
 		p.date(if={ i != posts.length - 1 && post._date != posts[i + 1]._date })
@@ -8,14 +14,33 @@ mk-timeline
 			span
 				i.fa.fa-angle-down
 				| { posts[i + 1]._datetext }
-	footer(data-yield='footer')
-		| <yield from="footer"/>
+	footer
+		i.fa.fa-moon-o(if={ !fetching })
+		i.fa.fa-spinner.fa-pulse.fa-fw(if={ fetching })
 
 style.
 	display block
 	background #fff
 	background-clip content-box
 	overflow hidden
+
+	> .init
+		padding 64px 0
+		text-align center
+		color #999
+
+	> .empty
+		margin 0 auto
+		padding 32px
+		max-width 400px
+		text-align center
+		color #999
+
+		> i
+			display block
+			margin-bottom 16px
+			font-size 3em
+			color #ccc
 
 	> mk-timeline-post
 		border-bottom solid 1px #eaeaea
@@ -49,24 +74,18 @@ style.
 
 script.
 	@posts = []
-	@controller = @opts.controller
+	@init = true
+	@fetching = false
 
-	@controller.on \set-posts (posts) ~>
-		@posts = posts
-		@update!
+	@on \mount ~>
+		window.add-event-listener \scroll @on-scroll
 
-	@controller.on \prepend-posts (posts) ~>
-		posts.for-each (post) ~>
-			@posts.push post
-			@update!
+		@opts.init.then (posts) ~>
+			@init = false
+			@set-posts posts
 
-	@controller.on \add-post (post) ~>
-		@posts.unshift post
-		@update!
-
-	@controller.on \clear ~>
-		@posts = []
-		@update!
+	@on \unmount ~>
+		window.remove-event-listener \scroll @on-scroll
 
 	@on \update ~>
 		@posts.for-each (post) ~>
@@ -74,6 +93,32 @@ script.
 			month = (new Date post.created_at).get-month! + 1
 			post._date = date
 			post._datetext = month + '月 ' + date + '日'
+
+	@on-scroll = ~>
+		current = window.scroll-y + window.inner-height
+		if current > document.body.offset-height - 16 # 遊び
+			@more!
+
+	@more = ~>
+		if @init or @fetching or @posts.length == 0 then return
+		@fetching = true
+		@update!
+		@opts.more!.then (posts) ~>
+			@fetching = false
+			@prepend-posts posts
+
+	@set-posts = (posts) ~>
+		@posts = posts
+		@update!
+
+	@prepend-posts = (posts) ~>
+		posts.for-each (post) ~>
+			@posts.push post
+			@update!
+
+	@add-post = (post) ~>
+		@posts.unshift post
+		@update!
 
 	@tail = ~>
 		@posts[@posts.length - 1]

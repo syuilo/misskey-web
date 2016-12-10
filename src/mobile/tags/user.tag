@@ -33,9 +33,9 @@ mk-user
 				a(data-is-active={ page == 'likes' }, onclick={ go-likes }) いいね
 
 		div.body
-			mk-user-timeline(if={ page == 'posts' }, user={ user-promise })
-			mk-user-timeline(if={ page == 'media' }, user={ user-promise }, with-media={ true })
-			mk-user-graphs(if={ page == 'graphs' }, user={ user-promise })
+			mk-user-timeline(if={ page == 'posts' }, user={ user })
+			mk-user-timeline(if={ page == 'media' }, user={ user }, with-media={ true })
+			mk-user-graphs(if={ page == 'graphs' }, user={ user })
 
 style.
 	display block
@@ -173,7 +173,7 @@ script.
 	@page = if @opts.page? then @opts.page else \posts
 	@fetching = true
 
-	@user-promise = new Promise (resolve, reject) ~>
+	@on \mount ~>
 		@api \users/show do
 			username: @username
 		.then (user) ~>
@@ -181,10 +181,6 @@ script.
 			@user = user
 			@event.trigger \loaded user
 			@update!
-			resolve user
-
-	@on \mount ~>
-		@user-promise.then!
 
 	@go-posts = ~>
 		@page = \posts

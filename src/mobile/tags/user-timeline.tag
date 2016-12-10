@@ -1,14 +1,5 @@
 mk-user-timeline
-	div.loading(if={ is-loading })
-		mk-ellipsis-icon
-	p.empty(if={ is-empty })
-		i.fa.fa-comments-o
-		| このユーザーはまだ何も投稿していないようです。
-	mk-timeline@timeline(controller={ controller })
-		<yield to="footer">
-		i.fa.fa-moon-o(if={ !parent.more-loading })
-		i.fa.fa-spinner.fa-pulse.fa-fw(if={ parent.more-loading })
-		</yield>
+	mk-timeline(init={ init }, more={ more }, empty={ 'このユーザーはまだ投稿していないようです。' })
 
 style.
 	display block
@@ -16,82 +7,23 @@ style.
 	margin 0 auto
 	background #fff
 
-	> .loading
-		padding 64px 0
-
-	> .empty
-		display block
-		margin 0 auto
-		padding 32px
-		max-width 400px
-		text-align center
-		color #999
-
-		> i
-			display block
-			margin-bottom 16px
-			font-size 3em
-			color #ccc
-
 script.
 	@mixin \api
-	@mixin \is-promise
-	@mixin \get-post-summary
 
-	@user = null
-	@user-promise = if @is-promise @opts.user then @opts.user else Promise.resolve @opts.user
-	@is-loading = true
-	@is-empty = false
-	@more-loading = false
-	@unread-count = 0
-	@controller = riot.observable!
+	@user = @opts.user
 	@event = @opts.event
 	@with-media = @opts.with-media
 
-	@on \mount ~>
-		window.add-event-listener \scroll @on-scroll
-
-		@user-promise.then (user) ~>
-			@user = user
-			@update!
-
-			@load ~>
-				if @event? then @event.trigger \loaded
-
-	@on \unmount ~>
-		window.remove-event-listener \scroll @on-scroll
-
-	@load = (cb) ~>
+	@init = new Promise (res, rej) ~>
 		@api \users/posts do
 			user_id: @user.id
 			with_media: @with-media
 		.then (posts) ~>
-			@is-loading = false
-			@is-empty = posts.length == 0
-			@update!
-			@controller.trigger \set-posts posts
-			if cb? then cb!
-		.catch (err) ~>
-			console.error err
-			if cb? then cb!
+			res posts
+			if @event? then @event.trigger \loaded
 
 	@more = ~>
-		if @more-loading or @is-loading or @refs.timeline.posts.length == 0
-			return
-		@more-loading = true
-		@update!
 		@api \users/posts do
 			user_id: @user.id
 			with_media: @with-media
 			max_id: @refs.timeline.tail!.id
-		.then (posts) ~>
-			@more-loading = false
-			@update!
-			@controller.trigger \prepend-posts posts
-		.catch (err) ~>
-			console.error err
-
-	@on-scroll = ~>
-		current = window.scroll-y + window.inner-height
-		if current > document.body.offset-height
-			@more!
