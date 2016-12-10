@@ -3,3 +3,6 @@ mk-drive-file-viewer
 
 style.
 	display block
+
+script.
+	@file = @opts.file
