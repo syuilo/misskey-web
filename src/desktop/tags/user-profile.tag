@@ -6,12 +6,12 @@ mk-user-profile
 	div.friends
 		p.following
 			i.fa.fa-angle-right
-			a { user.following_count }
+			a(onclick={ show-following }) { user.following_count }
 			| 人を
 			b フォロー
 		p.followers
 			i.fa.fa-angle-right
-			a { user.followers_count }
+			a(onclick={ show-followers }) { user.followers_count }
 			| 人の
 			b フォロワー
 
@@ -60,3 +60,13 @@ script.
 	@mixin \i
 
 	@user = @opts.user
+
+	@show-following = ~>
+		window = document.body.append-child document.create-element \mk-user-following-window
+		riot.mount window, do
+			user: @user
+
+	@show-followers = ~>
+		window = document.body.append-child document.create-element \mk-user-followers-window
+		riot.mount window, do
+			user: @user

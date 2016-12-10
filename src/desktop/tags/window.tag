@@ -130,6 +130,7 @@ style.
 					pointer-events none
 					display block
 					margin 0
+					height 40px
 					text-align center
 					font-size 1em
 					line-height 40px
