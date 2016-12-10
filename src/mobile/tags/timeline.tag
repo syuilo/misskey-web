@@ -2,7 +2,7 @@ mk-timeline
 	div.init(if={ init })
 		i.fa.fa-spinner.fa-pulse
 		| 読み込んでいます
-	div.empty(if={ posts.length == 0 })
+	div.empty(if={ !init && posts.length == 0 })
 		i.fa.fa-comments-o
 		| { opts.empty || '投稿はありません' }
 	virtual(each={ post, i in posts })
