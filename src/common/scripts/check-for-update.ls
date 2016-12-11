@@ -5,3 +5,5 @@ module.exports = ->
 		if meta.commit.hash != VERSION
 			if window.confirm '新しいMisskeyのバージョンがあります。更新しますか？'
 				location.reload true
+	.catch ~>
+		# ignore
