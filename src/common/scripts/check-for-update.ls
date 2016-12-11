@@ -1,5 +1,5 @@
 module.exports = ->
-	fetch \/meta
+	fetch \/api:meta
 	.then (res) ~>
 		meta <~ res.json!.then
 		if meta.commit.hash != VERSION
