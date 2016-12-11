@@ -27,9 +27,10 @@ const argv = require('yargs').argv;
 
 const config = {
 	url: argv['url'],
+	version: argv['version'],
 	themeColor: '#f7796c',
 	recaptcha: {
-		siteKey: argv['recaptcha-siteKey']
+		siteKey: argv['recaptcha-sitekey']
 	}
 };
 
@@ -335,6 +336,7 @@ gulp.task('build:scripts', done => {
 
 				.transform(transformify((source, file) => {
 					return source
+						.replace(/VERSION/g, `'${config.version}'`)
 						.replace(/CONFIG\.theme-color/g, `'${config.themeColor}'`)
 						.replace(/CONFIG\.themeColor/g, `'${config.themeColor}'`)
 						.replace(/CONFIG\.api\.url/g, `'${config.scheme}://api.${config.host}'`)
