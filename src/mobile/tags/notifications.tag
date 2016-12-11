@@ -23,6 +23,9 @@ style.
 	background #fff
 
 	> .notifications
+		margin 0 auto
+		max-width 500px
+
 		> mk-notification
 			border-bottom solid 1px rgba(0, 0, 0, 0.05)
 
