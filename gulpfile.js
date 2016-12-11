@@ -18,6 +18,7 @@ const aliasify = require('aliasify');
 const riotify = require('riotify');
 const transformify = require('syuilo-transformify');
 const pug = require('gulp-pug');
+const git = require('git-last-commit');
 
 const env = process.env.NODE_ENV;
 const isProduction = env === 'production';
@@ -27,7 +28,6 @@ const argv = require('yargs').argv;
 
 const config = {
 	url: argv['url'],
-	version: argv['version'],
 	themeColor: '#f7796c',
 	recaptcha: {
 		siteKey: argv['recaptcha-sitekey']
@@ -94,299 +94,302 @@ gulp.task('build:pug', ['build:scripts', 'build:styles'], () => {
 gulp.task('build:scripts', done => {
 	gutil.log('スクリプトを構築します...');
 
-	glob('./src/*/script.ls', (err, files) => {
-		const tasks = files.map(entry => {
-			let bundle =
-				browserify({
-					entries: [entry]
-				})
-				.transform(ls)
-				.transform(aliasify, aliasifyConfig)
+	// Get commit info
+	git.getLastCommit((err, commit) => {
+		glob('./src/*/script.ls', (err, files) => {
+			const tasks = files.map(entry => {
+				let bundle =
+					browserify({
+						entries: [entry]
+					})
+					.transform(ls)
+					.transform(aliasify, aliasifyConfig)
 
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-					console.log(file);
-					return source;
-				}))
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
+						console.log(file);
+						return source;
+					}))
 
-				// tagの{}の''を不要にする (その代わりスタイルの記法は使えなくなるけど)
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
+					// tagの{}の''を不要にする (その代わりスタイルの記法は使えなくなるけど)
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
 
-					const tag = new Tag(source);
-					const html = tag.sections.filter(s => s.name == 'html')[0];
+						const tag = new Tag(source);
+						const html = tag.sections.filter(s => s.name == 'html')[0];
 
-					html.lines = html.lines.map(line => {
-						if (line.replace(/\t/g, '')[0] === '|') {
-							return line;
-						} else {
-							return line.replace(/([+=])\s?\{(.+?)\}/g, '$1"{$2}"');
-						}
-					});
-
-					const styles = tag.sections.filter(s => s.name == 'style');
-
-					if (styles.length == 0) {
-						return tag.compile();
-					}
-
-					styles.forEach(style => {
-						let head = style.lines.shift();
-						head = head.replace(/([+=])\s?\{(.+?)\}/g, '$1"{$2}"');
-						style.lines.unshift(head);
-					});
-
-					return tag.compile();
-				}))
-
-				// tagの@hogeをref='hoge'にする
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-
-					const tag = new Tag(source);
-					const html = tag.sections.filter(s => s.name == 'html')[0];
-
-					html.lines = html.lines.map(line => {
-						if (line.indexOf('@') === -1) {
-							return line;
-						} else if (line.replace(/\t/g, '')[0] === '|') {
-							return line;
-						} else {
-							while (line.match(/[^\s']@[a-z-]+/) !== null) {
-								const match = line.match(/@[a-z-]+/);
-								let name = match[0];
-								if (line[line.indexOf(name) + name.length] === '(') {
-									line = line.replace(name + '(', '(ref=\'' + camelCase(name.substr(1)) + '\',');
-								} else {
-									line = line.replace(name, '(ref=\'' + camelCase(name.substr(1)) + '\')');
-								}
+						html.lines = html.lines.map(line => {
+							if (line.replace(/\t/g, '')[0] === '|') {
+								return line;
+							} else {
+								return line.replace(/([+=])\s?\{(.+?)\}/g, '$1"{$2}"');
 							}
+						});
+
+						const styles = tag.sections.filter(s => s.name == 'style');
+
+						if (styles.length == 0) {
+							return tag.compile();
+						}
+
+						styles.forEach(style => {
+							let head = style.lines.shift();
+							head = head.replace(/([+=])\s?\{(.+?)\}/g, '$1"{$2}"');
+							style.lines.unshift(head);
+						});
+
+						return tag.compile();
+					}))
+
+					// tagの@hogeをref='hoge'にする
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
+
+						const tag = new Tag(source);
+						const html = tag.sections.filter(s => s.name == 'html')[0];
+
+						html.lines = html.lines.map(line => {
+							if (line.indexOf('@') === -1) {
+								return line;
+							} else if (line.replace(/\t/g, '')[0] === '|') {
+								return line;
+							} else {
+								while (line.match(/[^\s']@[a-z-]+/) !== null) {
+									const match = line.match(/@[a-z-]+/);
+									let name = match[0];
+									if (line[line.indexOf(name) + name.length] === '(') {
+										line = line.replace(name + '(', '(ref=\'' + camelCase(name.substr(1)) + '\',');
+									} else {
+										line = line.replace(name, '(ref=\'' + camelCase(name.substr(1)) + '\')');
+									}
+								}
+								return line;
+							}
+						});
+
+						return tag.compile();
+
+						function camelCase(str) {
+							return str.replace(/-([^\s])/g, (match, group1) => {
+								return group1.toUpperCase();
+							});
+						}
+					}))
+
+					// tagのchain-caseをcamelCaseにする
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
+
+						const tag = new Tag(source);
+						const html = tag.sections.filter(s => s.name == 'html')[0];
+
+						html.lines = html.lines.map(line => {
+							(line.match(/\{.+?\}/g) || []).forEach(x => {
+								line = line.replace(x, camelCase(x));
+							});
 							return line;
-						}
-					});
-
-					return tag.compile();
-
-					function camelCase(str) {
-						return str.replace(/-([^\s])/g, (match, group1) => {
-							return group1.toUpperCase();
 						});
-					}
-				}))
 
-				// tagのchain-caseをcamelCaseにする
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-
-					const tag = new Tag(source);
-					const html = tag.sections.filter(s => s.name == 'html')[0];
-
-					html.lines = html.lines.map(line => {
-						(line.match(/\{.+?\}/g) || []).forEach(x => {
-							line = line.replace(x, camelCase(x));
-						});
-						return line;
-					});
-
-					return tag.compile();
-
-					function camelCase(str) {
-						str = str.replace(/([a-z\-]+):/g, (match, group1) => {
-							return group1.replace(/\-/g, '###') + ':';
-						});
-						str = str.replace(/'(.+?)'/g, (match, group1) => {
-							return "'" + group1.replace(/\-/g, '###') + "'";
-						});
-						str = str.replace(/-([^\s0-9])/g, (match, group1) => {
-							return group1.toUpperCase();
-						});
-						str = str.replace(/###/g, '-');
-
-						return str;
-					}
-				}))
-
-				// tagのstyleの属性
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-
-					const tag = new Tag(source);
-
-					const styles = tag.sections.filter(s => s.name == 'style');
-
-					if (styles.length == 0) {
 						return tag.compile();
-					}
 
-					styles.forEach(style => {
-						let head = style.lines.shift();
-						if (style.attr) {
-							style.attr = style.attr + ', type=\'stylus\', scoped';
-						} else {
-							style.attr = 'type=\'stylus\', scoped';
+						function camelCase(str) {
+							str = str.replace(/([a-z\-]+):/g, (match, group1) => {
+								return group1.replace(/\-/g, '###') + ':';
+							});
+							str = str.replace(/'(.+?)'/g, (match, group1) => {
+								return "'" + group1.replace(/\-/g, '###') + "'";
+							});
+							str = str.replace(/-([^\s0-9])/g, (match, group1) => {
+								return group1.toUpperCase();
+							});
+							str = str.replace(/###/g, '-');
+
+							return str;
 						}
-						style.lines.unshift(head);
-					});
+					}))
 
-					return tag.compile();
-				}))
+					// tagのstyleの属性
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
 
-				// tagのstyleの定数
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
+						const tag = new Tag(source);
 
-					const tag = new Tag(source);
+						const styles = tag.sections.filter(s => s.name == 'style');
 
-					const styles = tag.sections.filter(s => s.name == 'style');
-
-					if (styles.length == 0) {
-						return tag.compile();
-					}
-
-					styles.forEach(style => {
-						const head = style.lines.shift();
-						style.lines.unshift('$theme-color = ' + config.themeColor);
-						style.lines.unshift('$theme-color-foreground = #fff');
-						style.lines.unshift(head);
-					});
-
-					return tag.compile();
-				}))
-
-				// tagのstyleを暗黙的に:scopeにする
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-
-					const tag = new Tag(source);
-
-					const styles = tag.sections.filter(s => s.name == 'style');
-
-					if (styles.length == 0) {
-						return tag.compile();
-					}
-
-					styles.forEach((style, i) => {
-						if (i != 0) {
-							return;
+						if (styles.length == 0) {
+							return tag.compile();
 						}
-						const head = style.lines.shift();
-						style.lines = style.lines.map(line => {
-							return '\t' + line;
+
+						styles.forEach(style => {
+							let head = style.lines.shift();
+							if (style.attr) {
+								style.attr = style.attr + ', type=\'stylus\', scoped';
+							} else {
+								style.attr = 'type=\'stylus\', scoped';
+							}
+							style.lines.unshift(head);
 						});
-						style.lines.unshift(':scope');
-						style.lines.unshift(head);
-					});
 
-					return tag.compile();
-				}))
-
-				// tagのtheme styleのパース
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-
-					const tag = new Tag(source);
-
-					const styles = tag.sections.filter(s => s.name == 'style');
-
-					if (styles.length == 0) {
 						return tag.compile();
-					}
+					}))
 
-					styles.forEach((style, i) => {
-						if (i == 0) {
-							return;
-						} else if (style.attr.substr(0, 6) != 'theme=') {
-							return;
+					// tagのstyleの定数
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
+
+						const tag = new Tag(source);
+
+						const styles = tag.sections.filter(s => s.name == 'style');
+
+						if (styles.length == 0) {
+							return tag.compile();
 						}
-						const head = style.lines.shift();
-						style.lines = style.lines.map(line => {
-							return '\t' + line;
+
+						styles.forEach(style => {
+							const head = style.lines.shift();
+							style.lines.unshift('$theme-color = ' + config.themeColor);
+							style.lines.unshift('$theme-color-foreground = #fff');
+							style.lines.unshift(head);
 						});
-						style.lines.unshift(':scope');
-						style.lines = style.lines.map(line => {
-							return '\t' + line;
+
+						return tag.compile();
+					}))
+
+					// tagのstyleを暗黙的に:scopeにする
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
+
+						const tag = new Tag(source);
+
+						const styles = tag.sections.filter(s => s.name == 'style');
+
+						if (styles.length == 0) {
+							return tag.compile();
+						}
+
+						styles.forEach((style, i) => {
+							if (i != 0) {
+								return;
+							}
+							const head = style.lines.shift();
+							style.lines = style.lines.map(line => {
+								return '\t' + line;
+							});
+							style.lines.unshift(':scope');
+							style.lines.unshift(head);
 						});
-						style.lines.unshift('html[data-' + style.attr.match(/theme='(.+?)'/)[0] + ']');
-						style.lines.unshift(head);
-					});
 
-					return tag.compile();
-				}))
+						return tag.compile();
+					}))
 
-				// tagのstyleおよびscriptのインデントを不要にする
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-					const tag = new Tag(source);
+					// tagのtheme styleのパース
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
 
-					tag.sections = tag.sections.map(section => {
-						if (section.name != 'html') {
-							section.indent++;
+						const tag = new Tag(source);
+
+						const styles = tag.sections.filter(s => s.name == 'style');
+
+						if (styles.length == 0) {
+							return tag.compile();
 						}
-						return section;
-					});
 
-					return tag.compile();
-				}))
+						styles.forEach((style, i) => {
+							if (i == 0) {
+								return;
+							} else if (style.attr.substr(0, 6) != 'theme=') {
+								return;
+							}
+							const head = style.lines.shift();
+							style.lines = style.lines.map(line => {
+								return '\t' + line;
+							});
+							style.lines.unshift(':scope');
+							style.lines = style.lines.map(line => {
+								return '\t' + line;
+							});
+							style.lines.unshift('html[data-' + style.attr.match(/theme='(.+?)'/)[0] + ']');
+							style.lines.unshift(head);
+						});
 
-				// スペースでインデントされてないとエラーが出る
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-					return source.replace(/\t/g, '  ');
-				}))
+						return tag.compile();
+					}))
 
-				.transform(transformify((source, file) => {
-					return source
-						.replace(/VERSION/g, `'${config.version}'`)
-						.replace(/CONFIG\.theme-color/g, `'${config.themeColor}'`)
-						.replace(/CONFIG\.themeColor/g, `'${config.themeColor}'`)
-						.replace(/CONFIG\.api\.url/g, `'${config.scheme}://api.${config.host}'`)
-						.replace(/CONFIG\.urls\.about/g, `'${config.scheme}://about.${config.host}'`)
-						.replace(/CONFIG\.urls\.dev/g, `'${config.scheme}://dev.${config.host}'`)
-						.replace(/CONFIG\.url/g, `'${config.url}'`)
-						.replace(/CONFIG\.host/g, `'${config.host}'`)
-						.replace(/CONFIG\.recaptcha\.siteKey/g, `'${config.recaptcha.siteKey}'`)
-						;
-				}))
+					// tagのstyleおよびscriptのインデントを不要にする
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
+						const tag = new Tag(source);
 
-				.transform(riotify, {
-					template: 'pug',
-					type: 'livescript',
-					expr: false,
-					compact: true,
-					parserOptions: {
-						template: {
-							config: config,
-							CONFIG: config
+						tag.sections = tag.sections.map(section => {
+							if (section.name != 'html') {
+								section.indent++;
+							}
+							return section;
+						});
+
+						return tag.compile();
+					}))
+
+					// スペースでインデントされてないとエラーが出る
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
+						return source.replace(/\t/g, '  ');
+					}))
+
+					.transform(transformify((source, file) => {
+						return source
+							.replace(/VERSION/g, `'${commit.hash}'`)
+							.replace(/CONFIG\.theme-color/g, `'${config.themeColor}'`)
+							.replace(/CONFIG\.themeColor/g, `'${config.themeColor}'`)
+							.replace(/CONFIG\.api\.url/g, `'${config.scheme}://api.${config.host}'`)
+							.replace(/CONFIG\.urls\.about/g, `'${config.scheme}://about.${config.host}'`)
+							.replace(/CONFIG\.urls\.dev/g, `'${config.scheme}://dev.${config.host}'`)
+							.replace(/CONFIG\.url/g, `'${config.url}'`)
+							.replace(/CONFIG\.host/g, `'${config.host}'`)
+							.replace(/CONFIG\.recaptcha\.siteKey/g, `'${config.recaptcha.siteKey}'`)
+							;
+					}))
+
+					.transform(riotify, {
+						template: 'pug',
+						type: 'livescript',
+						expr: false,
+						compact: true,
+						parserOptions: {
+							template: {
+								config: config,
+								CONFIG: config
+							}
 						}
-					}
-				})
-				// Riotが謎の空白を挿入する
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-					return source.replace(/\s<mk\-ellipsis>/g, '<mk-ellipsis>');
-				}))
-				/*
-				// LiveScruptがHTMLクラスのショートカットを変な風に生成するのでそれを修正
-				.transform(transformify((source, file) => {
-					if (file.substr(-4) !== '.tag') return source;
-					return source.replace(/class="\{\(\{(.+?)\}\)\}"/g, 'class="{$1}"');
-				}))*/
-				.bundle()
-				.pipe(source(entry.replace('src', 'resources').replace('.ls', '.js')));
+					})
+					// Riotが謎の空白を挿入する
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
+						return source.replace(/\s<mk\-ellipsis>/g, '<mk-ellipsis>');
+					}))
+					/*
+					// LiveScruptがHTMLクラスのショートカットを変な風に生成するのでそれを修正
+					.transform(transformify((source, file) => {
+						if (file.substr(-4) !== '.tag') return source;
+						return source.replace(/class="\{\(\{(.+?)\}\)\}"/g, 'class="{$1}"');
+					}))*/
+					.bundle()
+					.pipe(source(entry.replace('src', 'resources').replace('.ls', '.js')));
 
-			if (isProduction) {
-				bundle = bundle
-					.pipe(buffer())
-					.pipe(uglify({
-						compress: true
-					}));
-			}
+				if (isProduction) {
+					bundle = bundle
+						.pipe(buffer())
+						.pipe(uglify({
+							compress: true
+						}));
+				}
 
-			return bundle
-				.pipe(gulp.dest('./built'));
+				return bundle
+					.pipe(gulp.dest('./built'));
+			});
+
+			es.merge(tasks).on('end', done);
 		});
-
-		es.merge(tasks).on('end', done);
 	});
 });
 
