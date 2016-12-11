@@ -9,19 +9,15 @@ mk-list-user
 				span.username
 					| @{ user.username }
 		div.body
+			p.followed(if={ user.is_followed }) フォローされています
 			div.bio { user.bio }
+	mk-follow-button(user={ user })
 
 style.
 	display block
 	margin 0
 	padding 16px
-	font-size 12px
-
-	@media (min-width 350px)
-		font-size 14px
-
-	@media (min-width 500px)
-		font-size 16px
+	font-size 16px
 
 	&:after
 		content ""
@@ -31,36 +27,23 @@ style.
 	> .avatar-anchor
 		display block
 		float left
-		margin 0 10px 0 0
-
-		@media (min-width 500px)
-			margin-right 16px
+		margin 0 16px 0 0
 
 		> .avatar
 			display block
-			width 48px
-			height 48px
+			width 58px
+			height 58px
 			margin 0
-			border-radius 6px
+			border-radius 8px
 			vertical-align bottom
-
-			@media (min-width 500px)
-				width 58px
-				height 58px
-				border-radius 8px
 
 	> .main
 		float left
-		width calc(100% - 58px)
-
-		@media (min-width 500px)
-			width calc(100% - 74px)
+		width calc(100% - 74px)
 
 		> header
+			margin-bottom 2px
 			white-space nowrap
-
-			@media (min-width 500px)
-				margin-bottom 2px
 
 			&:after
 				content ""
@@ -89,6 +72,15 @@ style.
 					color #ccc
 
 		> .body
+			> .followed
+				display inline-block
+				margin 0 0 4px 0
+				padding 2px 8px
+				vertical-align top
+				font-size 10px
+				color #71afc7
+				background #eefaff
+				border-radius 4px
 
 			> .bio
 				cursor default
@@ -98,6 +90,11 @@ style.
 				word-wrap break-word
 				font-size 1.1em
 				color #717171
+
+	> mk-follow-button
+		position absolute
+		top 16px
+		right 16px
 
 script.
 	@user = @opts.user
