@@ -14,7 +14,7 @@ mk-timeline
 			span
 				i.fa.fa-angle-down
 				| { posts[i + 1]._datetext }
-	footer
+	footer(if={ !init })
 		i.fa.fa-moon-o(if={ !fetching })
 		i.fa.fa-spinner.fa-pulse.fa-fw(if={ fetching })
 
