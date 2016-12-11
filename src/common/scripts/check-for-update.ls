@@ -1,6 +1,5 @@
 module.exports = ->
-	fetch \/meta do
-		method: \POST
+	fetch \/meta
 	.then (res) ~>
 		meta <~ res.json!.then
 		if meta.commit.hash != VERSION
