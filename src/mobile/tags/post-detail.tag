@@ -5,7 +5,7 @@ mk-post-detail
 
 	div.main(if={ !fetching })
 
-		button.read-more(if={ p.reply_to && p.reply_to.reply_to && context == null }, onclick={ load-context }, disabled={ loading-context })
+		button.read-more(if={ p.reply_to && p.reply_to.reply_to_id && context == null }, onclick={ load-context }, disabled={ loading-context })
 			i.fa.fa-ellipsis-v(if={ !loading-context })
 			i.fa.fa-spinner.fa-pulse(if={ loading-context })
 
@@ -416,7 +416,7 @@ script.
 
 		# Get context
 		@api \posts/context do
-			post_id: @p.reply_to.id
+			post_id: @p.reply_to_id
 		.then (context) ~>
 			@context = context.reverse!
 			@loading-context = false
