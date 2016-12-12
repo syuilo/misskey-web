@@ -12,7 +12,7 @@ style.
 	width 500px
 	color #fff
 	background rgba(#000, 0.7)
-	border-radius 0 0 4px 4px
+	border-radius 0 0 8px 8px
 
 	> p
 		margin 0
