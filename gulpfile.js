@@ -419,7 +419,7 @@ gulp.task('build-copy', [
 	gutil.log('必要なリソースをコピーします...');
 
 	return es.merge(
-		gulp.src('./src/resources/**/*').pipe(gulp.dest('./built/resources/')),
+		gulp.src('./resources/**/*').pipe(gulp.dest('./built/resources/')),
 		gulp.src('./src/desktop/resources/**/*').pipe(gulp.dest('./built/resources/desktop/')),
 		gulp.src('./src/mobile/resources/**/*').pipe(gulp.dest('./built/resources/mobile/')),
 		gulp.src('./src/dev/resources/**/*').pipe(gulp.dest('./built/resources/dev/')),
