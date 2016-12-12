@@ -1,6 +1,6 @@
 mk-post-form-window
 
-	mk-window(controller={ window-controller }, is-modal={ true }, colored={ true })
+	mk-window@window(controller={ window-controller }, is-modal={ true }, colored={ true })
 
 		<yield to="header">
 		span(if={ !parent.opts.reply }) 新規投稿
@@ -15,7 +15,7 @@ mk-post-form-window
 		div.ref(if={ parent.opts.reply })
 			mk-post-preview(post={ parent.opts.reply })
 		div.body
-			mk-post-form(controller={ parent.form-controller }, reply={ parent.opts.reply })
+			mk-post-form@form(event={ parent.form-event }, reply={ parent.opts.reply })
 		</yield>
 
 style.
@@ -39,53 +39,35 @@ style.
 					margin 16px 22px
 
 script.
-	@is-open = false
 	@wait = false
 
 	@uploading-files = []
 	@files = []
 
-	@controller = @opts.controller
 	@window-controller = riot.observable!
-	@form-controller = riot.observable!
+	@form-event = riot.observable!
 
-	@controller.on \toggle ~>
-		@toggle!
-
-	@controller.on \open ~>
+	@on \mount ~>
+		@form = @refs.window.refs.form
 		@open!
 
-	@controller.on \close ~>
+	@window-controller.on \closed ~>
+		@unmount!
+
+	@form-event.on \post ~>
 		@close!
 
-	@window-controller.on \opening ~>
-		@is-open = true
-		@controller.trigger \opening
-
-	@window-controller.on \closing ~>
-		@is-open = false
-		@controller.trigger \closing
-
-	@form-controller.on \post ~>
-		@close!
-
-	@form-controller.on \change-uploading-files (files) ~>
+	@form-event.on \change-uploading-files (files) ~>
 		@uploading-files = files
 		@update!
 
-	@form-controller.on \change-files (files) ~>
+	@form-event.on \change-files (files) ~>
 		@files = files
 		@update!
 
-	@toggle = ~>
-		if @is-open
-			@close!
-		else
-			@open!
-
 	@open = ~>
 		@window-controller.trigger \open
-		@form-controller.trigger \focus
+		@form.focus!
 
 	@close = ~>
 		@window-controller.trigger \close

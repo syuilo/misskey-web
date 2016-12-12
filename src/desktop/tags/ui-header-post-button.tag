@@ -2,10 +2,6 @@ mk-ui-header-post-button
 	button(onclick={ post }, title='新規投稿')
 		i.fa.fa-pencil-square-o
 
-script.
-	@post = (e) ~>
-		@opts.ui.trigger \toggle-post-form
-
 style.
 	display inline-block
 	padding 8px
@@ -37,3 +33,7 @@ style.
 		&:active
 			background darken($theme-color, 10%) !important
 			transition background 0s ease
+
+script.
+	@post = (e) ~>
+		@opts.ui-event.trigger \open-post-form

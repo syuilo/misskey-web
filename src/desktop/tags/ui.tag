@@ -1,8 +1,6 @@
 mk-ui
-	mk-post-form-window(controller={ post-form-controller })
-
 	div.global@global
-		mk-ui-header@header(ui={ ui }, page={ opts.page })
+		mk-ui-header@header(ui-event={ event }, page={ opts.page })
 
 		mk-set-avatar-suggestion(if={ SIGNIN && I.avatar_id == null })
 		mk-set-banner-suggestion(if={ SIGNIN && I.banner_id == null })
@@ -18,29 +16,30 @@ style.
 script.
 	@mixin \i
 
-	@ui = riot.observable!
-	riot.mixin \ui do
-		ui: @ui
+	@event = riot.observable!
 
-	@post-form-controller = riot.observable!
+	@event.on \open-post-form ~>
+		@open-post-form!
 
-	@ui.on \toggle-post-form ~>
-		@post-form-controller.trigger \toggle
-
-	@ui.on \notification (text) ~>
-		alert text
-
-	@ui.on \set-root-layout ~>
+	@event.on \set-root-layout ~>
 		@set-root-layout!
+
+	@open-post-form = ~>
+		riot.mount document.body.append-child document.create-element \mk-post-form-window
 
 	@set-root-layout = ~>
 		@root.style.padding-top = @refs.header.root.client-height + \px
 
 	@on \mount ~>
 		@set-root-layout!
-		document.add-event-listener \keydown (e) ~>
-			tag = e.target.tag-name.to-lower-case!
-			if tag != \input and tag != \textarea
-				if e.which == 80 or e.which == 78 # p or n
-					e.prevent-default!
-					@post-form-controller.trigger \open
+		document.add-event-listener \keydown @onkeydown
+
+	@on \unmount ~>
+		document.remove-event-listener \keydown @onkeydown
+
+	@onkeydown = (e) ~>
+		tag = e.target.tag-name.to-lower-case!
+		if tag != \input and tag != \textarea
+			if e.which == 80 or e.which == 78 # p or n
+				e.prevent-default!
+				@open-post-form!

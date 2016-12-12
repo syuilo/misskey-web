@@ -46,7 +46,6 @@ style.
 script.
 	@mixin \api
 	@mixin \i
-	@mixin \ui
 
 	@close = (e) ~>
 		e.prevent-default!
@@ -61,4 +60,4 @@ script.
 
 		@unmount!
 
-		@ui.trigger \set-root-layout
+		@opts.ui-event.trigger \set-root-layout

@@ -322,12 +322,6 @@ script.
 	@content = null
 	@post = null
 
-	@reply-form = null
-	@reply-form-controller = riot.observable!
-
-	@repost-form = null
-	@repost-form-controller = riot.observable!
-
 	@on \mount ~>
 
 		@api \posts/show do
@@ -387,20 +381,14 @@ script.
 			@update!
 
 	@reply = ~>
-		if !@reply-form?
-			@reply-form = document.body.append-child document.create-element \mk-post-form-window
-			riot.mount @reply-form, do
-				controller: @reply-form-controller
-				reply: @p
-		@reply-form-controller.trigger \open
+		form = document.body.append-child document.create-element \mk-post-form-window
+		riot.mount form, do
+			reply: @p
 
 	@repost = ~>
-		if !@repost-form?
-			@repost-form = document.body.append-child document.create-element \mk-repost-form-window
-			riot.mount @repost-form, do
-				controller: @repost-form-controller
-				post: @p
-		@repost-form-controller.trigger \open
+		form = document.body.append-child document.create-element \mk-repost-form-window
+		riot.mount form, do
+			post: @p
 
 	@like = ~>
 		if @p.is_liked

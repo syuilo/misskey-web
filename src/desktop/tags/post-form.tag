@@ -290,7 +290,7 @@ script.
 	@uploadings = []
 	@files = []
 	@uploader-controller = riot.observable!
-	@controller = @opts.controller
+	@event = @opts.event
 	@autocomplete = null
 
 	@on \mount ~>
@@ -300,13 +300,13 @@ script.
 	@on \unmount ~>
 		@autocomplete.detach!
 
-	@controller.on \focus ~>
+	@focus = ~>
 		@refs.text.focus!
 
 	@clear = ~>
 		@refs.text.value = ''
 		@files = []
-		@controller.trigger \change-files
+		@event.trigger \change-files
 		@update!
 
 	@ondragover = (e) ~>
@@ -394,16 +394,16 @@ script.
 		@add-file file
 
 	@uploader-controller.on \change-uploads (uploads) ~>
-		@controller.trigger \change-uploading-files uploads
+		@event.trigger \change-uploading-files uploads
 
 	@add-file = (file) ~>
 		file._remove = ~>
 			@files = @files.filter (x) -> x.id != file.id
-			@controller.trigger \change-files @files
+			@event.trigger \change-files @files
 			@update!
 
 		@files.push file
-		@controller.trigger \change-files @files
+		@event.trigger \change-files @files
 		@update!
 
 		new @Sortable @refs.attaches, do
@@ -422,8 +422,7 @@ script.
 			media_ids: files
 			reply_to_id: if @opts.reply? then @opts.reply.id else undefined
 		.then (data) ~>
-			@controller.trigger \post
-			@clear!
+			@event.trigger \post
 			@notify '投稿しました！'
 		.catch (err) ~>
 			console.error err
