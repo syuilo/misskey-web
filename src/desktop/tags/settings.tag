@@ -58,6 +58,11 @@ mk-settings
 					p 開発者モード
 					p デバッグ等の開発者モードを有効にします。
 
+		div.signin(show={ page == 'signin' })
+			section
+				h1 ログイン履歴
+				mk-signin-history
+
 style.
 	display block
 
