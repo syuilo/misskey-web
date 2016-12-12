@@ -113,6 +113,7 @@ style.
 
 script.
 	@mixin \api
+	@mixin \notify
 
 	@event = @opts.event
 	@wait = false
@@ -128,10 +129,10 @@ script.
 			text: if @quote then @refs.text.value else undefined
 		.then (data) ~>
 			@event.trigger \posted
-			#@opts.ui.trigger \notification '投稿しました。'
+			@notify 'Repostしました！'
 		.catch (err) ~>
 			console.error err
-			#@opts.ui.trigger \notification 'Error!'
+			@notify 'Repostできませんでした'
 		.then ~>
 			@wait = false
 			@update!
