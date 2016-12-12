@@ -282,6 +282,7 @@ style.
 
 script.
 	@mixin \api
+	@mixin \notify
 	@mixin \autocomplete
 	@mixin \sortable
 
@@ -423,10 +424,10 @@ script.
 		.then (data) ~>
 			@controller.trigger \post
 			@clear!
-			#@opts.ui.trigger \notification '投稿しました。'
+			@notify '投稿しました！'
 		.catch (err) ~>
 			console.error err
-			#@opts.ui.trigger \notification 'Error!'
+			@notify '投稿できませんでした'
 		.then ~>
 			@wait = false
 			@update!

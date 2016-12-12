@@ -12,6 +12,9 @@ module.exports = (me) ~>
 
 	require './scripts/open-window.ls'
 
+	riot.mixin \notify do
+		notify: require './scripts/notify.ls'
+
 	dialog = require './scripts/dialog.ls'
 
 	riot.mixin \dialog do
