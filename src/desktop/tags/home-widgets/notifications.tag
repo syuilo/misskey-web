@@ -21,7 +21,7 @@ style.
 
 		> i
 			margin-right 4px
-	
+
 	> button
 		position absolute
 		z-index 2
@@ -35,7 +35,7 @@ style.
 
 		&:hover
 			color #aaa
-		
+
 		&:active
 			color #999
 
