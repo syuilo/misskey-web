@@ -4,36 +4,31 @@
 ReconnectingWebSocket = require 'reconnecting-websocket'
 riot = require 'riot'
 
-function init me
-	event = riot.observable!
-	socket = null
-
-	function connect otherparty
+class Connection
+	(me, otherparty) ~>
+		@event = riot.observable!
+		@me = me
 		host = CONFIG.api.url.replace \http \ws
-		socket := new ReconnectingWebSocket host + '/messaging?otherparty=' + otherparty
+		@socket = new ReconnectingWebSocket "#{host}/messaging?otherparty=#{otherparty}"
 
-		socket.onopen = ~>
-			socket.send JSON.stringify do
-				i: me.token
+		@socket.add-event-listener \open @on-open
+		@socket.add-event-listener \message @on-message
 
-		socket.onmessage = (message) ~>
-			try
-				message = JSON.parse message.data
-				if message.type?
-					event.trigger message.type, message.body
-			catch
-				# ignore
+	on-open: ~>
+		@socket.send JSON.stringify do
+			i: @me.token
 
-	function close
-		socket.close!
+	on-message: (message) ~>
+		try
+			message = JSON.parse message.data
+			if message.type?
+				@event.trigger message.type, message.body
+		catch
+			# ignore
 
-	{
-		connect
-		close
-		event
-	}
+	close: ~>
+		@socket.remove-event-listener \open @on-open
+		@socket.remove-event-listener \message @on-message
+		@socket.close!
 
-# Export
-#--------------------------------
-
-module.exports = init
+module.exports = Connection

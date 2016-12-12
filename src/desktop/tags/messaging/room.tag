@@ -211,6 +211,7 @@ style.
 			display none
 
 script.
+	@mixin \i
 	@mixin \api
 	@mixin \messaging-stream
 
@@ -219,10 +220,11 @@ script.
 	@saying = false
 	@messages = []
 
+	@connection = new @MessagingStreamConnection @I, @user.id
+
 	@on \mount ~>
-		@messaging-stream.connect @user.id
-		@messaging-stream.event.on \message @on-message
-		@messaging-stream.event.on \read @on-read
+		@connection.event.on \message @on-message
+		@connection.event.on \read @on-read
 
 		@api \messaging/messages do
 			user_id: @user.id
@@ -234,7 +236,9 @@ script.
 			console.error err
 
 	@on \unmount ~>
-		@messaging-stream.close!
+		@connection.event.off \message @on-message
+		@connection.event.off \read @on-read
+		@connection.close!
 
 	@on \update ~>
 		@messages.for-each (message) ~>
