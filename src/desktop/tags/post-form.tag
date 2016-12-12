@@ -293,6 +293,11 @@ script.
 	@event = @opts.event
 	@autocomplete = null
 
+	@in-reply-to-post = @opts.reply
+
+	# https://github.com/riot/riot/issues/2080
+	if @in-reply-to-post == '' then @in-reply-to-post = null
+
 	@on \mount ~>
 		@autocomplete = new @Autocomplete @refs.text
 		@autocomplete.attach!
@@ -420,10 +425,10 @@ script.
 		@api \posts/create do
 			text: @refs.text.value
 			media_ids: files
-			reply_to_id: if @opts.reply? then @opts.reply.id else undefined
+			reply_to_id: if @in-reply-to-post? then @in-reply-to-post.id else undefined
 		.then (data) ~>
 			@event.trigger \post
-			@notify '投稿しました！'
+			@notify if @in-reply-to-post? then '返信しました！' else '投稿しました！'
 		.catch (err) ~>
 			console.error err
 			@notify '投稿できませんでした'
