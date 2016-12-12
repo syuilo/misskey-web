@@ -224,7 +224,7 @@ style.
 					float left
 					width 54px
 					height 54px
-					margin 0 18px 4px 0
+					margin 0 16px 0 0
 					border-radius 8px
 					transition all 0.1s ease
 
