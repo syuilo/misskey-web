@@ -27,8 +27,9 @@ module.exports = (I, cb, file = null) ~>
 		@set file
 	else
 		browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
-		i = riot.mount browser, do
+		browser = riot.mount browser, do
 			multiple: false
 			title: '<i class="fa fa-picture-o"></i>壁紙にする画像を選択'
-		i[0].one \selected (file) ~>
+		.0
+		browser.one \selected (file) ~>
 			@set file

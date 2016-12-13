@@ -3,8 +3,8 @@ mk-user
 		header
 			mk-user-header(user={ user })
 		div.body
-			mk-user-home@content(if={ page == 'home' }, user={ user })
-			mk-user-graphs@content(if={ page == 'graphs' }, user={ user })
+			mk-user-home(if={ page == 'home' }, user={ user })
+			mk-user-graphs(if={ page == 'graphs' }, user={ user })
 
 style.
 	display block
@@ -36,13 +36,10 @@ script.
 	@user = null
 
 	@on \mount ~>
-		@refs.content.on \loaded ~>
-			@trigger \loaded
-
 		@api \users/show do
 			username: @username
 		.then (user) ~>
 			@fetching = false
 			@user = user
 			@update!
-			@trigger \user-fetched user
+			@trigger \loaded

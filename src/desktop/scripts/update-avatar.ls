@@ -9,14 +9,12 @@ module.exports = (I, cb, file = null) ~>
 
 	@file-selected = (file) ~>
 		cropper = document.body.append-child document.create-element \mk-crop-window
-		cropper-controller = riot.observable!
-		riot.mount cropper, do
+		cropper = riot.mount cropper, do
 			file: file
 			title: 'アバターとして表示する部分を選択'
 			aspect-ratio: 1 / 1
-			controller: cropper-controller
-		cropper-controller.trigger \open
-		cropper-controller.on \cropped (blob) ~>
+		.0
+		cropper.on \cropped (blob) ~>
 			data = new FormData!
 			data.append \i I.token
 			data.append \file blob, file.name + '.cropped.png'
@@ -30,16 +28,15 @@ module.exports = (I, cb, file = null) ~>
 						@uplaod data, icon-folder
 				else
 					@uplaod data, icon-folder.0
-		cropper-controller.on \skiped ~>
+		cropper.on \skiped ~>
 			@set file
 
 	@uplaod = (data, folder) ~>
 
 		progress = document.body.append-child document.create-element \mk-progress-dialog
-		progress-controller = riot.observable!
-		riot.mount progress, do
+		progress.riot.mount progress, do
 			title: '新しいアバターをアップロードしています'
-			controller: progress-controller
+		.0
 
 		if folder?
 			data.append \folder_id folder.id
@@ -48,12 +45,12 @@ module.exports = (I, cb, file = null) ~>
 		xhr.open \POST CONFIG.api.url + \/drive/files/create true
 		xhr.onload = (e) ~>
 			file = JSON.parse e.target.response
-			progress-controller.trigger \close
+			progress.close!
 			@set file
 
 		xhr.upload.onprogress = (e) ~>
 			if e.length-computable
-				progress-controller.trigger \update e.loaded, e.total
+				progress.update-progress e.loaded, e.total
 
 		xhr.send data
 
@@ -76,8 +73,9 @@ module.exports = (I, cb, file = null) ~>
 		@file-selected file
 	else
 		browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
-		i = riot.mount browser, do
+		browser = riot.mount browser, do
 			multiple: false
 			title: '<i class="fa fa-picture-o"></i>アバターにする画像を選択'
-		i[0].one \selected (file) ~>
+		.0
+		browser.one \selected (file) ~>
 			@file-selected file
