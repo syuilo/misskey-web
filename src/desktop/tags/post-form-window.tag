@@ -50,14 +50,13 @@ script.
 		@refs.window.on \closed ~>
 			@unmount!
 
-			@refs.window.refs.form.on \post ~>
-				@refs.window.close!
+		@refs.window.refs.form.on \post ~>
+			@refs.window.close!
 
-			@refs.window.refs.form.on \change-uploading-files (files) ~>
-				@uploading-files = files
-				@update!
+		@refs.window.refs.form.on \change-uploading-files (files) ~>
+			@uploading-files = files
+			@update!
 
-			@refs.window.refs.form.on \change-files (files) ~>
-				@files = files
-				@update!
-
+		@refs.window.refs.form.on \change-files (files) ~>
+			@files = files
+			@update!
