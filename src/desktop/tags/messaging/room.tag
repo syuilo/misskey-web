@@ -262,6 +262,10 @@ script.
 
 	@on-message = (message) ~>
 		@messages.push message
+		if message.user_id != @I.id
+			@connection.socket.send JSON.stringify do
+				type: \read
+				id: message.id
 		@update!
 
 	@on-read = (ids) ~>
