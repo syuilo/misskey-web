@@ -1,5 +1,5 @@
 mk-ui-header
-	mk-donation(if={ SIGNIN && !I.data.no_donation }, ui-event={ opts.ui-event })
+	mk-donation(if={ SIGNIN && !I.data.no_donation })
 	div.main
 		div.backdrop
 		div.main: div.container
@@ -9,7 +9,7 @@ mk-ui-header
 				mk-ui-header-search
 				mk-ui-header-account(if={ SIGNIN })
 				mk-ui-header-notifications(if={ SIGNIN })
-				mk-ui-header-post-button(if={ SIGNIN }, ui-event={ opts.ui-event })
+				mk-ui-header-post-button(if={ SIGNIN })
 				mk-ui-header-clock
 
 style.

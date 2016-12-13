@@ -36,4 +36,4 @@ style.
 
 script.
 	@post = (e) ~>
-		@opts.ui-event.trigger \open-post-form
+		@parent.parent.open-post-form!
