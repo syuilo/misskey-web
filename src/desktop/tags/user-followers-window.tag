@@ -1,5 +1,5 @@
 mk-user-followers-window
-	mk-window(controller={ window-controller }, is-modal={ false }, width={ '400px' }, height={ '550px' })
+	mk-window(is-modal={ false }, width={ '400px' }, height={ '550px' })
 		<yield to="header">
 		img(src={ parent.user.avatar_url + '?thumbnail&size=64' }, alt='')
 		| { parent.user.name }のフォロワー
@@ -19,8 +19,4 @@ style.
 				border-radius 4px
 
 script.
-	@window-controller = riot.observable!
 	@user = @opts.user
-
-	@on \mount ~>
-		@window-controller.trigger \open
