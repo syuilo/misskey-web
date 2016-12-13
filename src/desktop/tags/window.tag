@@ -193,13 +193,10 @@ script.
 	@min-height = 40px
 	@min-width = 200px
 
-	@is-open = false
 	@is-modal = if @opts.is-modal? then @opts.is-modal else false
 	@can-close = if @opts.can-close? then @opts.can-close else true
 	@is-flexible = !@opts.height?
 	@can-resize = not @is-flexible
-
-	@controller = @opts.controller
 
 	@on \mount ~>
 		@refs.main.style.width = @opts.width || \530px
@@ -212,6 +209,8 @@ script.
 			e.prevent-default!
 
 		window.add-event-listener \resize @on-browser-resize
+
+		@open!
 
 	@on \unmount ~>
 		window.remove-event-listener \resize @on-browser-resize
@@ -235,24 +234,8 @@ script.
 		if position.top + window-height > browser-height
 			@refs.main.style.top = browser-height - window-height + \px
 
-	@controller.on \toggle ~>
-		@toggle!
-
-	@controller.on \open ~>
-		@open!
-
-	@controller.on \close ~>
-		@close!
-
-	@toggle = ~>
-		if @is-open
-			@close!
-		else
-			@open!
-
 	@open = ~>
-		@is-open = true
-		@controller.trigger \opening
+		@trigger \opening
 
 		@top!
 
@@ -282,12 +265,11 @@ script.
 		@refs.main.focus!
 
 		set-timeout ~>
-			@controller.trigger \opened
+			@trigger \opened
 		, 300ms
 
 	@close = ~>
-		@is-open = false
-		@controller.trigger \closing
+		@trigger \closing
 
 		if @is-modal
 			@refs.bg.style.pointer-events = \none
