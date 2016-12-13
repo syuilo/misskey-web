@@ -60,4 +60,4 @@ script.
 
 		@unmount!
 
-		@opts.ui-event.trigger \set-root-layout
+		@parent.parent.set-root-layout!
