@@ -75,16 +75,17 @@ script.
 	@reply = @opts.reply
 	@posting = false
 
+	@on \mount ~>
+		@refs.form.on \before-post ~>
+			@posting = true
+			@update!
+
+		@refs.form.on \after-post ~>
+			@posting = false
+			@update!
+
+		@refs.form.on \post ~>
+			@close!
+
 	@post = ~>
 		@refs.form.post!
-
-	@refs.form.on \before-post ~>
-		@posting = true
-		@update!
-
-	@refs.form.on \after-post ~>
-		@posting = false
-		@update!
-
-	@refs.form.on \post ~>
-		@close!
