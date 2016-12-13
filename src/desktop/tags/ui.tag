@@ -1,6 +1,6 @@
 mk-ui
 	div.global@global
-		mk-ui-header@header(ui-event={ event }, page={ opts.page })
+		mk-ui-header@header(page={ opts.page })
 
 		mk-set-avatar-suggestion(if={ SIGNIN && I.avatar_id == null })
 		mk-set-banner-suggestion(if={ SIGNIN && I.banner_id == null })
@@ -15,14 +15,6 @@ style.
 
 script.
 	@mixin \i
-
-	@event = riot.observable!
-
-	@event.on \open-post-form ~>
-		@open-post-form!
-
-	@event.on \set-root-layout ~>
-		@set-root-layout!
 
 	@open-post-form = ~>
 		riot.mount document.body.append-child document.create-element \mk-post-form-window

@@ -1,5 +1,5 @@
 mk-drive-page
-	mk-ui: mk-drive(event={ parent.event }, folder={ parent.opts.folder }, file={ parent.opts.file })
+	mk-ui@ui: mk-drive@browser(folder={ parent.opts.folder }, file={ parent.opts.file })
 
 style.
 	display block
@@ -8,41 +8,39 @@ script.
 	@mixin \ui
 	@mixin \ui-progress
 
-	@event = riot.observable!
-
 	@on \mount ~>
 		document.title = 'Misskey Drive'
 		@ui.trigger \title '<i class="fa fa-cloud"></i>ドライブ'
 
-	@event.on \begin-load ~>
-		@Progress.start!
+		@refs.ui.refs.browser.on \begin-load ~>
+			@Progress.start!
 
-	@event.on \loaded-mid ~>
-		@Progress.set 0.5
+		@refs.ui.refs.browser.on \loaded-mid ~>
+			@Progress.set 0.5
 
-	@event.on \loaded ~>
-		@Progress.done!
+		@refs.ui.refs.browser.on \loaded ~>
+			@Progress.done!
 
-	@event.on \move-root ~>
-		@ui.trigger \title '<i class="fa fa-cloud"></i>ドライブ'
+		@refs.ui.refs.browser.on \move-root ~>
+			@ui.trigger \title '<i class="fa fa-cloud"></i>ドライブ'
 
-		# Rewrite URL
-		history.push-state null null '/i/drive'
+			# Rewrite URL
+			history.push-state null null '/i/drive'
 
-	@event.on \cd (folder) ~>
-		# TODO: escape html characters in folder.name
-		@ui.trigger \title '<i class="fa fa-folder-open"></i>' + folder.name
+		@refs.ui.refs.browser.on \cd (folder) ~>
+			# TODO: escape html characters in folder.name
+			@ui.trigger \title '<i class="fa fa-folder-open"></i>' + folder.name
 
-	@event.on \move (folder) ~>
-		# Rewrite URL
-		history.push-state null null '/i/drive/folder/' + folder.id
+		@refs.ui.refs.browser.on \move (folder) ~>
+			# Rewrite URL
+			history.push-state null null '/i/drive/folder/' + folder.id
 
-	@event.on \open-file (file) ~>
-		# TODO: escape html characters in file.name
-		@ui.trigger \title '<mk-file-type-icon class="icon"></mk-file-type-icon>' + file.name
+		@refs.ui.refs.browser.on \open-file (file) ~>
+			# TODO: escape html characters in file.name
+			@ui.trigger \title '<mk-file-type-icon class="icon"></mk-file-type-icon>' + file.name
 
-		# Rewrite URL
-		history.push-state null null '/i/drive/file/' + file.id
+			# Rewrite URL
+			history.push-state null null '/i/drive/file/' + file.id
 
-		riot.mount \mk-file-type-icon do
-			file: file
+			riot.mount \mk-file-type-icon do
+				file: file

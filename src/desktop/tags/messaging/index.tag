@@ -258,7 +258,6 @@ script.
 	@mixin \i
 	@mixin \api
 
-	@event = @opts.event
 	@search-result = []
 
 	@on \mount ~>
@@ -269,9 +268,9 @@ script.
 				message.is_me = message.user_id == @I.id
 				message._click = ~>
 					if message.is_me
-						@event.trigger \navigate-user message.recipient
+						@trigger \navigate-user message.recipient
 					else
-						@event.trigger \navigate-user message.user
+						@trigger \navigate-user message.user
 			@history = history
 			@update!
 		.catch (err) ~>
@@ -287,7 +286,7 @@ script.
 			.then (users) ~>
 				users.for-each (user) ~>
 					user._click = ~>
-						@event.trigger \navigate-user user
+						@trigger \navigate-user user
 						@search-result = []
 				@search-result = users
 				@update!

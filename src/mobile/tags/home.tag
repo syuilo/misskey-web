@@ -1,5 +1,5 @@
 mk-home
-	mk-home-timeline(event={ tl-event })
+	mk-home-timeline@tl
 
 style.
 	display block
@@ -12,9 +12,6 @@ style.
 		padding 16px
 
 script.
-	@event = @opts.event
-
-	@tl-event = riot.observable!
-
-	@tl-event.on \loaded ~>
-		@event.trigger \loaded
+	@on \mount ~>
+		@refs.tl.on \loaded ~>
+			@trigger \loaded

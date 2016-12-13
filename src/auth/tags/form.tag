@@ -96,8 +96,6 @@ style.
 script.
 	@mixin \api
 
-	@event = @opts.event
-
 	@on \mount ~>
 		@opts.session.then (session) ~>
 			@session = session
@@ -108,10 +106,10 @@ script.
 		@api \auth/deny do
 			token: @session.token
 		.then ~>
-			@event.trigger \denied
+			@trigger \denied
 
 	@accept = ~>
 		@api \auth/accept do
 			token: @session.token
 		.then ~>
-			@event.trigger \accepted
+			@trigger \accepted

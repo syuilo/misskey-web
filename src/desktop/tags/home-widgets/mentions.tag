@@ -8,7 +8,7 @@ mk-mentions-home-widget
 		i.fa.fa-comments-o
 		span(if={ mode == 'all' }) あなた宛ての投稿はありません。
 		span(if={ mode == 'following' }) あなたがフォローしているユーザーからの言及はありません。
-	mk-timeline@timeline(controller={ controller })
+	mk-timeline@timeline
 		<yield to="footer">
 		i.fa.fa-moon-o(if={ !parent.more-loading })
 		i.fa.fa-spinner.fa-pulse.fa-fw(if={ parent.more-loading })
@@ -60,15 +60,13 @@ script.
 	@is-empty = false
 	@more-loading = false
 	@mode = \all
-	@controller = riot.observable!
-	@event = @opts.event
 
 	@on \mount ~>
 		document.add-event-listener \keydown @on-document-keydown
 		window.add-event-listener \scroll @on-scroll
 
 		@fetch ~>
-			@event.trigger \loaded
+			@trigger \loaded
 
 	@on \unmount ~>
 		document.remove-event-listener \keydown @on-document-keydown
@@ -78,7 +76,7 @@ script.
 		tag = e.target.tag-name.to-lower-case!
 		if tag != \input and tag != \textarea
 			if e.which == 84 # t
-				@controller.trigger \focus
+				@refs.timeline.focus!
 
 	@fetch = (cb) ~>
 		@api \posts/mentions do
@@ -87,7 +85,7 @@ script.
 			@is-loading = false
 			@is-empty = posts.length == 0
 			@update!
-			@controller.trigger \set-posts posts
+			@refs.timeline.set-posts posts
 			if cb? then cb!
 		.catch (err) ~>
 			console.error err
@@ -104,7 +102,7 @@ script.
 		.then (posts) ~>
 			@more-loading = false
 			@update!
-			@controller.trigger \prepend-posts posts
+			@refs.timeline.prepend-posts posts
 		.catch (err) ~>
 			console.error err
 

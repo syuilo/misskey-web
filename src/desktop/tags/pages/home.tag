@@ -1,5 +1,5 @@
 mk-home-page
-	mk-ui(page={ page }): mk-home(mode={ parent.opts.mode }, event={ parent.event })
+	mk-ui@ui(page={ page }): mk-home@home(mode={ parent.opts.mode })
 
 style.
 	display block
@@ -15,7 +15,6 @@ script.
 	@mixin \stream
 	@mixin \get-post-summary
 
-	@event = riot.observable!
 	@unread-count = 0
 
 	@page = switch @opts.mode
@@ -24,6 +23,9 @@ script.
 		| _ => \home
 
 	@on \mount ~>
+		@refs.ui.refs.home.on \loaded ~>
+			@Progress.done!
+
 		document.title = 'Misskey'
 		if @I.data.wallpaper
 			@api \drive/files/show do
@@ -37,9 +39,6 @@ script.
 	@on \unmount ~>
 		@stream.off \post @on-stream-post
 		document.remove-event-listener \visibilitychange @window-on-visibilitychange
-
-	@event.on \loaded ~>
-		@Progress.done!
 
 	@on-stream-post = (post) ~>
 		if document.hidden and post.user_id !== @I.id

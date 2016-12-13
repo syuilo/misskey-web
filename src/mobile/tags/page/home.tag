@@ -1,5 +1,5 @@
 mk-home-page
-	mk-ui: mk-home(event={ parent.event })
+	mk-ui@ui: mk-home@home
 
 style.
 	display block
@@ -11,7 +11,6 @@ script.
 	@mixin \stream
 	@mixin \get-post-summary
 
-	@event = riot.observable!
 	@unread-count = 0
 
 	@on \mount ~>
@@ -23,12 +22,12 @@ script.
 		@stream.on \post @on-stream-post
 		document.add-event-listener \visibilitychange @window-on-visibilitychange, false
 
+		@refs.ui.refs.home.on \loaded ~>
+			@Progress.done!
+
 	@on \unmount ~>
 		@stream.off \post @on-stream-post
 		document.remove-event-listener \visibilitychange @window-on-visibilitychange
-
-	@event.on \loaded ~>
-		@Progress.done!
 
 	@on-stream-post = (post) ~>
 		if document.hidden and post.user_id !== @I.id

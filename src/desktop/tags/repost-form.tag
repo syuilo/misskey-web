@@ -115,12 +115,11 @@ script.
 	@mixin \api
 	@mixin \notify
 
-	@event = @opts.event
 	@wait = false
 	@quote = false
 
 	@cancel = ~>
-		@event.trigger \cancel
+		@trigger \cancel
 
 	@ok = ~>
 		@wait = true
@@ -128,7 +127,7 @@ script.
 			repost_id: @opts.post.id
 			text: if @quote then @refs.text.value else undefined
 		.then (data) ~>
-			@event.trigger \posted
+			@trigger \posted
 			@notify 'Repostしました！'
 		.catch (err) ~>
 			console.error err

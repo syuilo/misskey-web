@@ -1,5 +1,5 @@
 mk-debugger
-	mk-window(controller={ window-controller }, is-modal={ false }, width={ '700px' }, height={ '550px' })
+	mk-window@window(is-modal={ false }, width={ '700px' }, height={ '550px' })
 		<yield to="header">
 		i.fa.fa-wrench
 		| Debugger
@@ -58,17 +58,13 @@ style.
 script.
 	@mixin \open-window
 
-	@window-controller = riot.observable!
-
 	@on \mount ~>
-		@window-controller.trigger \open
-
 		@progress-title = @tags['mk-window'].progress-title
 		@progress-value = @tags['mk-window'].progress-value
 		@progress-max = @tags['mk-window'].progress-max
 
-	@window-controller.on \closed ~>
-		@unmount!
+		@refs.window.on \closed ~>
+			@unmount!
 
 	################################
 

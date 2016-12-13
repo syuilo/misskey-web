@@ -1,5 +1,5 @@
 mk-user-following-page
-	mk-ui: mk-user-following(if={ !parent.fetching }, user={ parent.user }, event={ parent.event })
+	mk-ui@ui: mk-user-following@list(if={ !parent.fetching }, user={ parent.user })
 
 style.
 	display block
@@ -11,7 +11,6 @@ script.
 
 	@fetching = true
 	@user = null
-	@event = riot.observable!
 
 	@on \mount ~>
 		@Progress.start!
@@ -28,5 +27,5 @@ script.
 
 			@update!
 
-	@event.on \loaded ~>
-		@Progress.done!
+		@refs.ui.refs.list.on \loaded ~>
+			@Progress.done!

@@ -100,15 +100,12 @@ script.
 	@limit = 30users
 	@mode = \all
 
-	@event = @opts.event
-
 	@fetching = true
 	@more-fetching = false
 
 	@on \mount ~>
 		@fetch ~>
-			# ↓ https://github.com/riot/riot/issues/2080
-			if @event? and @event != '' then @event.trigger \loaded
+			@trigger \loaded
 
 	@fetch = (cb) ~>
 		@fetching = true

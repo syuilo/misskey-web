@@ -323,14 +323,11 @@ script.
 	@fetching = true
 	@loading-context = false
 	@content = null
-	@event = @opts.event
 	@post = null
 
 	@reply-form = null
-	@reply-form-controller = riot.observable!
 
 	@repost-form = null
-	@repost-form-controller = riot.observable!
 
 	@on \mount ~>
 		@api \posts/show do
@@ -340,7 +337,7 @@ script.
 			@is-repost = @post.repost?
 			@p = if @is-repost then @post.repost else @post
 			@summary = @get-post-summary @p
-			if @event then @event.trigger \loaded
+			@trigger \loaded
 			@fetching = false
 			@update!
 
@@ -388,7 +385,6 @@ script.
 		form = document.body.append-child document.create-element \mk-post-form-dialog
 		riot.mount form, do
 			reply: @p
-			controller: null
 
 	@repost = ~>
 		text = window.prompt '「' + @summary + '」をRepost'

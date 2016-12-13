@@ -3,8 +3,8 @@ mk-user
 		header
 			mk-user-header(user={ user })
 		div.body
-			mk-user-home(if={ page == 'home' }, user={ user }, event={ content-event })
-			mk-user-graphs(if={ page == 'graphs' }, user={ user }, event={ content-event })
+			mk-user-home@content(if={ page == 'home' }, user={ user })
+			mk-user-graphs@content(if={ page == 'graphs' }, user={ user })
 
 style.
 	display block
@@ -30,21 +30,19 @@ style.
 script.
 	@mixin \api
 
-	@event = @opts.event
 	@username = @opts.user
 	@page = if @opts.page? then @opts.page else \home
 	@fetching = true
-	@content-event = riot.observable!
 	@user = null
 
 	@on \mount ~>
+		@refs.content.on \loaded ~>
+			@trigger \loaded
+
 		@api \users/show do
 			username: @username
 		.then (user) ~>
 			@fetching = false
 			@user = user
 			@update!
-			@event.trigger \user-fetched user
-
-	@content-event.on \loaded ~>
-		@event.trigger \loaded
+			@trigger \user-fetched user

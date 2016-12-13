@@ -68,8 +68,6 @@ script.
 	@mixin \stream
 	@mixin \get-post-summary
 
-	@event = @opts.event
-
 	@notifications = []
 	@loading = true
 
@@ -79,7 +77,7 @@ script.
 			@notifications = notifications
 			@loading = false
 			@update!
-			@event.trigger \loaded
+			@trigger \loaded
 		.catch (err, text-status) ->
 			console.error err
 

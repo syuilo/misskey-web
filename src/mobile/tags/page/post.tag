@@ -1,5 +1,5 @@
 mk-post-page
-	mk-ui: main: mk-post-detail(post={ parent.post }, event={ parent.event })
+	mk-ui@ui: main: mk-post-detail@post(post={ parent.post })
 
 style.
 	display block
@@ -17,7 +17,6 @@ script.
 	@mixin \ui-progress
 
 	@post = @opts.post
-	@event = riot.observable!
 
 	@on \mount ~>
 		document.title = 'Misskey'
@@ -25,8 +24,8 @@ script.
 
 		@Progress.start!
 
-	@event.on \post-fetched ~>
-		@Progress.set 0.5
+		@refs.ui.refs.post.on \post-fetched ~>
+			@Progress.set 0.5
 
-	@event.on \loaded ~>
-		@Progress.done!
+		@refs.ui.refs.post.on \loaded ~>
+			@Progress.done!

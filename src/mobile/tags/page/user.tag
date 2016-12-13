@@ -1,5 +1,5 @@
 mk-user-page
-	mk-ui: mk-user(user={ parent.user }, event={ parent.event }, page={ parent.opts.page })
+	mk-ui@ui: mk-user@user(user={ parent.user }, page={ parent.opts.page })
 
 style.
 	display block
@@ -9,13 +9,12 @@ script.
 	@mixin \ui-progress
 
 	@user = @opts.user
-	@event = riot.observable!
 
 	@on \mount ~>
 		@Progress.start!
 
-	@event.on \loaded (user) ~>
-		@Progress.done!
-		document.title = user.name + ' | Misskey'
-		# TODO: ユーザー名をエスケープ
-		@ui.trigger \title '<i class="fa fa-user"></i>' + user.name
+		@refs.ui.refs.user.on \loaded (user) ~>
+			@Progress.done!
+			document.title = user.name + ' | Misskey'
+			# TODO: ユーザー名をエスケープ
+			@ui.trigger \title '<i class="fa fa-user"></i>' + user.name

@@ -3,7 +3,7 @@ mk-index
 		p.fetching(if={ fetching })
 			| 読み込み中
 			mk-ellipsis
-		mk-form(if={ state == null && !fetching }, session={ session-promise }, event={ event })
+		mk-form@form(if={ state == null && !fetching }, session={ session-promise })
 		div.denied(if={ state == 'denied' })
 			h1 アプリケーションの連携をキャンセルしました。
 			p このアプリがあなたのアカウントにアクセスすることはありません。
@@ -57,8 +57,6 @@ script.
 	@state = null
 	@fetching = true
 
-	@event = riot.observable!
-
 	@token = window.location.href.split \/ .pop!
 
 	@session-promise = new Promise (resolve, reject) ~>
@@ -73,17 +71,17 @@ script.
 			@update!
 
 	@on \mount ~>
+		@refs.form.on \denied ~>
+			@state = \denied
+			@update!
+
+		@refs.form.on \accepted ~>
+			@state = \accepted
+			@update!
+
+			if @session.app.callback_url
+				location.href = @session.app.callback_url + '?token=' + @session.token
+
 		@session-promise.then (session) ~>
 			@session = session
 			@update!
-
-	@event.on \denied ~>
-		@state = \denied
-		@update!
-
-	@event.on \accepted ~>
-		@state = \accepted
-		@update!
-
-		if @session.app.callback_url
-			location.href = @session.app.callback_url + '?token=' + @session.token

@@ -32,7 +32,5 @@ style.
 			margin 0 auto 16px auto
 
 script.
-	@event = @opts.event
-
 	@on \mount ~>
-		@event.trigger \loaded
+		@trigger \loaded

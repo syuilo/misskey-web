@@ -289,7 +289,6 @@ script.
 	@wait = false
 	@uploadings = []
 	@files = []
-	@event = @opts.event
 	@autocomplete = null
 
 	@in-reply-to-post = @opts.reply
@@ -302,7 +301,7 @@ script.
 			@add-file file
 
 		@refs.uploader.on \change-uploads (uploads) ~>
-			@event.trigger \change-uploading-files uploads
+			@trigger \change-uploading-files uploads
 
 		@autocomplete = new @Autocomplete @refs.text
 		@autocomplete.attach!
@@ -316,7 +315,7 @@ script.
 	@clear = ~>
 		@refs.text.value = ''
 		@files = []
-		@event.trigger \change-files
+		@trigger \change-files
 		@update!
 
 	@ondragover = (e) ~>
@@ -397,11 +396,11 @@ script.
 	@add-file = (file) ~>
 		file._remove = ~>
 			@files = @files.filter (x) -> x.id != file.id
-			@event.trigger \change-files @files
+			@trigger \change-files @files
 			@update!
 
 		@files.push file
-		@event.trigger \change-files @files
+		@trigger \change-files @files
 		@update!
 
 		new @Sortable @refs.attaches, do
@@ -420,7 +419,7 @@ script.
 			media_ids: files
 			reply_to_id: if @in-reply-to-post? then @in-reply-to-post.id else undefined
 		.then (data) ~>
-			@event.trigger \post
+			@trigger \post
 			@notify if @in-reply-to-post? then '返信しました！' else '投稿しました！'
 		.catch (err) ~>
 			console.error err

@@ -7,7 +7,7 @@ mk-drive-selector
 				span.count(if={ files.length > 0 }) ({ files.length })
 			button.close(onclick={ close }): i.fa.fa-times
 			button.ok(onclick={ ok }): i.fa.fa-check
-		mk-drive(select={ true }, multiple={ opts.multiple }, controller={ controller }, event={ event })
+		mk-drive@browser(select={ true }, multiple={ opts.multiple })
 
 style.
 	display block
@@ -73,13 +73,12 @@ script.
 	@mixin \window
 
 	@cb = opts.callback
-	@event = riot.observable!
-	@controller = riot.observable!
 	@files = []
 
-	@event.on \change-selected (files) ~>
-		@files = files
-		@update!
+	@on \mount ~>
+		@refs.browser.on \change-selected (files) ~>
+			@files = files
+			@update!
 
 	@ok = ~>
 		@cb @files

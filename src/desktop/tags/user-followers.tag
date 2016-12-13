@@ -1,5 +1,5 @@
 mk-user-followers
-	mk-users-list(fetch={ fetch }, count={ user.followers_count }, you-know-count={ user.followers_you_know_count }, no-users={ 'フォロワーはいないようです。' }, event={ event })
+	mk-users-list(fetch={ fetch }, count={ user.followers_count }, you-know-count={ user.followers_you_know_count }, no-users={ 'フォロワーはいないようです。' })
 
 style.
 	display block
@@ -9,7 +9,6 @@ script.
 	@mixin \api
 
 	@user = @opts.user
-	@event = @opts.event
 
 	@fetch = (iknow, limit, cursor, cb) ~>
 		@api \users/followers do

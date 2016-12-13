@@ -5,7 +5,7 @@ mk-timeline-home-widget
 	p.empty(if={ is-empty })
 		i.fa.fa-comments-o
 		| 自分の投稿や、自分がフォローしているユーザーの投稿が表示されます。
-	mk-timeline@timeline(controller={ controller })
+	mk-timeline@timeline
 		<yield to="footer">
 		i.fa.fa-moon-o(if={ !parent.more-loading })
 		i.fa.fa-spinner.fa-pulse.fa-fw(if={ parent.more-loading })
@@ -44,8 +44,6 @@ script.
 	@is-empty = false
 	@more-loading = false
 	@no-following = @I.following_count == 0
-	@controller = riot.observable!
-	@event = @opts.event
 
 	@on \mount ~>
 		@stream.on \post @on-stream-post
@@ -56,7 +54,7 @@ script.
 		window.add-event-listener \scroll @on-scroll
 
 		@load ~>
-			@event.trigger \loaded
+			@trigger \loaded
 
 	@on \unmount ~>
 		@stream.off \post @on-stream-post
@@ -70,7 +68,7 @@ script.
 		tag = e.target.tag-name.to-lower-case!
 		if tag != \input and tag != \textarea
 			if e.which == 84 # t
-				@controller.trigger \focus
+				@refs.timeline.focus!
 
 	@load = (cb) ~>
 		@api \posts/timeline
@@ -78,7 +76,7 @@ script.
 			@is-loading = false
 			@is-empty = posts.length == 0
 			@update!
-			@controller.trigger \set-posts posts
+			@refs.timeline.set-posts posts
 			if cb? then cb!
 		.catch (err) ~>
 			console.error err
@@ -94,14 +92,14 @@ script.
 		.then (posts) ~>
 			@more-loading = false
 			@update!
-			@controller.trigger \prepend-posts posts
+			@refs.timeline.prepend-posts posts
 		.catch (err) ~>
 			console.error err
 
 	@on-stream-post = (post) ~>
 		@is-empty = false
 		@update!
-		@controller.trigger \add-post post
+		@refs.timeline.add-post post
 
 	@on-stream-follow = ~>
 		@load!

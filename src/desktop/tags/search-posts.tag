@@ -4,7 +4,7 @@ mk-search-posts
 	p.empty(if={ is-empty })
 		i.fa.fa-search
 		| 「{ query }」に関する投稿は見つかりませんでした。
-	mk-timeline(controller={ controller })
+	mk-timeline
 		<yield to="footer">
 		i.fa.fa-moon-o(if={ !parent.more-loading })
 		i.fa.fa-spinner.fa-pulse.fa-fw(if={ parent.more-loading })
@@ -40,9 +40,7 @@ script.
 	@is-empty = false
 	@more-loading = false
 	@page = 0
-	@controller = riot.observable!
 	@timeline = @tags[\mk-timeline]
-	@event = @opts.event
 
 	@on \mount ~>
 		document.add-event-listener \keydown @on-document-keydown
@@ -54,8 +52,8 @@ script.
 			@is-loading = false
 			@is-empty = posts.length == 0
 			@update!
-			@controller.trigger \set-posts posts
-			@event.trigger \loaded
+			@refs.timeline.set-posts posts
+			@trigger \loaded
 		.catch (err) ~>
 			console.error err
 
@@ -67,7 +65,7 @@ script.
 		tag = e.target.tag-name.to-lower-case!
 		if tag != \input and tag != \textarea
 			if e.which == 84 # t
-				@controller.trigger \focus
+				@refs.timeline.focus!
 
 	@more = ~>
 		if @more-loading or @is-loading or @timeline.posts.length == 0
@@ -81,7 +79,7 @@ script.
 			@more-loading = false
 			@page++
 			@update!
-			@controller.trigger \prepend-posts posts
+			@refs.timeline.prepend-posts posts
 		.catch (err) ~>
 			console.error err
 

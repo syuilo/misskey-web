@@ -1,7 +1,7 @@
 mk-search
 	header
 		h1 { query }
-	mk-search-posts(query={ query }, event={ event })
+	mk-search-posts@posts(query={ query })
 
 style.
 	display block
@@ -22,8 +22,7 @@ style.
 
 script.
 	@query = @opts.query
-	@event = @opts.event
-	@tl-event = riot.observable!
 
-	@tl-event.on \loaded ~>
-		@evemt.trigger \loaded
+	@on \mount ~>
+		@refs.posts.on \loaded ~>
+			@trigger \loaded

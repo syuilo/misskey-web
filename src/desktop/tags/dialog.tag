@@ -76,7 +76,6 @@ style.
 
 script.
 	@can-through = if opts.can-through? then opts.can-through else true
-	@controller = @opts.controller
 	@opts.buttons.for-each (button) ~>
 		button._onclick = ~>
 			if button.onclick?
@@ -86,12 +85,6 @@ script.
 	@on \mount ~>
 		@refs.header.innerHTML = @opts.title
 		@refs.body.innerHTML = @opts.text
-
-	@controller.on \open ~>
-		@open!
-
-	@controller.on \close ~>
-		@close!
 
 	@open = ~>
 		@refs.bg.style.pointer-events = \auto

@@ -11,7 +11,6 @@ script.
 	@mixin \api
 
 	@user = @opts.user
-	@event = @opts.event
 	@with-media = @opts.with-media
 
 	@init = new Promise (res, rej) ~>
@@ -20,7 +19,7 @@ script.
 			with_media: @with-media
 		.then (posts) ~>
 			res posts
-			if @event? then @event.trigger \loaded
+			@trigger \loaded
 
 	@more = ~>
 		@api \users/posts do

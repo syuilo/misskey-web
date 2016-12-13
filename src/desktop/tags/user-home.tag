@@ -3,12 +3,9 @@ mk-user-home
 		mk-user-profile(user={ user })
 		mk-user-photos(user={ user })
 	main
-		mk-user-timeline(user={ user }, event={ tl-event })
+		mk-user-timeline@tl(user={ user })
 
 style.
-	display -webkit-flex
-	display -moz-flex
-	display -ms-flex
 	display flex
 	justify-content center
 
@@ -37,8 +34,7 @@ style.
 
 script.
 	@user = @opts.user
-	@event = @opts.event
-	@tl-event = riot.observable!
 
-	@tl-event.on \loaded ~>
-		@event.trigger \loaded
+	@on \mount ~>
+		@refs.tl.on \loaded ~>
+			@trigger \loaded

@@ -168,7 +168,6 @@ script.
 	@mixin \i
 	@mixin \api
 
-	@event = @opts.event
 	@username = @opts.user
 	@page = if @opts.page? then @opts.page else \posts
 	@fetching = true
@@ -179,7 +178,7 @@ script.
 		.then (user) ~>
 			@fetching = false
 			@user = user
-			@event.trigger \loaded user
+			@trigger \loaded user
 			@update!
 
 	@go-posts = ~>

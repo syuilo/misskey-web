@@ -117,12 +117,6 @@ script.
 
 	@title = @date-stringify @post.created_at
 
-	@reply-form = null
-	@reply-form-controller = riot.observable!
-
-	@repost-form = null
-	@repost-form-controller = riot.observable!
-
 	@on \mount ~>
 		if @post.text?
 			tokens = @analyze @post.text

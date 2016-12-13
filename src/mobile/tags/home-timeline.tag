@@ -8,13 +8,11 @@ script.
 	@mixin \api
 	@mixin \stream
 
-	@event = @opts.event
-
 	@init = new Promise (res, rej) ~>
 		@api \posts/timeline
 		.then (posts) ~>
 			res posts
-			@event.trigger \loaded
+			@trigger \loaded
 
 	@on \mount ~>
 		@stream.on \post @on-stream-post

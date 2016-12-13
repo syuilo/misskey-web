@@ -1,5 +1,5 @@
 mk-crop-window
-	mk-window@window(controller={ window-controller }, is-modal={ true }, width={ '800px' })
+	mk-window@window(is-modal={ true }, width={ '800px' })
 		<yield to="header">
 		i.fa.fa-crop
 		| { parent.title }
@@ -163,12 +163,10 @@ style.
 script.
 	@mixin \cropper
 
-	@controller = @opts.controller
 	@image = @opts.file
 	@title = @opts.title
 	@aspect-ratio = @opts.aspect-ratio
 	@cropper = null
-	@window-controller = riot.observable!
 
 	@on \mount ~>
 		@img = @refs.window.refs.img
@@ -177,18 +175,15 @@ script.
 			highlight: no
 			view-mode: 1
 
-	@controller.on \open ~>
-		@window-controller.trigger \open
-
 	@ok = ~>
 		@cropper.get-cropped-canvas!.to-blob (blob) ~>
-			@controller.trigger \cropped blob
-			@window-controller.trigger \close
+			@trigger \cropped blob
+			@refs.window.close!
 
 	@skip = ~>
-		@controller.trigger \skiped
-		@window-controller.trigger \close
+		@trigger \skiped
+		@refs.window.close!
 
 	@cancel = ~>
-		@controller.trigger \canceled
-		@window-controller.trigger \close
+		@trigger \canceled
+		@refs.window.close!

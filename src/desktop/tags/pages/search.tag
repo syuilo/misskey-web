@@ -1,5 +1,5 @@
 mk-search-page
-	mk-ui: mk-search(query={ parent.opts.query }, event={ parent.event })
+	mk-ui@ui: mk-search@search(query={ parent.opts.query })
 
 style.
 	display block
@@ -7,10 +7,8 @@ style.
 script.
 	@mixin \ui-progress
 
-	@event = riot.observable!
-
 	@on \mount ~>
 		@Progress.start!
 
-	@event.on \loaded ~>
-		@Progress.done!
+		@refs.ui.refs.search.on \loaded ~>
+			@Progress.done!

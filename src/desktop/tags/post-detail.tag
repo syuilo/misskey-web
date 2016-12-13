@@ -316,7 +316,6 @@ script.
 	@mixin \date-stringify
 	@mixin \NotImplementedException
 
-	@event = @opts.event
 	@fetching = true
 	@loading-context = false
 	@content = null
@@ -329,7 +328,7 @@ script.
 		.then (post) ~>
 			@fetching = false
 			@post = post
-			@event.trigger \loaded
+			@trigger \loaded
 
 			@is-repost = @post.repost?
 			@p = if @is-repost then @post.repost else @post

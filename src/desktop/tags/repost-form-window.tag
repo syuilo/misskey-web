@@ -1,11 +1,11 @@
 mk-repost-form-window
-	mk-window(controller={ window-controller }, is-modal={ true }, colored={ true })
+	mk-window@window(is-modal={ true }, colored={ true })
 		<yield to="header">
 		i.fa.fa-retweet
 		| この投稿をRepostしますか？
 		</yield>
 		<yield to="content">
-		mk-repost-form(post={ parent.opts.post }, event={ parent.event })
+		mk-repost-form@form(post={ parent.opts.post })
 		</yield>
 
 style.
@@ -15,27 +15,24 @@ style.
 				margin-right 4px
 
 script.
-	@window-controller = riot.observable!
-	@event = riot.observable!
-
-	@event.on \cancel ~>
-		@window-controller.trigger \close
-
-	@event.on \posted ~>
-		@window-controller.trigger \close
-
-	@window-controller.on \closed ~>
-		@unmount!
 
 	@on-document-keydown = (e) ~>
 		tag = e.target.tag-name.to-lower-case!
 		if tag != \input and tag != \textarea
 			if e.which == 27 # Esc
-				@window-controller.trigger \close
+				@refs.window.close!
 
 	@on \mount ~>
-		@window-controller.trigger \open
+		@refs.window.form.on \cancel ~>
+			@refs.window.close!
+
+		@refs.window.form.on \posted ~>
+			@refs.window.close!
+
 		document.add-event-listener \keydown @on-document-keydown
+
+		@refs.window.on \closed ~>
+			@unmount!
 
 	@on \unmount ~>
 		document.remove-event-listener \keydown @on-document-keydown

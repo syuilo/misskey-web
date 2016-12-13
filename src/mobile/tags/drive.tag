@@ -132,8 +132,6 @@ script.
 
 	@file = null
 
-	@event = @opts.event
-
 	@is-select-mode = @opts.select? and @opts.select
 	@multiple = if @opts.multiple? then @opts.multiple else false
 
@@ -209,8 +207,8 @@ script.
 				x folder.parent
 
 			@update!
-			if is-move then @event.trigger \move @folder
-			@event.trigger \cd @folder
+			if is-move then @trigger \move @folder
+			@trigger \cd @folder
 			@load!
 		.catch (err, text-status) ->
 			console.error err
@@ -265,7 +263,7 @@ script.
 			@folder = null
 			@hierarchy-folders = []
 			@update!
-			@event.trigger \move-root
+			@trigger \move-root
 			@load!
 
 	@load = ~>
@@ -276,7 +274,7 @@ script.
 		@loading = true
 		@update!
 
-		@event.trigger \begin-load
+		@trigger \begin-load
 
 		load-folders = null
 		load-files = null
@@ -320,10 +318,10 @@ script.
 				@loading = false
 				@update!
 
-				@event.trigger \loaded
+				@trigger \loaded
 			else
 				flag := true
-				@event.trigger \load-mid
+				@trigger \load-mid
 
 	@choose-file = (file) ~>
 		if @is-select-mode
@@ -333,8 +331,8 @@ script.
 			else
 				@selected-files.push file
 			@update!
-			@event.trigger \change-selected @selected-files
+			@trigger \change-selected @selected-files
 		else
 			@file = file
 			@update!
-			@event.trigger \open-file @file
+			@trigger \open-file @file

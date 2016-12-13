@@ -86,14 +86,12 @@ script.
 	@limit = 30users
 	@mode = \all
 
-	@event = @opts.event
-
 	@fetching = true
 	@more-fetching = false
 
 	@on \mount ~>
 		@fetch ~>
-			if @event? then @event.trigger \loaded
+			@trigger \loaded
 
 	@fetch = (cb) ~>
 		@fetching = true

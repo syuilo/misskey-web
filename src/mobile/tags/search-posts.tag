@@ -12,7 +12,6 @@ script.
 	@offset = 0
 
 	@query = @opts.query
-	@event = @opts.event
 	@with-media = @opts.with-media
 
 	@init = new Promise (res, rej) ~>
@@ -20,7 +19,7 @@ script.
 			query: @query
 		.then (posts) ~>
 			res posts
-			if @event? then @event.trigger \loaded
+			@trigger \loaded
 
 	@more = ~>
 		@offset += @max

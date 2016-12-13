@@ -1,5 +1,5 @@
 mk-post-page
-	mk-ui: main: mk-post-detail(post={ parent.post }, event={ parent.event })
+	mk-ui@ui: main: mk-post-detail@detail(post={ parent.post })
 
 style.
 	display block
@@ -14,13 +14,12 @@ script.
 	@mixin \ui-progress
 
 	@post = @opts.post
-	@event = riot.observable!
 
 	@on \mount ~>
 		@Progress.start!
 
-	@event.on \post-fetched ~>
-		@Progress.set 0.5
+		@refs.ui.refs.detail.on \post-fetched ~>
+			@Progress.set 0.5
 
-	@event.on \loaded ~>
-		@Progress.done!
+		@refs.ui.refs.detail.on \loaded ~>
+			@Progress.done!

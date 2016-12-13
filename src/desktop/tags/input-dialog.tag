@@ -1,5 +1,5 @@
 mk-input-dialog
-	mk-window@window(controller={ window-controller }, is-modal={ true }, width={ '500px' })
+	mk-window@window(is-modal={ true }, width={ '500px' })
 		<yield to="header">
 		i.fa.fa-i-cursor
 		| { parent.title }
@@ -124,33 +124,30 @@ script.
 	@default = @opts.default
 	@allow-empty = if @opts.allow-empty? then @opts.allow-empty else true
 
-	@window-controller = riot.observable!
-
 	@on \mount ~>
 		@text = @refs.window.refs.text
 		if @default?
 			@text.value = @default
-		@window-controller.trigger \open
 		@text.focus!
 
-	@window-controller.on \closing ~>
-		if @done
-			@opts.on-ok @text.value
-		else
-			if @opts.on-cancel?
-				@opts.on-cancel!
+		@refs.window.on \closing ~>
+			if @done
+				@opts.on-ok @text.value
+			else
+				if @opts.on-cancel?
+					@opts.on-cancel!
 
-	@window-controller.on \closed ~>
-		@unmount!
+		@refs.window.on \closed ~>
+			@unmount!
 
 	@cancel = ~>
 		@done = false
-		@window-controller.trigger \close
+		@refs.window.close!
 
 	@ok = ~>
 		if not @allow-empty and @text.value == '' then return
 		@done = true
-		@window-controller.trigger \close
+		@refs.window.close!
 
 	@on-keydown = (e) ~>
 		if e.which == 13 # Enter

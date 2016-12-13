@@ -94,13 +94,6 @@ style.
 		transition visibility 0s linear 0.2s
 
 script.
-	@controller = @opts.controller
-
-	@controller.on \open (pos) ~>
-		@open pos
-
-	@controller.on \close ~>
-		@close!
 
 	@root.add-event-listener \contextmenu (e) ~>
 		e.prevent-default!
@@ -133,7 +126,7 @@ script.
 		all = document.query-selector-all 'body *'
 		Array.prototype.for-each.call all, (el) ~>
 			el.remove-event-listener \mousedown @mousedown
-		@controller.trigger \closed
+		@trigger \closed
 		@unmount!
 
 	function contains(parent, child)
