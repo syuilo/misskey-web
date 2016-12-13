@@ -126,22 +126,6 @@ script.
 				if e.tag-name == \MK-URL
 					riot.mount e
 
-	@reply = ~>
-		if !@reply-form?
-			@reply-form = document.body.append-child document.create-element \mk-post-form-window
-			riot.mount @reply-form, do
-				controller: @reply-form-controller
-				reply: @p
-		@reply-form-controller.trigger \open
-
-	@repost = ~>
-		if !@repost-form?
-			@repost-form = document.body.append-child document.create-element \mk-repost-form-window
-			riot.mount @repost-form, do
-				controller: @repost-form-controller
-				post: @p
-		@repost-form-controller.trigger \open
-
 	@like = ~>
 		if @post.is_liked
 			@api \posts/likes/delete do
