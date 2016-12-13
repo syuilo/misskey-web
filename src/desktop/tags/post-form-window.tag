@@ -39,13 +39,11 @@ style.
 					margin 16px 22px
 
 script.
-	@wait = false
-
 	@uploading-files = []
 	@files = []
 
 	@on \mount ~>
-		@form = @refs.window.refs.form
+		@refs.window.refs.form.focus!
 
 		@refs.window.on \closed ~>
 			@unmount!

@@ -262,7 +262,7 @@ script.
 			easing: \ease-out
 		}
 
-		@refs.main.focus!
+		#@refs.main.focus!
 
 		set-timeout ~>
 			@trigger \opened

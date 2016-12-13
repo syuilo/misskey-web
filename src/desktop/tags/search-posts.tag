@@ -4,7 +4,7 @@ mk-search-posts
 	p.empty(if={ is-empty })
 		i.fa.fa-search
 		| 「{ query }」に関する投稿は見つかりませんでした。
-	mk-timeline
+	mk-timeline@timeline
 		<yield to="footer">
 		i.fa.fa-moon-o(if={ !parent.more-loading })
 		i.fa.fa-spinner.fa-pulse.fa-fw(if={ parent.more-loading })
@@ -40,7 +40,6 @@ script.
 	@is-empty = false
 	@more-loading = false
 	@page = 0
-	@timeline = @tags[\mk-timeline]
 
 	@on \mount ~>
 		document.add-event-listener \keydown @on-document-keydown
