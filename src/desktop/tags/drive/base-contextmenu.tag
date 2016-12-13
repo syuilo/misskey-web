@@ -10,7 +10,7 @@ mk-drive-browser-base-contextmenu
 
 script.
 	@controller = @opts.controller
-	@browser-controller = @opts.browser-controller
+	@browser = @opts.browser
 	@ctx-controller = riot.observable!
 
 	@controller.on \open (pos) ~>
@@ -21,9 +21,9 @@ script.
 		@unmount!
 
 	@create-folder = ~>
-		@browser-controller.trigger \create-folder
+		@browser.create-folder!
 		@ctx-controller.trigger \close
 
 	@upload = ~>
-		@browser-controller.trigger \upload
+		@browser.select-local-file!
 		@ctx-controller.trigger \close

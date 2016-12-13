@@ -20,7 +20,7 @@ script.
 	@mixin \input-dialog
 
 	@controller = @opts.controller
-	@browser-controller = @opts.browser-controller
+	@browser = @opts.browser
 	@ctx-controller = riot.observable!
 	@folder = @opts.folder
 
@@ -32,19 +32,19 @@ script.
 		@unmount!
 
 	@move = ~>
-		@browser-controller.trigger \move @folder.id
+		@browser.move @folder.id
 		@ctx-controller.trigger \close
 
 	@new-window = ~>
-		@browser-controller.trigger \new-window @folder.id
+		@browser.new-window @folder.id
 		@ctx-controller.trigger \close
 
 	@create-folder = ~>
-		@browser-controller.trigger \create-folder
+		@browser.create-folder!
 		@ctx-controller.trigger \close
 
 	@upload = ~>
-		@browser-controller.trigger \upload
+		@browser.select-lcoal-file!
 		@ctx-controller.trigger \close
 
 	@rename = ~>

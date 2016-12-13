@@ -43,7 +43,7 @@ script.
 	@mixin \NotImplementedException
 
 	@controller = @opts.controller
-	@browser-controller = @opts.browser-controller
+	@browser = @opts.browser
 	@ctx-controller = riot.observable!
 	@file = @opts.file
 
@@ -74,9 +74,7 @@ script.
 		@NotImplementedException!
 
 	@download = ~>
-		#@browser-controller.trigger \download @file
 		@ctx-controller.trigger \close
-		return true
 
 	@set-avatar = ~>
 		@ctx-controller.trigger \close

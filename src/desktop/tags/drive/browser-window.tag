@@ -19,17 +19,15 @@ style.
 				height 100%
 
 script.
-	@controller = @opts.controller
-
 	@window-controller = riot.observable!
 	@browser-controller = riot.observable!
 
 	@folder = if @opts.folder? then @opts.folder else null
 
-	@controller.on \open ~>
+	@on \mount ~>
 		@window-controller.trigger \open
 
-	@controller.on \close ~>
+	@close = ~>
 		@window-controller.trigger \close
 
 	@window-controller.on \closed ~>

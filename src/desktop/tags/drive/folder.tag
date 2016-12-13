@@ -172,7 +172,7 @@ script.
 		ctx-controller = riot.observable!
 		riot.mount ctx, do
 			controller: ctx-controller
-			browser-controller: @browser.controller
+			browser: @browser
 			folder: @folder
 		ctx-controller.trigger \open do
 			x: e.page-x - window.page-x-offset

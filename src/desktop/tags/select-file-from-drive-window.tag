@@ -1,14 +1,14 @@
 mk-select-file-from-drive-window
-	mk-window(controller={ window-controller }, is-modal={ true }, width={ '800px' }, height={ '500px' })
+	mk-window@window(controller={ window-controller }, is-modal={ true }, width={ '800px' }, height={ '500px' })
 		<yield to="header">
 		mk-raw(content={ parent.title })
 		span.count(if={ parent.multiple && parent.file.length > 0 }) ({ parent.file.length }ファイル選択中)
 		</yield>
 		<yield to="content">
-		mk-drive-browser(controller={ parent.browser-controller }, multiple={ parent.multiple })
+		mk-drive-browser@browser(event={ parent.browser-event }, multiple={ parent.multiple })
 		div
 			button.upload(title='PCからドライブにファイルをアップロード', onclick={ parent.upload }): i.fa.fa-upload
-			button.cancel(onclick={ parent.cancel }) キャンセル
+			button.cancel(onclick={ parent.close }) キャンセル
 			button.ok(disabled={ parent.multiple && parent.file.length == 0 }, onclick={ parent.ok }) 決定
 		</yield>
 
@@ -134,36 +134,33 @@ style.
 script.
 	@file = []
 
-	@controller = @opts.controller
 	@multiple = if @opts.multiple? then @opts.multiple else false
 	@title = @opts.title || '<i class="fa fa-file-o"></i>ファイルを選択'
 
 	@window-controller = riot.observable!
-	@browser-controller = riot.observable!
+	@browser-event = riot.observable!
+	@event = @opts.event
 
-	@controller.on \open ~>
+	@on \mount ~>
 		@window-controller.trigger \open
 
-	@controller.on \close ~>
+	@close = ~>
 		@window-controller.trigger \close
 
 	@window-controller.on \closed ~>
 		@unmount!
 
-	@browser-controller.on \selected (file) ~>
+	@browser-event.on \selected (file) ~>
 		@file = file
 		@ok!
 
-	@browser-controller.on \change-selection (files) ~>
+	@browser-event.on \change-selection (files) ~>
 		@file = files
 		@update!
 
 	@upload = ~>
-		@browser-controller.trigger \upload
-
-	@cancel = ~>
-		@controller.trigger \close
+		@refs.window.refs.browser.select-local-file!
 
 	@ok = ~>
-		@controller.trigger \selected @file
+		@event.trigger \selected @file
 		@window-controller.trigger \close

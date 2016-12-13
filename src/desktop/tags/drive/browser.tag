@@ -252,7 +252,7 @@ script.
 	# * null でルートを表す
 	@folder = null
 
-	@controller = @opts.controller
+	@event = @opts.event
 	@multiple = if @opts.multiple? then @opts.multiple else false
 
 	@uploader-controller = riot.observable!
@@ -345,6 +345,7 @@ script.
 		document.document-element.add-event-listener \mouseup up
 
 	@path-oncontextmenu = (e) ~>
+		e.prevent-default!
 		e.stop-immediate-propagation!
 		return false
 
@@ -440,23 +441,17 @@ script.
 		ctx-controller = riot.observable!
 		riot.mount ctx, do
 			controller: ctx-controller
-			browser-controller: @controller
+			browser: @
 		ctx-controller.trigger \open do
 			x: e.page-x - window.page-x-offset
 			y: e.page-y - window.page-y-offset
 
 		return false
 
-	@controller.on \upload ~>
+	@select-local-file = ~>
 		@refs.file-input.click!
 
-	@controller.on \move (folder) ~>
-		@move folder
-
-	@controller.on \new-window (folder) ~>
-		@new-window folder
-
-	@controller.on \create-folder ~>
+	@create-folder = ~>
 		name <~ @input-dialog do
 			'フォルダー作成'
 			'フォルダー名'
@@ -497,11 +492,8 @@ script.
 
 	@new-window = (folder-id) ~>
 		browser = document.body.append-child document.create-element \mk-drive-browser-window
-		browser-controller = riot.observable!
 		riot.mount browser, do
-			controller: browser-controller
 			folder: folder-id
-		browser-controller.trigger \open
 
 	@move = (target-folder) ~>
 		if target-folder? and typeof target-folder == \object

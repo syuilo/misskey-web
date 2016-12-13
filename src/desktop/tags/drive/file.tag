@@ -161,15 +161,15 @@ script.
 				@file._selected = !@file._selected
 			else
 				@file._selected = true
-			@browser.controller.trigger \change-selection @browser.get-selection!
+			@browser.event.trigger \change-selection @browser.get-selection!
 		else
 			if @file._selected
-				@browser.controller.trigger \selected @file
+				@browser.event.trigger \selected @file
 			else
 				@browser.files.for-each (file) ~>
 					file._selected = false
 				@file._selected = true
-				@browser.controller.trigger \change-selection @file
+				@browser.event.trigger \change-selection @file
 
 	@oncontextmenu = (e) ~>
 		e.prevent-default!
@@ -181,7 +181,7 @@ script.
 		ctx-controller = riot.observable!
 		riot.mount ctx, do
 			controller: ctx-controller
-			browser-controller: @browser.controller
+			browser: @browser
 			file: @file
 		ctx-controller.trigger \open do
 			x: e.page-x - window.page-x-offset
