@@ -375,12 +375,11 @@ script.
 
 	@select-file-from-drive = ~>
 		browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
-		browser-controller = riot.observable!
+		event = riot.observable!
 		riot.mount browser, do
 			multiple: true
-			controller: browser-controller
-		browser-controller.trigger \open
-		browser-controller.one \selected (files) ~>
+			event: event
+		event.one \selected (files) ~>
 			files.for-each @add-file
 
 	@change-file = ~>
