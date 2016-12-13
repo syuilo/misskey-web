@@ -1,5 +1,5 @@
 mk-select-file-from-drive-window
-	mk-window@window(controller={ window-controller }, is-modal={ true }, width={ '800px' }, height={ '500px' })
+	mk-window@window(is-modal={ true }, width={ '800px' }, height={ '500px' })
 		<yield to="header">
 		mk-raw(content={ parent.title })
 		span.count(if={ parent.multiple && parent.file.length > 0 }) ({ parent.file.length }ファイル選択中)
@@ -137,8 +137,6 @@ script.
 	@multiple = if @opts.multiple? then @opts.multiple else false
 	@title = @opts.title || '<i class="fa fa-file-o"></i>ファイルを選択'
 
-	@window-controller = riot.observable!
-
 	@on \mount ~>
 		@refs.window.refs.browser.on \selected (file) ~>
 			@file = file
@@ -148,17 +146,15 @@ script.
 			@file = files
 			@update!
 
-		@window-controller.trigger \open
+		@refs.window.on \closed ~>
+			@unmount!
 
 	@close = ~>
-		@window-controller.trigger \close
-
-	@window-controller.on \closed ~>
-		@unmount!
+		@refs.window.close!
 
 	@upload = ~>
 		@refs.window.refs.browser.select-local-file!
 
 	@ok = ~>
 		@trigger \selected @file
-		@window-controller.trigger \close
+		@refs.window.close!
