@@ -8,7 +8,7 @@ mk-post-form(ondragover={ ondragover }, ondragenter={ ondragenter }, ondragleave
 			li.add(if={ files.length < 4 }, title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-plus
 		p.remain
 			| 残り{ 4 - files.length }
-	mk-uploader(controller={ uploader-controller })
+	mk-uploader@uploader
 	button@upload(title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-upload
 	button@drive(title='ドライブからファイルを添付', onclick={ select-file-from-drive }): i.fa.fa-cloud
 	p.text-count(class={ over: refs.text.value.length > 300 }) のこり{ 300 - refs.text.value.length }文字
@@ -289,7 +289,6 @@ script.
 	@wait = false
 	@uploadings = []
 	@files = []
-	@uploader-controller = riot.observable!
 	@event = @opts.event
 	@autocomplete = null
 
@@ -299,6 +298,12 @@ script.
 	if @in-reply-to-post == '' then @in-reply-to-post = null
 
 	@on \mount ~>
+		@refs.uploader.on \uploaded (file) ~>
+			@add-file file
+
+		@refs.uploader.on \change-uploads (uploads) ~>
+			@event.trigger \change-uploading-files uploads
+
 		@autocomplete = new @Autocomplete @refs.text
 		@autocomplete.attach!
 
@@ -375,11 +380,9 @@ script.
 
 	@select-file-from-drive = ~>
 		browser = document.body.append-child document.create-element \mk-select-file-from-drive-window
-		event = riot.observable!
-		riot.mount browser, do
+		i = riot.mount browser, do
 			multiple: true
-			event: event
-		event.one \selected (files) ~>
+		i[0].one \selected (files) ~>
 			files.for-each @add-file
 
 	@change-file = ~>
@@ -389,13 +392,7 @@ script.
 			@upload file
 
 	@upload = (file) ~>
-		@uploader-controller.trigger \upload file
-
-	@uploader-controller.on \uploaded (file) ~>
-		@add-file file
-
-	@uploader-controller.on \change-uploads (uploads) ~>
-		@event.trigger \change-uploading-files uploads
+		@refs.uploader.upload file
 
 	@add-file = (file) ~>
 		file._remove = ~>

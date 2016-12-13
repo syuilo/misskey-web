@@ -152,9 +152,8 @@ script.
 
 	@uploads = []
 
-	@controller = @opts.controller
 
-	@controller.on \upload (file, folder) ~>
+	@upload = (file, folder) ~>
 		id = Math.random!
 
 		ctx =
@@ -163,7 +162,7 @@ script.
 			progress: undefined
 
 		@uploads.push ctx
-		@controller.trigger \change-uploads @uploads
+		@trigger \change-uploads @uploads
 		@update!
 
 		reader = new FileReader!
@@ -184,10 +183,10 @@ script.
 		xhr.onload = (e) ~>
 			drive-file = JSON.parse e.target.response
 
-			@controller.trigger \uploaded drive-file
+			@trigger \uploaded drive-file
 
 			@uploads = @uploads.filter (x) -> x.id != id
-			@controller.trigger \change-uploads @uploads
+			@trigger \change-uploads @uploads
 
 			@update!
 

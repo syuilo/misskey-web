@@ -5,7 +5,7 @@ mk-drive-browser-window
 		| ドライブ
 		</yield>
 		<yield to="content">
-		mk-drive-browser(controller={ parent.browser-controller }, multiple={ true }, folder={ parent.folder })
+		mk-drive-browser(multiple={ true }, folder={ parent.folder })
 		</yield>
 
 style.
@@ -20,7 +20,6 @@ style.
 
 script.
 	@window-controller = riot.observable!
-	@browser-controller = riot.observable!
 
 	@folder = if @opts.folder? then @opts.folder else null
 

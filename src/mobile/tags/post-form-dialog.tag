@@ -9,7 +9,7 @@ mk-post-form-dialog
 				i.fa.fa-spinner.fa-pulse(if={ postiong })
 		div.form
 			mk-post-preview(if={ reply }, post={ reply })
-			mk-post-form(event={ event }, controller={ controller }, reply={ reply })
+			mk-post-form@form(reply={ reply })
 
 style.
 	display block
@@ -72,21 +72,19 @@ style.
 script.
 	@mixin \window
 
-	@controller = riot.observable!
-	@event = riot.observable!
 	@reply = @opts.reply
 	@posting = false
 
 	@post = ~>
-		@controller.trigger \post
+		@refs.form.post!
 
-	@event.on \before-post ~>
+	@refs.form.on \before-post ~>
 		@posting = true
 		@update!
 
-	@event.on \after-post ~>
+	@refs.form.on \after-post ~>
 		@posting = false
 		@update!
 
-	@event.on \post ~>
+	@refs.form.on \post ~>
 		@close!

@@ -5,7 +5,7 @@ mk-select-file-from-drive-window
 		span.count(if={ parent.multiple && parent.file.length > 0 }) ({ parent.file.length }ファイル選択中)
 		</yield>
 		<yield to="content">
-		mk-drive-browser@browser(event={ parent.browser-event }, multiple={ parent.multiple })
+		mk-drive-browser@browser(multiple={ parent.multiple })
 		div
 			button.upload(title='PCからドライブにファイルをアップロード', onclick={ parent.upload }): i.fa.fa-upload
 			button.cancel(onclick={ parent.close }) キャンセル
@@ -138,10 +138,16 @@ script.
 	@title = @opts.title || '<i class="fa fa-file-o"></i>ファイルを選択'
 
 	@window-controller = riot.observable!
-	@browser-event = riot.observable!
-	@event = @opts.event
 
 	@on \mount ~>
+		@refs.window.refs.browser.on \selected (file) ~>
+			@file = file
+			@ok!
+
+		@refs.window.refs.browser.on \change-selection (files) ~>
+			@file = files
+			@update!
+
 		@window-controller.trigger \open
 
 	@close = ~>
@@ -150,17 +156,9 @@ script.
 	@window-controller.on \closed ~>
 		@unmount!
 
-	@browser-event.on \selected (file) ~>
-		@file = file
-		@ok!
-
-	@browser-event.on \change-selection (files) ~>
-		@file = files
-		@update!
-
 	@upload = ~>
 		@refs.window.refs.browser.select-local-file!
 
 	@ok = ~>
-		@event.trigger \selected @file
+		@trigger \selected @file
 		@window-controller.trigger \close

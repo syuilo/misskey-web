@@ -5,7 +5,7 @@ mk-post-form
 			li.file(each={ files })
 				div.img(style='background-image: url({ url + "?thumbnail&size=64" })', title={ name })
 			li.add(if={ files.length < 4 }, title='PCからファイルを添付', onclick={ select-file }): i.fa.fa-plus
-	mk-uploader(controller={ uploader-controller })
+	mk-uploader@uploader
 	button@upload(onclick={ select-file }): i.fa.fa-upload
 	button@drive(onclick={ select-file-from-drive }): i.fa.fa-cloud
 	input@file(type='file', accept='image/*', multiple, tabindex='-1', onchange={ change-file })
@@ -181,10 +181,14 @@ script.
 	@uploadings = []
 	@files = []
 	@uploader-controller = riot.observable!
-	@controller = @opts.controller
-	@event = @opts.event
 
 	@on \mount ~>
+		@refs.uploader.on \uploaded (file) ~>
+			@add-file file
+
+		@refs.uploader.on \change-uploads (uploads) ~>
+			@trigger \change-uploading-files uploads
+
 		@refs.text.focus!
 
 	@onkeypress = (e) ~>
@@ -220,34 +224,25 @@ script.
 			@upload file
 
 	@upload = (file) ~>
-		@uploader-controller.trigger \upload file
-
-	@uploader-controller.on \uploaded (file) ~>
-		@add-file file
-
-	@uploader-controller.on \change-uploads (uploads) ~>
-		@event.trigger \change-uploading-files uploads
+		@refs.uploader.upload file
 
 	@add-file = (file) ~>
 		file._remove = ~>
 			@files = @files.filter (x) -> x.id != file.id
-			@event.trigger \change-files @files
+			@trigger \change-files @files
 			@update!
 
 		@files.push file
-		@event.trigger \change-files @files
+		@trigger \change-files @files
 		@update!
 
 		new @Sortable @refs.attaches, do
 			draggable: \.file
 			animation: 150ms
 
-	@controller.on \post ~>
-		@post!
-
 	@post = ~>
 		@wait = true
-		@event.trigger \before-post
+		@trigger \before-post
 
 		files = if @files? and @files.length > 0
 			then @files.map (f) -> f.id
@@ -258,12 +253,11 @@ script.
 			media_ids: files
 			reply_to_id: if @opts.reply? then @opts.reply.id else undefined
 		.then (data) ~>
-			@event.trigger \post
-			#@opts.ui.trigger \notification '投稿しました。'
+			@trigger \post
 		.catch (err) ~>
 			console.error err
 			#@opts.ui.trigger \notification 'Error!'
 		.then ~>
 			@wait = false
-			@event.trigger \after-post
+			@trigger \after-post
 			@update!

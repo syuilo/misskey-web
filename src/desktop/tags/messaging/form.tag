@@ -1,7 +1,7 @@
 mk-messaging-form
 	textarea@text(onkeypress={ onkeypress }, onpaste={ onpaste }, placeholder='ここにメッセージを入力')
 	div.files
-	mk-uploader(controller={ uploader-controller })
+	mk-uploader@uploader
 	button.send(onclick={ send }, disabled={ sending }, title='メッセージを送信')
 		i.fa.fa-paper-plane(if={ !sending })
 		i.fa.fa-spinner.fa-spin(if={ sending })

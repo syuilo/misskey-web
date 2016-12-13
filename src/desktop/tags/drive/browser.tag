@@ -37,7 +37,7 @@ mk-drive-browser
 				<div class="dot2"></div>
 			</div>
 	div.dropzone(if={ draghover })
-	mk-uploader(controller={ uploader-controller })
+	mk-uploader@uploader
 	input@file-input(type='file', accept='*/*', multiple, tabindex='-1', onchange={ change-file-input })
 
 style.
@@ -252,10 +252,7 @@ script.
 	# * null でルートを表す
 	@folder = null
 
-	@event = @opts.event
 	@multiple = if @opts.multiple? then @opts.multiple else false
-
-	@uploader-controller = riot.observable!
 
 	# ドロップされようとしているか
 	@draghover = false
@@ -265,6 +262,13 @@ script.
 	@is-drag-source = false
 
 	@on \mount ~>
+		@refs.uploader.on \uploaded (file) ~>
+			@add-file file, true
+
+		@refs.uploader.on \change-uploads (uploads) ~>
+			@uploads = uploads
+			@update!
+
 		@stream.on \drive_file_created @on-stream-drive-file-created
 		@stream.on \drive_file_updated @on-stream-drive-file-updated
 		@stream.on \drive_folder_created @on-stream-drive-folder-created
@@ -475,17 +479,7 @@ script.
 	@upload = (file, folder) ~>
 		if folder? and typeof folder == \object
 			folder = folder.id
-		@uploader-controller.trigger do
-			\upload
-			file
-			folder
-
-	@uploader-controller.on \uploaded (file) ~>
-		@add-file file, true
-
-	@uploader-controller.on \change-uploads (uploads) ~>
-		@uploads = uploads
-		@update!
+		@refs.uploader.upload file, folder
 
 	@get-selection = ~>
 		@files.filter (file) -> file._selected

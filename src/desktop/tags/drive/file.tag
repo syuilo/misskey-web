@@ -161,15 +161,15 @@ script.
 				@file._selected = !@file._selected
 			else
 				@file._selected = true
-			@browser.event.trigger \change-selection @browser.get-selection!
+			@browser.trigger \change-selection @browser.get-selection!
 		else
 			if @file._selected
-				@browser.event.trigger \selected @file
+				@browser.trigger \selected @file
 			else
 				@browser.files.for-each (file) ~>
 					file._selected = false
 				@file._selected = true
-				@browser.event.trigger \change-selection @file
+				@browser.trigger \change-selection @file
 
 	@oncontextmenu = (e) ~>
 		e.prevent-default!
