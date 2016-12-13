@@ -1,5 +1,5 @@
 mk-progress-dialog
-	mk-window(controller={ window-controller }, is-modal={ false }, can-close={ false }, width={ '500px' })
+	mk-window@window(is-modal={ false }, can-close={ false }, width={ '500px' })
 		<yield to="header">
 		| { parent.title }
 		mk-ellipsis
@@ -76,21 +76,17 @@ style.
 
 script.
 	@title = @opts.title
-	@controller = @opts.controller
 	@value = parse-int @opts.value, 10
 	@max = parse-int @opts.max, 10
-	@window-controller = riot.observable!
 
 	@on \mount ~>
-		@window-controller.trigger \open
+		@refs.window.on \closed ~>
+			@unmount!
 
-	@window-controller.on \closed ~>
-		@unmount!
-
-	@controller.on \update (value, max) ~>
+	@update-progress = (value, max) ~>
 		@value = parse-int value, 10
 		@max = parse-int max, 10
 		@update!
 
-	@controller.on \close ~>
-		@window-controller.trigger \close
+	@close = ~>
+		@refs.window.close!
