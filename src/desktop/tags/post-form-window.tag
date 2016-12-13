@@ -1,6 +1,6 @@
 mk-post-form-window
 
-	mk-window@window(controller={ window-controller }, is-modal={ true }, colored={ true })
+	mk-window@window(is-modal={ true }, colored={ true })
 
 		<yield to="header">
 		span(if={ !parent.opts.reply }) 新規投稿
@@ -15,7 +15,7 @@ mk-post-form-window
 		div.ref(if={ parent.opts.reply })
 			mk-post-preview(post={ parent.opts.reply })
 		div.body
-			mk-post-form@form(event={ parent.form-event }, reply={ parent.opts.reply })
+			mk-post-form@form(reply={ parent.opts.reply })
 		</yield>
 
 style.
@@ -44,30 +44,20 @@ script.
 	@uploading-files = []
 	@files = []
 
-	@window-controller = riot.observable!
-	@form-event = riot.observable!
-
 	@on \mount ~>
 		@form = @refs.window.refs.form
-		@open!
 
-	@window-controller.on \closed ~>
-		@unmount!
+		@refs.window.on \closed ~>
+			@unmount!
 
-	@form-event.on \post ~>
-		@close!
+			@refs.window.refs.form.on \post ~>
+				@refs.window.close!
 
-	@form-event.on \change-uploading-files (files) ~>
-		@uploading-files = files
-		@update!
+			@refs.window.refs.form.on \change-uploading-files (files) ~>
+				@uploading-files = files
+				@update!
 
-	@form-event.on \change-files (files) ~>
-		@files = files
-		@update!
+			@refs.window.refs.form.on \change-files (files) ~>
+				@files = files
+				@update!
 
-	@open = ~>
-		@window-controller.trigger \open
-		@form.focus!
-
-	@close = ~>
-		@window-controller.trigger \close
