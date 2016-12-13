@@ -14,12 +14,12 @@ mk-messaging-room
 	div.typings
 	form
 		div.grippie(title='ドラッグしてフォームの広さを調整')
-		textarea@text(placeholder='ここにメッセージを入力')
+		textarea@text(onkeypress={ onkeypress }, placeholder='ここにメッセージを入力')
 		div.uploads
 		div.files
-		button.submit(type='button', onclick={ say }, disabled={ saying }, title='メッセージを送信')
-			i.fa.fa-paper-plane(if={ !saying })
-			i.fa.fa-spinner.fa-spin(if={ saying })
+		button.submit(type='button', onclick={ send }, disabled={ sending }, title='メッセージを送信')
+			i.fa.fa-paper-plane(if={ !sending })
+			i.fa.fa-spinner.fa-spin(if={ sending })
 		button.attach-from-local(type='button', title='PCから画像を添付する')
 			i.fa.fa-upload
 		button.attach-from-drive(type='button', title='アルバムから画像を添付する')
@@ -217,7 +217,7 @@ script.
 
 	@user = @opts.user
 	@init = true
-	@saying = false
+	@sending = false
 	@messages = []
 
 	@connection = new @MessagingStreamConnection @I, @user.id
@@ -247,8 +247,12 @@ script.
 			message._date = date
 			message._datetext = month + '月 ' + date + '日'
 
-	@say = ~>
-		@saying = true
+	@onkeypress = (e) ~>
+		if (e.which == 10 || e.which == 13) && e.ctrl-key
+			@send!
+
+	@send = ~>
+		@sending = true
 		@api \messaging/messages/create do
 			user_id: @user.id
 			text: @refs.text.value
@@ -257,7 +261,7 @@ script.
 		.catch (err) ~>
 			console.error err
 		.then ~>
-			@saying = false
+			@sending = false
 			@update!
 
 	@on-message = (message) ~>
