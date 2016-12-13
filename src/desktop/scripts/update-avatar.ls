@@ -34,7 +34,7 @@ module.exports = (I, cb, file = null) ~>
 	@uplaod = (data, folder) ~>
 
 		progress = document.body.append-child document.create-element \mk-progress-dialog
-		progress.riot.mount progress, do
+		progress = riot.mount progress, do
 			title: '新しいアバターをアップロードしています'
 		.0
 

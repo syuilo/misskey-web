@@ -86,7 +86,6 @@ script.
 		@refs.header.innerHTML = @opts.title
 		@refs.body.innerHTML = @opts.text
 
-	@open = ~>
 		@refs.bg.style.pointer-events = \auto
 		Velocity @refs.bg, \finish true
 		Velocity @refs.bg, {
