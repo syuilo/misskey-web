@@ -23,10 +23,10 @@ script.
 				@refs.window.close!
 
 	@on \mount ~>
-		@refs.window.form.on \cancel ~>
+		@refs.window.refs.form.on \cancel ~>
 			@refs.window.close!
 
-		@refs.window.form.on \posted ~>
+		@refs.window.refs.form.on \posted ~>
 			@refs.window.close!
 
 		document.add-event-listener \keydown @on-document-keydown
