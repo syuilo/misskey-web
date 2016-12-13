@@ -325,10 +325,6 @@ script.
 	@content = null
 	@post = null
 
-	@reply-form = null
-
-	@repost-form = null
-
 	@on \mount ~>
 		@api \posts/show do
 			post_id: @opts.post
