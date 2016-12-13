@@ -12,19 +12,9 @@ mk-messaging-room
 				span { messages[i + 1]._datetext }
 
 	div.typings
-	form
+	div.form
 		div.grippie(title='ドラッグしてフォームの広さを調整')
-		textarea@text(onkeypress={ onkeypress }, placeholder='ここにメッセージを入力')
-		div.uploads
-		div.files
-		button.submit(type='button', onclick={ send }, disabled={ sending }, title='メッセージを送信')
-			i.fa.fa-paper-plane(if={ !sending })
-			i.fa.fa-spinner.fa-spin(if={ sending })
-		button.attach-from-local(type='button', title='PCから画像を添付する')
-			i.fa.fa-upload
-		button.attach-from-drive(type='button', title='アルバムから画像を添付する')
-			i.fa.fa-folder-open
-		input(name='file', type='file', accept='image/*')
+		mk-messaging-form
 
 style.
 	display block
@@ -88,7 +78,7 @@ style.
 				color rgba(0, 0, 0, 0.3)
 				background #fff
 
-	> form
+	> .form
 		position absolute
 		z-index 2
 		bottom 0
@@ -99,7 +89,7 @@ style.
 		background rgba(255, 255, 255, 0.95)
 		background-clip content-box
 
-		.grippie
+		> .grippie
 			height 10px
 			margin-top -10px
 			background transparent
@@ -110,105 +100,6 @@ style.
 
 			&:active
 				//background rgba(0, 0, 0, 0.2)
-
-		textarea
-			cursor auto
-			display block
-			width 100%
-			min-width 100%
-			max-width 100%
-			height 64px
-			margin 0
-			padding 8px
-			font-size 1em
-			color #000
-			outline none
-			border none
-			border-top solid 1px #eee
-			border-radius 0
-			box-shadow none
-			background transparent
-
-		.submit
-			position absolute
-			bottom 0
-			right 0
-			margin 0
-			padding 10px 14px
-			line-height 1em
-			font-size 1em
-			color #aaa
-			transition color 0.1s ease
-
-			&:hover
-				color $theme-color
-
-			&:active
-				color darken($theme-color, 10%)
-				transition color 0s ease
-
-		.files
-			display block
-			margin 0
-			padding 0 8px
-			list-style none
-
-			&:after
-				content ''
-				display block
-				clear both
-
-			> li
-				display block
-				float left
-				margin 4px
-				padding 0
-				width 64px
-				height 64px
-				background-color #eee
-				background-repeat no-repeat
-				background-position center center
-				background-size cover
-				cursor move
-
-				&:hover
-					> .remove
-						display block
-
-				> .remove
-					display none
-					position absolute
-					right -6px
-					top -6px
-					margin 0
-					padding 0
-					background transparent
-					outline none
-					border none
-					border-radius 0
-					box-shadow none
-					cursor pointer
-
-		.attach-from-local
-		.attach-from-drive
-			margin 0
-			padding 10px 14px
-			line-height 1em
-			font-size 1em
-			font-weight normal
-			text-decoration none
-			color #aaa
-			transition color 0.1s ease
-
-			&:hover
-				color $theme-color
-
-			&:active
-				color darken($theme-color, 10%)
-				transition color 0s ease
-
-		input[type=file]
-			display none
 
 script.
 	@mixin \i
@@ -246,23 +137,6 @@ script.
 			month = (new Date message.created_at).get-month! + 1
 			message._date = date
 			message._datetext = month + '月 ' + date + '日'
-
-	@onkeypress = (e) ~>
-		if (e.which == 10 || e.which == 13) && e.ctrl-key
-			@send!
-
-	@send = ~>
-		@sending = true
-		@api \messaging/messages/create do
-			user_id: @user.id
-			text: @refs.text.value
-		.then (message) ~>
-			# something
-		.catch (err) ~>
-			console.error err
-		.then ~>
-			@sending = false
-			@update!
 
 	@on-message = (message) ~>
 		@messages.push message
