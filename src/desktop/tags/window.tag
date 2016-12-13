@@ -294,7 +294,7 @@ script.
 		}
 
 		set-timeout ~>
-			@controller.trigger \closed
+			@trigger \closed
 		, 300ms
 
 	# 最前面へ移動します

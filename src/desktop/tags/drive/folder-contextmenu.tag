@@ -1,5 +1,5 @@
 mk-drive-browser-folder-contextmenu
-	mk-contextmenu(controller={ ctx-controller }): ul
+	mk-contextmenu@ctx: ul
 		li(onclick={ parent.move }): p
 			i.fa.fa-arrow-right
 			| このフォルダへ移動
@@ -19,36 +19,34 @@ script.
 	@mixin \api
 	@mixin \input-dialog
 
-	@controller = @opts.controller
 	@browser = @opts.browser
-	@ctx-controller = riot.observable!
 	@folder = @opts.folder
 
-	@controller.on \open (pos) ~>
-		@ctx-controller.trigger \open pos
+	@open = (pos) ~>
+		@refs.ctx.open pos
 
-	@ctx-controller.on \closed ~>
-		@controller.trigger \closed
-		@unmount!
+		@refs.ctx.on \closed ~>
+			@trigger \closed
+			@unmount!
 
 	@move = ~>
 		@browser.move @folder.id
-		@ctx-controller.trigger \close
+		@refs.ctx.close!
 
 	@new-window = ~>
 		@browser.new-window @folder.id
-		@ctx-controller.trigger \close
+		@refs.ctx.close!
 
 	@create-folder = ~>
 		@browser.create-folder!
-		@ctx-controller.trigger \close
+		@refs.ctx.close!
 
 	@upload = ~>
 		@browser.select-lcoal-file!
-		@ctx-controller.trigger \close
+		@refs.ctx.close!
 
 	@rename = ~>
-		@ctx-controller.trigger \close
+		@refs.ctx.close!
 
 		name <~ @input-dialog do
 			'フォルダ名の変更'

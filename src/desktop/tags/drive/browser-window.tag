@@ -1,5 +1,5 @@
 mk-drive-browser-window
-	mk-window(controller={ window-controller }, is-modal={ false }, width={ '800px' }, height={ '500px' })
+	mk-window@window(is-modal={ false }, width={ '800px' }, height={ '500px' })
 		<yield to="header">
 		i.fa.fa-cloud
 		| ドライブ
@@ -19,15 +19,11 @@ style.
 				height 100%
 
 script.
-	@window-controller = riot.observable!
-
 	@folder = if @opts.folder? then @opts.folder else null
 
 	@on \mount ~>
-		@window-controller.trigger \open
+		@refs.window.on \closed ~>
+			@unmount!
 
 	@close = ~>
-		@window-controller.trigger \close
-
-	@window-controller.on \closed ~>
-		@unmount!
+		@refs.window.close!

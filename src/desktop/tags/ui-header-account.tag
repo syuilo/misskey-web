@@ -204,19 +204,11 @@ script.
 
 	@drive = ~>
 		@close!
-		browser = document.body.append-child document.create-element \mk-drive-browser-window
-		browser-controller = riot.observable!
-		riot.mount browser, do
-			controller: browser-controller
-		browser-controller.trigger \open
+		riot.mount document.body.append-child document.create-element \mk-drive-browser-window
 
 	@settings = ~>
 		@close!
-		w = document.body.append-child document.create-element \mk-settings-window
-		w-controller = riot.observable!
-		riot.mount w, do
-			controller: w-controller
-		w-controller.trigger \open
+		riot.mount document.body.append-child document.create-element \mk-settings-window
 
 	function contains(parent, child)
 		node = child.parent-node

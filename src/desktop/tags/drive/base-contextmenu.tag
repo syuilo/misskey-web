@@ -1,5 +1,5 @@
 mk-drive-browser-base-contextmenu
-	mk-contextmenu(controller={ ctx-controller })
+	mk-contextmenu@ctx
 		ul
 			li(onclick={ parent.create-folder }): p
 				i.fa.fa-folder-o
@@ -9,21 +9,20 @@ mk-drive-browser-base-contextmenu
 				| ファイルをアップロード
 
 script.
-	@controller = @opts.controller
 	@browser = @opts.browser
-	@ctx-controller = riot.observable!
 
-	@controller.on \open (pos) ~>
-		@ctx-controller.trigger \open pos
+	@on \mount ~>
+		@refs.ctx.on \closed ~>
+			@trigger \closed
+			@unmount!
 
-	@ctx-controller.on \closed ~>
-		@controller.trigger \closed
-		@unmount!
+	@open = (pos) ~>
+		@refs.ctx.open pos
 
 	@create-folder = ~>
 		@browser.create-folder!
-		@ctx-controller.trigger \close
+		@refs.ctx.close!
 
 	@upload = ~>
 		@browser.select-local-file!
-		@ctx-controller.trigger \close
+		@refs.ctx.close!

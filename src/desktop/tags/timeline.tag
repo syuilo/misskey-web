@@ -54,26 +54,25 @@ style(theme='dark').
 
 script.
 	@posts = []
-	@controller = @opts.controller
 
-	@controller.on \set-posts (posts) ~>
+	@set-posts = (posts) ~>
 		@posts = posts
 		@update!
 
-	@controller.on \prepend-posts (posts) ~>
+	@prepend-posts = (posts) ~>
 		posts.for-each (post) ~>
 			@posts.push post
 			@update!
 
-	@controller.on \add-post (post) ~>
+	@add-post = (post) ~>
 		@posts.unshift post
 		@update!
 
-	@controller.on \clear ~>
+	@clear = ~>
 		@posts = []
 		@update!
 
-	@controller.on \focus ~>
+	@focus = ~>
 		@root.children.0.focus!
 
 	@on \update ~>

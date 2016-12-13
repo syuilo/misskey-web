@@ -180,7 +180,6 @@ script.
 	@wait = false
 	@uploadings = []
 	@files = []
-	@uploader-controller = riot.observable!
 
 	@on \mount ~>
 		@refs.uploader.on \uploaded (file) ~>

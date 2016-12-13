@@ -1,5 +1,5 @@
 mk-messaging-room-window
-	mk-window(controller={ window-controller }, is-modal={ false }, width={ '500px' }, height={ '560px' })
+	mk-window@window(is-modal={ false }, width={ '500px' }, height={ '560px' })
 		<yield to="header">
 		i.fa.fa-comments
 		| メッセージ: { parent.user.name }
@@ -19,11 +19,8 @@ style.
 				height 100%
 
 script.
-	@window-controller = riot.observable!
 	@user = @opts.user
 
 	@on \mount ~>
-		@window-controller.trigger \open
-
-	@window-controller.on \closed ~>
-		@unmount!
+		@refs.window.on \closed ~>
+			@unmount!

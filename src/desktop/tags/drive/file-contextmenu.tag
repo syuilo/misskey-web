@@ -1,5 +1,5 @@
 mk-drive-browser-file-contextmenu
-	mk-contextmenu(controller={ ctx-controller }): ul
+	mk-contextmenu@ctx: ul
 		li(onclick={ parent.rename }): p
 			i.fa.fa-i-cursor
 			| 名前を変更
@@ -42,20 +42,19 @@ script.
 	@mixin \input-dialog
 	@mixin \NotImplementedException
 
-	@controller = @opts.controller
 	@browser = @opts.browser
-	@ctx-controller = riot.observable!
 	@file = @opts.file
 
-	@controller.on \open (pos) ~>
-		@ctx-controller.trigger \open pos
+	@on \mount ~>
+		@refs.ctx.on \closed ~>
+			@trigger \closed
+			@unmount!
 
-	@ctx-controller.on \closed ~>
-		@controller.trigger \closed
-		@unmount!
+	@open = (pos) ~>
+		@refs.ctx.open pos
 
 	@rename = ~>
-		@ctx-controller.trigger \close
+		@refs.ctx.close!
 
 		name <~ @input-dialog do
 			'ファイル名の変更'
@@ -74,22 +73,22 @@ script.
 		@NotImplementedException!
 
 	@download = ~>
-		@ctx-controller.trigger \close
+		@refs.ctx.close!
 
 	@set-avatar = ~>
-		@ctx-controller.trigger \close
+		@refs.ctx.close!
 		@update-avatar @I, (i) ~>
 			@update-i i
 		, @file
 
 	@set-banner = ~>
-		@ctx-controller.trigger \close
+		@refs.ctx.close!
 		@update-banner @I, (i) ~>
 			@update-i i
 		, @file
 
 	@set-wallpaper = ~>
-		@ctx-controller.trigger \close
+		@refs.ctx.close!
 		@update-wallpaper @I, (i) ~>
 			@update-i i
 		, @file

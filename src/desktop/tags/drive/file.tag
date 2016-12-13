@@ -178,15 +178,14 @@ script.
 		@is-contextmenu-showing = true
 		@update!
 		ctx = document.body.append-child document.create-element \mk-drive-browser-file-contextmenu
-		ctx-controller = riot.observable!
-		riot.mount ctx, do
-			controller: ctx-controller
+		ctx = riot.mount ctx, do
 			browser: @browser
 			file: @file
-		ctx-controller.trigger \open do
+		ctx = ctx.0
+		ctx.open do
 			x: e.page-x - window.page-x-offset
 			y: e.page-y - window.page-y-offset
-		ctx-controller.on \closed ~>
+		ctx.on \closed ~>
 			@is-contextmenu-showing = false
 			@update!
 		return false

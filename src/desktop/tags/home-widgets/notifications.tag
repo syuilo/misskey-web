@@ -45,9 +45,5 @@ style.
 
 script.
 	@settings = ~>
-		w = document.body.append-child document.create-element \mk-settings-window
-		w-controller = riot.observable!
-		riot.mount w, do
-			controller: w-controller
-		w-controller.trigger \switch \notification
-		w-controller.trigger \open
+		w = riot.mount document.body.append-child document.create-element \mk-settings-window .0
+		w.switch \notification
