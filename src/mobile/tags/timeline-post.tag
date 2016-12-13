@@ -247,12 +247,6 @@ script.
 	@summary = @get-post-summary @p
 	@url = CONFIG.url + '/' + @p.user.username + '/' + @p.id
 
-	@reply-form = null
-	@reply-form-controller = riot.observable!
-
-	@repost-form = null
-	@repost-form-controller = riot.observable!
-
 	@on \mount ~>
 		if @p.text?
 			tokens = if @p._highlight?
@@ -279,7 +273,6 @@ script.
 		form = document.body.append-child document.create-element \mk-post-form-dialog
 		riot.mount form, do
 			reply: @p
-			controller: null
 
 	@repost = ~>
 		text = window.prompt '「' + @summary + '」をRepost'
