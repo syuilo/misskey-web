@@ -27,5 +27,5 @@ script.
 
 			@update!
 
-		@refs.ui.refs.list.on \loaded ~>
-			@Progress.done!
+			@refs.ui.refs.list.on \loaded ~>
+				@Progress.done!
