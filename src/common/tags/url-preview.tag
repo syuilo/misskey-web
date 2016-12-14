@@ -73,12 +73,17 @@ style.
 		font-size 8px
 
 		> a
+			border none
+
 			> .thumbnail
 				width 70px
 
 				& + article
 					left 70px
 					width calc(100% - 70px)
+
+			> article
+				padding 8px
 
 script.
 	@mixin \api
