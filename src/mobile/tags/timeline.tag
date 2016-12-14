@@ -4,7 +4,7 @@ mk-timeline
 		| 読み込んでいます
 	div.empty(if={ !init && posts.length == 0 })
 		i.fa.fa-comments-o
-		| { opts.empty || '投稿はありません' }
+		| { opts.empty || '表示するものがありません' }
 	virtual(each={ post, i in posts })
 		mk-timeline-post(post={ post })
 		p.date(if={ i != posts.length - 1 && post._date != posts[i + 1]._date })
@@ -15,8 +15,11 @@ mk-timeline
 				i.fa.fa-angle-down
 				| { posts[i + 1]._datetext }
 	footer(if={ !init })
-		i.fa.fa-moon-o(if={ !fetching })
-		i.fa.fa-spinner.fa-pulse.fa-fw(if={ fetching })
+		button(if={ can-fetch-more }, onclick={ more }, disabled={ fetching })
+			span(if={ !fetching }) もっとみる
+			span(if={ fetching })
+				| 読み込み中
+				mk-ellipsis
 
 style.
 	display block
@@ -65,27 +68,30 @@ style.
 			margin-right 8px
 
 	> footer
-		padding 16px
 		text-align center
-		color #ccc
 		border-top solid 1px #eaeaea
 		border-bottom-left-radius 4px
 		border-bottom-right-radius 4px
+
+		> button
+			margin 0
+			padding 16px
+			width 100%
+			color $theme-color
+
+			&:disabled
+				opacity 0.7
 
 script.
 	@posts = []
 	@init = true
 	@fetching = false
+	@can-fetch-more = true
 
 	@on \mount ~>
-		window.add-event-listener \scroll @on-scroll
-
 		@opts.init.then (posts) ~>
 			@init = false
 			@set-posts posts
-
-	@on \unmount ~>
-		window.remove-event-listener \scroll @on-scroll
 
 	@on \update ~>
 		@posts.for-each (post) ~>
@@ -93,11 +99,6 @@ script.
 			month = (new Date post.created_at).get-month! + 1
 			post._date = date
 			post._datetext = month + '月 ' + date + '日'
-
-	@on-scroll = ~>
-		current = window.scroll-y + window.inner-height
-		if current > document.body.offset-height - 16 # 遊び
-			@more!
 
 	@more = ~>
 		if @init or @fetching or @posts.length == 0 then return
