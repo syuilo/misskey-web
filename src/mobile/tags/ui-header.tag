@@ -76,20 +76,22 @@ style.
 				top 0
 				right 0
 				width $height
+				text-align center
 				font-size 1.4em
+				color inherit
 				line-height $height
 				border-left solid 1px rgba(#000, 0.1)
 
 script.
-	@mixin \core
 	@mixin \ui
+	@mixin \open-post-form
 
 	@on \mount ~>
 		@opts.ready!
 
-	@post = ~>
-		@core.trigger \post
-
 	@ui.one \title (title) ~>
 		if @refs.title?
 			@refs.title.innerHTML = title
+
+	@post = ~>
+		@open-post-form!

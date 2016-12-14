@@ -15,6 +15,7 @@ module.exports = (me) ~>
 	route \/i/drive drive
 	route \/i/drive/folder/:folder drive
 	route \/i/drive/file/:file drive
+	route \/post/new new-post
 	route \/post::post post
 	route \/search::query search
 	route \/:user user.bind null \posts
@@ -42,6 +43,10 @@ module.exports = (me) ~>
 	# 通知
 	function notifications
 		mount document.create-element \mk-notifications-page
+
+	# 新規投稿
+	function new-post
+		mount document.create-element \mk-new-post-page
 
 	# 検索
 	function search ctx

@@ -319,6 +319,7 @@ script.
 	@mixin \api
 	@mixin \text
 	@mixin \get-post-summary
+	@mixin \open-post-form
 
 	@fetching = true
 	@loading-context = false
@@ -378,8 +379,7 @@ script.
 				@update!
 
 	@reply = ~>
-		form = document.body.append-child document.create-element \mk-post-form-dialog
-		riot.mount form, do
+		@open-post-form do
 			reply: @p
 
 	@repost = ~>

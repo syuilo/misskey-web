@@ -1,39 +1,28 @@
 mk-drive-selector
-	div.bg@bg
-	div.body@body
+	div.body
 		header
 			h1
 				| ファイルを選択
 				span.count(if={ files.length > 0 }) ({ files.length })
-			button.close(onclick={ close }): i.fa.fa-times
+			button.close(onclick={ cancel }): i.fa.fa-times
 			button.ok(onclick={ ok }): i.fa.fa-check
 		mk-drive@browser(select={ true }, multiple={ opts.multiple })
 
 style.
 	display block
 
-	> .bg
+	> .body
 		position fixed
 		z-index 2048
 		top 0
 		left 0
-		width 100%
-		height 100%
-		background rgba(#000, 0.5)
-
-	> .body
-		position fixed
-		z-index 2048
-		top 16px
-		left 0
 		right 0
 		margin 0 auto
-		width calc(100% - 32px)
+		width 100%
 		max-width 500px
-		height calc(100% - 32px)
+		height 100%
 		overflow hidden
 		background #fff
-		border-radius 8px
 		box-shadow 0 0 16px rgba(#000, 0.3)
 
 		> header
@@ -70,9 +59,6 @@ style.
 			overflow scroll
 
 script.
-	@mixin \window
-
-	@cb = opts.callback
 	@files = []
 
 	@on \mount ~>
@@ -80,6 +66,10 @@ script.
 			@files = files
 			@update!
 
+	@cancel = ~>
+		@trigger \canceled
+		@unmount!
+
 	@ok = ~>
-		@cb @files
-		@close!
+		@trigger \selected @files
+		@unmount!

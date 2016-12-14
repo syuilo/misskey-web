@@ -240,6 +240,7 @@ script.
 	@mixin \api
 	@mixin \text
 	@mixin \get-post-summary
+	@mixin \open-post-form
 
 	@post = @opts.post
 	@is-repost = @post.repost? and !@post.text?
@@ -270,8 +271,7 @@ script.
 						url: t.content
 
 	@reply = ~>
-		form = document.body.append-child document.create-element \mk-post-form-dialog
-		riot.mount form, do
+		@open-post-form do
 			reply: @p
 
 	@repost = ~>
