@@ -6,9 +6,6 @@ module.exports = (me) ~>
 	riot.mixin \cropper do
 		Cropper: require \cropper
 
-	riot.mixin \sortable do
-		Sortable: require \Sortable
-
 	riot.mixin \signout do
 		signout: require './common/scripts/signout.ls'
 

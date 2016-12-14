@@ -17,7 +17,6 @@ if HTMLCollection.prototype.for-each == undefined
 #--------------------------------
 
 require \velocity
-require \chart.js
 
 # Define common tags
 #--------------------------------

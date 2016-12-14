@@ -1,6 +1,8 @@
 # DESKTOP CLIENT SCRIPT
 #================================
 
+require \chart.js
+
 # Define tags
 #--------------------------------
 
