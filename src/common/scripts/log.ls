@@ -1,3 +1,18 @@
-module.exports = (me, msg) ~>
-	if me? && me.data.debug
-		console.log msg
+riot = require \riot
+
+logs = []
+
+ev = riot.observable!
+
+function log(msg)
+	logs.push do
+		date: new Date!
+		message: msg
+	ev.trigger \log
+
+riot.mixin \log do
+	logs: logs
+	log: log
+	log-event: ev
+
+module.exports = log

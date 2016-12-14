@@ -15,9 +15,6 @@ module.exports = (me) ~>
 	riot.mixin \is-promise do
 		is-promise: require './common/scripts/is-promise.ls'
 
-	riot.mixin \log do
-		log: (require './common/scripts/log.ls').bind null me
-
 	riot.mixin \get-post-summary do
 		get-post-summary: require './common/scripts/get-post-summary.ls'
 

@@ -8,6 +8,8 @@ net = riot.observable!
 riot.mixin \net do
 	net: net
 
+log = (riot.mixin \log).log
+
 module.exports = (i, endpoint, data) ->
 	api-stack++
 
@@ -45,6 +47,8 @@ module.exports = (i, endpoint, data) ->
 		timer = set-timeout ->
 			net.trigger \detected-slow-network
 		, 5000ms
+
+		log "API: #{ep}"
 
 		fetch ep, opts
 		.then (res) ->

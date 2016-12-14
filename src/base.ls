@@ -26,17 +26,25 @@ require './common/tags.ls'
 # Boot
 #--------------------------------
 
+log = require './common/scripts/log.ls'
+
 fetchme = require './fetchme.ls'
 mixins = require './mixins.ls'
 panic = require './panic.ls'
 check-for-update = require './common/scripts/check-for-update.ls'
 
+log "Misskey (aoi) v:#{VERSION}"
+
 # Get token from cookie
 i = ((document.cookie.match /i=(\w+)/) || [null null]).1
+
+if i? then log "ME: #{i}"
 
 module.exports = (callback) ~>
 	# fetch me
 	me <~ fetchme i
+
+	if me? then log "Fetched! Hello #{me.username}."
 
 	# activate mixins
 	mixins me

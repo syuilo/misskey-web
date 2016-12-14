@@ -26,6 +26,7 @@ if \Notification in window
 # Boot
 #--------------------------------
 
+riot = require \riot
 boot = require '../base.ls'
 mixins = require './mixins.ls'
 route = require './router.ls'
@@ -33,6 +34,10 @@ route = require './router.ls'
 boot (me) ~>
 	# activate mixins
 	mixins me
+
+	# DEBUG
+	if me? and me.data.debug
+		riot.mount document.body.append-child document.create-element \mk-log-window
 
 	# routing
 	route me
