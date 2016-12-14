@@ -1,4 +1,4 @@
-riot = require 'riot'
+riot = require \riot
 
 module.exports = (i) ->
 
