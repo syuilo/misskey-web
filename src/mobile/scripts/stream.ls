@@ -4,21 +4,10 @@
 stream = require '../../common/scripts/stream.ls'
 riot = require \riot
 
-function init me, manager
-	s = stream me, manager
-
-	#s.event.on \drive_file_created (file) ~>
-	#	n = new Notification 'ファイルがアップロードされました' do
-	#		body: file.name
-	#		icon: file.url + '?thumbnail&size=64'
-	#	set-timeout (n.close.bind n), 5000ms
+module.exports = (me) ~>
+	s = stream me
 
 	riot.mixin \stream do
 		stream: s.event
 		get-stream-state: s.get-state
 		stream-state-ev: s.state-ev
-
-# Export
-#--------------------------------
-
-module.exports = init

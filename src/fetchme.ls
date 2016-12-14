@@ -36,7 +36,7 @@ fetchme = (token, cb) ~>
 			retry: ~> fetchme token, cb
 
 	function done
-		if cb? then cb me
+		if cb? then cb if me? then riot.observable me else null
 
 	function init
 		data = generate-default-userdata!

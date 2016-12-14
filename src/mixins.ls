@@ -3,6 +3,11 @@ riot = require \riot
 module.exports = (me) ~>
 	i = if me? then me.token else null
 
+	(require './common/scripts/i.ls') me
+
+	riot.mixin \api do
+		api: (require './common/scripts/api.ls').bind null i
+
 	riot.mixin \cropper do
 		Cropper: require \cropper
 
@@ -30,9 +35,6 @@ module.exports = (me) ~>
 
 	riot.mixin \ui-progress do
 		Progress: require './common/scripts/loading.ls'
-
-	riot.mixin \api do
-		api: (require './common/scripts/api.ls').bind null i
 
 	riot.mixin \bytes-to-size do
 		bytes-to-size: require './common/scripts/bytes-to-size.js'

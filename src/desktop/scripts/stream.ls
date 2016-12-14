@@ -5,8 +5,8 @@ stream = require '../../common/scripts/stream.ls'
 get-post-summary = require '../../common/scripts/get-post-summary.ls'
 riot = require \riot
 
-function init me, manager
-	s = stream me, manager
+module.exports = (me) ~>
+	s = stream me
 
 	s.event.on \drive_file_created (file) ~>
 		n = new Notification 'ファイルがアップロードされました' do
@@ -36,8 +36,3 @@ function init me, manager
 		stream: s.event
 		get-stream-state: s.get-state
 		stream-state-ev: s.state-ev
-
-# Export
-#--------------------------------
-
-module.exports = init

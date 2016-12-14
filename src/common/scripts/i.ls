@@ -1,26 +1,15 @@
 riot = require \riot
 
-module.exports = (i) ->
-
-	ev = riot.observable!
-
+module.exports = (me) ->
 	riot.mixin \i do
 		init: ->
-			@I = i
-			@SIGNIN = i?
+			@I = me
+			@SIGNIN = me?
 
-			@on \mount   ~> ev.on  \update updated.bind @
-			@on \unmount ~> ev.off \update updated.bind @
+			@on \mount   ~> me.on  \updated @update
+			@on \unmount ~> me.off \updated @update
 
-			function updated
-				@update do
-					I: i
-
-		update-i: update
-
-	function update(data)
-		if data?
-			i := Object.assign i, data
-		ev.trigger \update
-
-	return update
+		update-i: (data) ->
+			if data?
+				Object.assign me, data
+			me.trigger \updated
