@@ -59,4 +59,4 @@ script.
 	@on-log = ~>
 		@update!
 		if @following
-			@refs.logs.scroll-to 0 @refs.logs.scroll-height
+			@refs.logs.scroll-top = @refs.logs.scroll-height
