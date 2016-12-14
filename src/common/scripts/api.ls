@@ -1,7 +1,7 @@
 riot = require \riot
 
 spinner = null
-api-stack = 0
+pending-requests = 0
 
 net = riot.observable!
 
@@ -11,7 +11,7 @@ riot.mixin \net do
 log = (riot.mixin \log).log
 
 module.exports = (i, endpoint, data) ->
-	api-stack++
+	pending-requests++
 
 	if i? and typeof i == \object then i = i.token
 
@@ -38,7 +38,7 @@ module.exports = (i, endpoint, data) ->
 		then endpoint
 		else "#{CONFIG.api.url}/#{endpoint}"
 
-	if api-stack == 1
+	if pending-requests == 1
 		spinner := document.create-element \div
 			..set-attribute \id \wait
 		document.body.append-child spinner
@@ -52,9 +52,9 @@ module.exports = (i, endpoint, data) ->
 
 		fetch ep, opts
 		.then (res) ->
-			api-stack--
+			pending-requests--
 			clear-timeout timer
-			if api-stack == 0
+			if pending-requests == 0
 				spinner.parent-node.remove-child spinner
 
 			if res.status == 200
