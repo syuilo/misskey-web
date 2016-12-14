@@ -123,7 +123,7 @@ script.
 	@file = @opts.file
 	@is-selected = @browser.selected-files.some (f) ~> f.id == @file.id
 
-	@browser.event.on \change-selected (selects) ~>
+	@browser.on \change-selected (selects) ~>
 		@is-selected = selects.some (f) ~> f.id == @file.id
 
 	@onclick = ~>
