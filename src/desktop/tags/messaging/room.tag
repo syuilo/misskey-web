@@ -14,7 +14,7 @@ mk-messaging-room
 	div.typings
 	div.form
 		div.grippie(title='ドラッグしてフォームの広さを調整')
-		mk-messaging-form
+		mk-messaging-form(user={ user })
 
 style.
 	display block

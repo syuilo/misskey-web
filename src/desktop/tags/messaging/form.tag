@@ -116,6 +116,8 @@ style.
 script.
 	@mixin \api
 
+	@user = @opts.user
+
 	@onpaste = (e) ~>
 		data = e.clipboard-data
 		items = data.items
