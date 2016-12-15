@@ -144,6 +144,8 @@ script.
 		@connection.event.on \message @on-message
 		@connection.event.on \read @on-read
 
+		document.add-event-listener \visibilitychange @on-visibilitychange
+
 		@api \messaging/messages do
 			user_id: @user.id
 		.then (messages) ~>
@@ -159,6 +161,8 @@ script.
 		@connection.event.off \read @on-read
 		@connection.close!
 
+		document.remove-event-listener \visibilitychange @on-visibilitychange
+
 	@on \update ~>
 		@messages.for-each (message) ~>
 			date = (new Date message.created_at).get-date!
@@ -170,7 +174,7 @@ script.
 		is-bottom = @is-bottom!
 
 		@messages.push message
-		if message.user_id != @I.id
+		if message.user_id != @I.id and not document.hidden
 			@connection.socket.send JSON.stringify do
 				type: \read
 				id: message.id
@@ -213,3 +217,11 @@ script.
 				n.parent-node.remove-child n
 			, 1000ms
 		, 4000ms
+
+	@on-visibilitychange = ~>
+		if document.hidden then return
+		@messages.for-each (message) ~>
+			if message.user_id != @I.id and not message.is_read
+				@connection.socket.send JSON.stringify do
+					type: \read
+					id: message.id
