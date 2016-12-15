@@ -14,7 +14,7 @@ mk-messaging
 	div.main
 		div.history(if={ history.length > 0 })
 			virtual(each={ history })
-				a.user(data-is-me={ is_me }, onclick={ _click })
+				a.user(data-is-me={ is_me }, onclick={ _click }): div
 					img.avatar(src={ (is_me ? recipient.avatar_url : user.avatar_url) + '?thumbnail&size=64' }, alt='')
 					header
 						span.name { is_me ? recipient.name : user.name }
@@ -169,6 +169,10 @@ style.
 				background #fff
 				border-bottom solid 1px #eee
 
+				*
+					pointer-events none
+					user-select none
+
 				&:hover
 					background #fafafa
 
@@ -192,60 +196,64 @@ style.
 					display block
 					clear both
 
-				> header
-					margin-bottom 2px
-					white-space nowrap
-					overflow hidden
+				> div
+					max-width 500px
+					margin 0 auto
 
-					> .name
-						text-align left
-						display inline
-						margin 0
-						padding 0
-						font-size 1em
-						color rgba(0, 0, 0, 0.9)
-						font-weight bold
+					> header
+						margin-bottom 2px
+						white-space nowrap
+						overflow hidden
+
+						> .name
+							text-align left
+							display inline
+							margin 0
+							padding 0
+							font-size 1em
+							color rgba(0, 0, 0, 0.9)
+							font-weight bold
+							transition all 0.1s ease
+
+						> .username
+							text-align left
+							margin 0 0 0 8px
+							color rgba(0, 0, 0, 0.5)
+
+						> mk-time
+							position absolute
+							top 0
+							right 0
+							display inline
+							color rgba(0, 0, 0, 0.5)
+							font-size small
+
+					> .avatar
+						float left
+						width 54px
+						height 54px
+						margin 0 16px 0 0
+						border-radius 8px
 						transition all 0.1s ease
 
-					> .username
-						text-align left
-						margin 0 0 0 8px
-						color rgba(0, 0, 0, 0.5)
+					> .body
 
-					> mk-time
-						position absolute
-						top 0
-						right 0
-						display inline
-						color rgba(0, 0, 0, 0.5)
-						font-size small
+						> .text
+							display block
+							margin 0 0 0 0
+							padding 0
+							overflow hidden
+							word-wrap break-word
+							font-size 1.1em
+							color rgba(0, 0, 0, 0.8)
 
-				> .avatar
-					float left
-					width 54px
-					height 54px
-					margin 0 16px 0 0
-					border-radius 8px
-					transition all 0.1s ease
+							.me
+								color rgba(0, 0, 0, 0.4)
 
-				> .body
-
-					> .text
-						display block
-						margin 0 0 0 0
-						padding 0
-						overflow hidden
-						word-wrap break-word
-						font-size 1.1em
-						color rgba(0, 0, 0, 0.8)
-
-						.me
-							color rgba(0, 0, 0, 0.4)
-
-					> .image
-						display block
-						max-width 100%
-						max-height 512px
+						> .image
+							display block
+							max-width 100%
+							max-height 512px
 
 		> .no-history
 			margin 0
