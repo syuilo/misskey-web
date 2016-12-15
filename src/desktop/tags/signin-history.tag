@@ -53,6 +53,7 @@ style.
 
 				> code
 					white-space pre-wrap
+					word-break break-all
 					color #4a535a
 
 script.
