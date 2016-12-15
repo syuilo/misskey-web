@@ -29,69 +29,74 @@ style.
 	border-radius 4px
 	overflow hidden
 
-	> .banner
-		height 84px
-		background-color #f5f5f5
-		background-size cover
-		background-position center
-
-	> .avatar
+	// https://github.com/riot/riot/issues/2081
+	> virtual
 		display block
-		position absolute
-		top 62px
-		left 13px
+		position relative
 
-		> img
+		> .banner
+			height 84px
+			background-color #f5f5f5
+			background-size cover
+			background-position center
+
+		> .avatar
 			display block
-			width 58px
-			height 58px
-			margin 0
-			border solid 3px #fff
-			border-radius 8px
+			position absolute
+			top 62px
+			left 13px
 
-	> .title
-		display block
-		padding 8px 0 8px 85px
-
-		> .name
-			display block
-			margin 0
-			font-weight bold
-			line-height 16px
-			color #656565
-
-		> .username
-			display block
-			margin 0
-			line-height 16px
-			font-size 0.8em
-			color #999
-
-	> .bio
-		padding 0 16px
-		font-size 0.7em
-		color #555
-
-	> .status
-		padding 8px 16px
-
-		> div
-			display inline-block
-			width 33%
-
-			> p
+			> img
+				display block
+				width 58px
+				height 58px
 				margin 0
-				font-size 0.7em
-				color #aaa
+				border solid 3px #fff
+				border-radius 8px
 
-			> a
-				font-size 1em
-				color $theme-color
+		> .title
+			display block
+			padding 8px 0 8px 85px
 
-	> mk-follow-button
-		position absolute
-		top 92px
-		right 8px
+			> .name
+				display block
+				margin 0
+				font-weight bold
+				line-height 16px
+				color #656565
+
+			> .username
+				display block
+				margin 0
+				line-height 16px
+				font-size 0.8em
+				color #999
+
+		> .bio
+			padding 0 16px
+			font-size 0.7em
+			color #555
+
+		> .status
+			padding 8px 16px
+
+			> div
+				display inline-block
+				width 33%
+
+				> p
+					margin 0
+					font-size 0.7em
+					color #aaa
+
+				> a
+					font-size 1em
+					color $theme-color
+
+		> mk-follow-button
+			position absolute
+			top 92px
+			right 8px
 
 script.
 	@mixin \i
