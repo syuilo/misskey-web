@@ -1,5 +1,5 @@
 mk-messaging-room
-	div.stream
+	div.stream@stream
 		p.initializing(if={ init })
 			i.fa.fa-spinner.fa-spin
 			| 読み込み中
@@ -12,7 +12,8 @@ mk-messaging-room
 				span { messages[i + 1]._datetext }
 
 	div.typings
-	div.form
+	footer
+		div@notifications
 		div.grippie(title='ドラッグしてフォームの広さを調整')
 		mk-messaging-form(user={ user })
 
@@ -78,7 +79,7 @@ style.
 				color rgba(0, 0, 0, 0.3)
 				background #fff
 
-	> .form
+	> footer
 		position absolute
 		z-index 2
 		bottom 0
@@ -88,6 +89,32 @@ style.
 		padding 0
 		background rgba(255, 255, 255, 0.95)
 		background-clip content-box
+
+		> [ref='notifications']
+			position absolute
+			top -48px
+			width 100%
+			padding 8px 0
+			text-align center
+
+			> p
+				display inline-block
+				margin 0
+				padding 0 12px 0 28px
+				cursor pointer
+				line-height 32px
+				font-size 12px
+				color $theme-color-foreground
+				background $theme-color
+				border-radius 16px
+				transition opacity 1s ease
+
+				> i
+					position absolute
+					top 0
+					left 10px
+					line-height 32px
+					font-size 16px
 
 		> .grippie
 			height 10px
@@ -123,6 +150,7 @@ script.
 			@init = false
 			@messages = messages.reverse!
 			@update!
+			@scroll-to-bottom!
 		.catch (err) ~>
 			console.error err
 
@@ -139,12 +167,21 @@ script.
 			message._datetext = month + '月 ' + date + '日'
 
 	@on-message = (message) ~>
+		is-bottom = @is-bottom!
+
 		@messages.push message
 		if message.user_id != @I.id
 			@connection.socket.send JSON.stringify do
 				type: \read
 				id: message.id
 		@update!
+
+		if is-bottom
+			# Scroll to bottom
+			@scroll-to-bottom!
+		else if message.user_id != @I.id
+			# Notify
+			@notify '新しいメッセージがあります'
 
 	@on-read = (ids) ~>
 		if not Array.isArray ids then ids = [ids]
@@ -153,3 +190,26 @@ script.
 				exist = (@messages.map (x) -> x.id).index-of id
 				@messages[exist].is_read = true
 				@update!
+
+	@is-bottom = ~>
+		current = @refs.stream.scroll-top + @refs.stream.offset-height
+		max = @refs.stream.scroll-height
+		current > (max - 32)
+
+	@scroll-to-bottom = ~>
+		@refs.stream.scroll-top = @refs.stream.scroll-height
+
+	@notify = (message) ~>
+		n = document.create-element \p
+		n.inner-HTML = '<i class="fa fa-arrow-circle-down"></i>' + message
+		n.onclick = ~>
+			@scroll-to-bottom!
+			n.parent-node.remove-child n
+		@refs.notifications.append-child n
+
+		set-timeout ~>
+			n.style.opacity = 0
+			set-timeout ~>
+				n.parent-node.remove-child n
+			, 1000ms
+		, 4000ms
