@@ -191,7 +191,8 @@ style.
 						color rgba(255, 255, 255, 0.5)
 
 					> [ref='text']
-						color #fff
+						&, *
+							color #fff !important
 
 			> footer
 				text-align right
