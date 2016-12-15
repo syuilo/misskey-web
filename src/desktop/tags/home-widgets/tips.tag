@@ -54,7 +54,7 @@ script.
 		@update!
 
 	@change = ~>
-		Velocity @tip, {
+		Velocity @refs.tip, {
 			opacity: 0
 		} {
 			duration: 500ms
@@ -62,7 +62,7 @@ script.
 			complete: @set
 		}
 
-		Velocity @tip, {
+		Velocity @refs.tip, {
 			opacity: 1
 		} {
 			duration: 500ms
