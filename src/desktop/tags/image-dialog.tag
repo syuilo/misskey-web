@@ -1,6 +1,6 @@
 mk-image-dialog
 	div.bg@bg(onclick={ close })
-	img@img(src={ image.url + '?thumbnail' }, alt={ image.name }, title={ image.name }, onclick={ close })
+	img@img(src={ image.url }, alt={ image.name }, title={ image.name }, onclick={ close })
 
 style.
 	display block
