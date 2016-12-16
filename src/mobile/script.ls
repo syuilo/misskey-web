@@ -14,7 +14,7 @@ require './scripts/sp-slidemenu.js'
 # Boot
 #--------------------------------
 
-boot = require '../base.ls'
+boot = require '../boot.ls'
 mixins = require './mixins.ls'
 route = require './router.ls'
 

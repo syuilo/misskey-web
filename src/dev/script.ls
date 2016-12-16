@@ -9,7 +9,7 @@ require './tags.ls'
 # Boot
 #--------------------------------
 
-boot = require '../base.ls'
+boot = require '../boot.ls'
 route = require './router.ls'
 
 boot (me) ~>
