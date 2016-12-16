@@ -58,14 +58,17 @@ script.
 			@trigger \loaded
 
 		@I.data.home.for-each (widget) ~>
-			el = document.create-element \mk- + widget.name + \-home-widget
-			switch widget.place
-				| \left => @refs.left.append-child el
-				| \right => @refs.right.append-child el
-			@home.push (riot.mount el, do
-				id: widget.id
-				data: widget.data
-			.0)
+			try
+				el = document.create-element \mk- + widget.name + \-home-widget
+				switch widget.place
+					| \left => @refs.left.append-child el
+					| \right => @refs.right.append-child el
+				@home.push (riot.mount el, do
+					id: widget.id
+					data: widget.data
+				.0)
+			catch e
+				# nope
 
 	@on \unmount ~>
 		@home.for-each (widget) ~>
