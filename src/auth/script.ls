@@ -1,6 +1,8 @@
 # AUTH FORM SCRIPT
 #================================
 
+riot = require \riot
+
 document.title = 'Misskey | アプリの連携'
 
 # Define tags
@@ -19,8 +21,6 @@ boot (me) ~>
 
 # Mount
 #================================
-
-riot = require \riot
 
 function mount content
 	body = document.get-element-by-id \app
