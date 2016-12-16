@@ -14,7 +14,7 @@ mk-messaging
 	div.main
 		div.history(if={ history.length > 0 })
 			virtual(each={ history })
-				a.user(data-is-me={ is_me }, onclick={ _click }): div
+				a.user(data-is-me={ is_me }, data-is-read={ is_read }, onclick={ _click }): div
 					img.avatar(src={ (is_me ? recipient.avatar_url : user.avatar_url) + '?thumbnail&size=64' }, alt='')
 					header
 						span.name { is_me ? recipient.name : user.name }
@@ -182,11 +182,11 @@ style.
 				&:active
 					background #eee
 
-				&[data-is-unread='false']
-				&[data-is-me='true']
+				&[data-is-read]
+				&[data-is-me]
 					opacity 0.8
 
-				&[data-is-unread='true'] > a > article
+				&:not([data-is-me]):not([data-is-read])
 					background-image url("/_/resources/desktop/unread.svg")
 					background-repeat no-repeat
 					background-position 0 center
