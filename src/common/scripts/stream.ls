@@ -31,7 +31,8 @@ module.exports = (me) ~>
 
 	get-state = ~> state
 
-	event.on \i_updated ~>
+	event.on \i_updated (data) ~>
+		Object.assign me, data
 		me.trigger \updated
 
 	{

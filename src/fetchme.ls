@@ -1,8 +1,6 @@
 # Fetch me
 #================================
 
-riot = require \riot
-
 api = require './common/scripts/api.ls'
 signout = require './common/scripts/signout.ls'
 generate-default-userdata = require './common/scripts/generate-default-userdata.ls'
@@ -36,7 +34,7 @@ fetchme = (token, cb) ~>
 			retry: ~> fetchme token, cb
 
 	function done
-		if cb? then cb if me? then riot.observable me else null
+		if cb? then cb me
 
 	function init
 		data = generate-default-userdata!
