@@ -48,7 +48,7 @@ module.exports = (callback) ~>
 	# Get cached account data
 	cached-me = JSON.parse local-storage.get-item \me
 
-	if cached-me? and cached-me.data.cache
+	if cached-me?.data?.cache
 		fetched cached-me
 
 		# 後から新鮮なデータをフェッチ
