@@ -20,6 +20,7 @@ module.exports = ~>
 			place: \right
 
 	data =
+		cache: true
 		debug: false
 		home: home-data
 
