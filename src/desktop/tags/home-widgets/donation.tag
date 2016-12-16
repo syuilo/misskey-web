@@ -1,4 +1,4 @@
-mk-donate-home-widget
+mk-donation-home-widget
 	article
 		h1
 			i.fa.fa-heart

@@ -2,7 +2,7 @@ uuid = require './uuid.js'
 
 home =
 	left: [ \profile \calendar \rss-reader \photo-stream ]
-	right: [ \broadcast \notifications \user-recommendation \donate \nav \tips ]
+	right: [ \broadcast \notifications \user-recommendation \donation \nav \tips ]
 
 module.exports = ~>
 	home-data = []
