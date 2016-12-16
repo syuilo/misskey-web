@@ -52,7 +52,7 @@ module.exports = (callback) ~>
 		fetched cached-me
 
 		# 後から新鮮なデータをフェッチ
-		fetchme i, (fresh-data) ~>
+		fetchme i, true, (fresh-data) ~>
 			Object.assign cached-me, fresh-data
 			cached-me.trigger \updated
 	else
@@ -60,7 +60,7 @@ module.exports = (callback) ~>
 		if cached-me?
 			local-storage.remove-item \me
 
-		fetchme i, fetched
+		fetchme i, false, fetched
 
 	function fetched me
 

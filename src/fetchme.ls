@@ -5,7 +5,7 @@ api = require './common/scripts/api.ls'
 signout = require './common/scripts/signout.ls'
 generate-default-userdata = require './common/scripts/generate-default-userdata.ls'
 
-fetchme = (token, cb) ~>
+fetchme = (token, silent, cb) ~>
 	me = null
 
 	# Return when not signed in
@@ -28,10 +28,13 @@ fetchme = (token, cb) ~>
 		# initialize it if user data is empty
 		if me.data? then done! else init!
 	.catch ~>
-		info = document.create-element \mk-core-error
-			|> document.body.append-child
-		riot.mount info, do
-			retry: ~> fetchme token, cb
+		if not silent
+			info = document.create-element \mk-core-error
+				|> document.body.append-child
+			riot.mount info, do
+				retry: ~> fetchme token, false, cb
+		else
+			# nope
 
 	function done
 		if cb? then cb me
