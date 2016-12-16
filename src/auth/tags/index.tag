@@ -3,7 +3,7 @@ mk-index
 		p.fetching(if={ fetching })
 			| 読み込み中
 			mk-ellipsis
-		mk-form@form(if={ state == null && !fetching }, session={ session-promise })
+		mk-form@form(if={ state == null && !fetching }, session={ session })
 		div.denied(if={ state == 'denied' })
 			h1 アプリケーションの連携をキャンセルしました。
 			p このアプリがあなたのアカウントにアクセスすることはありません。
@@ -59,29 +59,26 @@ script.
 
 	@token = window.location.href.split \/ .pop!
 
-	@session-promise = new Promise (resolve, reject) ~>
+	@on \mount ~>
 		@api \auth/session/show do
 			token: @token
 		.then (session) ~>
-			resolve session
-		.catch (error) ~>
-			@state = \fetch-session-error
-		.then ~>
+			@session = session
 			@fetching = false
 			@update!
 
-	@on \mount ~>
-		@refs.form.on \denied ~>
-			@state = \denied
-			@update!
+			@refs.form.on \denied ~>
+				@state = \denied
+				@update!
 
-		@refs.form.on \accepted ~>
-			@state = \accepted
-			@update!
+			@refs.form.on \accepted ~>
+				@state = \accepted
+				@update!
 
-			if @session.app.callback_url
-				location.href = @session.app.callback_url + '?token=' + @session.token
+				if @session.app.callback_url
+					location.href = @session.app.callback_url + '?token=' + @session.token
 
-		@session-promise.then (session) ~>
-			@session = session
+		.catch (error) ~>
+			@fetching = false
+			@state = \fetch-session-error
 			@update!
