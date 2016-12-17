@@ -14,7 +14,7 @@ style.
 		display flex
 		justify-content center
 		margin 0 auto
-		max-width 1100px
+		max-width 1200px
 
 		> *
 			> *
@@ -28,20 +28,24 @@ style.
 					margin-bottom 16px
 
 		> main
-			flex 0 560px
+			flex 2.4
 			padding 16px
 
-		> .left
+		> *:not(main)
 			flex 1
+
+		> .left
 			padding 16px 0 16px 16px
 
 		> .right
-			flex 1
 			padding 16px 16px 16px 0
 
-		@media (max-width 1100px)
+		@media (max-width 1050px)
 			> *:not(main)
 				display none
+
+			> main
+				max-width 700px
 
 script.
 	@mixin \i
