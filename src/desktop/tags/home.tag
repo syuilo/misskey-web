@@ -28,11 +28,11 @@ style.
 					margin-bottom 16px
 
 		> main
-			flex 2.4
+			flex 1
 			padding 16px
 
 		> *:not(main)
-			flex 1
+			width 23%
 
 		> .left
 			padding 16px 0 16px 16px
