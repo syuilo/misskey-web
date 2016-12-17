@@ -69,6 +69,10 @@ style.
 					float right
 					height 48px
 
+					@media (max-width 1100px)
+						> mk-ui-header-search
+							display none
+
 style(theme='dark').
 	box-shadow 0 1px 0 #222221
 

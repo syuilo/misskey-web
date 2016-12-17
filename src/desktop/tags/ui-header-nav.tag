@@ -66,9 +66,18 @@ style.
 					font-size 10px
 					color $theme-color
 
+					@media (max-width 1100px)
+						margin-left -5px
+
 				> p
 					display inline
 					margin 0
+
+					@media (max-width 1100px)
+						display none
+
+				@media (max-width 700px)
+					padding 0 12px
 
 script.
 	@mixin \i
