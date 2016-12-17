@@ -58,6 +58,7 @@ style.
 
 		> img
 			display block
+			z-index 1
 			width 84px
 			height 84px
 			margin 0 auto -38px auto
