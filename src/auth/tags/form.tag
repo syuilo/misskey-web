@@ -96,11 +96,8 @@ style.
 script.
 	@mixin \api
 
-	@on \mount ~>
-		@opts.session.then (session) ~>
-			@session = session
-			@app = @session.app
-			@update!
+	@session = @opts.session
+	@app = @session.app
 
 	@cancel = ~>
 		@api \auth/deny do
