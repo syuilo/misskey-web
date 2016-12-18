@@ -99,7 +99,7 @@ gulp.task('build:scripts', done => {
 
 	// Get commit info
 	git.getLastCommit((err, commit) => {
-		glob('./src/*/script.ls', (err, files) => {
+		glob('./src/*/script.js', (err, files) => {
 			const tasks = files.map(entry => {
 				let bundle =
 					browserify({
