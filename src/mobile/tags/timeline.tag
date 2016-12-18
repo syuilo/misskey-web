@@ -32,6 +32,9 @@ style.
 		text-align center
 		color #999
 
+		> i
+			margin-right 4px
+
 	> .empty
 		margin 0 auto
 		padding 32px
