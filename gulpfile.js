@@ -29,6 +29,7 @@ const argv = require('yargs').argv;
 const config = {
 	url: argv['url'],
 	themeColor: '#f76d6c',
+	themeColorForeground: '#fff',
 	recaptcha: {
 		siteKey: argv['recaptcha-sitekey']
 	}
@@ -359,7 +360,8 @@ gulp.task('build:scripts', done => {
 						compact: true,
 						parserOptions: {
 							style: {
-								compress: true
+								compress: true,
+								rawDefine: config
 							}
 						}
 					})
@@ -401,7 +403,9 @@ gulp.task('build:styles', () => {
 
 	return gulp.src('./src/**/*.styl')
 		.pipe(stylus({
-			'include css': true
+			'include css': true,
+			compress: true,
+			rawDefine: config
 		}))
 		.pipe(isProduction
 			? cssnano({
