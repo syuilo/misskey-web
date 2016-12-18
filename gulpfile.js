@@ -356,7 +356,12 @@ gulp.task('build:scripts', done => {
 						template: 'pug',
 						type: 'livescript',
 						expr: false,
-						compact: true
+						compact: true,
+						parserOptions: {
+							style: {
+								compress: true
+							}
+						}
 					})
 					// Riotが謎の空白を挿入する
 					.transform(transformify((source, file) => {
