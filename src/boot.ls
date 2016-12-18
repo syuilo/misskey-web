@@ -30,7 +30,7 @@ require './common/tags.ls'
 log = require './common/scripts/log.ls'
 
 fetchme = require './fetchme.ls'
-mixins = require './mixins.ls'
+mixins = require './common/mixins.ls'
 panic = require './panic.ls'
 check-for-update = require './common/scripts/check-for-update.ls'
 
