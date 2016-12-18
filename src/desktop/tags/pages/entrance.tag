@@ -1,23 +1,6 @@
 mk-entrance
 	main
-		ul@title
-			li m
-			li i
-			li s
-			li s
-			li k
-			li e
-			li y
-			li: i ・
-			//
-				li: i ・
-				li: i ・
-				li
-				li
-				li: i ・
-				li
-				li
-				li
+		img(src='/_/resources/title.svg', alt='Misskey')
 
 		div.form
 			mk-entrance-signin(if={ mode == 'signin' }, onsignup={ signup })
@@ -33,52 +16,11 @@ style.
 	> main
 		display block
 
-		&:after
-			content ''
+		> img
 			display block
-			clear both
-
-		> ul
-			$tile = 48px
-
-			box-sizing content-box
-			width $tile * 4
+			width 160px
+			height 170px
 			margin 0 auto
-			padding $tile
-			font-size ($tile / 3)
-			font-weight bold
-			color #555
-			list-style none
-
-			&:after
-				content ''
-				display block
-				clear both
-
-			> li
-				display block
-				float left
-				width $tile
-				height $tile
-				line-height $tile
-				text-align center
-				user-select none
-				cursor default
-
-				&:hover
-					background #fff
-
-				&:first-child
-					color $theme-color-foreground
-					background $theme-color !important
-
-				&:nth-child(5)
-					color #fff
-					background #444
-
-				> i
-					font-style normal
-					opacity 0.3
 
 	> footer
 		> mk-copyright
@@ -89,13 +31,7 @@ style.
 			color rgba(#000, 0.5)
 
 script.
-	@mixin \sortable
-
 	@mode = \signin
-
-	@on \mount ~>
-		new @Sortable @refs.title, do
-			animation: 150ms
 
 	@signup = ~>
 		@mode = \signup

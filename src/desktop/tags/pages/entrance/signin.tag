@@ -1,6 +1,7 @@
 mk-entrance-signin
 	a.help(href={ CONFIG.urls.about + '/help' }, title='お困りですか？'): i.fa.fa-question
 	mk-signin
+	div.divider: span or
 	button.signup(onclick={ signup }) 新規登録
 
 style.
@@ -41,12 +42,28 @@ style.
 	> mk-signin
 		padding 10px 28px 0 28px
 		background #fff
-		border solid 1px rgba(0, 0, 0, 0.1)
-		border-radius 4px
-		box-shadow 0 0 8px rgba(0, 0, 0, 0.1)
+		box-shadow 0px 4px 16px rgba(0, 0, 0, 0.2)
+
+	> .divider
+		padding 16px 0
+		text-align center
+
+		&:after
+			content ""
+			display block
+			position absolute
+			top 50%
+			width 100%
+			height 1px
+			border-top solid 1px rgba(0, 0, 0, 0.1)
+
+		> *
+			z-index 1
+			padding 0 8px
+			color rgba(0, 0, 0, 0.5)
+			background #fdfdfd
 
 	> .signup
-		margin-top 16px
 		padding 16px
 		width 100%
 		font-size 1em

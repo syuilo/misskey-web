@@ -14,9 +14,7 @@ style.
 	> mk-signup
 		padding 18px 32px 0 32px
 		background #fff
-		border solid 1px rgba(0, 0, 0, 0.1)
-		border-radius 4px
-		box-shadow 0 0 8px rgba(0, 0, 0, 0.1)
+		box-shadow 0px 4px 16px rgba(0, 0, 0, 0.2)
 
 	> .cancel
 		cursor pointer

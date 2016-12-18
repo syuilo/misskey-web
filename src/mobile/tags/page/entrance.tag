@@ -1,6 +1,6 @@
 mk-entrance
 	main
-		h1 Misskey
+		img(src='/_/resources/title.svg', alt='Misskey')
 
 		div.form
 			mk-entrance-signin(if={ mode == 'signin' }, onsignup={ signup })
@@ -16,12 +16,11 @@ style.
 	> main
 		display block
 
-		> h1
-			margin 0
-			padding 32px 0
-			text-align center
-			font-size 18px
-			color #555
+		> img
+			display block
+			width 130px
+			height 120px
+			margin 0 auto
 
 	> footer
 		> mk-copyright
