@@ -1,6 +1,10 @@
 mk-entrance-signin
 	a.help(href={ CONFIG.urls.about + '/help' }, title='お困りですか？'): i.fa.fa-question
-	mk-signin
+	div.form
+		h1
+			img(if={ user }, src={ user.avatar_url + '?thumbnail&size=32' })
+			p { user ? user.name : 'アカウント' }
+		mk-signin@signin
 	div.divider: span or
 	button.signup(onclick={ signup }) 新規登録
 
@@ -39,10 +43,39 @@ style.
 		> i
 			padding 14px
 
-	> mk-signin
-		padding 10px 28px 0 28px
+	> .form
+		padding 10px 28px 16px 28px
 		background #fff
 		box-shadow 0px 4px 16px rgba(0, 0, 0, 0.2)
+
+		> h1
+			display block
+			margin 0
+			padding 0
+			height 54px
+			line-height 54px
+			text-align center
+			text-transform uppercase
+			font-size 1em
+			font-weight bold
+			color rgba(0, 0, 0, 0.5)
+			border-bottom solid 1px rgba(0, 0, 0, 0.1)
+
+			> p
+				display inline
+				margin 0
+				padding 0
+
+			> img
+				display inline-block
+				top 10px
+				width 32px
+				height 32px
+				margin-right 8px
+				border-radius 100%
+
+				&[src='']
+					display none
 
 	> .divider
 		padding 16px 0
@@ -78,5 +111,10 @@ style.
 			background darken($theme-color, 5%)
 
 script.
+	@on \mount ~>
+		@refs.signin.on \user (user) ~>
+			@update do
+				user: user
+
 	@signup = ~>
 		@opts.onsignup!

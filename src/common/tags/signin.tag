@@ -1,8 +1,5 @@
 mk-signin
 	form(onsubmit={ onsubmit })
-		h1
-			img@avatar(src={ user.avatar_url + '?thumbnail&size=32' }, if={ user })
-			p { user ? user.name : 'アカウント' }
 		label.user-name
 			input@username(
 				type='text'
@@ -26,35 +23,6 @@ style.
 	> form
 		display block
 		z-index 2
-
-		> h1
-			display block
-			margin 0
-			padding 0
-			height 54px
-			line-height 54px
-			text-align center
-			text-transform uppercase
-			font-size 1em
-			font-weight bold
-			color rgba(0, 0, 0, 0.5)
-			border-bottom solid 1px rgba(0, 0, 0, 0.1)
-
-			> p
-				display inline
-				margin 0
-				padding 0
-
-			> img
-				display inline-block
-				top 10px
-				width 32px
-				height 32px
-				margin-right 8px
-				border-radius 100%
-
-				&[src='']
-					display none
 
 		label
 			display block
@@ -105,7 +73,7 @@ style.
 
 		[type=submit]
 			cursor pointer
-			padding 16px 16px 32px 16px
+			padding 16px
 			margin -6px 0 0 0
 			width 100%
 			font-size 1.2em
@@ -138,6 +106,7 @@ script.
 			username: @refs.username.value
 		.then (user) ~>
 			@user = user
+			@trigger \user user
 			@update!
 
 	@onsubmit = (e) ~>
