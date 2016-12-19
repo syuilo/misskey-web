@@ -6,6 +6,8 @@ mk-entrance
 			mk-entrance-signin(if={ mode == 'signin' }, onsignup={ signup })
 			mk-entrance-signup(if={ mode == 'signup' }, onsignin={ signin })
 
+	mk-forkit
+
 	footer
 		mk-copyright
 
