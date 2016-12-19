@@ -42,7 +42,7 @@ config.scheme = config.url.substr(0, config.url.indexOf('://'));
  * Browserifyのモジュールエイリアス
  */
 const aliasifyConfig = {
-	"aliases": {
+	aliases: {
 		"fetch": "./node_modules/whatwg-fetch/fetch.js",
 		"page": "./node_modules/page/page.js",
 		"NProgress": "./node_modules/nprogress/nprogress.js",
