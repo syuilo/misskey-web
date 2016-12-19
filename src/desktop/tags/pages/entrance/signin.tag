@@ -97,12 +97,12 @@ style.
 			background #fdfdfd
 
 	> .signup
-		padding 16px
 		width 100%
+		line-height 56px
 		font-size 1em
 		color #fff
 		background $theme-color
-		border-radius 3px
+		border-radius 64px
 
 		&:hover
 			background lighten($theme-color, 5%)
