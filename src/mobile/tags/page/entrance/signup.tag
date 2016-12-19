@@ -1,6 +1,6 @@
 mk-entrance-signup
 	mk-signup
-	button.cancel(type='button', onclick={ cancel }, title='キャンセル'): i.fa.fa-times
+	button.cancel(type='button', onclick={ parent.signin }, title='キャンセル'): i.fa.fa-times
 
 style.
 	display block
@@ -33,7 +33,3 @@ style.
 
 		> i
 			padding 14px
-
-script.
-	@cancel = ~>
-		@opts.onsignin!

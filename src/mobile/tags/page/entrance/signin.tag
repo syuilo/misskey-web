@@ -1,13 +1,15 @@
 mk-entrance-signin
 	mk-signin
 	div.divider: span or
-	button.signup(onclick={ signup }) 新規登録
+	button.signup(onclick={ parent.signup }) 新規登録
+	a.introduction(onclick={ parent.introduction }) Misskeyについて
 
 style.
 	display block
 	margin 0 auto
 	padding 0 8px
 	max-width 350px
+	text-align center
 
 	> .signup
 		padding 16px
@@ -36,6 +38,8 @@ style.
 			color rgba(0, 0, 0, 0.5)
 			background #fdfdfd
 
-script.
-	@signup = ~>
-		@opts.onsignup!
+	> .introduction
+		display inline-block
+		margin-top 16px
+		font-size 12px
+		color #666
