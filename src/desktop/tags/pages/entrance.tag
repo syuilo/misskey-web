@@ -29,13 +29,19 @@ style.
 			user-select none
 
 		> .introduction
-			max-width 300px
+			max-width 360px
 			margin 0 auto
-			color #666
+			color #777
+
+			> mk-introduction
+				padding 32px
+				background #fff
+				box-shadow 0 4px 16px rgba(0, 0, 0, 0.2)
 
 			> button
 				display block
-				margin 0 auto
+				margin 16px auto 0 auto
+				color #666
 
 				&:hover
 					text-decoration underline

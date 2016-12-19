@@ -11,6 +11,12 @@ style.
 
 	h1
 		margin 0
+		text-align center
+		font-size 1.2em
 
 	p
 		margin 16px 0
+
+		&:last-child
+			margin 0
+			text-align center
