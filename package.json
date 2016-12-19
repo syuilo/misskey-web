@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "aliasify": "2.1.0",
+    "babel-preset-es2015": "6.18.0",
     "browserify": "13.1.1",
     "browserify-livescript": "0.2.3",
     "chart.js": "2.4.0",
@@ -20,6 +21,7 @@
     "git-last-commit": "0.2.0",
     "glob": "7.1.1",
     "gulp": "3.9.1",
+    "gulp-babel": "6.1.2",
     "gulp-cssnano": "2.1.2",
     "gulp-livescript": "3.0.1",
     "gulp-pug": "3.2.0",

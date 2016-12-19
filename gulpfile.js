@@ -4,6 +4,7 @@ Error.stackTraceLimit = Infinity;
 
 const gulp = require('gulp');
 const gutil = require('gulp-util');
+const babel = require('gulp-babel');
 const glob = require('glob');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
@@ -382,6 +383,10 @@ gulp.task('build:scripts', done => {
 				if (isProduction) {
 					bundle = bundle
 						.pipe(buffer())
+						// ↓ https://github.com/mishoo/UglifyJS2/issues/448
+						.pipe(babel({
+							presets: ['es2015']
+						}))
 						.pipe(uglify({
 							compress: true
 						}));
