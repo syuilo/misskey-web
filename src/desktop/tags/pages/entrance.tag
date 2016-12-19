@@ -2,9 +2,11 @@ mk-entrance
 	main
 		img(src='/_/resources/title.svg', alt='Misskey')
 
-		div.form
-			mk-entrance-signin(if={ mode == 'signin' }, onsignup={ signup })
-			mk-entrance-signup(if={ mode == 'signup' }, onsignin={ signin })
+		mk-entrance-signin(if={ mode == 'signin' })
+		mk-entrance-signup(if={ mode == 'signup' })
+		div.introduction(if={ mode == 'introduction' })
+			mk-introduction
+			button(onclick={ signin }) わかった
 
 	mk-forkit
 
@@ -26,6 +28,18 @@ style.
 			pointer-events none
 			user-select none
 
+		> .introduction
+			max-width 300px
+			margin 0 auto
+			color #666
+
+			> button
+				display block
+				margin 0 auto
+
+				&:hover
+					text-decoration underline
+
 	> footer
 		> mk-copyright
 			margin 0
@@ -43,4 +57,8 @@ script.
 
 	@signin = ~>
 		@mode = \signin
+		@update!
+
+	@introduction = ~>
+		@mode = \introduction
 		@update!

@@ -6,12 +6,14 @@ mk-entrance-signin
 			p { user ? user.name : 'アカウント' }
 		mk-signin@signin
 	div.divider: span or
-	button.signup(onclick={ signup }) 新規登録
+	button.signup(onclick={ parent.signup }) 新規登録
+	a.introduction(onclick={ introduction }) Misskeyについて
 
 style.
 	display block
 	width 290px
 	margin 0 auto
+	text-align center
 
 	&:hover
 		> .help
@@ -110,11 +112,17 @@ style.
 		&:active
 			background darken($theme-color, 5%)
 
+	> .introduction
+		display inline-block
+		margin-top 16px
+		font-size 12px
+		color #666
+
 script.
 	@on \mount ~>
 		@refs.signin.on \user (user) ~>
 			@update do
 				user: user
 
-	@signup = ~>
-		@opts.onsignup!
+	@introduction = ~>
+		@parent.introduction!
