@@ -21,6 +21,8 @@ style.
 			width 160px
 			height 170px
 			margin 0 auto
+			pointer-events none
+			user-select none
 
 	> footer
 		> mk-copyright
