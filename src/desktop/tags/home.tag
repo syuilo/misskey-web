@@ -11,12 +11,17 @@ style.
 	display block
 
 	> .main
-		display flex
-		justify-content center
 		margin 0 auto
 		max-width 1200px
 
+		&:after
+			content ""
+			display block
+			clear both
+
 		> *
+			float left
+
 			> *
 				display block
 				//border solid 1px #eaeaea
@@ -28,11 +33,11 @@ style.
 					margin-bottom 16px
 
 		> main
-			flex 1
 			padding 16px
+			width calc(100% - 275px * 2)
 
 		> *:not(main)
-			width 23%
+			width 275px
 
 		> .left
 			padding 16px 0 16px 16px
@@ -40,12 +45,15 @@ style.
 		> .right
 			padding 16px 16px 16px 0
 
-		@media (max-width 1050px)
+		@media (max-width 1100px)
 			> *:not(main)
 				display none
 
 			> main
+				float none
+				width 100%
 				max-width 700px
+				margin 0 auto
 
 script.
 	@mixin \i
