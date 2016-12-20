@@ -68,6 +68,7 @@ mk-settings
 			p
 				| Token:
 				code { I.token }
+			p APIを利用するには、上記のトークンを「i」というキーでパラメータに付加してリクエストします。
 
 style.
 	display block
