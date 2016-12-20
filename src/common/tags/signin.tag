@@ -1,5 +1,5 @@
 mk-signin
-	form(onsubmit={ onsubmit })
+	form(onsubmit={ onsubmit }, class={ signing: signing })
 		label.user-name
 			input@username(
 				type='text'
@@ -15,7 +15,7 @@ mk-signin
 				placeholder='パスワード'
 				required)
 			i.fa.fa-lock
-		button(type='submit') サインイン
+		button(type='submit', disabled={ signing }) { signing ? 'やっています...' : 'サインイン' }
 
 style.
 	display block
@@ -23,6 +23,10 @@ style.
 	> form
 		display block
 		z-index 2
+
+		&.signing
+			&, *
+				cursor wait !important
 
 		label
 			display block
@@ -96,10 +100,14 @@ style.
 				color darken($theme-color, 30%)
 				transition all .2s ease
 
+			&:disabled
+				opacity 0.7
+
 script.
 	@mixin \api
 
 	@user = null
+	@signing = false
 
 	@oninput = ~>
 		@api \users/show do
@@ -112,12 +120,17 @@ script.
 	@onsubmit = (e) ~>
 		e.prevent-default!
 
+		@signing = true
+		@update!
+
 		@api \signin do
 			username: @refs.username.value
 			password: @refs.password.value
-		.then ->
+		.then ~>
 			location.reload!
-		.catch ->
+		.catch ~>
 			alert 'something happened'
+			@signing = false
+			@update!
 
 		false
