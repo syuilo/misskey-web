@@ -122,7 +122,8 @@ function fetchme token, silent, cb
 
 		# initialize it if user data is empty
 		if me.data? then done! else init!
-	.catch ~>
+	.catch (e) ~>
+		alert e
 		if not silent
 			info = document.create-element \mk-core-error
 				|> document.body.append-child
