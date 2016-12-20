@@ -35,6 +35,12 @@ if NodeList.prototype.for-each == undefined
 if HTMLCollection.prototype.for-each == undefined
 	HTMLCollection.prototype.for-each = Array.prototype.for-each
 
+# ↓ iOSでプライベートモードだとlocalStorageが使えないので既存のメソッドを上書きする
+try
+	local-storage.set-item \kyoppie \yuppie
+catch e
+	Storage.prototype.set-item = ~> # nope
+
 # MAIN PROCESS
 #--------------------------------
 
@@ -122,8 +128,7 @@ function fetchme token, silent, cb
 
 		# initialize it if user data is empty
 		if me.data? then done! else init!
-	.catch (e) ~>
-		alert e
+	.catch ~>
 		if not silent
 			info = document.create-element \mk-core-error
 				|> document.body.append-child
