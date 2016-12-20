@@ -79,7 +79,7 @@ script.
 					data: widget.data
 				.0)
 			catch e
-				# nope
+				# noop
 
 	@on \unmount ~>
 		@home.for-each (widget) ~>

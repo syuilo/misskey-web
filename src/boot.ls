@@ -39,7 +39,7 @@ if HTMLCollection.prototype.for-each == undefined
 try
 	local-storage.set-item \kyoppie \yuppie
 catch e
-	Storage.prototype.set-item = ~> # nope
+	Storage.prototype.set-item = ~> # noop
 
 # MAIN PROCESS
 #--------------------------------
@@ -135,7 +135,7 @@ function fetchme token, silent, cb
 			riot.mount info, do
 				retry: ~> fetchme token, false, cb
 		else
-			# nope
+			# noop
 
 	function done
 		if cb? then cb me
