@@ -21,6 +21,9 @@ mk-settings
 		p(class={ active: page == 'password' }, onmousedown={ set-page.bind(null, 'password') })
 			i.fa.fa-fw.fa-unlock-alt
 			| パスワード
+		p(class={ active: page == 'api' }, onmousedown={ set-page.bind(null, 'api') })
+			i.fa.fa-fw.fa-key
+			| API
 
 	div.pages
 		div.account(show={ page == 'account' })
@@ -62,6 +65,13 @@ mk-settings
 			section
 				h1 ログイン履歴
 				mk-signin-history
+
+		div.api(show={ page == 'api' })
+			section
+				h1 API
+				p
+					| Token:
+					code { I.token }
 
 style.
 	display block
@@ -182,6 +192,11 @@ style.
 						> button
 							float left
 							margin-left 8px
+
+			&.api
+				code
+					padding 4px
+					background #eee
 
 script.
 	@mixin \i
