@@ -26,52 +26,48 @@ mk-settings
 			| API
 
 	div.pages
-		div.account(show={ page == 'account' })
-			section
-				h1 アカウント
-				label.avatar
-					p アバター
-					img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar')
-					button.style-normal(onclick={ avatar }) 画像を選択
-				label
-					p 名前
-					input@account-name(type='text', value={ I.name })
-				label
-					p 場所
-					input@account-location(type='text', value={ I.location })
-				label
-					p 自己紹介
-					textarea@account-bio { I.bio }
-				button.style-primary(onclick={ update-account }) 保存
+		section.account(show={ page == 'account' })
+			h1 アカウント
+			label.avatar
+				p アバター
+				img.avatar(src={ I.avatar_url + '?thumbnail&size=64' }, alt='avatar')
+				button.style-normal(onclick={ avatar }) 画像を選択
+			label
+				p 名前
+				input@account-name(type='text', value={ I.name })
+			label
+				p 場所
+				input@account-location(type='text', value={ I.location })
+			label
+				p 自己紹介
+				textarea@account-bio { I.bio }
+			button.style-primary(onclick={ update-account }) 保存
 
-		div.web(show={ page == 'web' })
-			section
-				h1 デザイン
-				label
-					p 壁紙
-					button.style-normal(onclick={ wallpaper }) 画像を選択
-			section
-				h1 その他
-				label.checkbox
-					input(type='checkbox', checked={ I.data.cache }, onclick={ update-cache })
-					p 読み込みを高速化する
-					p API通信時に新鮮なユーザー情報をキャッシュすることでフェッチのオーバーヘッドを無くします。(実験的)
-				label.checkbox
-					input(type='checkbox', checked={ I.data.debug }, onclick={ update-debug })
-					p 開発者モード
-					p デバッグ等の開発者モードを有効にします。
+		section.web(show={ page == 'web' })
+			h1 デザイン
+			label
+				p 壁紙
+				button.style-normal(onclick={ wallpaper }) 画像を選択
+		section.web(show={ page == 'web' })
+			h1 その他
+			label.checkbox
+				input(type='checkbox', checked={ I.data.cache }, onclick={ update-cache })
+				p 読み込みを高速化する
+				p API通信時に新鮮なユーザー情報をキャッシュすることでフェッチのオーバーヘッドを無くします。(実験的)
+			label.checkbox
+				input(type='checkbox', checked={ I.data.debug }, onclick={ update-debug })
+				p 開発者モード
+				p デバッグ等の開発者モードを有効にします。
 
-		div.signin(show={ page == 'signin' })
-			section
-				h1 ログイン履歴
-				mk-signin-history
+		section.signin(show={ page == 'signin' })
+			h1 ログイン履歴
+			mk-signin-history
 
-		div.api(show={ page == 'api' })
-			section
-				h1 API
-				p
-					| Token:
-					code { I.token }
+		section.api(show={ page == 'api' })
+			h1 API
+			p
+				| Token:
+				code { I.token }
 
 style.
 	display block
@@ -132,52 +128,51 @@ style.
 		left 200px
 		width calc(100% - 200px)
 
-		> div
-			> section
-				padding 32px
+		> section
+			padding 32px
 
-				//	& + section
-				//		margin-top 16px
+			//	& + section
+			//		margin-top 16px
 
-				h1
+			h1
+				display block
+				margin 0
+				padding 0 0 8px 0
+				font-size 1em
+				color #555
+				border-bottom solid 1px #eee
+
+			label
+				display block
+				margin 16px 0
+
+				&:after
+					content ""
 					display block
-					margin 0
-					padding 0 0 8px 0
-					font-size 1em
-					color #555
-					border-bottom solid 1px #eee
+					clear both
 
-				label
-					display block
-					margin 16px 0
+				> p
+					margin 0 0 8px 0
+					font-weight bold
+					color #999
 
-					&:after
-						content ""
-						display block
-						clear both
+				&.checkbox
+					> input
+						position absolute
+						top 0
+						left 0
+
+						&:checked + p
+							color $theme-color
 
 					> p
-						margin 0 0 8px 0
+						width calc(100% - 32px)
+						margin 0 0 0 32px
 						font-weight bold
-						color #999
 
-					&.checkbox
-						> input
-							position absolute
-							top 0
-							left 0
-
-							&:checked + p
-								color $theme-color
-
-						> p
-							width calc(100% - 32px)
-							margin 0 0 0 32px
-							font-weight bold
-
-							&:last-child
-								font-weight normal
-								color #999
+						&:last-child
+							font-weight normal
+							color #999
 
 			&.account
 				> .general
