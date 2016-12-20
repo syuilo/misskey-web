@@ -13,6 +13,13 @@ mk-entrance
 	footer
 		mk-copyright
 
+	// ↓ https://github.com/riot/riot/issues/2134 (将来的)
+	style(data-disable-scope).
+		#wait {
+			right: auto;
+			left: 15px;
+		}
+
 style.
 	display block
 	height 100%

@@ -41,6 +41,12 @@
 html
 	background #fdfdfd
 
+	// ↓ workaround of https://github.com/riot/riot/issues/2134
+	&[data-page='entrance']
+		#wait
+			right auto
+			left 15px
+
 html[theme='dark']
 	background #100f0f
 

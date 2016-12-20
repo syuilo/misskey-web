@@ -30,6 +30,7 @@ module.exports = (me) ~>
 
 	function entrance
 		mount document.create-element \mk-entrance
+		document.document-element.set-attribute \data-page \entrance
 
 	function mentions
 		document.create-element \mk-home-page
@@ -70,6 +71,7 @@ module.exports = (me) ~>
 #================================
 
 function mount content
+	document.document-element.remove-attribute \data-page
 	if page? then page.unmount!
 	body = document.get-element-by-id \app
 	page := riot.mount body.append-child content .0
