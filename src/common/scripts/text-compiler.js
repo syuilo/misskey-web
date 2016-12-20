@@ -17,6 +17,8 @@ module.exports = function(tokens, canBreak, escape) {
 					return token.content
 						.replace(/(\r\n|\n|\r)/g, canBreak ? '<br>' : ' ');
 				}
+			case 'bold':
+				return '<strong>' + token.bold + '</strong>';
 			case 'link':
 				return '<mk-url href="' + token.content + '" target="_blank"></mk-url>';
 			case 'mention':
