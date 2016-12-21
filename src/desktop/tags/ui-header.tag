@@ -37,11 +37,10 @@ style.
 				display block
 				width 100%
 				height 48px
-				background-image url(/_/resources/logo.svg)
+				background-image url(/_/resources/desktop/header-logo.svg)
 				background-size 64px
 				background-position center
 				background-repeat no-repeat
-				filter opacity(20%) grayscale(100%)
 
 		> .main
 			z-index 1024
