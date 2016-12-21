@@ -94,6 +94,19 @@ style.
 		> button
 			margin 0 8px
 
+	@media (max-width 600px)
+		> header
+			> img
+				box-shadow none
+
+		> .app
+			box-shadow none
+
+	@media (max-width 500px)
+		> header
+			> h1
+				font-size 16px
+
 script.
 	@mixin \api
 

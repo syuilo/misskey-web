@@ -51,6 +51,15 @@ style.
 			&.accepted > h1
 				color #50bbe6
 
+		@media (max-width 600px)
+			max-width none
+			box-shadow none
+
+		@media (max-width 500px)
+			> div
+				> h1
+					font-size 16px
+
 script.
 	@mixin \api
 
