@@ -6,9 +6,6 @@ mk-signin-history
 				i.fa.fa-check(if={ success })
 				i.fa.fa-times(if={ !success })
 				span.ip { ip }
-			p.try(if={ password })
-				| 試行:
-				code { password }
 			pre: code { JSON.stringify(headers, null, '    ') }
 
 style.
@@ -40,12 +37,6 @@ style.
 				top 16px
 				right 0
 				color #777
-
-			> .try
-				margin 0
-
-				> code
-					background #eee
 
 			> pre
 				overflow auto
