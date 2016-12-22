@@ -25,7 +25,7 @@ mk-timeline-post(tabindex='-1', title={ title }, onkeydown={ on-key-down })
 			div.body
 				div.text
 					a.reply(if={ p.reply_to }): i.fa.fa-reply
-					soan@text
+					span@text
 					a.quote(if={ p.repost != null }) RP:
 				div.media(if={ p.media })
 					mk-images-viewer(images={ p.media })
