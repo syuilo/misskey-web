@@ -1,5 +1,5 @@
 mk-post-form(ondragover={ ondragover }, ondragenter={ ondragenter }, ondragleave={ ondragleave }, ondrop={ ondrop })
-	textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, oninput={ update }, onkeypress={ onkeypress }, onpaste={ onpaste }, placeholder={ opts.reply ? 'この投稿への返信...' : 'いまどうしてる？' })
+	textarea@text(disabled={ wait }, class={ withfiles: files.length != 0 }, oninput={ update }, onkeydown={ onkeydown }, onpaste={ onpaste }, placeholder={ opts.reply ? 'この投稿への返信...' : 'いまどうしてる？' })
 	div.attaches(if={ files.length != 0 })
 		ul.files@attaches
 			li.file(each={ files })
@@ -361,8 +361,8 @@ script.
 
 		return false
 
-	@onkeypress = (e) ~>
-		if (e.which == 10 || e.which == 13) && e.ctrl-key
+	@onkeydown = (e) ~>
+		if (e.which == 10 || e.which == 13) && (e.ctrl-key || e.meta-key)
 			@post!
 
 	@onpaste = (e) ~>
