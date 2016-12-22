@@ -335,6 +335,7 @@ script.
 		@draghover = false
 
 	@ondrop = (e) ~>
+		e.prevent-default!
 		e.stop-propagation!
 		@draghover = false
 
