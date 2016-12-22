@@ -15,9 +15,9 @@ mk-ui-header-account
 				i.fa.fa-cloud
 				| ドライブ
 				i.fa.fa-angle-right
-			li: a(href='/i/likes')
-				i.fa.fa-star
-				| お気に入り
+			li: a(href='/i>mentions')
+				i.fa.fa-at
+				| あなた宛て
 				i.fa.fa-angle-right
 		ul
 			li(onclick={ settings }): p
