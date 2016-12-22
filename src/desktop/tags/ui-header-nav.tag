@@ -9,7 +9,7 @@ mk-ui-header-nav: ul(if={ SIGNIN })
 	li.info: a(href='https://twitter.com/misskey_xyz', target='_blank')
 		i.fa.fa-info
 		p お知らせ
-	li.tv: a(href='http://misskey.tk', target='_blank')
+	li.tv: a(href='https://misskey.tk', target='_blank')
 		i.fa.fa-television
 		p MisskeyTV™
 
