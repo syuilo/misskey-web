@@ -349,8 +349,7 @@ script.
 		@update!
 
 	@on-key-down = (e) ~>
-		e.prevent-default!
-
+		should-be-cancel = true
 		switch
 		| e.which == 38 or e.which == 74 or (e.which == 9 and e.shift-key) => # ↑, j or Shift+Tab
 			focus @root, (e) -> e.previous-element-sibling
@@ -362,6 +361,11 @@ script.
 			@like!
 		| e.which == 82 => # r
 			@reply!
+		| _ =>
+			should-be-cancel = false
+
+		if should-be-cancel
+			e.prevent-default!
 
 	function focus(el, fn)
 		target = fn el
