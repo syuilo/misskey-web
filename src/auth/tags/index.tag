@@ -86,15 +86,18 @@ script.
 
 			# 既に連携していた場合
 			if @session.app.is_authorized
-				return @accepted!
-
-			@update!
-
-			@refs.form.on \denied ~>
-				@state = \denied
+				@api \auth/accept do
+					token: @session.token
+				.then ~>
+					@accepted!
+			else
 				@update!
 
-			@refs.form.on \accepted @accepted
+				@refs.form.on \denied ~>
+					@state = \denied
+					@update!
+
+				@refs.form.on \accepted @accepted
 
 		.catch (error) ~>
 			@fetching = false
