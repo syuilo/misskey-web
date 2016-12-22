@@ -8,7 +8,7 @@ mk-index
 			h1 アプリケーションの連携をキャンセルしました。
 			p このアプリがあなたのアカウントにアクセスすることはありません。
 		div.accepted(if={ state == 'accepted' })
-			h1 アプリケーションの連携を許可しました。
+			h1 { session.app.is_authorized ? 'このアプリは既に連携済みです' : 'アプリケーションの連携を許可しました'}
 			p(if={ session.app.callback_url })
 				| アプリケーションに戻っています
 				mk-ellipsis
@@ -74,20 +74,27 @@ script.
 		.then (session) ~>
 			@session = session
 			@fetching = false
+
+			# 既に連携していた場合
+			if @session.app.is_authorized
+				return @accepted!
+
 			@update!
 
 			@refs.form.on \denied ~>
 				@state = \denied
 				@update!
 
-			@refs.form.on \accepted ~>
-				@state = \accepted
-				@update!
-
-				if @session.app.callback_url
-					location.href = @session.app.callback_url + '?token=' + @session.token
+			@refs.form.on \accepted @accepted
 
 		.catch (error) ~>
 			@fetching = false
 			@state = \fetch-session-error
 			@update!
+
+	@accepted = ~>
+		@state = \accepted
+		@update!
+
+		if @session.app.callback_url
+			location.href = @session.app.callback_url + '?token=' + @session.token
