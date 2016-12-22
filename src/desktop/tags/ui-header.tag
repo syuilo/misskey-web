@@ -1,5 +1,6 @@
 mk-ui-header
 	mk-donation(if={ SIGNIN && !I.data.no_donation })
+	mk-special-message
 	div.main
 		div.backdrop
 		div.main: div.container

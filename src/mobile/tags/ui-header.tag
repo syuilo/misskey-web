@@ -1,4 +1,5 @@
 mk-ui-header
+	mk-special-message
 	div.main
 		div.backdrop
 		div.content
