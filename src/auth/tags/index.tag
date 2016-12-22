@@ -15,6 +15,8 @@ mk-index
 			p(if={ !session.app.callback_url }) アプリケーションに戻って、やっていってください。
 		div.error(if={ state == 'fetch-session-error' })
 			p セッションが存在しません。
+	footer
+		img(src='/_/resources/auth/logo.svg', alt='Misskey')
 
 style.
 	display block
@@ -59,6 +61,13 @@ style.
 			> div
 				> h1
 					font-size 16px
+
+	> footer
+		> img
+			display block
+			width 64px
+			height 64px
+			margin 0 auto
 
 script.
 	@mixin \api
