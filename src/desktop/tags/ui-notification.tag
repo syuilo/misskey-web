@@ -10,9 +10,10 @@ style.
 	right 0
 	margin 0 auto
 	width 500px
-	color #fff
-	background rgba(#000, 0.7)
+	color rgba(#000, 0.6)
+	background rgba(#fff, 0.9)
 	border-radius 0 0 8px 8px
+	box-shadow 0 2px 4px rgba(#000, 0.2)
 
 	> p
 		margin 0
