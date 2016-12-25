@@ -15,7 +15,8 @@ mk-index
 			p(if={ !session.app.callback_url }) アプリケーションに戻って、やっていってください。
 		div.error(if={ state == 'fetch-session-error' })
 			p セッションが存在しません。
-	main(if={ !SIGNIN })
+	main.signin(if={ !SIGNIN })
+		h1 サインインしてください
 		mk-signin
 	footer
 		img(src='/_/resources/auth/logo.svg', alt='Misskey')
@@ -55,8 +56,16 @@ style.
 			&.accepted > h1
 				color #50bbe6
 
-		> mk-signin
-			padding 16px
+		&.signin
+			> h1
+				margin 0 0 8px 0
+				padding 0
+				font-size 20px
+				font-weight normal
+				color #555
+
+			> mk-signin
+				padding 16px
 
 		@media (max-width 600px)
 			max-width none
