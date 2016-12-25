@@ -1,5 +1,5 @@
 mk-index
-	main
+	main(if={ SIGNIN })
 		p.fetching(if={ fetching })
 			| 読み込み中
 			mk-ellipsis
@@ -15,6 +15,8 @@ mk-index
 			p(if={ !session.app.callback_url }) アプリケーションに戻って、やっていってください。
 		div.error(if={ state == 'fetch-session-error' })
 			p セッションが存在しません。
+	main(if={ !SIGNIN })
+		mk-signin
 	footer
 		img(src='/_/resources/auth/logo.svg', alt='Misskey')
 
@@ -70,6 +72,7 @@ style.
 			margin 0 auto
 
 script.
+	@mixin \i
 	@mixin \api
 
 	@state = null
@@ -78,6 +81,9 @@ script.
 	@token = window.location.href.split \/ .pop!
 
 	@on \mount ~>
+		if not @SIGNIN then return
+
+		# Fetch session
 		@api \auth/session/show do
 			token: @token
 		.then (session) ~>
