@@ -6,8 +6,9 @@ module.exports = (me) ->
 			@I = me
 			@SIGNIN = me?
 
-			@on \mount   ~> me.on  \updated @update
-			@on \unmount ~> me.off \updated @update
+			if @SIGNIN
+				@on \mount   ~> me.on  \updated @update
+				@on \unmount ~> me.off \updated @update
 
 		update-i: (data) ->
 			if data?
