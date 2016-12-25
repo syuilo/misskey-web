@@ -55,6 +55,9 @@ style.
 			&.accepted > h1
 				color #50bbe6
 
+		> mk-signin
+			padding 16px
+
 		@media (max-width 600px)
 			max-width none
 			box-shadow none
