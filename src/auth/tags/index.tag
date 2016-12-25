@@ -57,15 +57,14 @@ style.
 				color #50bbe6
 
 		&.signin
+			padding 32px 32px 16px 32px
+
 			> h1
-				margin 0 0 8px 0
+				margin 0 0 22px 0
 				padding 0
 				font-size 20px
 				font-weight normal
 				color #555
-
-			> mk-signin
-				padding 16px
 
 		@media (max-width 600px)
 			max-width none
