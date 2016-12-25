@@ -79,8 +79,9 @@ style.
 	input[type='email']
 	textarea
 		padding 8px
+		width 100%
 		font-size 16px
-		color #555
+		color #55595c
 		border solid 1px #dadada
 		border-radius 4px
 
@@ -155,7 +156,7 @@ style.
 				> p
 					margin 0 0 8px 0
 					font-weight bold
-					color #999
+					color #373a3c
 
 				&.checkbox
 					> input
