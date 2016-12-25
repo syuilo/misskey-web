@@ -69,6 +69,11 @@ mk-settings
 				| Token:
 				code { I.token }
 			p APIを利用するには、上記のトークンを「i」というキーでパラメータに付加してリクエストします。
+			p アカウントを乗っ取られてしまう可能性があるため、このトークンは第三者に教えないでください(アプリなどにも入力しないでください)。
+			p
+				| 万が一このトークンが漏れたりその可能性がある場合は
+				button.regenerate(onclick={ regenerate-token }) トークンを再生成
+				| できます。(副作用として、ログインしているすべてのデバイスでログアウトが発生します)
 
 style.
 	display block
@@ -194,6 +199,13 @@ style.
 				code
 					padding 4px
 					background #eee
+
+				.regenerate
+					display inline
+					color $theme-color
+
+					&:hover
+						text-decoration underline
 
 script.
 	@mixin \i
