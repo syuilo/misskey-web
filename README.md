@@ -1,3 +1,10 @@
+:warning: THIS REPOSITORY IS NO LONGER MAINTAINED :warning:
+===========================================================
+
+**MOVE TO https://github.com/syuilo/misskey**
+
+:v:
+
 Misskey Web
 ===========
 
